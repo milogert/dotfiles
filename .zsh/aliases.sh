@@ -62,6 +62,7 @@ if [ -e /usr/bin/colordiff ]; then
     alias diff='colordiff'
 fi
 alias df='df -h'
+alias du='du -h'
 alias hist='history | grep $1'
 alias mkdir='mkdir -p -v'
 if [[ $(uname -a) == *Darwin* ]]; then
