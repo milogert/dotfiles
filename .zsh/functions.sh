@@ -3,78 +3,78 @@
 # Functions.
 # Gets the battery charge.
 function battery_charge {
-  echo `$BAT_CHARGE` 2>/dev/null
+    echo `$BAT_CHARGE` 2>/dev/null
 }
 
 # Collapse the pwd to home. Deprected with ${PWD/#$HOME/~}
 function collapse_pwd {
-  echo $(pwd | sed -e "s,^$HOME,~,")
+    echo $(pwd | sed -e "s,^$HOME,~,")
 }
 
 # Decompress everything and anything.
 function extract {
-  if [ -f "$1" ]; then
-    case "$1" in
-      *.tar.bz2) tar xvjf "$1";;
-      *.tar.gz) tar xvjf "$1";;
-      *.bz2) bunzip2 "$1";;
-      *.rar) unrar x "$1";;
-      *.gz) gunzip "$1";;
-      *.tar) tar xvf "$1";;
-      *.tbz2) tar xvjf "$1";;
-      *.tgz) tar xvzf "$1";;
-      *.zip) unzip "$1";;
-      *.Z) uncompress "$1";;
-      *.7z) 7z x "$1";;
-      *)
-        echo "'$1' cannot be extracted."
+    if [ -f "$1" ]; then
+        case "$1" in
+            *.tar.bz2) tar xvjf "$1";;
+            *.tar.gz) tar xvjf "$1";;
+            *.bz2) bunzip2 "$1";;
+            *.rar) unrar x "$1";;
+            *.gz) gunzip "$1";;
+            *.tar) tar xvf "$1";;
+            *.tbz2) tar xvjf "$1";;
+            *.tgz) tar xvzf "$1";;
+            *.zip) unzip "$1";;
+            *.Z) uncompress "$1";;
+            *.7z) 7z x "$1";;
+            *)
+                echo "'$1' cannot be extracted."
+                return 1
+                ;;
+        esac
+    else
+        echo "'$1' is not a valid file."
         return 1
-        ;;
-    esac
-  else
-    echo "'$1' is not a valid file."
-    return 1
-  fi
-  return 0
+    fi
+    return 0
 }
 
 # Used to find return codes of urls in a list of them.
 function find_url_codes {
-  if [ $# -lt 2 ]; then
-    echo "Usage: find_url_codes urlfile outfile"
-  else
-    while read line; do
-      wget -q --spider $line
-      echo "${?} -> ${line}" >> $2
-    done < $1
-  fi
+    if [ $# -lt 2 ]; then
+        echo "Usage: find_url_codes urlfile outfile"
+    else
+        while read line; do
+            wget -q --spider $line
+            echo "${?} -> ${line}" >> $2
+        done < $1
+    fi
 }
 
 # Git prompt, if there is one.
 #function git_prompt {
-#  ref=$(git symbolic-ref HEAD | cut -d'/' -f3)
-#  echo ''
+#    ref=$(git symbolic-ref HEAD | cut -d'/' -f3)
+#    echo ''
 #}
 
 # Lazy tmux.
 function ltm {
-  if tmux has-session -t $USER; then
-    tmux attach -t $USER;
-  else
-    tmux new -s $USER;
-  fi
+    if tmux has-session -t $USER; then
+        tmux attach -t $USER;
+    else
+        tmux new -s $USER;
+    fi
 }
 
 # Make a directory and move into it.
 function mkcd {
-  mkdir $1
-  cd $1
+    mkdir $1
+    cd $1
 }
 
 # Determines prompt character.
 #function prompt_char {
-#  git branch >/dev/null 2>/dev/null && echo '±' && return
-#  echo 'o'
+#    git branch >/dev/null 2>/dev/null && echo '±' && return
+#    echo 'o'
 #}
 
 # Realoads zsh configuration.
