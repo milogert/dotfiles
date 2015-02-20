@@ -23,7 +23,7 @@ bindkey "^[3;5~" delete-char
 
 # Local variables to make color easier.
 for COLOR in RED GREEN YELLOW BLUE MAGENTA CYAN BLACK WHITE; do
-  eval $COLOR='%{$fg_no_bold[${(L)COLOR}]%}'  #wrap colours between %{ %} to avoid weird gaps in autocomplete
+  eval $COLOR='%{$fg_no_bold[${(L)COLOR}]%}'
   eval BOLD_$COLOR='%{$fg_bold[${(L)COLOR}]%}'
 done
 eval RESET='$reset_color'
