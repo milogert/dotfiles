@@ -25,6 +25,11 @@ if [ -d $HOME/go ]; then
   PATH=$PATH:$GOPATH/bin
 fi
 
+# If the android sdk tools are installed.
+if [ -d /opt/android-sdk/platform-tools ]; then
+  PATH=$PATH:/opt/android-sdk/platform-tools;
+fi
+
 # Things to export.
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 export EDITOR=/usr/bin/nano
