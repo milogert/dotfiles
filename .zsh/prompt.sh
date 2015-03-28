@@ -8,7 +8,7 @@ PROMPT='
 %{$YELLOW%}%?%{$RESET%} %# '
 
 # Right prompt.
-RPROMPT='${vcs_info_msg_0_}%{$RESET%}'
+RPROMPT='${vcs_info_msg_0_}%{$RESET%} $(virtenv_indicator)'
 
 # Prompt 2, to show why you are in a continued prompt. (if, for, while, etc.)
 PROMPT2='%{$YELLOW%}%_%{$RESET%}> '

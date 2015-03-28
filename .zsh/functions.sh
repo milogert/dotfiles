@@ -1,14 +1,8 @@
 #!/bin/zsh
 
-# Functions.
-# Gets the battery charge.
-function battery_charge {
-    echo `$BAT_CHARGE` 2>/dev/null
-}
-
 # Collapse the pwd to home. Deprected with ${PWD/#$HOME/~}
 function collapse_pwd {
-    echo $(pwd | sed -e "s,^$HOME,~,")
+  echo $(pwd | sed -e "s,^$HOME,~,")
 }
 
 # Decompress everything and anything.
@@ -127,3 +121,9 @@ function virtenv_indicator {
         echo "(${VIRTUAL_ENV##*/}) "
     fi
 }
+
+function veactivate {
+  export VIRTUAL_ENV_DISABLE_PROMPT='1'
+  source ./$1/bin/activate
+}
+
