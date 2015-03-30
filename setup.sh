@@ -12,3 +12,4 @@ done
 
 echo ".dotfiles setup is complete."
 
+ 
