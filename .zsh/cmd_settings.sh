@@ -37,7 +37,7 @@ fi
 
 # Things to export.
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-export EDITOR=/usr/bin/nano
+export EDITOR=/usr/bin/vim
 export GNUSTEP_USER_ROOT=~/GNUstep
 export GREP_COLOR='1;33'
 export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
