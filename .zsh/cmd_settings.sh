@@ -9,6 +9,11 @@ elif [[ $(uname -a) == *Darwin* ]]; then
     export LSCOLORS=ExFxCxDxCxegedabagaced
 fi
 
+# Setting for the java home.
+if [ -e /usr/libexec/java_home ]; then
+  export JAVA_HOME="`/usr/libexec/java_home -v '1.7'`"
+fi
+
 # Declares the display, if necessary.
 if [[ $(uname) == CYGWIN* ]]; then
     export DISPLAY=localhost:0.0

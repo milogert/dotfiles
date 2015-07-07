@@ -17,18 +17,18 @@ fi
 
 # Elevated commands (power, daemons, etc.)
 if [ $UID -ne 0 ] && [ -e /usr/bin/systemctl ]; then
-    alias start='sudo systemctl start $1'
-    alias stop='sudo systemctl stop $1'
-    alias restart='sudo systemctl restart $1'
-    alias reload='sudo systemctl reload $1'
-    alias status='systemctl status -l $1'
-    alias is-enabled='systemctl is-enabled $1'
-    alias enable='sudo systemctl enable $1'
-    alias disable='sudo systemctl disable $1'
-    alias shutdown='sudo systemctl poweroff'
-    alias reboot='sudo systemctl reboot'
-    alias suspend='sudo systemctl suspend'
-    alias hibernate='sudo systemctl hibernate'
+    alias sysstart='sudo systemctl start $1'
+    alias sysstop='sudo systemctl stop $1'
+    alias sysrestart='sudo systemctl restart $1'
+    alias sysreload='sudo systemctl reload $1'
+    alias sysstatus='systemctl status -l $1'
+    alias sysenabled='systemctl is-enabled $1'
+    alias sysenable='sudo systemctl enable $1'
+    alias sysdisable='sudo systemctl disable $1'
+    alias sysshutdown='sudo systemctl poweroff'
+    alias sysreboot='sudo systemctl reboot'
+    alias syssuspend='sudo systemctl suspend'
+    alias syshibernate='sudo systemctl hibernate'
 fi
 
 # Safety features
