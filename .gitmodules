@@ -1,0 +1,3 @@
+[submodule ".vim/themes/nofrils"]
+	path = .vim/themes/nofrils
+	url = https://github.com/robertmeta/nofrils
