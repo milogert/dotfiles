@@ -4,7 +4,9 @@
 "
 
 " Enable syntax highlighting.
-syntax enable
+"syntax enable
+colorscheme nofrils-dark
+let g:nofrils_strbackgrounds=1
 
 " Encoding.
 set encoding=utf-8
@@ -28,6 +30,9 @@ noremap <Up> <nop>
 noremap <Down> <nop>
 noremap <Left> <nop>
 noremap <Right> <nop>
+
+noremap j gj
+noremap k gk
 
 " Folding.
 set foldmethod=indent   " Fold based on indent.

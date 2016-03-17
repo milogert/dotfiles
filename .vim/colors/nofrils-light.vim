@@ -1,0 +1,1 @@
+nofrils/colors/nofrils-light.vim
