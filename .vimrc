@@ -4,15 +4,14 @@
 "
 
 " Enable syntax highlighting.
-"syntax enable
 colorscheme nofrils-dark
-let g:nofrils_strbackgrounds=1
 
 " Encoding.
 set encoding=utf-8
 
 " Set line numbers.
-set nu
+set number
+set relativenumber
 
 " Setup proper tabs.
 set expandtab
@@ -31,8 +30,14 @@ noremap <Down> <nop>
 noremap <Left> <nop>
 noremap <Right> <nop>
 
-noremap j gj
-noremap k gk
+inoremap <Up> <nop>
+inoremap <Down> <nop>
+inoremap <Left> <nop>
+inoremap <Right> <nop>
+
+" Remap j/k to gj/gk but only when we are not counting.
+noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
+noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
 " Folding.
 set foldmethod=indent   " Fold based on indent.
