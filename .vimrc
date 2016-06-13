@@ -15,8 +15,8 @@ set relativenumber
 
 " Setup proper tabs.
 set expandtab
-set tabstop=2 shiftwidth=2
-set softtabstop=2
+set tabstop=4 shiftwidth=4
+set softtabstop=4
 
 " Searching.
 set hlsearch
