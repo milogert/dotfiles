@@ -3,6 +3,11 @@
 " Written by: Milo Gertjejansen
 "
 
+" Enable modelines.
+set nocompatible
+filetype plugin on
+set modeline
+
 " Enable syntax highlighting.
 colorscheme nofrils-dark
 
@@ -45,3 +50,13 @@ set foldnestmax=10      " Deepest fold is 10 levels.
 set nofoldenable        " Don't fold by default.
 set foldlevel=1         " This is just what I use.
 
+" Append modeline after last line in buffer.
+" Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
+" files.
+function! AppendModeline()
+  let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
+        \ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
+  let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
+  call append(line("$"), l:modeline)
+endfunction
+nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
