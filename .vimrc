@@ -3,6 +3,9 @@
 " Written by: Milo Gertjejansen
 "
 
+" vim-plug
+call plug#begin('~/.vim/plugged')
+
 " Enable modelines.
 set nocompatible
 filetype plugin on
