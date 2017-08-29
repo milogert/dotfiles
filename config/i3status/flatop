@@ -36,9 +36,9 @@ ethernet _first_ {
 }
 
 battery 1 {
-	status_chr = "⚡"
-	status_bat = "🔋"
-	status_full = "✓"
+	status_chr = "CHG"
+	status_bat = "BAT"
+	status_full = "FUL"
         format = "%status %percentage %remaining"
 }
 
