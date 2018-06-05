@@ -5,6 +5,16 @@
 
 " vim-plug
 call plug#begin('~/.vim/plugged')
+Plug 'elmcast/elm-vim'
+call plug#end()
+
+" Splitting.
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+set splitbelow
+set splitright
 
 " Enable modelines.
 set nocompatible
@@ -12,7 +22,7 @@ filetype plugin on
 set modeline
 
 " Enable syntax highlighting.
-colorscheme nofrils-dark
+"colorscheme nofrils-dark
 
 " Encoding.
 set encoding=utf-8
