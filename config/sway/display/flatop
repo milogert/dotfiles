@@ -1,0 +1,9 @@
+# Monitor variables.
+set $monleft eDP-1
+set $moncenter eDP-1
+set $monright eDP-1
+
+# dpi
+output $monleft position 0,0
+output $moncenter scale 2
+
