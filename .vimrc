@@ -6,7 +6,11 @@
 " vim-plug
 call plug#begin('~/.vim/plugged')
 Plug 'elmcast/elm-vim'
+Plug 'w0rp/ale'
 call plug#end()
+
+" ALE
+let g:ale_completion_enabled = 1
 
 " Splitting.
 nnoremap <C-J> <C-W><C-J>
