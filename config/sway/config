@@ -31,3 +31,8 @@ bar {
     tray_output primary
 }
 
+# Touchpad tapping.
+input "2:14:ETPS/2_Elantech_Touchpad" {
+    tap enabled
+    natural_scroll disabled
+}
