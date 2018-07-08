@@ -6,13 +6,17 @@
 " vim-plug
 call plug#begin('~/.vim/plugged')
 
+Plug 'elmcast/elm-vim'
+
+call plug#end()
+
 " Enable modelines.
 set nocompatible
 filetype plugin on
 set modeline
 
 " Enable syntax highlighting.
-colorscheme nofrils-dark
+"colorscheme nofrils-dark
 
 " Encoding.
 set encoding=utf-8
