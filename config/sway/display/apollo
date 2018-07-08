@@ -1,14 +1,13 @@
 # Monitor variables.
 set $monleft HDMI-A-1
-set $moncenter DVI-D-1
-set $monright DP-1
+set $moncenter DP-1
+set $monright DVI-D-1
 
 # dpi
 output $monleft position 0,0
 
 output $moncenter position 1920,0
-#output $moncenter resolution 3840,2160
-#output $moncenter scale 2
+output $moncenter scale 2
 
 output $monright position 3840,0
 

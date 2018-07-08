@@ -12,9 +12,10 @@ workspace $ws4 output $monright
 
 # Put certain applications on specific workspaces.
 assign [class="Chromium" instance="chromium"] $ws1
+assign [class="qutebrowser"] $ws1
 #assign [class="Vlc"] $ws4
 assign [class="Chromium" instance="crx_eppojlglocelodeimnohnlnionkobfln"] $ws4 # Netflix.
-assign [class="media-browser"] $ws4
+assign [title="Media Browser"] $ws4
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -42,6 +43,7 @@ bindsym $mod+Shift+0 move container to workspace number 10
 
 # Start applications up on login.
 exec chromium
+exec qutebrowser
 #exec StartupWMClass=crx_eppojlglocelodeimnohnlnionkobfln /usr/bin/chromium --profile-directory=Default --app-id=eppojlglocelodeimnohnlnionkobfln
-exec termite -e 'ranger --cmd="cd /media"' --class='media-browser'
+exec termite -e 'ranger --cmd="cd /media"' --title='Media Browser'
 

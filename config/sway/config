@@ -19,6 +19,7 @@ include workspaces
 include volume
 
 # Modes definition.
+include modes/exit
 include modes/game
 include modes/resize
 include modes/launcher
@@ -28,6 +29,5 @@ include modes/launcher
 bar {
     status_command i3status
     strip_workspace_numbers no
-    tray_output primary
 }
 
