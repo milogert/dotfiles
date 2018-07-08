@@ -5,6 +5,20 @@
 
 " vim-plug
 call plug#begin('~/.vim/plugged')
+Plug 'elmcast/elm-vim'
+Plug 'w0rp/ale'
+call plug#end()
+
+" ALE
+let g:ale_completion_enabled = 1
+
+" Splitting.
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+set splitbelow
+set splitright
 
 Plug 'elmcast/elm-vim'
 
