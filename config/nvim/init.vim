@@ -3,11 +3,17 @@
 " Written by: Milo Gertjejansen
 "
 
+" Set the leader key to space.
+let mapleader = " "
+
+set background=dark
+
 " vim-plug
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 Plug 'elmcast/elm-vim'
 Plug 'w0rp/ale'
 call plug#end()
+
 
 " ALE
 let g:ale_completion_enabled = 1
@@ -19,10 +25,6 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 set splitbelow
 set splitright
-
-Plug 'elmcast/elm-vim'
-
-call plug#end()
 
 " Enable modelines.
 set nocompatible
@@ -85,3 +87,15 @@ nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
 " Special language stuff.
 autocmd! BufNewFile,BufReadPre,FileReadPre Makefile source ~/.vim/langs/makefile.vim
 
+" Backspace.
+set backspace=2
+
+" Undo file to maintain undo's between runs.
+set undodir=~/.config/nvim/undodir
+set undofile
+
+" y/p uses system clipboard now.
+set clipboard+=unnamed
+
+" True colors.
+set termguicolors

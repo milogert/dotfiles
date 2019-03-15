@@ -1,1 +1,0 @@
-nofrils/colors/nofrils-sepia.vim
