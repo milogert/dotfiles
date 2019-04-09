@@ -1,8 +1,8 @@
 # Workspace variables.
-set $ws1 "1:browser"
-set $ws2 "2:misc"
-set $ws3 "3:terminals"
-set $ws4 "4:media"
+set $ws1 1:browser
+set $ws2 2:misc
+set $ws3 3:terminals
+set $ws4 4:media
 
 # Put workspaces on specific windows.
 workspace $ws1 output $monleft
@@ -42,7 +42,7 @@ bindsym $mod+Shift+9 move container to workspace number 9
 bindsym $mod+Shift+0 move container to workspace number 10
 
 # Start applications up on login.
-exec chromium
+#exec chromium
 exec qutebrowser
 #exec StartupWMClass=crx_eppojlglocelodeimnohnlnionkobfln /usr/bin/chromium --profile-directory=Default --app-id=eppojlglocelodeimnohnlnionkobfln
 exec termite -e 'ranger --cmd="cd /media"' --title='Media Browser'

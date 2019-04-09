@@ -1,10 +1,10 @@
-# Game modes.
-set $mode_exit "Exit: (y)es or (n)o?"
-mode "$mode_exit" {
+# Quit mode.
+set $mode_quit "quit? (y)es or (n)o"
+mode "$mode_quit" {
     bindsym n mode "default"
     bindsym Escape mode "default"
     bindsym $mod+Shift+e mode "default"
     bindsym y exit
 }
-bindsym $mod+Shift+e mode $mode_exit
+bindsym $mod+Shift+e mode $mode_quit
 
