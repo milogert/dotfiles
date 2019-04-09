@@ -11,12 +11,12 @@ general {
         interval = 5
 }
 
-order += "ipv6"
+#order += "ipv6"
 order += "disk /"
 order += "disk /home"
-order += "run_watch DHCP"
-order += "run_watch VPNC"
-order += "path_exists VPN"
+#order += "run_watch DHCP"
+#order += "run_watch VPNC"
+#order += "path_exists VPN"
 order += "wireless _first_"
 order += "ethernet _first_"
 order += "battery 1"
@@ -25,7 +25,7 @@ order += "volume default"
 order += "tztime local"
 
 wireless _first_ {
-        format_up = "W: (%quality at %essid) %ip"
+        format_up = "W: (%essid, %frequency) %ip"
         format_down = "W: down"
 }
 
