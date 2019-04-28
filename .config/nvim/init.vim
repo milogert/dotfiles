@@ -99,3 +99,7 @@ set clipboard+=unnamed
 
 " True colors.
 set termguicolors
+
+" ALE nav to next errors
+nmap <silent> <leader>aj :ALENext<cr>
+nmap <silent> <leader>ak :ALEPrevious<cr>
