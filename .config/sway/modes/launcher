@@ -1,10 +1,10 @@
 # Launcher mode.
-set $mode_launcher launcher (h for help)
-mode "$mode_launcher" {
+set $mode_launcher "launcher (h for help)"
+mode $mode_launcher {
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
     bindsym $mod+g mode "default"
 }
-bindsym $mod+g mode "$mode_launcher"
+bindsym $mod+g mode $mode_launcher
 

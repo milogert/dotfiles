@@ -19,7 +19,7 @@ include workspaces
 include volume
 
 # Modes definition.
-#include modes/quit
+include modes/power
 include modes/game
 include modes/resize
 include modes/launcher
