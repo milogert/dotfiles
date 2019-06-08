@@ -54,7 +54,7 @@
 
     },
     "battery": {
-        "format": "🔋{capacity}%",
+        "format": "🔋{capacity}% ⏲️{time}",
         "format-icons": ["😨", "😬", "🤔", "👌", "💯"],
         "states": {
             "warning": 25,

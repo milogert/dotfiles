@@ -12,6 +12,7 @@ set background=dark
 call plug#begin('~/.config/nvim/plugged')
 Plug 'elmcast/elm-vim'
 Plug 'w0rp/ale'
+Plug 'python/black'
 call plug#end()
 
 
@@ -86,6 +87,7 @@ nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
 
 " Special language stuff.
 autocmd! BufNewFile,BufReadPre,FileReadPre Makefile source ~/.vim/langs/makefile.vim
+autocmd BufWritePre *.py execute ':Black'
 
 " Backspace.
 set backspace=2
@@ -103,3 +105,5 @@ set termguicolors
 " ALE nav to next errors
 nmap <silent> <leader>aj :ALENext<cr>
 nmap <silent> <leader>ak :ALEPrevious<cr>
+
+
