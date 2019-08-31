@@ -1,17 +1,19 @@
 {
     "layer": "top",
-    "position": "bottom",
-    "height": 20,
+    "position": "top",
+    "height": 21,
+    "name": "top",
 
-    "modules-left": ["sway/workspaces", "sway/mode"],
-    "modules-right": [
-        "custom/nzbget",
-        "custom/disk-root",
-        "custom/disk-home",
-        "network",
-        "battery",
-        "pulseaudio",
+    "modules-left": [
+        "sway/window"
+    ],
+    "modules-center": [
         "clock"
+    ],
+    "modules-right": [
+        "network",
+        "pulseaudio",
+        "battery"
     ],
 
     "sway/window": {
@@ -19,7 +21,7 @@
     },
 
     "sway/mode": {
-        "format": "m: {}"
+        "format": "mode: {}"
     },
 
     "custom/nzbget": {
@@ -39,7 +41,8 @@
         "exec": "df -h --output=target,avail | grep '/home' | awk '{print $2}'"
     },
     "network": {
-        "format": "{ifname}: {ipaddr}",
+        "format-wifi": "{ifname}: {ipaddr}",
+        "format-ethernet": "{ifname}: {ipaddr}",
         "format-disconnected": "down",
 
         "tooltip": true,

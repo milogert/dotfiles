@@ -1,8 +1,0 @@
-.DS_store
-.vim/.netrwhist
-.vim/plugged
-.vim/view
-.config/nvim/undodir
-.config/nvim/.netrwhist
-.config/nvim/plugged
-.config/nvim/view
