@@ -13,6 +13,7 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'elmcast/elm-vim'
 Plug 'w0rp/ale'
 Plug 'python/black'
+Plug 'rust-lang/rust.vim'
 call plug#end()
 
 
