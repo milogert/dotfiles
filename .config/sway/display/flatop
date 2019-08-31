@@ -11,3 +11,6 @@ output $moncenter scale 2
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 bindsym XF86MonBrightnessUp exec brightnessctl set +5%
 
+# Wallpaper
+exec curl -A 'ua' 'https://www.reddit.com/r/EarthPorn/new.json?limit=100' | jq -r '.data.children[].data.url' | grep -P 'jpg$' | sed '1q;d' | xargs -n 1 curl -o ~/.config/sway/wallpaper.jpg -O
+output $moncenter bg ~/.config/sway/wallpaper.jpg center

@@ -1,5 +1,5 @@
 # Game modes.
-set $mode_passthrough "games"
+set $mode_passthrough "passthrough"
 mode $mode_passthrough {
     bindsym $mod+Escape mode "default"
 }
