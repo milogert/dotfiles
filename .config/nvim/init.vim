@@ -14,6 +14,8 @@ Plug 'elmcast/elm-vim'
 Plug 'w0rp/ale'
 Plug 'python/black'
 Plug 'rust-lang/rust.vim'
+Plug 'roxma/python-support.nvim'
+Plug 'vim-python/python-syntax'
 call plug#end()
 
 
@@ -107,4 +109,8 @@ set termguicolors
 nmap <silent> <leader>aj :ALENext<cr>
 nmap <silent> <leader>ak :ALEPrevious<cr>
 
+" Black location
+let g:black_virtualenv = '~/.config/nvim/black'
 
+" Python syntax
+let g:python_highlight_all = 1
