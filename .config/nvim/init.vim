@@ -107,4 +107,5 @@ set termguicolors
 nmap <silent> <leader>aj :ALENext<cr>
 nmap <silent> <leader>ak :ALEPrevious<cr>
 
-
+" Black
+let g:black_virtualenv = "~/.config/nvim/blackvenv"
