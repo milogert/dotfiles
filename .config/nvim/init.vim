@@ -14,6 +14,12 @@ Plug 'elmcast/elm-vim'
 Plug 'w0rp/ale'
 Plug 'python/black'
 Plug 'rust-lang/rust.vim'
+"Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 call plug#end()
 
 
@@ -89,6 +95,7 @@ nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
 " Special language stuff.
 autocmd! BufNewFile,BufReadPre,FileReadPre Makefile source ~/.vim/langs/makefile.vim
 autocmd BufWritePre *.py execute ':Black'
+autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
 
 " Backspace.
 set backspace=2
