@@ -1,4 +1,4 @@
-.config/nvim/black/
+.config/nvim/.netrwhist
+.config/nvim/blackvenv/
 .config/nvim/plugged/
 .config/nvim/undodir/
-.config/nvim/.netrwhist

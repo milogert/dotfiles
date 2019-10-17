@@ -19,6 +19,7 @@ include display/font
 include display/windows
 include workspaces
 include volume
+include inputs/current
 
 # Modes definition.
 include modes/power
@@ -35,10 +36,4 @@ bar {
 bar {
     id bottom
     swaybar_command waybar_interceptor
-}
-
-# Touchpad tapping.
-input "2:14:ETPS/2_Elantech_Touchpad" {
-    tap enabled
-    natural_scroll disabled
 }

@@ -1,8 +1,9 @@
 # Power mode.
-set $mode_power "(q)uit sway, (r)eboot, (h)ibernate, (s)hutdown, or escape"
+set $mode_power "(l)ock, (q)uit sway, (r)eboot, (h)ibernate, (s)hutdown, or escape"
 mode $mode_power {
     bindsym Escape mode "default"
     bindsym $mod+Shift+e mode "default"
+    bindsym l exec swaylock && swaymsg mode default
     bindsym q exit
     bindsym r exec systemctl reboot && swaymsg mode default
     bindsym s exec systemctl shutdown && swaymsg mode default
