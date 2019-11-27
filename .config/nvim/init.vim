@@ -10,17 +10,29 @@ set background=dark
 
 " vim-plug
 call plug#begin('~/.config/nvim/plugged')
-Plug 'elmcast/elm-vim'
-Plug 'w0rp/ale'
-Plug 'python/black'
-Plug 'rust-lang/rust.vim'
-Plug 'roxma/python-support.nvim'
-Plug 'vim-python/python-syntax'
-Plug 'mxw/vim-jsx'
-Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+    " Tool extensions
+    Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+    Plug 'Xuyuanp/nerdtree-git-plugin'
+    Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'airblade/vim-gitgutter'
+    Plug 'mileszs/ack.vim'
+    Plug 'tpope/vim-fugitive'
+    Plug 'w0rp/ale'
+
+    " Helpers
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+
+    " Languages
+    Plug 'elmcast/elm-vim'
+    Plug 'python/black'
+    Plug 'rust-lang/rust.vim'
+    Plug 'roxma/python-support.nvim'
+    Plug 'vim-python/python-syntax'
+    Plug 'mxw/vim-jsx'
+    Plug 'pangloss/vim-javascript'
+    Plug 'leafgarland/typescript-vim'
+    Plug 'digitaltoad/vim-pug'
 call plug#end()
 
 
@@ -82,6 +94,9 @@ set foldnestmax=10      " Deepest fold is 10 levels.
 set nofoldenable        " Don't fold by default.
 set foldlevel=1         " This is just what I use.
 
+" Helpful remaps.
+inoremap jj <Esc>
+
 " Append modeline after last line in buffer.
 " Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
 " files.
@@ -93,10 +108,18 @@ function! AppendModeline()
 endfunction
 nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
 
+function! AddFlogger()
+  let l:flogger = printf("const fl = tag => logData => ( console.log(tag, logData), logData )")
+  call append(0, l:flogger)
+endfunction
+nnoremap <silent> <Leader>fl :call AddFlogger()<CR>
+
 " Special language stuff.
 autocmd! BufNewFile,BufReadPre,FileReadPre Makefile source ~/.vim/langs/makefile.vim
 autocmd BufWritePre *.py execute ':Black'
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
+autocmd BufNewFile,BufRead *.jsx,*.scss setlocal shiftwidth=2 tabstop=2
+
 
 " Backspace.
 set backspace=2
@@ -112,11 +135,66 @@ set clipboard+=unnamed
 set termguicolors
 
 " ALE nav to next errors
-nmap <silent> <leader>aj :ALENext<cr>
-nmap <silent> <leader>ak :ALEPrevious<cr>
+nmap <silent> <leader>ej :ALENext<cr>
+nmap <silent> <leader>ek :ALEPrevious<cr>
 
 " Black location
 let g:black_virtualenv = "~/.config/nvim/blackvenv"
 
 " Python syntax
 let g:python_highlight_all = 1
+
+" CtrlP config.
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
+" Silver Searcher config
+if executable('ag')
+    let g:ackprg = 'ag --vimgrep --smart-case'
+endif
+cnoreabbrev ag Ack!
+cnoreabbrev aG Ack!
+cnoreabbrev Ag Ack!
+cnoreabbrev AG Ack!
+nnoremap <Leader>a :Ack!<Space>
+
+" NerdTree colors
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+    exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+    exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+
+call NERDTreeHighlightFile('jade', 'red', 'none', 'red', '#151515')
+call NERDTreeHighlightFile('pug', 'red', 'none', 'red', '#151515')
+call NERDTreeHighlightFile('html', 'red', 'none', 'red', '#151515')
+call NERDTreeHighlightFile('md', 'magenta', 'none', 'gray', '#151515')
+call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('less', 'brown', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('css', 'brown', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('js', 'darkgreen', 'none', 'darkgreen', '#151515')
+call NERDTreeHighlightFile('jsx', 'darkgreen', 'none', 'darkgreen', '#151515')
+call NERDTreeHighlightFile('rs', 'darkgreen', 'none', 'darkgreen', '#151515')
+call NERDTreeHighlightFile('purs', 'darkgreen', 'none', 'darkgreen', '#151515')
+call NERDTreeHighlightFile('elm', 'darkgreen', 'none', 'darkgreen', '#151515')
+call NERDTreeHighlightFile('Dockerfile', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('toml', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('acme', 'darkgreen', 'none', 'darkgreen', '#151515')
+call NERDTreeHighlightFile('cpp', 'darkgreen', 'none', 'darkgreen', '#151515')
+call NERDTreeHighlightFile('hpp', 'brown', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('Makefile', 'yellow', 'none', 'yellow', '#151515')
+
+" NERDTree Key Binding (Plugin)
+map <C-n> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
+
+" Airline theme
+let g:airline_theme='dark'
+let g:airline#extensions#default#section_truncate_width = {
+  \ 'b': 128,
+  \ 'x': 60,
+  \ 'y': 88,
+  \ 'z': 45,
+  \ 'warning': 80,
+  \ 'error': 80,
+  \ }
+
