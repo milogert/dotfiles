@@ -10,6 +10,8 @@ set background=dark
 
 " vim-plug
 call plug#begin('~/.config/nvim/plugged')
+    Plug 'tpope/vim-sensible'
+
     " Tool extensions
     Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
     Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -18,10 +20,14 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'mileszs/ack.vim'
     Plug 'tpope/vim-fugitive'
     Plug 'w0rp/ale'
+    Plug 'christoomey/vim-tmux-navigator'
+    Plug 'benmills/vimux'
+    Plug 'kana/vim-arpeggio'
 
     " Helpers
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
+    Plug 'srcery-colors/srcery-vim'
 
     " Languages
     Plug 'elmcast/elm-vim'
@@ -40,10 +46,10 @@ call plug#end()
 let g:ale_completion_enabled = 1
 
 " Splitting.
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+"nnoremap <C-J> <C-W><C-J>
+"nnoremap <C-K> <C-W><C-K>
+"nnoremap <C-L> <C-W><C-L>
+"nnoremap <C-H> <C-W><C-H>
 set splitbelow
 set splitright
 
@@ -54,6 +60,7 @@ set modeline
 
 " Enable syntax highlighting.
 "colorscheme nofrils-dark
+colorscheme srcery
 
 " Encoding.
 set encoding=utf-8
@@ -96,6 +103,7 @@ set foldlevel=1         " This is just what I use.
 
 " Helpful remaps.
 inoremap jj <Esc>
+"Arpeggio inoremap jk <Esc>
 
 " Append modeline after last line in buffer.
 " Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
@@ -149,8 +157,10 @@ set clipboard+=unnamed
 set termguicolors
 
 " ALE nav to next errors
-nmap <silent> <leader>ej :ALENext<cr>
-nmap <silent> <leader>ek :ALEPrevious<cr>
+nmap <silent> <leader>ej :ALENext<CR>
+nmap <silent> <leader>ek :ALEPrevious<CR>
+"Arpeggio nmap <silent> ej :ALENext<CR>
+"Arpeggio nmap <silent> ek :ALEPrevious<CR>
 
 " Black location
 let g:black_virtualenv = "~/.config/nvim/blackvenv"
@@ -170,6 +180,10 @@ cnoreabbrev aG Ack!
 cnoreabbrev Ag Ack!
 cnoreabbrev AG Ack!
 nnoremap <Leader>a :Ack!<Space>
+
+" Fugitive aliases.
+cnoreabbrev G 15G
+cnoreabbrev Gstatus 15Gstatus
 
 " NerdTree colors
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
@@ -198,11 +212,11 @@ call NERDTreeHighlightFile('hpp', 'brown', 'none', 'cyan', '#151515')
 call NERDTreeHighlightFile('Makefile', 'yellow', 'none', 'yellow', '#151515')
 
 " NERDTree Key Binding (Plugin)
-map <C-n> :NERDTreeToggle<CR>
+noremap <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 
 " Airline theme
-let g:airline_theme='dark'
+let g:airline_theme='srcery'
 let g:airline#extensions#default#section_truncate_width = {
   \ 'b': 128,
   \ 'x': 60,
@@ -212,3 +226,15 @@ let g:airline#extensions#default#section_truncate_width = {
   \ 'error': 80,
   \ }
 
+" Vimux config.
+let g:VimuxHeight = "25"
+let g:VimuxOrientation = "h"
+
+" Ask for a command.
+noremap <Leader>vp :VimuxPromptCommand<CR>
+
+" Run the last command.
+noremap <Leader>vl :VimuxRunLastCommand<CR>
+
+" Zoom the runner.
+noremap <Leader>vz :VimuxZoomRunner<CR>
