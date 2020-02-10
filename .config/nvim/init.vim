@@ -23,33 +23,61 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'benmills/vimux'
     Plug 'kana/vim-arpeggio'
+    Plug 'tpope/vim-obsession'
+    Plug 'tpope/vim-unimpaired'
+    Plug 'adelarsq/vim-matchit'
 
     " Helpers
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
     Plug 'srcery-colors/srcery-vim'
+    Plug 'https://github.com/adelarsq/vim-matchit'
 
     " Languages
-    Plug 'elmcast/elm-vim'
-    Plug 'python/black'
-    Plug 'rust-lang/rust.vim'
-    Plug 'roxma/python-support.nvim'
-    Plug 'vim-python/python-syntax'
-    Plug 'mxw/vim-jsx'
-    Plug 'pangloss/vim-javascript'
-    Plug 'leafgarland/typescript-vim'
-    Plug 'digitaltoad/vim-pug'
+        " Elm
+        Plug 'elmcast/elm-vim'
+        Plug 'andys8/vim-elm-syntax'
+
+        " Python
+        Plug 'python/black'
+        Plug 'roxma/python-support.nvim'
+        Plug 'vim-python/python-syntax'
+
+        " Rust
+        Plug 'rust-lang/rust.vim'
+
+        " JS
+        Plug 'mxw/vim-jsx'
+        Plug 'pangloss/vim-javascript'
+        Plug 'leafgarland/typescript-vim'
+        Plug 'digitaltoad/vim-pug'
+
+        " Elixir
+        Plug 'elixir-editors/vim-elixir'
 call plug#end()
 
 
 " ALE
 let g:ale_completion_enabled = 1
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_insert_leave = 1
+let g:ale_lint_on_save = 1
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint'],
+\   'elm': ['elm_ls'],
+\}
+nnoremap <silent> <leader>lj :ALENext<CR>
+nnoremap <silent> <leader>lk :ALEPrevious<CR>
+nnoremap <silent> <leader>lgd :ALEGoToDefinition<CR>
+nnoremap <silent> <leader>lgt :ALEGoToTypeDefinition<CR>
+nnoremap <silent> <leader>lh :ALEHover<CR>
+nnoremap <silent> <leader>lf :ALEFindReferences<CR>
+nnoremap <leader>lss :ALESymbolSearch<space>
+"Arpeggio nmap <silent> ej :ALENext<CR>
+"Arpeggio nmap <silent> ek :ALEPrevious<CR>
 
 " Splitting.
-"nnoremap <C-J> <C-W><C-J>
-"nnoremap <C-K> <C-W><C-K>
-"nnoremap <C-L> <C-W><C-L>
-"nnoremap <C-H> <C-W><C-H>
 set splitbelow
 set splitright
 
@@ -72,7 +100,7 @@ set relativenumber
 " Setup proper tabs.
 set expandtab
 set tabstop=4 shiftwidth=4
-set softtabstop=4
+set softtabstop=-1
 
 " Searching.
 set hlsearch
@@ -139,9 +167,11 @@ vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 " Special language stuff.
 autocmd! BufNewFile,BufReadPre,FileReadPre Makefile source ~/.vim/langs/makefile.vim
 autocmd BufWritePre *.py execute ':Black'
+
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
 autocmd BufNewFile,BufRead *.jsx,*.scss setlocal shiftwidth=2 tabstop=2
 
+autocmd BufNewFile,BufRead *.ex,*.exs setlocal shiftwidth=2 tabstop=2
 
 " Backspace.
 set backspace=2
@@ -156,12 +186,6 @@ set clipboard+=unnamed
 " True colors.
 set termguicolors
 
-" ALE nav to next errors
-nmap <silent> <leader>ej :ALENext<CR>
-nmap <silent> <leader>ek :ALEPrevious<CR>
-"Arpeggio nmap <silent> ej :ALENext<CR>
-"Arpeggio nmap <silent> ek :ALEPrevious<CR>
-
 " Black location
 let g:black_virtualenv = "~/.config/nvim/blackvenv"
 
@@ -173,7 +197,7 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 
 " Silver Searcher config
 if executable('ag')
-    let g:ackprg = 'ag --vimgrep --smart-case'
+    let g:ackprg = 'ag --hidden --vimgrep --smart-case'
 endif
 cnoreabbrev ag Ack!
 cnoreabbrev aG Ack!
@@ -182,8 +206,8 @@ cnoreabbrev AG Ack!
 nnoremap <Leader>a :Ack!<Space>
 
 " Fugitive aliases.
-cnoreabbrev G 15G
-cnoreabbrev Gstatus 15Gstatus
+cnoreabbrev G vert<space>G
+cnoreabbrev Gstatus vert<space>Gstatus
 
 " NerdTree colors
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
