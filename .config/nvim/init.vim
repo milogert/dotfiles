@@ -8,12 +8,17 @@ let mapleader = " "
 
 set background=dark
 
+" Reload the config.
+nnoremap <leader>ce :tabnew $MYVIMRC<CR>
+nnoremap <leader>cs :so $MYVIMRC<CR>
+
 " vim-plug
 call plug#begin('~/.config/nvim/plugged')
     Plug 'tpope/vim-sensible'
 
     " Tool extensions
     Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+        autocmd! User nerdtree echom 'NERDTree loaded!'
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'airblade/vim-gitgutter'
@@ -22,7 +27,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'w0rp/ale'
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'benmills/vimux'
-    Plug 'kana/vim-arpeggio'
+    Plug 'kana/vim-arpeggio', { 'on': 'Arpeggio' }
     Plug 'tpope/vim-obsession'
     Plug 'tpope/vim-unimpaired'
     Plug 'adelarsq/vim-matchit'
@@ -35,27 +40,26 @@ call plug#begin('~/.config/nvim/plugged')
 
     " Languages
         " Elm
-        Plug 'elmcast/elm-vim'
-        Plug 'andys8/vim-elm-syntax'
+        Plug 'elmcast/elm-vim', { 'for': 'elm' }
+        Plug 'andys8/vim-elm-syntax', { 'for': 'elm' }
 
         " Python
-        Plug 'python/black'
-        Plug 'roxma/python-support.nvim'
-        Plug 'vim-python/python-syntax'
+        Plug 'python/black', { 'for': 'python' }
+        Plug 'roxma/python-support.nvim', { 'for': 'python' }
+        Plug 'vim-python/python-syntax', { 'for': 'python' }
 
         " Rust
-        Plug 'rust-lang/rust.vim'
+        Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
         " JS
-        Plug 'mxw/vim-jsx'
-        Plug 'pangloss/vim-javascript'
-        Plug 'leafgarland/typescript-vim'
-        Plug 'digitaltoad/vim-pug'
+        Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'jsx' ] }
+        Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'jsx' ] }
+        Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+        Plug 'digitaltoad/vim-pug', { 'for': [ 'javascript', 'jsx' ] }
 
         " Elixir
         Plug 'elixir-editors/vim-elixir'
 call plug#end()
-
 
 " ALE
 let g:ale_completion_enabled = 1
@@ -67,15 +71,13 @@ let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \   'elm': ['elm_ls'],
 \}
-nnoremap <silent> <leader>lj :ALENext<CR>
-nnoremap <silent> <leader>lk :ALEPrevious<CR>
-nnoremap <silent> <leader>lgd :ALEGoToDefinition<CR>
-nnoremap <silent> <leader>lgt :ALEGoToTypeDefinition<CR>
-nnoremap <silent> <leader>lh :ALEHover<CR>
-nnoremap <silent> <leader>lf :ALEFindReferences<CR>
-nnoremap <leader>lss :ALESymbolSearch<space>
-"Arpeggio nmap <silent> ej :ALENext<CR>
-"Arpeggio nmap <silent> ek :ALEPrevious<CR>
+nnoremap <silent> <leader>aj :ALENext<CR>
+nnoremap <silent> <leader>ak :ALEPrevious<CR>
+nnoremap <silent> <leader>agd :ALEGoToDefinition<CR>
+nnoremap <silent> <leader>agt :ALEGoToTypeDefinition<CR>
+nnoremap <silent> <leader>ah :ALEHover<CR>
+nnoremap <silent> <leader>af :ALEFindReferences<CR>
+nnoremap <leader>ass :ALESymbolSearch<space>
 
 " Splitting.
 set splitbelow
@@ -131,7 +133,7 @@ set foldlevel=1         " This is just what I use.
 
 " Helpful remaps.
 inoremap jj <Esc>
-"Arpeggio inoremap jk <Esc>
+Arpeggio inoremap jk <Esc>
 
 " Append modeline after last line in buffer.
 " Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
@@ -193,7 +195,12 @@ let g:black_virtualenv = "~/.config/nvim/blackvenv"
 let g:python_highlight_all = 1
 
 " CtrlP config.
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+let g:ctrlp_user_command = [
+    \ '.git',
+    \ 'cd %s && git ls-files -co --exclude-standard',
+    \ 'find . -type f -not -path "./.git/*" -not -path "./node_modules/*"'
+    \ ]
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.snap     " MacOSX/Linux
 
 " Silver Searcher config
 if executable('ag')
@@ -203,7 +210,7 @@ cnoreabbrev ag Ack!
 cnoreabbrev aG Ack!
 cnoreabbrev Ag Ack!
 cnoreabbrev AG Ack!
-nnoremap <Leader>a :Ack!<Space>
+nnoremap <Leader>/ :Ack!<Space>
 
 " Fugitive aliases.
 cnoreabbrev G vert<space>G
@@ -253,12 +260,8 @@ let g:airline#extensions#default#section_truncate_width = {
 " Vimux config.
 let g:VimuxHeight = "25"
 let g:VimuxOrientation = "h"
-
-" Ask for a command.
 noremap <Leader>vp :VimuxPromptCommand<CR>
-
-" Run the last command.
+Arpeggio nmap <silent> vp :VimuxPromptCommand<CR>
 noremap <Leader>vl :VimuxRunLastCommand<CR>
-
-" Zoom the runner.
+Arpeggio nmap <silent> vl :VimuxRunLastCommand<CR>
 noremap <Leader>vz :VimuxZoomRunner<CR>

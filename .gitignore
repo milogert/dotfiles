@@ -1,6 +1,9 @@
 .config/nvim/.netrwhist
+.config/nvim/autoload/plug.vim.old
 .config/nvim/blackvenv/
 .config/nvim/plugged/
+.config/nvim/spell/
 .config/nvim/undodir/
 
 .tmux/plugins
+.tmux/resurrect
