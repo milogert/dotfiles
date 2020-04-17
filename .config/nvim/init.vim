@@ -6,8 +6,6 @@
 " Set the leader key to space.
 let mapleader = " "
 
-set background=dark
-
 " Reload the config.
 nnoremap <leader>ce :tabnew $MYVIMRC<CR>
 nnoremap <leader>cs :so $MYVIMRC<CR>
@@ -20,9 +18,11 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
         autocmd! User nerdtree echom 'NERDTree loaded!'
     Plug 'Xuyuanp/nerdtree-git-plugin'
-    Plug 'ctrlpvim/ctrlp.vim'
+    "Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
     Plug 'airblade/vim-gitgutter'
-    Plug 'mileszs/ack.vim'
+    "Plug 'mileszs/ack.vim'
     Plug 'tpope/vim-fugitive'
     Plug 'w0rp/ale'
     Plug 'christoomey/vim-tmux-navigator'
@@ -37,6 +37,9 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'vim-airline/vim-airline-themes'
     Plug 'srcery-colors/srcery-vim'
     Plug 'https://github.com/adelarsq/vim-matchit'
+    "Plug 'camspiers/animate.vim'
+    "Plug 'camspiers/lens.vim'
+    Plug 'pechorin/any-jump.vim'
 
     " Languages
         " Elm
@@ -44,7 +47,7 @@ call plug#begin('~/.config/nvim/plugged')
         Plug 'andys8/vim-elm-syntax', { 'for': 'elm' }
 
         " Python
-        Plug 'python/black', { 'for': 'python' }
+        Plug 'python/black', { 'tag': '19.10b0', 'for': 'python' }
         Plug 'roxma/python-support.nvim', { 'for': 'python' }
         Plug 'vim-python/python-syntax', { 'for': 'python' }
 
@@ -52,18 +55,24 @@ call plug#begin('~/.config/nvim/plugged')
         Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
         " JS
-        Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'jsx' ] }
-        Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'jsx' ] }
-        Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
-        Plug 'digitaltoad/vim-pug', { 'for': [ 'javascript', 'jsx' ] }
+        Plug 'MaxMEllon/vim-jsx-pretty'
+        Plug 'pangloss/vim-javascript'
+        Plug 'digitaltoad/vim-pug'
 
         " Elixir
         Plug 'elixir-editors/vim-elixir'
+
+        " Terraform
+        Plug 'hashivim/vim-terraform'
 call plug#end()
+
+" AnyJump
+let g:any_jump_search_prefered_engine = 'ag'
+let g:any_jump_results_ui_style = 'filename_last'
 
 " ALE
 let g:ale_completion_enabled = 1
-let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_text_changed = 1
 let g:ale_lint_on_insert_leave = 1
 let g:ale_lint_on_save = 1
 let g:ale_fixers = {
@@ -78,6 +87,8 @@ nnoremap <silent> <leader>agt :ALEGoToTypeDefinition<CR>
 nnoremap <silent> <leader>ah :ALEHover<CR>
 nnoremap <silent> <leader>af :ALEFindReferences<CR>
 nnoremap <leader>ass :ALESymbolSearch<space>
+"Arpeggio nnoremap <silent> aj :ALENext<CR>
+"Arpeggio nnoremap <silent> ak :ALEPrevious<CR>
 
 " Splitting.
 set splitbelow
@@ -90,6 +101,10 @@ set modeline
 
 " Enable syntax highlighting.
 "colorscheme nofrils-dark
+" True colors.
+"set termguicolors
+"set background=dark
+set t_Co=256
 colorscheme srcery
 
 " Encoding.
@@ -98,10 +113,12 @@ set encoding=utf-8
 " Set line numbers.
 set number
 set relativenumber
+set list
+set listchars=eol:$,tab:-->,trail:~,extends:>,precedes:<,space:·
 
 " Setup proper tabs.
 set expandtab
-set tabstop=4 shiftwidth=4
+set tabstop=2 shiftwidth=2
 set softtabstop=-1
 
 " Searching.
@@ -170,10 +187,7 @@ vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 autocmd! BufNewFile,BufReadPre,FileReadPre Makefile source ~/.vim/langs/makefile.vim
 autocmd BufWritePre *.py execute ':Black'
 
-autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
-autocmd BufNewFile,BufRead *.jsx,*.scss setlocal shiftwidth=2 tabstop=2
-
-autocmd BufNewFile,BufRead *.ex,*.exs setlocal shiftwidth=2 tabstop=2
+autocmd FileType eelixir,elixir,javascript,javascriptreact,sass,yaml setlocal shiftwidth=2 tabstop=2
 
 " Backspace.
 set backspace=2
@@ -184,9 +198,6 @@ set undofile
 
 " y/p uses system clipboard now.
 set clipboard+=unnamed
-
-" True colors.
-set termguicolors
 
 " Black location
 let g:black_virtualenv = "~/.config/nvim/blackvenv"
@@ -202,19 +213,31 @@ let g:ctrlp_user_command = [
     \ ]
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.snap     " MacOSX/Linux
 
+" fzf config.
+nnoremap <silent> <C-p> :GFiles <CR>
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+command! -bang -nargs=? -complete=dir GFiles
+    \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
+
 " Silver Searcher config
 if executable('ag')
-    let g:ackprg = 'ag --hidden --vimgrep --smart-case'
+    let g:ackprg = 'ag --nogroup --nocolor --column --smart-case --hidden'
 endif
-cnoreabbrev ag Ack!
-cnoreabbrev aG Ack!
-cnoreabbrev Ag Ack!
-cnoreabbrev AG Ack!
-nnoremap <Leader>/ :Ack!<Space>
+"cnoreabbrev ag Ack!
+"cnoreabbrev aG Ack!
+"cnoreabbrev Ag Ack!
+"cnoreabbrev AG Ack!
+"nnoremap <Leader>/ :Ack!<Space>
+nnoremap <Leader>/ :Ag<Space>
+let g:ackhighlight = 1
 
 " Fugitive aliases.
 cnoreabbrev G vert<space>G
 cnoreabbrev Gstatus vert<space>Gstatus
+
+" GitGutter options.
+set updatetime=10
 
 " NerdTree colors
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
