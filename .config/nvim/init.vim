@@ -18,6 +18,8 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
         autocmd! User nerdtree echom 'NERDTree loaded!'
     Plug 'Xuyuanp/nerdtree-git-plugin'
+    "Plug 'ryanoasis/vim-devicons'
+    "Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
     "Plug 'ctrlpvim/ctrlp.vim'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
@@ -164,11 +166,16 @@ endfunction
 nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
 
 " Functional logger.
-function! AddFlogger()
-  let l:flogger = printf("const fl = tag => logData => ( console.log(tag, logData), logData )")
-  call append(0, l:flogger)
+function! AddFunctionalLogger()
+  let l:logger = printf("const fl = tag => logData => ( console.log(tag, logData), logData )")
+  call append(0, l:logger)
 endfunction
-nnoremap <silent> <Leader>fl :call AddFlogger()<CR>
+nnoremap <silent> <Leader>fl :call AddFunctionalLogger()<CR>
+function! AddConditionalFunctionalLogger()
+  let l:logger = printf("const cfl = tag => predicate => logData => ( console.log(`CONDITION ${predicate(logData) ? '' : 'NOT '}MET: ${tag}`, logData) , logData )")
+  call append(0, l:logger)
+endfunction
+nnoremap <silent> <Leader>cfl :call AddConditionalFunctionalLogger()<CR>
 
 " Twiddle case by highlighting text and hitting ~
 function! TwiddleCase(str)
@@ -240,30 +247,30 @@ cnoreabbrev Gstatus vert<space>Gstatus
 set updatetime=10
 
 " NerdTree colors
-function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-    exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-    exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-endfunction
-
-call NERDTreeHighlightFile('jade', 'red', 'none', 'red', '#151515')
-call NERDTreeHighlightFile('pug', 'red', 'none', 'red', '#151515')
-call NERDTreeHighlightFile('html', 'red', 'none', 'red', '#151515')
-call NERDTreeHighlightFile('md', 'magenta', 'none', 'gray', '#151515')
-call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('less', 'brown', 'none', 'cyan', '#151515')
-call NERDTreeHighlightFile('css', 'brown', 'none', 'cyan', '#151515')
-call NERDTreeHighlightFile('js', 'darkgreen', 'none', 'darkgreen', '#151515')
-call NERDTreeHighlightFile('jsx', 'darkgreen', 'none', 'darkgreen', '#151515')
-call NERDTreeHighlightFile('rs', 'darkgreen', 'none', 'darkgreen', '#151515')
-call NERDTreeHighlightFile('purs', 'darkgreen', 'none', 'darkgreen', '#151515')
-call NERDTreeHighlightFile('elm', 'darkgreen', 'none', 'darkgreen', '#151515')
-call NERDTreeHighlightFile('Dockerfile', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('toml', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('acme', 'darkgreen', 'none', 'darkgreen', '#151515')
-call NERDTreeHighlightFile('cpp', 'darkgreen', 'none', 'darkgreen', '#151515')
-call NERDTreeHighlightFile('hpp', 'brown', 'none', 'cyan', '#151515')
-call NERDTreeHighlightFile('Makefile', 'yellow', 'none', 'yellow', '#151515')
+"function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+    "exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+    "exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+"endfunction
+"
+"call NERDTreeHighlightFile('jade', 'red', 'none', 'red', '#151515')
+"call NERDTreeHighlightFile('pug', 'red', 'none', 'red', '#151515')
+"call NERDTreeHighlightFile('html', 'red', 'none', 'red', '#151515')
+"call NERDTreeHighlightFile('md', 'magenta', 'none', 'gray', '#151515')
+"call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+"call NERDTreeHighlightFile('less', 'brown', 'none', 'cyan', '#151515')
+"call NERDTreeHighlightFile('css', 'brown', 'none', 'cyan', '#151515')
+"call NERDTreeHighlightFile('js', 'darkgreen', 'none', 'darkgreen', '#151515')
+"call NERDTreeHighlightFile('jsx', 'darkgreen', 'none', 'darkgreen', '#151515')
+"call NERDTreeHighlightFile('rs', 'darkgreen', 'none', 'darkgreen', '#151515')
+"call NERDTreeHighlightFile('purs', 'darkgreen', 'none', 'darkgreen', '#151515')
+"call NERDTreeHighlightFile('elm', 'darkgreen', 'none', 'darkgreen', '#151515')
+"call NERDTreeHighlightFile('Dockerfile', 'yellow', 'none', 'yellow', '#151515')
+"call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+"call NERDTreeHighlightFile('toml', 'yellow', 'none', 'yellow', '#151515')
+"call NERDTreeHighlightFile('acme', 'darkgreen', 'none', 'darkgreen', '#151515')
+"call NERDTreeHighlightFile('cpp', 'darkgreen', 'none', 'darkgreen', '#151515')
+"call NERDTreeHighlightFile('hpp', 'brown', 'none', 'cyan', '#151515')
+"call NERDTreeHighlightFile('Makefile', 'yellow', 'none', 'yellow', '#151515')
 
 " NERDTree Key Binding (Plugin)
 noremap <C-n> :NERDTreeToggle<CR>
