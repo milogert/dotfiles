@@ -44,6 +44,9 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'pechorin/any-jump.vim'
 
     " Languages
+        " CSS
+        Plug 'gko/vim-coloresque'
+
         " Elm
         Plug 'elmcast/elm-vim', { 'for': 'elm' }
         Plug 'andys8/vim-elm-syntax', { 'for': 'elm' }
@@ -104,7 +107,7 @@ set modeline
 " Enable syntax highlighting.
 "colorscheme nofrils-dark
 " True colors.
-"set termguicolors
+set termguicolors
 "set background=dark
 set t_Co=256
 colorscheme srcery
@@ -225,7 +228,7 @@ nnoremap <silent> <C-p> :GFiles <CR>
 command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 command! -bang -nargs=? -complete=dir GFiles
-    \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
+    \ call fzf#vim#gitfiles(join([<q-args>, '--cached --others --exclude-standard'], ' '), fzf#vim#with_preview(), <bang>0)
 
 " Silver Searcher config
 if executable('ag')
