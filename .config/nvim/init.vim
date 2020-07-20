@@ -12,88 +12,73 @@ nnoremap <leader>cs :so $MYVIMRC<CR>
 
 " vim-plug
 call plug#begin('~/.config/nvim/plugged')
-    Plug 'tpope/vim-sensible'
+  Plug 'tpope/vim-sensible'
 
-    " Tool extensions
-    Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-        autocmd! User nerdtree echom 'NERDTree loaded!'
-    Plug 'Xuyuanp/nerdtree-git-plugin'
-    "Plug 'ryanoasis/vim-devicons'
-    "Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-    "Plug 'ctrlpvim/ctrlp.vim'
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
-    Plug 'airblade/vim-gitgutter'
-    "Plug 'mileszs/ack.vim'
-    Plug 'tpope/vim-fugitive'
-    Plug 'w0rp/ale'
-    Plug 'christoomey/vim-tmux-navigator'
-    Plug 'benmills/vimux'
-    Plug 'kana/vim-arpeggio', { 'on': 'Arpeggio' }
-    Plug 'tpope/vim-obsession'
-    Plug 'tpope/vim-unimpaired'
-    Plug 'adelarsq/vim-matchit'
+  " Tool extensions
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'junegunn/fzf.vim'
+  Plug 'mhinz/vim-signify'
+  Plug 'tpope/vim-fugitive'
+  "Plug 'w0rp/ale'
+  Plug 'christoomey/vim-tmux-navigator'
+  Plug 'benmills/vimux'
+  Plug 'kana/vim-arpeggio', { 'on': 'Arpeggio' }
+  Plug 'tpope/vim-obsession'
+  Plug 'tpope/vim-unimpaired'
+  Plug 'adelarsq/vim-matchit'
+  Plug 'SirVer/ultisnips'
+  Plug 'tpope/vim-vinegar'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-    " Helpers
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
-    Plug 'srcery-colors/srcery-vim'
-    Plug 'https://github.com/adelarsq/vim-matchit'
-    "Plug 'camspiers/animate.vim'
-    "Plug 'camspiers/lens.vim'
-    Plug 'pechorin/any-jump.vim'
+  " Helpers
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+  Plug 'srcery-colors/srcery-vim'
+  Plug 'pechorin/any-jump.vim'
 
-    " Languages
-        " CSS
-        Plug 'gko/vim-coloresque'
+  " Languages
+    " CSS
+    Plug 'gko/vim-coloresque'
 
-        " Elm
-        Plug 'elmcast/elm-vim', { 'for': 'elm' }
-        Plug 'andys8/vim-elm-syntax', { 'for': 'elm' }
+    " Elm
+    Plug 'elmcast/elm-vim', { 'for': 'elm' }
+    Plug 'andys8/vim-elm-syntax', { 'for': 'elm' }
 
-        " Python
-        Plug 'python/black', { 'tag': '19.10b0', 'for': 'python' }
-        Plug 'roxma/python-support.nvim', { 'for': 'python' }
-        Plug 'vim-python/python-syntax', { 'for': 'python' }
+    " Python
+    Plug 'python/black', { 'tag': '19.10b0', 'for': 'python' }
+    Plug 'roxma/python-support.nvim', { 'for': 'python' }
+    Plug 'vim-python/python-syntax', { 'for': 'python' }
 
-        " Rust
-        Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+    " Rust
+    Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
-        " JS
-        Plug 'MaxMEllon/vim-jsx-pretty'
-        Plug 'pangloss/vim-javascript'
-        Plug 'digitaltoad/vim-pug'
+    " JS
+    Plug 'MaxMEllon/vim-jsx-pretty'
+    Plug 'pangloss/vim-javascript'
+    Plug 'digitaltoad/vim-pug'
 
-        " Elixir
-        Plug 'elixir-editors/vim-elixir'
+    " Elixir
+    Plug 'elixir-editors/vim-elixir'
 
-        " Terraform
-        Plug 'hashivim/vim-terraform'
+    " Terraform
+    Plug 'hashivim/vim-terraform'
+
+    " Coffeescript
+    Plug 'kchmck/vim-coffee-script'
 call plug#end()
 
 " AnyJump
 let g:any_jump_search_prefered_engine = 'ag'
 let g:any_jump_results_ui_style = 'filename_last'
 
-" ALE
-let g:ale_completion_enabled = 1
-let g:ale_lint_on_text_changed = 1
-let g:ale_lint_on_insert_leave = 1
-let g:ale_lint_on_save = 1
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['eslint'],
-\   'elm': ['elm_ls'],
-\}
-nnoremap <silent> <leader>aj :ALENext<CR>
-nnoremap <silent> <leader>ak :ALEPrevious<CR>
-nnoremap <silent> <leader>agd :ALEGoToDefinition<CR>
-nnoremap <silent> <leader>agt :ALEGoToTypeDefinition<CR>
-nnoremap <silent> <leader>ah :ALEHover<CR>
-nnoremap <silent> <leader>af :ALEFindReferences<CR>
-nnoremap <leader>ass :ALESymbolSearch<space>
-"Arpeggio nnoremap <silent> aj :ALENext<CR>
-"Arpeggio nnoremap <silent> ak :ALEPrevious<CR>
+" CoC.nvim
+nmap <silent> <leader>aj <Plug>(coc-diagnostic-next)
+nmap <silent> <leader>ak <Plug>(coc-diagnostic-prev)
+"nnoremap <silent> <leader>agd :ALEGoToDefinition<CR>
+"nnoremap <silent> <leader>agt :ALEGoToTypeDefinition<CR>
+"nnoremap <silent> <leader>ah :ALEHover<CR>
+"nnoremap <silent> <leader>af :ALEFindReferences<CR>
+
 
 " Splitting.
 set splitbelow
@@ -101,7 +86,9 @@ set splitright
 
 " Enable modelines.
 set nocompatible
+filetype on
 filetype plugin on
+filetype indent on
 set modeline
 
 " Enable syntax highlighting.
@@ -193,12 +180,6 @@ function! TwiddleCase(str)
 endfunction
 vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 
-" Special language stuff.
-autocmd! BufNewFile,BufReadPre,FileReadPre Makefile source ~/.vim/langs/makefile.vim
-autocmd BufWritePre *.py execute ':Black'
-
-autocmd FileType eelixir,elixir,javascript,javascriptreact,sass,yaml setlocal shiftwidth=2 tabstop=2
-
 " Backspace.
 set backspace=2
 
@@ -215,12 +196,6 @@ let g:black_virtualenv = "~/.config/nvim/blackvenv"
 " Python syntax
 let g:python_highlight_all = 1
 
-" CtrlP config.
-let g:ctrlp_user_command = [
-    \ '.git',
-    \ 'cd %s && git ls-files -co --exclude-standard',
-    \ 'find . -type f -not -path "./.git/*" -not -path "./node_modules/*"'
-    \ ]
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.snap     " MacOSX/Linux
 
 " fzf config.
@@ -232,13 +207,8 @@ command! -bang -nargs=? -complete=dir GFiles
 
 " Silver Searcher config
 if executable('ag')
-    let g:ackprg = 'ag --nogroup --nocolor --column --smart-case --hidden'
+  let g:ackprg = 'ag --nogroup --nocolor --column --smart-case --hidden'
 endif
-"cnoreabbrev ag Ack!
-"cnoreabbrev aG Ack!
-"cnoreabbrev Ag Ack!
-"cnoreabbrev AG Ack!
-"nnoremap <Leader>/ :Ack!<Space>
 nnoremap <Leader>/ :Ag<Space>
 let g:ackhighlight = 1
 
@@ -249,37 +219,49 @@ cnoreabbrev Gstatus vert<space>Gstatus
 " GitGutter options.
 set updatetime=10
 
+" Netrw
+noremap <silent> <C-n> :20Lex<CR>
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+"let g:netrw_winsize = 20
+let g:netrw_preview = 1
+let g:netrw_alto = 1
+let g:netrw_altv = 1
+"augroup ProjectDrawer
+"  autocmd!
+"  autocmd VimEnter * :Vexplore
+"augroup END
+function! NetRWFind()
+  Lex %:p:h
+endfunction
+command! NetRWFind call NetRWFind()
+
+" NetRanger stuff
+"let g:NETRPreviewDefaultOn=v:false
+"let g:NETRDefaultMapSkip = ['<cr>']
+"let g:NETRToggleExpand = ['<cr>']
+"let g:NETRBugPanelOpen = ['<cr>']
+"function! NetRangerToggle()
+  "topleft 40vsplit ./
+"endfunction
+"command! NetRangerToggle call NetRangerToggle()
+
 " NerdTree colors
 "function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
     "exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
     "exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
 "endfunction
-"
-"call NERDTreeHighlightFile('jade', 'red', 'none', 'red', '#151515')
-"call NERDTreeHighlightFile('pug', 'red', 'none', 'red', '#151515')
-"call NERDTreeHighlightFile('html', 'red', 'none', 'red', '#151515')
-"call NERDTreeHighlightFile('md', 'magenta', 'none', 'gray', '#151515')
-"call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
-"call NERDTreeHighlightFile('less', 'brown', 'none', 'cyan', '#151515')
-"call NERDTreeHighlightFile('css', 'brown', 'none', 'cyan', '#151515')
-"call NERDTreeHighlightFile('js', 'darkgreen', 'none', 'darkgreen', '#151515')
-"call NERDTreeHighlightFile('jsx', 'darkgreen', 'none', 'darkgreen', '#151515')
-"call NERDTreeHighlightFile('rs', 'darkgreen', 'none', 'darkgreen', '#151515')
-"call NERDTreeHighlightFile('purs', 'darkgreen', 'none', 'darkgreen', '#151515')
-"call NERDTreeHighlightFile('elm', 'darkgreen', 'none', 'darkgreen', '#151515')
-"call NERDTreeHighlightFile('Dockerfile', 'yellow', 'none', 'yellow', '#151515')
-"call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
-"call NERDTreeHighlightFile('toml', 'yellow', 'none', 'yellow', '#151515')
-"call NERDTreeHighlightFile('acme', 'darkgreen', 'none', 'darkgreen', '#151515')
-"call NERDTreeHighlightFile('cpp', 'darkgreen', 'none', 'darkgreen', '#151515')
-"call NERDTreeHighlightFile('hpp', 'brown', 'none', 'cyan', '#151515')
-"call NERDTreeHighlightFile('Makefile', 'yellow', 'none', 'yellow', '#151515')
 
 " NERDTree Key Binding (Plugin)
-noremap <C-n> :NERDTreeToggle<CR>
+"noremap <C-n> :NERDTreeToggle<CR>
+"noremap <C-n> :NetRangerToggle<CR>
+let g:NETRDefaultMapSkip = ['l']
+let g:NETRBufPanelOpen = ['l']
 let NERDTreeShowHidden=1
 
 " Airline theme
+let g:airline#extensions#ale#enabled = 1
 let g:airline_theme='srcery'
 let g:airline#extensions#default#section_truncate_width = {
   \ 'b': 128,
@@ -293,8 +275,42 @@ let g:airline#extensions#default#section_truncate_width = {
 " Vimux config.
 let g:VimuxHeight = "25"
 let g:VimuxOrientation = "h"
+let g:VimuxUseNearest = 0
 noremap <Leader>vp :VimuxPromptCommand<CR>
 Arpeggio nmap <silent> vp :VimuxPromptCommand<CR>
 noremap <Leader>vl :VimuxRunLastCommand<CR>
 Arpeggio nmap <silent> vl :VimuxRunLastCommand<CR>
 noremap <Leader>vz :VimuxZoomRunner<CR>
+
+" UltiSnips config
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsEditSplit="vertical"
+
+" Pretty print json
+function! PrettyPrintJsonFile()
+  %!python -m json.tool
+endfunction
+command! -range PrettyPrintJsonFile call PrettyPrintJsonFile()
+nnoremap <silent> <Leader>ppj :PrettyPrintJsonFile<CR>
+"function! PrettyPrintJsonRange()
+"  '<,'>!python -m json.tool
+"endfunction
+"command! -range PrettyPrintJsonRange call PrettyPrintJsonRange()
+"vnoremap <silent> <Leader>ppj :PrettyPrintJsonRange<CR>
+
+" Profile functions.
+source ~/.config/nvim/profile.vim
+
+" Thank you next please, from https://ctoomey.com/writing/using-vims-arglist-as-a-todo-list/
+function! s:ThankYouNext() abort
+  update
+  argdelete %
+  bdelete
+  if !empty(argv())
+    argument
+  endif
+endfunction
+command! ThankYouNext call <sid>ThankYouNext()
+
