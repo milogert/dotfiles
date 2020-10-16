@@ -5,5 +5,7 @@
 .config/nvim/spell/
 .config/nvim/undodir/
 
+.config/coc
+
 .tmux/plugins
 .tmux/resurrect

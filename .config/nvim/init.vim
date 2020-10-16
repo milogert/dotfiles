@@ -15,6 +15,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'tpope/vim-sensible'
 
   " Tool extensions
+  Plug 'tveskag/nvim-blame-line'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
   Plug 'mhinz/vim-signify'
@@ -27,8 +28,10 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'tpope/vim-unimpaired'
   Plug 'adelarsq/vim-matchit'
   Plug 'SirVer/ultisnips'
-  Plug 'tpope/vim-vinegar'
+  "Plug 'tpope/vim-vinegar'
+  Plug 'justinmk/vim-dirvish'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'junegunn/vim-peekaboo'
 
   " Helpers
   Plug 'vim-airline/vim-airline'
@@ -65,6 +68,12 @@ call plug#begin('~/.config/nvim/plugged')
 
     " Coffeescript
     Plug 'kchmck/vim-coffee-script'
+
+    " Go
+    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+    " GraphQL
+    Plug 'jparise/vim-graphql'
 call plug#end()
 
 " AnyJump
@@ -79,6 +88,8 @@ nmap <silent> <leader>ak <Plug>(coc-diagnostic-prev)
 "nnoremap <silent> <leader>ah :ALEHover<CR>
 "nnoremap <silent> <leader>af :ALEFindReferences<CR>
 
+" ShaDa
+set shada='50
 
 " Splitting.
 set splitbelow
@@ -220,7 +231,7 @@ cnoreabbrev Gstatus vert<space>Gstatus
 set updatetime=10
 
 " Netrw
-noremap <silent> <C-n> :20Lex<CR>
+"noremap <silent> <C-n> :20Lex<CR>
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
@@ -237,28 +248,8 @@ function! NetRWFind()
 endfunction
 command! NetRWFind call NetRWFind()
 
-" NetRanger stuff
-"let g:NETRPreviewDefaultOn=v:false
-"let g:NETRDefaultMapSkip = ['<cr>']
-"let g:NETRToggleExpand = ['<cr>']
-"let g:NETRBugPanelOpen = ['<cr>']
-"function! NetRangerToggle()
-  "topleft 40vsplit ./
-"endfunction
-"command! NetRangerToggle call NetRangerToggle()
-
-" NerdTree colors
-"function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-    "exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-    "exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-"endfunction
-
-" NERDTree Key Binding (Plugin)
-"noremap <C-n> :NERDTreeToggle<CR>
-"noremap <C-n> :NetRangerToggle<CR>
-let g:NETRDefaultMapSkip = ['l']
-let g:NETRBufPanelOpen = ['l']
-let NERDTreeShowHidden=1
+" coc-explorer
+nmap <space>e :CocCommand explorer<CR>
 
 " Airline theme
 let g:airline#extensions#ale#enabled = 1
@@ -271,6 +262,7 @@ let g:airline#extensions#default#section_truncate_width = {
   \ 'warning': 80,
   \ 'error': 80,
   \ }
+let g:airline_section_y = ''
 
 " Vimux config.
 let g:VimuxHeight = "25"
@@ -281,6 +273,9 @@ Arpeggio nmap <silent> vp :VimuxPromptCommand<CR>
 noremap <Leader>vl :VimuxRunLastCommand<CR>
 Arpeggio nmap <silent> vl :VimuxRunLastCommand<CR>
 noremap <Leader>vz :VimuxZoomRunner<CR>
+Arpeggio nmap <silent> vz :VimuxZoomRunner<CR>
+noremap <Leader>vs :VimuxInterruptRunner<CR>
+Arpeggio nmap <silent> vs :VimuxInterruptRunner<CR>
 
 " UltiSnips config
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -313,4 +308,33 @@ function! s:ThankYouNext() abort
   endif
 endfunction
 command! ThankYouNext call <sid>ThankYouNext()
+
+" nvim-blame-line
+nnoremap <silent> <leader>b :ToggleBlameLine<CR>
+
+" Run from an empty buffer
+function! GetCommandFrequency()
+  " Be sure to change viminfo path if you put yours elsewhere (like nvim's shada or my vim-cache).
+  .! grep -e"^:"  ~/.viminfo
+  %v/^:/d
+  %sm/\v^:(silent|verb\w*) /:
+  %sm,[ /].*
+  %sm/^:..,../:
+  %sm/^:%/:
+  %g/\v^:?\s*$/d
+  %sort
+  %g/^:\W/d
+  %! uniq -c
+  %sort n
+  " Ignore single use items
+  %g/   1 :/d
+  10,$-10delete
+  0put ='Bottom (but more than once) usage:'
+  10put ='Top usage:'
+  $put ='out of total non-unique commands'
+  $put =''
+  $! grep -e"^:"  ~/.viminfo | wc -l
+  " Indent for posting to reddit.
+  exec "norm! gg0\<C-v>GI    "
+endf
 
