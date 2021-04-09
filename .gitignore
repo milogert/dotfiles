@@ -1,3 +1,10 @@
+.DS_Store
+
+.config/coc/*
+!.config/coc/extensions
+.config/coc/extensions/*
+!.config/coc/extensions/*.json
+
 .config/nvim/.netrwhist
 .config/nvim/autoload/plug.vim.old
 .config/nvim/blackvenv/
@@ -5,7 +12,9 @@
 .config/nvim/spell/
 .config/nvim/undodir/
 
-.config/coc
+.config/tmuxinator/rise*
 
 .tmux/plugins
 .tmux/resurrect
+
+

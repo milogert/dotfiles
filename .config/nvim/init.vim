@@ -10,12 +10,14 @@ let mapleader = " "
 nnoremap <leader>ce :tabnew $MYVIMRC<CR>
 nnoremap <leader>cs :so $MYVIMRC<CR>
 
+:set viminfo='1000,f1
+":mark V $MYVIMRC
+
 " vim-plug
 call plug#begin('~/.config/nvim/plugged')
   Plug 'tpope/vim-sensible'
 
   " Tool extensions
-  Plug 'tveskag/nvim-blame-line'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
   Plug 'mhinz/vim-signify'
@@ -27,11 +29,13 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'tpope/vim-obsession'
   Plug 'tpope/vim-unimpaired'
   Plug 'adelarsq/vim-matchit'
-  Plug 'SirVer/ultisnips'
+  "Plug 'SirVer/ultisnips'
   "Plug 'tpope/vim-vinegar'
   Plug 'justinmk/vim-dirvish'
+  Plug 'kristijanhusak/vim-dirvish-git'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'junegunn/vim-peekaboo'
+  "Plug 'junegunn/vim-peekaboo'
+  Plug 'kburdett/vim-nuuid'
 
   " Helpers
   Plug 'vim-airline/vim-airline'
@@ -48,9 +52,9 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'andys8/vim-elm-syntax', { 'for': 'elm' }
 
     " Python
-    Plug 'python/black', { 'tag': '19.10b0', 'for': 'python' }
-    Plug 'roxma/python-support.nvim', { 'for': 'python' }
-    Plug 'vim-python/python-syntax', { 'for': 'python' }
+    "Plug 'python/black', { 'tag': '19.10b0', 'for': 'python' }
+    "Plug 'roxma/python-support.nvim', { 'for': 'python' }
+    "Plug 'vim-python/python-syntax', { 'for': 'python' }
 
     " Rust
     Plug 'rust-lang/rust.vim', { 'for': 'rust' }
@@ -130,6 +134,9 @@ set incsearch
 set ignorecase
 set smartcase
 
+" Other settings.
+set hidden
+
 " Remap the arrow keys to do nothing.
 noremap <Up> <nop>
 noremap <Down> <nop>
@@ -192,7 +199,7 @@ endfunction
 vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 
 " Backspace.
-set backspace=2
+set backspace=indent,eol,start
 
 " Undo file to maintain undo's between runs.
 set undodir=~/.config/nvim/undodir
@@ -215,12 +222,13 @@ command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 command! -bang -nargs=? -complete=dir GFiles
     \ call fzf#vim#gitfiles(join([<q-args>, '--cached --others --exclude-standard'], ' '), fzf#vim#with_preview(), <bang>0)
+nnoremap <Leader>b :Buffer <CR>
 
 " Silver Searcher config
-if executable('ag')
-  let g:ackprg = 'ag --nogroup --nocolor --column --smart-case --hidden'
+if executable('rg')
+  let g:ackprg = 'rg --nogroup --nocolor --column --smart-case --hidden'
 endif
-nnoremap <Leader>/ :Ag<Space>
+nnoremap <Leader>/ :Rg<CR>
 let g:ackhighlight = 1
 
 " Fugitive aliases.
@@ -249,7 +257,7 @@ endfunction
 command! NetRWFind call NetRWFind()
 
 " coc-explorer
-nmap <space>e :CocCommand explorer<CR>
+nmap <Leader>e :CocCommand explorer<CR>
 
 " Airline theme
 let g:airline#extensions#ale#enabled = 1
@@ -278,10 +286,10 @@ noremap <Leader>vs :VimuxInterruptRunner<CR>
 Arpeggio nmap <silent> vs :VimuxInterruptRunner<CR>
 
 " UltiSnips config
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-let g:UltiSnipsEditSplit="vertical"
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"let g:UltiSnipsEditSplit="vertical"
 
 " Pretty print json
 function! PrettyPrintJsonFile()
@@ -309,8 +317,8 @@ function! s:ThankYouNext() abort
 endfunction
 command! ThankYouNext call <sid>ThankYouNext()
 
-" nvim-blame-line
-nnoremap <silent> <leader>b :ToggleBlameLine<CR>
+" Tmux config stuff
+cnoreabbrev Mux !tmuxinator
 
 " Run from an empty buffer
 function! GetCommandFrequency()
