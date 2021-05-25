@@ -1,0 +1,5 @@
+#!/bin/sh
+[ x"$1" = x"-b" ] || exit 1
+exec waybar \
+    -c ~/.config/waybar/$2/config \
+    -s ~/.config/waybar/style.css

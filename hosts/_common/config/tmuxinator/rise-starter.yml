@@ -1,0 +1,89 @@
+# /Users/milo/.config/tmuxinator/rise-starter.yml
+
+name: rise-starter
+root: ~/
+
+# Optional tmux socket
+# socket_name: foo
+
+# Note that the pre and post options have been deprecated and will be replaced by
+# project hooks.
+
+# Project hooks
+
+# Runs on project start, always
+# on_project_start: art skipper
+
+# Run on project start, the first time
+on_project_first_start: art skipper
+
+# Run on project start, after the first time
+# on_project_restart: command
+
+# Run on project exit ( detaching from tmux session )
+# on_project_exit: command
+
+# Run on project stop
+on_project_stop: art skipper down
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+# Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+# startup_window: editor
+
+# Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
+# startup_pane: 1
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+windows:
+  - art: art skipper up
+  - lazydocker: lazydocker
+  - manage:
+      root: ~/projects/rise-platform-frontend
+      panes: 
+        - "if [[ <%= @settings['projects'] %> == *'manage'* ]]; then; dkcuart rise; else; exit; fi"
+  - frontend:
+      root: ~/projects/rise-frontend
+      panes: 
+        - "if [[ <%= @settings['projects'] %> == *'frontend'* ]]; then; dkcu; else; exit; fi"
+  - gateway:
+      root: ~/projects/rise-com-gateway
+      panes: 
+        - "if [[ <%= @settings['projects'] %> == *'gateway'* ]]; then; dkcuart rise; else; exit; fi"
+  - runtime:
+      root: ~/projects/rise-runtime
+      panes: 
+        - "if [[ <%= @settings['projects'] %> == *'runtime'* ]]; then; dkcuart rise; else; exit; fi"
+  - api:
+      root: ~/projects/rise-api
+      panes: 
+        - "if [[ <%= @settings['projects'] %> == *'api'* ]]; then; dkcuart rise; else; exit; fi"
+  - notify:
+      root: ~/projects/notify
+      panes: 
+        - "if [[ <%= @settings['projects'] %> == *'notify'* ]]; then; dkcuart rise; else; exit; fi"
+  - magistrate:
+      root: ~/projects/magistrate
+      panes: 
+        - "if [[ <%= @settings['projects'] %> == *'magistrate'* ]]; then; dkcu; else; exit; fi"
+  - botzo:
+      root: ~/projects/botzo
+      panes:
+        - "if [[ <%= @settings['projects'] %> == *'botzo'* ]]; then; dkcu; else; exit; fi"
+  - rise-business-content:
+      root: ~/projects/rise-business-content
+      panes:
+        - "if [[ <%= @settings['projects'] %> == *'rbc'* ]]; then; dkcuart rise; else; exit; fi"
+  - packages:
+      root: ~/projects/rise-packages
+      panes:
+        - "if [[ <%= @settings['projects'] %> == *'packages'* ]]; then; dkcuart rise; else; exit; fi"

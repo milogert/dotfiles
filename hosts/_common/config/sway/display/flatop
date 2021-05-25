@@ -1,0 +1,16 @@
+# Monitor variables.
+set $monleft eDP-1
+set $moncenter eDP-1
+set $monright eDP-1
+
+# dpi
+output $monleft position 0,0
+output $moncenter scale 2
+
+# Monitor brightness
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+
+# Wallpaper
+exec curl -A 'ua' 'https://www.reddit.com/r/EarthPorn/new.json?limit=100' | jq -r '.data.children[].data.url' | grep -P 'jpg$' | sed '1q;d' | xargs -n 1 curl -o ~/.config/sway/wallpaper.jpg -O
+output $moncenter bg ~/.config/sway/wallpaper.jpg center
