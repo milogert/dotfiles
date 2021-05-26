@@ -7,12 +7,11 @@ let
   home_dir = "${config.home.homeDirectory}";
   common_dir = ../../../_common;
 in rec {
-  xdg = import (common_dir + "/home/xdg.nix") { inherit config; };
-
   imports = [
+    (common_dir + /home/xdg.nix)
     (common_dir + /home/git)
     (common_dir + /home/neovim)
-    ((common_dir + "/home/zsh") { inherit xdg; })
+    (common_dir + /home/zsh)
   ];
 
   home.stateVersion = "21.05";

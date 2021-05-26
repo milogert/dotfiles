@@ -1,11 +1,11 @@
 { pkgs
-, xdg
 , ...
 }:
 
 let
   vimPlugins = pkgs.vimPlugins;# // pkgs.callPackage ./custom-plugins.nix {};
-in {
+  #common_dir = ../../../_common;
+in rec {
   home.file = {
     "${xdg.configHome}/nvim/" = {
       recursive = true;
