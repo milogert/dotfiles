@@ -7,26 +7,36 @@ let
   home_dir = "${config.home.homeDirectory}";
   common_dir = ../../../_common;
 in rec {
-  imports = [
-    (common_dir + "/home/git")
-    (common_dir + "/home/neovim")
-    (common_dir + "default.nix")
-  ];
+  xdg = import (common_dir + "/home/xdg.nix") { inherit config; };
 
-  xdg = {
-    enable = true;
-    cacheHome = "${home_dir}/.cache";
-    configHome = "${home_dir}/.config";
-    dataHome = "${home_dir}/.data";
-  };
+  imports = [
+    (common_dir + /home/git)
+    (common_dir + /home/neovim)
+    ((common_dir + "/home/zsh") { inherit xdg; })
+  ];
 
   home.stateVersion = "21.05";
 
-  home.file = {
-    ".mac_specific".source = common_dir + "/config/mac_specific";
-  } // home.file;
+  #programs.git.signing.key = "696FAC60B36CA0D3";
 
-  programs.git.signing.key = "696FAC60B36CA0D3";
+  home.file = {
+    #".psqlrc".source = common_dir + "/conf/.psqlrc";
+    #".ripgreprc".source = common_dir + "/conf/.ripgreprc";
+    "${xdg.configHome}/tmuxinator/" = {
+      recursive = true;
+      source = common_dir + "/config/tmuxinator/";
+    };
+    "${xdg.configHome}/alacritty/" = {
+      recursive = true;
+      source = common_dir + "/config/alacritty/";
+    };
+    "${xdg.configHome}/starship.toml".source = common_dir + "/config/starship.toml";
+    "${xdg.configHome}/bat/" = {
+      recursive = true;
+      source = common_dir + "/config/bat/";
+    };
+    #"${xdg.configHome}/git/ignore".source = common_dir + "/conf/.gitignore";
+  };
 
   home.packages = with pkgs; [
     #bashcards
@@ -51,28 +61,6 @@ in rec {
         ${npmSet} init.license "MIT"
         ${npmSet} init.version "0.0.1"
       '';
-
-#  home.activation.setSSH =
-#    config.lib.dag.entryAfter ["writeBoundary"] ''
-#      if [[ ! -f "$HOME/.ssh/id_rsa" ]]; then
-#        echo "ssh: Setting up key..."
-#        ssh-keygen -t rsa -b 4096 -C "me@robertwpearce.com"
-#
-#        echo "ssh: Starting ssh-agent in the background"
-#        eval "$(ssh-agent -s)"
-#
-#        echo "ssh: writing config to store passphrases in keychain"
-#        cat <<EOF > "$HOME/.ssh/config"
-#Host *
-#  AddKeysToAgent yes
-#  UseKeychain yes
-#  IdentityFile "$HOME/.ssh/id_rsa"
-#EOF
-#
-#        echo "ssh: Adding private key to ssh-agent and storing passphrase in keychain"
-#        ssh-add -K "$HOME/.ssh/id_rsa"
-#      fi
-#    '';
 
   home.activation.setVimDirs =
     config.lib.dag.entryAfter ["writeBoundary"] ''

@@ -1,14 +1,26 @@
 { pkgs
+, xdg
 , ...
 }:
 
 let
-  vimPlugins = pkgs.vimPlugins // pkgs.callPackage ./custom-plugins.nix {};
+  vimPlugins = pkgs.vimPlugins;# // pkgs.callPackage ./custom-plugins.nix {};
 in {
+  home.file = {
+    "${xdg.configHome}/nvim/" = {
+      recursive = true;
+      source = "../../config/nvim/";
+    };
+    "${xdg.configHome}/coc/" = {
+      recursive = true;
+      source = "../../config/coc/";
+    };
+  };
+
   programs.neovim = {
     enable = true;
 
-    extraConfig = builtins.readFile ./vimrc;
+    extraConfig = builtins.readFile ./init.vim;
 
     plugins = with vimPlugins; [
       #vim-sensible
@@ -16,14 +28,14 @@ in {
 
       # Tooling
       coc-nvim
-      fzf
+      #fzf
       fzf-vim
-      vim-arpeggio
+      #vim-arpeggio
       vim-dirvish
       vim-dirvish-git
       vim-fugitive
-      vim-matchit
-      vim-nuuid
+      #vim-matchit
+      #vim-nuuid
       vim-obsession
       vim-signify
       vim-surround
@@ -32,9 +44,9 @@ in {
       vimux
 
       # Themes
-      moonlight-nvim
-      nord-nvim
-      onedark-vim
+      #moonlight-nvim
+      #nord-nvim
+      #onedark-vim
       srcery-vim
 
       # UI
@@ -42,12 +54,12 @@ in {
       vim-airline
       vim-airline-themes
 
-      vim-coloresque
+      #vim-coloresque
 
       # Languages
       #vim-go
       elm-vim
-      rust.vim
+      rust-vim
       vim-coffee-script
       vim-elixir
       vim-elm-syntax

@@ -1,6 +1,12 @@
 { pkgs, ... }:
 
-{
+rec {
+  imports = [
+    ./tmux.nix
+    ./aliases.nix
+    ./fonts.nix
+  ];
+
   system.stateVersion = 4;
 
   nix.useSandbox = false;
@@ -13,7 +19,7 @@
   nix.trustedBinaryCaches = [
     https://cache.nixos.org
     https://nix-community.cachix.org
-    https://rpearce.cachix.org
+    #https://rpearce.cachix.org
   ];
 
   nix.binaryCaches = nix.trustedBinaryCaches;
@@ -21,24 +27,12 @@
   nix.binaryCachePublicKeys = [
     cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
     nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
-    rpearce.cachix.org-1:JfcsbYqjrn4Hb3nbBnlprokdSEE5xYdxZ39ikK7nOCM=
+    #rpearce.cachix.org-1:JfcsbYqjrn4Hb3nbBnlprokdSEE5xYdxZ39ikK7nOCM=
   ];
 
   services.nix-daemon.enable = true;
 
   users.nix.configureBuildUsers = true;
-
-  home.file = {
-    #".psqlrc".source = common_dir + "/conf/.psqlrc";
-    #".ripgreprc".source = common_dir + "/conf/.ripgreprc";
-    "${xdg.configHome}/nvim/".source = common_dir + "/config/nvim/";
-    "${xdg.configHome}/tmuxinator/".source = common_dir + "/config/tmuxinator/";
-    "${xdg.configHome}/alacritty/".source = common_dir + "/config/alacritty/";
-    "${xdg.configHome}/starship.toml".source = common_dir + "/config/starship.toml";
-    "${xdg.configHome}/bat/".source = common_dir + "/config/bat/";
-    "${xdg.configHome}/coc/".source = common_dir + "/config/coc/";
-    #"${xdg.configHome}/git/ignore".source = common_dir + "/conf/.gitignore";
-  };
 
   environment.variables = {
     EDITOR = "nvim";

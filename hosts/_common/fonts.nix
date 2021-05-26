@@ -6,7 +6,7 @@ let
       "Meslo"
       #"Hack"
       #"Hasklig"
-      "Lilex"
+      #"Lilex"
       #"SpaceMono"
     ];
   };

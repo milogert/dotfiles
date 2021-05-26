@@ -9,11 +9,11 @@
     userName  = "Milo Gertjejansen";
     userEmail = "milo@milogert.com";
 
-    signing = {
-      # NOTE: `key` is set by user home files
-      signByDefault = true;
-      gpgPath = "gpg";
-    };
+    #signing = {
+    #  # NOTE: `key` is set by user home files
+    #  signByDefault = true;
+    #  gpgPath = "gpg";
+    #};
 
     aliases = {
       a = "add";
