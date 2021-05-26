@@ -1,19 +1,21 @@
 { pkgs
+, config
 , ...
 }:
 
 let
   vimPlugins = pkgs.vimPlugins;# // pkgs.callPackage ./custom-plugins.nix {};
-  #common_dir = ../../../_common;
+  xdg = import ../xdg.nix { inherit config; };
 in rec {
+  inherit xdg;
   home.file = {
     "${xdg.configHome}/nvim/" = {
       recursive = true;
-      source = "../../config/nvim/";
+      source = ../../config/nvim + "/";
     };
     "${xdg.configHome}/coc/" = {
       recursive = true;
-      source = "../../config/coc/";
+      source = ../../config/coc + "/";
     };
   };
 

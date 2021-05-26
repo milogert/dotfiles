@@ -4,11 +4,11 @@
 }:
 
 let
-  home_dir = "${config.home.homeDirectory}";
   common_dir = ../../../_common;
+  xdg = import (common_dir + /home/xdg.nix) { inherit config; };
 in rec {
+  inherit xdg;
   imports = [
-    (common_dir + /home/xdg.nix)
     (common_dir + /home/git)
     (common_dir + /home/neovim)
     (common_dir + /home/zsh)
@@ -16,7 +16,7 @@ in rec {
 
   home.stateVersion = "21.05";
 
-  #programs.git.signing.key = "696FAC60B36CA0D3";
+  programs.git.signing.key = "7291258F2B7C086E";
 
   home.file = {
     #".psqlrc".source = common_dir + "/conf/.psqlrc";
