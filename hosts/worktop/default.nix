@@ -7,8 +7,4 @@ rec {
     ./darwin/nix-apps.nix
     ./networking.nix
   ];
-
-  environment.systemPackages = with pkgs; [
-    #awscli
-  ];
 }

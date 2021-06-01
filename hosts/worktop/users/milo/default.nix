@@ -9,9 +9,7 @@ let
 in rec {
   inherit xdg;
   imports = [
-    (common_dir + /home/git)
-    (common_dir + /home/neovim)
-    (common_dir + /home/zsh)
+    (common_dir + /home/default.nix)
   ];
 
   home.stateVersion = "21.05";
@@ -25,15 +23,15 @@ in rec {
       recursive = true;
       source = common_dir + "/config/tmuxinator/";
     };
-    "${xdg.configHome}/alacritty/" = {
-      recursive = true;
-      source = common_dir + "/config/alacritty/";
-    };
-    "${xdg.configHome}/starship.toml".source = common_dir + "/config/starship.toml";
-    "${xdg.configHome}/bat/" = {
-      recursive = true;
-      source = common_dir + "/config/bat/";
-    };
+    #"${xdg.configHome}/alacritty/" = {
+    #  recursive = true;
+    #  source = common_dir + "/config/alacritty/";
+    #};
+    #"${xdg.configHome}/starship.toml".source = common_dir + "/config/starship.toml";
+    #"${xdg.configHome}/bat/" = {
+    #  recursive = true;
+    #  source = common_dir + "/config/bat/";
+    #};
     #"${xdg.configHome}/git/ignore".source = common_dir + "/conf/.gitignore";
   };
 

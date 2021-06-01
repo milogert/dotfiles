@@ -2,6 +2,15 @@
 
 {
   programs.zsh = {
+    enable = true;
+    #enableBashCompletion = true;
+    enableAutosuggestions = true;
+    enableCompletion = true;
+    #enableFzfCompletion = true;
+    #enableFzfGit = true;
+    #enableFzfHistory = true;
+    #enableSyntaxHighlighting = false;
+    #promptInit = "eval \"$(starship init zsh)\"";
     autocd = true;
     localVariables = {
       PASSWORD_STORE_GENERATED_LENGTH = 32;
@@ -29,6 +38,7 @@
       #  showReturnVal = true;
       #};
       color = true;
+      #pmoduleDirs = [ "$HOME/.zprezto-contrib" ];
     };
   };
 }

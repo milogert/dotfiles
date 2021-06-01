@@ -3,6 +3,9 @@
 " Written by: Milo Gertjejansen
 "
 
+" Load Arpeggio early?
+packadd vim-arpeggio
+
 " Set the leader key to space.
 let mapleader = " "
 

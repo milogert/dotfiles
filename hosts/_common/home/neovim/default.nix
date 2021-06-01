@@ -4,7 +4,7 @@
 }:
 
 let
-  vimPlugins = pkgs.vimPlugins;# // pkgs.callPackage ./custom-plugins.nix {};
+  vimPlugins = pkgs.vimPlugins // pkgs.callPackage ./custom-plugins.nix {};
   xdg = import ../xdg.nix { inherit config; };
 in rec {
   inherit xdg;
@@ -13,11 +13,20 @@ in rec {
       recursive = true;
       source = ../../config/nvim + "/";
     };
-    "${xdg.configHome}/coc/" = {
-      recursive = true;
-      source = ../../config/coc + "/";
-    };
   };
+
+  home.activation.initalizeCoc =
+    config.lib.dag.entryAfter ["writeBoundary"] ''
+      if [[ -d ${xdg.configHome}/coc/ ]]; then
+        echo "!! Skipping Coc.nvim inialization, since ${xdg.configHome}/coc/ already exists"
+      else
+        rm -rf ${xdg.configHome}/coc/
+        mkdir ${xdg.configHome}/coc/
+        cp -r ./.dotfiles/hosts/_common/config/coc/* ${xdg.configHome}/coc/
+        echo "!! To install all the Coc.nvim extensions run:"
+        echo "    pushd ~/.config/coc/extensions; npm install; popd"
+      fi
+  '';
 
   programs.neovim = {
     enable = true;
@@ -32,12 +41,12 @@ in rec {
       coc-nvim
       #fzf
       fzf-vim
-      #vim-arpeggio
+      vim-arpeggio
       vim-dirvish
       vim-dirvish-git
       vim-fugitive
       #vim-matchit
-      #vim-nuuid
+      vim-nuuid
       vim-obsession
       vim-signify
       vim-surround
@@ -52,7 +61,7 @@ in rec {
       srcery-vim
 
       # UI
-      #any-jump.vim
+      any-jump-vim
       vim-airline
       vim-airline-themes
 

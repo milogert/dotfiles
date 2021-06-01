@@ -2,7 +2,6 @@
 
 rec {
   imports = [
-    ./tmux.nix
     ./aliases.nix
     ./fonts.nix
   ];
@@ -34,6 +33,11 @@ rec {
 
   users.nix.configureBuildUsers = true;
 
+  environment.shells = with pkgs; [
+    zsh
+    bashInteractive
+  ];
+
   environment.variables = {
     EDITOR = "nvim";
     MANPAGER = "sh -c 'col -b | bat -l man -p'";
@@ -49,10 +53,13 @@ rec {
     TERM = "xterm-256color";
   };
 
+  environment.pathsToLink = [ "/share/zsh" ];
+
   environment.systemPackages = with pkgs; [
     bash
     bash-completion
     bat
+    browserpass
     cachix
     coreutils
     ctop
@@ -61,13 +68,15 @@ rec {
     findutils
     fzf
     gitAndTools.delta
-    #gitAndTools.diff-so-fancy
     gitAndTools.gh
     gnupg
     htop
     jq
+    lazydocker
     ncdu
+    neovim
     nix-prefetch-git
+    pass
     procs # https://github.com/dalance/procs
     rename
     ripgrep
@@ -84,4 +93,10 @@ rec {
 
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.enableSSHSupport = true;
+
+  environment.shellInit = ''
+    export GPG_TTY="$(tty)"
+    gpg-connect-agent /bye
+    export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+  '';
 }
