@@ -65,10 +65,7 @@ in rec {
       vim-airline
       vim-airline-themes
 
-      #vim-coloresque
-
       # Languages
-      #vim-go
       elm-vim
       rust-vim
       vim-coffee-script

@@ -9,5 +9,3 @@ mode $mode_power {
     bindsym s exec systemctl shutdown && swaymsg mode default
     bindsym h exec systemctl hibernate && swaymsg mode default
 }
-bindsym $mod+Shift+e mode $mode_power
-

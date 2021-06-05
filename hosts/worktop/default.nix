@@ -7,4 +7,9 @@ rec {
     ./darwin/nix-apps.nix
     ./networking.nix
   ];
+
+  #services.activate-system.enable = true;
+
+  # This is required here for nix?.
+  #programs.zsh.enable = true;
 }

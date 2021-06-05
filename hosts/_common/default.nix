@@ -10,7 +10,7 @@ rec {
 
   nix.useSandbox = false;
   nix.gc.automatic = true;
-  nix.gc.options = "--delete-older-than 7d";
+  nix.gc.options = "--delete-older-than 30d";
   nix.package = pkgs.nixUnstable;
   nix.extraOptions = "experimental-features = nix-command flakes ca-references";
   nix.trustedUsers = [ "root" "@admin" ];
@@ -18,7 +18,7 @@ rec {
   nix.trustedBinaryCaches = [
     https://cache.nixos.org
     https://nix-community.cachix.org
-    #https://rpearce.cachix.org
+    https://milogert.cachix.org
   ];
 
   nix.binaryCaches = nix.trustedBinaryCaches;
@@ -26,22 +26,19 @@ rec {
   nix.binaryCachePublicKeys = [
     cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
     nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
-    #rpearce.cachix.org-1:JfcsbYqjrn4Hb3nbBnlprokdSEE5xYdxZ39ikK7nOCM=
+    milogert.cachix.org-1:MaZAAWJXDV85HpLm2yyLX9b52wQghRxljAZJg0dEjkY=
   ];
 
   services.nix-daemon.enable = true;
 
   users.nix.configureBuildUsers = true;
 
-  environment.shells = with pkgs; [
-    zsh
-    bashInteractive
-  ];
-
   environment.variables = {
     EDITOR = "nvim";
     MANPAGER = "sh -c 'col -b | bat -l man -p'";
     NPM_TOKEN = "`cat $HOME/.npmrc 2>/dev/null | grep authToken | tr \"=\" \"\\n\" | tail -n 1`";
+    PASSWORD_STORE_GENERATED_LENGTH = "32";
+    PASSWORD_STORE_ENABLE_EXTENSIONS = "true";
     PATH = builtins.concatStringsSep ":" [
       "/usr/local/sbin"
       "$HOME/.local/bin"
@@ -55,12 +52,18 @@ rec {
 
   environment.pathsToLink = [ "/share/zsh" ];
 
+
+  environment.shellAliases = {
+    adj = "echo ADJACENT";
+  };
   environment.systemPackages = with pkgs; [
+    ag
     bash
     bash-completion
     bat
     browserpass
     cachix
+    cargo
     coreutils
     ctop
     diskonaut
@@ -77,9 +80,13 @@ rec {
     neovim
     nix-prefetch-git
     pass
+    platinum-searcher
     procs # https://github.com/dalance/procs
+    python3Full
+    qmk
     rename
     ripgrep
+    rnix-lsp
     shellcheck
     speedtest-cli
     starship

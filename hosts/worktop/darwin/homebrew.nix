@@ -20,6 +20,7 @@
     #"zsh-completions"
     "tmuxinator"
     "pinentry-mac"
+    "gnu-sed"
 
     # REMOVE THESE ENVENTUALLY
     #"neovim"

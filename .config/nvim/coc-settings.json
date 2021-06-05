@@ -1,4 +1,0 @@
-{
-  "eslint.nodePath": "./node_modules",
-  "eslint.autoFixOnSave": true
-}

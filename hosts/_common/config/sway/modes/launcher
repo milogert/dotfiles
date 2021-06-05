@@ -6,5 +6,3 @@ mode $mode_launcher {
     bindsym Escape mode "default"
     bindsym $mod+g mode "default"
 }
-bindsym $mod+g mode $mode_launcher
-

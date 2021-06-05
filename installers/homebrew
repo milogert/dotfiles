@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [[ $(uname -s) == 'Darwin' ]]; then
+  if ! type "brew" &> /dev/null; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+else
+  echo "Skipping homebrew on non-darwin system"
+fi

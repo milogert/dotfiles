@@ -10,6 +10,8 @@ in rec {
   inherit xdg;
   imports = [
     (common_dir + /home/default.nix)
+    ./sway.nix
+    ./waybar.nix
   ];
 
   home.stateVersion = "21.05";
@@ -25,16 +27,15 @@ in rec {
 
   home.packages = with pkgs; [
     elixir
-    git-lfs
-    nodejs-14_x
+    nodejs
     ruby
-    (yarn.override { nodejs = nodejs-14_x; })
+    yarn
   ];
 
   # NPM config options in lieu of no easy static config file
   home.activation.setNpmOptions =
     let
-      npmSet = "$DRY_RUN_CMD ${pkgs.nodejs-16_x}/bin/npm set";
+      npmSet = "$DRY_RUN_CMD ${pkgs.nodejs}/bin/npm set";
     in
       config.lib.dag.entryAfter ["writeBoundary"] ''
         ${npmSet} init.author.name "Milo Gertjejanse"

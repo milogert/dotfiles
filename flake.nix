@@ -59,12 +59,40 @@
             };
           }
         ];
+
+      mkNixosConfig =
+        { host
+        , user
+        }: [
+          (./. + "/hosts/${host}/default.nix")
+          home-manager.nixosModules.home-manager
+          {
+            nixpkgs = nixpkgsConfig;
+            users.users.${user}.home = "/home/${user}";
+            home-manager.useUserPackages = true;
+            home-manager.users.${user} = with self.homeManagerModules; {
+              imports = [ (./. + "/hosts/${host}/users/${user}") ];
+              nixpkgs.overlays = nixpkgsConfig.overlays;
+            };
+          }
+        ];
     in {
       darwinConfigurations = {
         worktop = darwin.lib.darwinSystem {
           inputs = inputs;
           modules = mkDarwinConfig {
             host = "worktop";
+            user = "milo";
+          };
+        };
+      };
+
+      nixosConfigurations = {
+        theseus = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          inputs = inputs;
+          modules = mkNixosConfig {
+            host = "theseus";
             user = "milo";
           };
         };

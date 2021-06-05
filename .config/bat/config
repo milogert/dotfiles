@@ -1,5 +1,0 @@
-# Set the theme to "TwoDark"
---theme="ansi"
-
-# One of: full, plain, changes, header, grid, rule, numbers, snip.
---style="full,changes"
