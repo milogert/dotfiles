@@ -71,7 +71,7 @@ in rec {
   set-hook session-closed 'switch-client -l'
 
   # List of plugins
-  set -g @plugin 'srcery-colors/srcery-tmux'
+  #set -g @plugin 'srcery-colors/srcery-tmux'
 
       # Rebind prefix key from C-b to C-Space
       #set -g prefix C-Space

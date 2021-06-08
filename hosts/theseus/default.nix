@@ -6,6 +6,7 @@ rec {
     ./hardware-configuration.nix
     ../_common/default.nix
     ./networking.nix
+    ./services.nix
     #./sway.nix
   ];
 

@@ -101,7 +101,6 @@ rec {
 
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.enableSSHSupport = true;
-  services.pcscd.enable = true;
 
   environment.shellInit = ''
     export GPG_TTY="$(tty)"
