@@ -14,6 +14,5 @@ rec {
   #services.activate-system.enable = true;
 
   # This is required here for nix?.
-  programs.bash.enable = true;
   programs.zsh.enable = true;
 }

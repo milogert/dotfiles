@@ -6,6 +6,8 @@
 let
   vimPlugins = pkgs.vimPlugins // pkgs.callPackage ./custom-plugins.nix {};
   xdg = import ../xdg.nix { inherit config; };
+  cocConfig = ../../config/coc + "/";
+
 in rec {
   inherit xdg;
   home.file = {
@@ -21,9 +23,8 @@ in rec {
         echo "!! Skipping Coc.nvim inialization, since ${xdg.configHome}/coc/ already exists"
       else
         rm -rf ${xdg.configHome}/coc/
-        mkdir -p ${xdg.configHome}/coc/
-        echo $(pwd)
-        cp -r ./.dotfiles/hosts/_common/config/coc/* ${xdg.configHome}/coc/
+        mkdir ${xdg.configHome}/coc/
+        cp -r ${cocConfig}* ${xdg.configHome}/coc/
         echo "!! To install all the Coc.nvim extensions run:"
         echo "    pushd ~/.config/coc/extensions; npm install; popd"
       fi
@@ -54,6 +55,7 @@ in rec {
       vim-tmux-navigator
       vim-unimpaired
       vimux
+      vim-commentary
 
       # Themes
       #moonlight-nvim
@@ -78,6 +80,7 @@ in rec {
       vim-nix
       vim-pug
       vim-terraform
+      markdown-preview-nvim
     ];
 
     viAlias = true;

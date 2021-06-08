@@ -50,7 +50,14 @@ rec {
   environment.shellAliases = {
     adj = "echo ADJACENT";
   };
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; 
+  let
+    my-python-packages = python-packages: with python-packages; [
+      pip
+      #virutalenv
+    ];
+    python-with-packages = python38.withPackages my-python-packages;
+  in [
     ag
     bash
     bash-completion
@@ -77,7 +84,8 @@ rec {
     pass
     platinum-searcher
     procs # https://github.com/dalance/procs
-    python3Full
+    #python3Full
+    python-with-packages
     qmk
     rename
     ripgrep

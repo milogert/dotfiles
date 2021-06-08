@@ -1,6 +1,19 @@
-{ pkgs, ... }:
+{ pkgs
+, config
+, ...
+}:
 
-{
+let
+  xdg = import ../xdg.nix { inherit config; };
+  #tmuxinatorPriv = ../../config/tmuxinator/priv + "/";
+  tmuxPlugins = pkgs.tmuxPlugins // pkgs.callPackage ./custom-plugins.nix {};
+in rec {
+  inherit xdg;
+  #home.activation.copyPrivTmuxinatorProfiles =
+  #  config.lib.dag.entryAfter ["writeBoundary"] ''
+  #    #cp -r ${tmuxinatorPriv}* ${xdg.configHome}/tmuxinator/
+  #'';
+
   programs.tmux = {
     enable = true;
     tmuxinator.enable = true;
@@ -12,8 +25,9 @@
     escapeTime = 1;
     historyLimit = 10000;
     terminal = "screen-256color";
-    plugins = with pkgs; [
-      tmuxPlugins.vim-tmux-navigator
+    plugins = with tmuxPlugins; [
+      vim-tmux-navigator
+      srcery-tmux
     ];
     extraConfig = ''
   # Set correct binding to Ctrl-a

@@ -2,14 +2,14 @@
 
 rec {
   imports = [
-    ./git
-    ./neovim
-    ./zsh
+    ./alacritty.nix
+    ./bat.nix
     ./browserpass.nix
     ./fzf.nix
+    ./git
+    ./neovim
     ./starship.nix
-    ./bat.nix
-    ./tmux.nix
-    ./alacritty.nix
+    ./tmux
+    ./zsh
   ];
 }
