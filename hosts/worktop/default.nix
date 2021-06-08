@@ -8,8 +8,12 @@ rec {
     ./networking.nix
   ];
 
+  system.stateVersion = 4;
+  users.nix.configureBuildUsers = true;
+  services.nix-daemon.enable = true;
   #services.activate-system.enable = true;
 
   # This is required here for nix?.
-  #programs.zsh.enable = true;
+  programs.bash.enable = true;
+  programs.zsh.enable = true;
 }

@@ -21,7 +21,8 @@ in rec {
         echo "!! Skipping Coc.nvim inialization, since ${xdg.configHome}/coc/ already exists"
       else
         rm -rf ${xdg.configHome}/coc/
-        mkdir ${xdg.configHome}/coc/
+        mkdir -p ${xdg.configHome}/coc/
+        echo $(pwd)
         cp -r ./.dotfiles/hosts/_common/config/coc/* ${xdg.configHome}/coc/
         echo "!! To install all the Coc.nvim extensions run:"
         echo "    pushd ~/.config/coc/extensions; npm install; popd"

@@ -23,30 +23,11 @@
             "battery"
         ];
 
+modules = {
         "sway/window" = {
             max-length = 50;
         };
 
-        "sway/mode" = {
-            format = "mode: {}";
-        };
-
-        "custom/nzbget" = {
-            exec-if = "which curl && which jq";
-            exec = "~/.config/waybar/nzbget.sh";
-            format = "{}";
-            interval = 15;
-
-        };
-
-        "custom/disk-root" = {
-            format = "/: {}";
-            exec = "df -h --output=target;avail | grep '/ ' | awk '{print $2}'";
-        };
-        "custom/disk-home" = {
-            format = "/home: {}";
-            exec = "df -h --output=target;avail | grep '/home' | awk '{print $2}'";
-        };
         network = {
             format-wifi = "{ifname}: {ipaddr}";
             format-ethernet = "{ifname}: {ipaddr}";
@@ -75,6 +56,7 @@
             format = "{:%Y-%m-%d %H:%M}";
             format-alt = "{:%a; %d. %b  %H:%M}";
         };
+};
       }
       {
         name = "bottom";
@@ -91,10 +73,7 @@
             "tray"
         ];
 
-        "sway/window" = {
-            max-length = 50;
-        };
-
+modules = {
         "custom/nzbget" = {
             exec-if = "which curl && which jq";
             exec = "~/.config/waybar/bottom/nzbget.sh";
@@ -111,31 +90,8 @@
             format = "/home: {}";
             exec = "df -h --output=target,avail | grep '/home' | awk '{print $2}'";
         };
-        network = {
-            format-wifi = "{ifname}: {ipaddr}";
-            format-ethernet = "{ifname}: {ipaddr}";
-            format-disconnected = "down";
-
-            tooltip = true;
-            tooltip-format-wifi = "{essid}";
-            interval = 15;
-        };
-        pulseaudio = {
-            format = "{icon}{volume}%";
-            format-muted = "🔇";
-            format-icons = ["🔈" "🔉" "🔊"];
-            on-click = "pavucontrol";
-
-        };
-        battery = {
-            format = "🔋{capacity}% ⏲️{time}";
-            format-icons = ["😨" "😬" "🤔" "👌" "💯"];
-            states = {
-                warning = 25;
-                critical = 10;
-            };
-        };
         tray = {};
+};
       }
     ];
   };

@@ -80,12 +80,11 @@ in rec {
         "wakeonlan"
         "utility"
         "completion"
-        "prompt"
-        "pacman"
-        "tmux"
         "docker"
         "git"
       ];
+      terminal.autoTitle = true;
+      editor.dotExpansion = true;
       #prompt = {
       #  showReturnVal = true;
       #};

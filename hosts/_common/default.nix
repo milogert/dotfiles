@@ -6,8 +6,6 @@ rec {
     ./fonts.nix
   ];
 
-  system.stateVersion = 4;
-
   nix.useSandbox = false;
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 30d";
@@ -28,10 +26,6 @@ rec {
     nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
     milogert.cachix.org-1:MaZAAWJXDV85HpLm2yyLX9b52wQghRxljAZJg0dEjkY=
   ];
-
-  services.nix-daemon.enable = true;
-
-  users.nix.configureBuildUsers = true;
 
   environment.variables = {
     EDITOR = "nvim";
@@ -72,6 +66,7 @@ rec {
     fzf
     gitAndTools.delta
     gitAndTools.gh
+    gnumake
     gnupg
     htop
     jq
@@ -96,10 +91,9 @@ rec {
     zsh-completions
   ];
 
-  programs.bash.enable = true;
-
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.enableSSHSupport = true;
+  services.pcscd.enable = true;
 
   environment.shellInit = ''
     export GPG_TTY="$(tty)"

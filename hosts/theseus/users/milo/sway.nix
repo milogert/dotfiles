@@ -1,11 +1,21 @@
 { pkgs, ... }:
 
 let
-  volsink = 0;
-  volchange = 5;
+  modifier = "Mod1";
+  volsink = "0";
+  volchange = "5";
 in {
+  home.packages = with pkgs; [
+    swaylock
+    swayidle
+    wl-clipboard
+    mako
+    wofi
+    #dmenu
+  ];
   wayland.windowManager.sway = {
     enable = true;
+    wrapperFeatures.gtk = true;
 
     config = {
       modifier = "Mod1";
@@ -25,7 +35,7 @@ in {
         "${modifier}+Shift+r" = "restart";
         "Ctrl+Shift+4" = "grim -g \"$(slurp)\" $(xdg-user-dir PICTURES)/screenshots/$(date +'screenshot_%Y-%m-%dT%H:%M:%S.png')";
         "${modifier}+Shift+w" = "mkdir -p ~/Pictures/saved_wallpapers; cp ~/.config/sway/wallpaper.jpg ~/Pictures/saved_wallpapers/$(date --iso=seconds).jpg";
-        
+
         # Media controls
         XF86AudioPlay = "playerctl play";
         XF86AudioPause = "layerctl pause";
@@ -42,13 +52,12 @@ in {
         "${modifier}+r" = "mode $mode_resize";
       };
 
-      modes = [
-      ];
+      modes = {};
 
       output = {
         DP-1 = {
           position = "0,0";
-          scale = 2;
+          scale = "2";
         };
       };
 

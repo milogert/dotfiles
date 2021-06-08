@@ -1,5 +1,5 @@
 {
-  description = "A very basic flake";
+  description = "Milo's flake";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -64,11 +64,25 @@
         { host
         , user
         }: [
+{
+          system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
+#nixpkgs = { inherit nixpkgs.pkgs; };
+nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+nix.registry.nixpkgs.flake = nixpkgs;
+}
+          #/etc/nixos/configurations.nix
           (./. + "/hosts/${host}/default.nix")
           home-manager.nixosModules.home-manager
           {
             nixpkgs = nixpkgsConfig;
-            users.users.${user}.home = "/home/${user}";
+            users.users.${user} = {
+              home = "/home/${user}";
+              description = "Milo Gertjejansen";
+              createHome = true;
+              isNormalUser = true;
+              extraGroups = [ "wheel" ];
+            };
+            home-manager.verbose = true;
             home-manager.useUserPackages = true;
             home-manager.users.${user} = with self.homeManagerModules; {
               imports = [ (./. + "/hosts/${host}/users/${user}") ];
@@ -90,7 +104,7 @@
       nixosConfigurations = {
         theseus = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          inputs = inputs;
+          #inputs = inputs;
           modules = mkNixosConfig {
             host = "theseus";
             user = "milo";

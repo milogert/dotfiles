@@ -2,14 +2,20 @@
 
 rec {
   imports = [
+    ./configuration.nix
+    ./hardware-configuration.nix
     ../_common/default.nix
     ./networking.nix
+    #./sway.nix
   ];
-
-  services.activate-system.enable = true;
 
   # This is required here for nix-darwin.
   programs.zsh.enable = true;
 
   programs.steam.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    firefox
+    chromium
+  ];
 }
