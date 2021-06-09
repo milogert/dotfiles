@@ -31,8 +31,6 @@ rec {
     EDITOR = "nvim";
     MANPAGER = "sh -c 'col -b | bat -l man -p'";
     NPM_TOKEN = "`cat $HOME/.npmrc 2>/dev/null | grep authToken | tr \"=\" \"\\n\" | tail -n 1`";
-    PASSWORD_STORE_GENERATED_LENGTH = "32";
-    PASSWORD_STORE_ENABLE_EXTENSIONS = "true";
     PATH = builtins.concatStringsSep ":" [
       "/usr/local/sbin"
       "$HOME/.local/bin"
@@ -81,8 +79,6 @@ rec {
     ncdu
     neovim
     nix-prefetch-git
-    pass
-    platinum-searcher
     procs # https://github.com/dalance/procs
     #python3Full
     python-with-packages

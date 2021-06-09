@@ -64,33 +64,22 @@
         { host
         , user
         }: [
-{
-          system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
-#nixpkgs = { inherit nixpkgs.pkgs; };
-nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
-nix.registry.nixpkgs.flake = nixpkgs;
-}
-          #/etc/nixos/configurations.nix
           (./. + "/hosts/${host}/default.nix")
           home-manager.nixosModules.home-manager
-          {
+          ({ pkgs, ... }: {
+            system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
+            users.users.${user} = import (./. + "/hosts/${host}/users/${user}/config.nix")
+              { inherit pkgs user; };
             nixpkgs = nixpkgsConfig;
-            users.users.${user} = {
-              home = "/home/${user}";
-              description = "Milo Gertjejansen";
-              createHome = true;
-              isNormalUser = true;
-              extraGroups = [ "wheel" ];
-            };
             home-manager.verbose = true;
             home-manager.useUserPackages = true;
             home-manager.users.${user} = with self.homeManagerModules; {
               imports = [ (./. + "/hosts/${host}/users/${user}") ];
-              nixpkgs.overlays = nixpkgsConfig.overlays;
+              nixpkgs = nixpkgsConfig;
             };
-          }
+          })
         ];
-    in {
+    in rec {
       darwinConfigurations = {
         worktop = darwin.lib.darwinSystem {
           inputs = inputs;
@@ -104,7 +93,6 @@ nix.registry.nixpkgs.flake = nixpkgs;
       nixosConfigurations = {
         theseus = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          #inputs = inputs;
           modules = mkNixosConfig {
             host = "theseus";
             user = "milo";

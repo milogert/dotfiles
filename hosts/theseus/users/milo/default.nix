@@ -30,6 +30,10 @@ in rec {
     nodejs
     ruby
     yarn
+    discord
+    spotify
+    joplin-desktop
+    calibre
   ];
 
   # NPM config options in lieu of no easy static config file
@@ -38,7 +42,7 @@ in rec {
       npmSet = "$DRY_RUN_CMD ${pkgs.nodejs}/bin/npm set";
     in
       config.lib.dag.entryAfter ["writeBoundary"] ''
-        ${npmSet} init.author.name "Milo Gertjejanse"
+        ${npmSet} init.author.name "Milo Gertjejansen"
         ${npmSet} init.author.email "milo@milogert.com"
         ${npmSet} init.author.url "https://milogert.com"
         ${npmSet} init.license "MIT"

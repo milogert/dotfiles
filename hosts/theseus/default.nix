@@ -10,6 +10,10 @@ rec {
     #./sway.nix
   ];
 
+  programs.sway.enable = true;
+
+  # TODO: This should belong in the rest of the user config.
+
   # This is required here for nix-darwin.
   programs.zsh.enable = true;
 

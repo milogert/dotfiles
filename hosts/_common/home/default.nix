@@ -8,6 +8,7 @@ rec {
     ./fzf.nix
     ./git
     ./neovim
+    ./password-store.nix
     ./starship.nix
     ./tmux
     ./zsh
