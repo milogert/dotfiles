@@ -267,8 +267,8 @@
       #   - (macOS) /bin/bash --login
       #   - (Linux/BSD) user login shell
       #   - (Windows) powershell
-      #shell.program = "/bin/zsh";
-      #shell.args = [ "--login" ];
+      shell.program = "${pkgs.zsh}";
+      shell.args = [ "--login" ];
 
       # Startup directory
       #

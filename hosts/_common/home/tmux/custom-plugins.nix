@@ -42,7 +42,7 @@ let
     }));
 in rec {
   srcery-tmux = mkTmuxPlugin {
-    pluginName = "srcery-tmux";
+    pluginName = "srcery";
     version = "now";
     src = pkgs.fetchFromGitHub {
       owner = "srcery-colors";

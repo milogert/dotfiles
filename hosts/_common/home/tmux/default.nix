@@ -30,17 +30,27 @@ in rec {
       srcery-tmux
     ];
     extraConfig = ''
-  # Set correct binding to Ctrl-a
-  #unbind C-b
-  #set -g prefix C-a
+      # Rebind prefix key from C-b to C-Space
+      set -g prefix C-Space
+      unbind-key C-b
+      bind-key C-Space send-prefix
 
-  # Set the defualt shell.
-  set-option -g default-shell /bin/zsh
+  # Set the default shell.
+  set-option -g default-shell ${pkgs.zsh}
   set-option -ga terminal-overrides ",xterm-256color:Tc"
 
-  # Force a reload of the config file
-  unbind r
-  bind r source-file ~/.tmux.conf \; display "tmux config reloaded :)"
+      # Swap layout switch and previous buffer keys.
+      unbind Space
+      bind Space last-window
+      unbind b
+      bind b next-layout
+
+
+
+
+      # Force a reload of the config file
+      unbind r
+      bind r source-file ~/.config/tmux/tmux.conf \; display "tmux config reloaded"
 
   # Quick pane cycling
   unbind ^A
@@ -65,24 +75,10 @@ in rec {
   bind-key -T copy-mode-vi y send-keys -X copy-selection
 
   # Focus events
-  set -g focus-events
+  set -g focus-events on
 
   # Focus last session when exiting a session totally.
   set-hook session-closed 'switch-client -l'
-
-  # List of plugins
-  #set -g @plugin 'srcery-colors/srcery-tmux'
-
-      # Rebind prefix key from C-b to C-Space
-      #set -g prefix C-Space
-      #unbind-key C-b
-      #bind-key C-Space send-prefix
-
-      ## Hot-reload tmux when configuration changes
-      #bind r source-file /etc/tmux.conf\; display "Reloaded."
-
-      ## Set history length
-      #set -g history-limit 10000
 
       ## Enable clipboard interactivity
       #set -g set-clipboard on
@@ -110,51 +106,61 @@ in rec {
       ## https://rudra.dev/posts/a-mininal-tmux-configuration-from-scratch/
 
       ## Set status bar on
-      #set -g status on
+      set -g status on
 
       ## Update the status line every second
-      #set -g status-interval 1
+      set -g status-interval 1
 
       ## Set the position of window lists.
-      #set -g status-justify centre # [left | centre | right]
+      set -g status-justify centre # [left | centre | right]
 
       ## Set Vi style keybinding in the status line
-      #set -g status-keys vi
+      set -g status-keys vi
 
       ## Set the status bar position
-      #set -g status-position top # [top, bottom]
+      set -g status-position top # [top, bottom]
 
       ## Set status bar background and foreground color.
       #set -g status-style fg=colour136,bg="#002b36"
 
       ## Set left side status bar length and style
-      #set -g status-left-length 60
-      #set -g status-left-style default
+      set -g status-left-length 60
+      set -g status-left-style default
 
       ## Display the session name
       #set -g status-left "#[fg=green] ❐ #S #[default]"
+      set -g status-left " ❐ #S "
 
       ## Display the os version (Mac Os)
       #set -ag status-left " #[fg=black] #[fg=green,bright]  #(sw_vers -productVersion) #[default]"
+      set -ag status-left "  #(sw_vers -productVersion) "
 
       ## Display the battery percentage (Mac OS)
       #set -ag status-left "#[fg=green,bg=default,bright] 🔋 #(pmset -g batt | tail -1 | awk '{print $3}' | tr -d ';') #[default]"
+      set -ag status-left " 🔋 #(pmset -g batt | tail -1 | awk '{print $3}' | tr -d ';') "
 
       ## Set right side status bar length and style
-      #set -g status-right-length 140
-      #set -g status-right-style default
+      set -g status-right-length 140
+      set -g status-right-style default
 
       ## Display the cpu load (Mac OS)
       #set -g status-right "#[fg=green,bg=default,bright]  #(top -l 1 | grep -E "^CPU" | sed 's/.*://') #[default]"
+      set -g status-right "  #(top -l 1 | grep -E "^CPU" | sed 's/.*://') "
 
       ## Display the date
-      #set -ag status-right "#[fg=white,bg=default]  %a %d #[default]"
+      set -ag status-right "#[fg=white,bg=default]  %a %d #[default]"
 
       ## Display the time
       #set -ag status-right "#[fg=colour172,bright,bg=default] ⌚︎%l:%M %p #[default]"
+      set -ag status-right " ⌚︎%l:%M %p "
 
       ## Display the hostname
       #set -ag status-right "#[fg=cyan,bg=default] ☠ #H #[default]"
+      set -ag status-right " ☠ #H "
+
+      #############
+      ## Windows ##
+      #############
 
       ## Set the inactive window color and style
       #set -g window-status-style fg=colour244,bg=default
