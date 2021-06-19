@@ -16,6 +16,11 @@ in rec {
     enableCompletion = true;
     autocd = true;
 
+    localVariables = {
+      EDITOR = "nvim";
+      MANPAGER = "col -b | bat -l man -p";
+    };
+
     envExtra = ''
       ## envExtra start
       if [[ -s "''${ZDOTDIR:-$HOME}/.zshenv_priv" ]]; then

@@ -36,7 +36,7 @@ in rec {
       bind-key C-Space send-prefix
 
   # Set the default shell.
-  set-option -g default-shell ${pkgs.zsh}
+  set-option -g default-shell ${pkgs.zsh}/bin/zsh
   set-option -ga terminal-overrides ",xterm-256color:Tc"
 
       # Swap layout switch and previous buffer keys.

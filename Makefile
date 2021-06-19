@@ -1,3 +1,5 @@
+all:
+
 install_requirements:
 	./installers/homebrew
 	./installers/nix

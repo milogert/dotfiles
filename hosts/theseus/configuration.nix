@@ -25,17 +25,21 @@
   # };
 
   systemd.services.mount-pstore.enable = false;
+
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-
-  # Enable the GNOME 3 Desktop Environment.
-  services.xserver.displayManager.gdm = {
+  services.xserver = {
     enable = true;
-    wayland = true;
+
+    videoDrivers = [ "amdgpu" ];
+
+    # Enable the GNOME 3 Desktop Environment.
+    displayManager.gdm = {
+      enable = true;
+      wayland = true;
+    };
+    desktopManager.gnome.enable = true;
   };
-  services.xserver.desktopManager.gnome.enable = true;
-  
+  services.gnome.core-utilities.enable = false;
 
   # Configure keymap in X11
   # services.xserver.layout = "us";

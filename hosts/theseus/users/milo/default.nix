@@ -26,14 +26,17 @@ in rec {
   };
 
   home.packages = with pkgs; [
-    elixir
-    nodejs
-    ruby
-    yarn
-    discord
-    spotify
-    joplin-desktop
     calibre
+    cargo
+    discord
+    elixir
+    joplin-desktop
+    nodejs
+    ripasso-cursive
+    ruby
+    spotify
+    wyvern
+    yarn
   ];
 
   # NPM config options in lieu of no easy static config file

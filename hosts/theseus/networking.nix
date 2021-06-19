@@ -20,7 +20,9 @@
     # Per-interface useDHCP will be mandatory in the future, so this generated config
     # replicates the default behaviour.
     useDHCP = false;
-    interfaces.enp6s0.useDHCP = true;
+    interfaces.wlp6s0.useDHCP = true;
+    interfaces.enp9s0.useDHCP = true;
+    enableIPv6 = false;
 
     # Configure network proxy if necessary
     #proxy.default = "http://user:password@proxy:port/";

@@ -9,7 +9,7 @@
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
@@ -25,13 +25,21 @@
 
   swapDevices = [ ];
 
-  # high-resolution display
   hardware = {
+    # high-resolution display
     video.hidpi.enable = lib.mkDefault true;
+
     opengl = {
+      driSupport = true;
       driSupport32Bit = true;
+      extraPackages = with pkgs; [
+        #amdvlk
+        rocm-opencl-icd
+        rocm-opencl-runtime
+      ];
       # This is for steam support. Needs pipewire at the moment
       extraPackages32 = with pkgs.pkgsi686Linux; [
+        #amdvlk
         libva
       ] ++ lib.optionals config.services.pipewire.enable [ pipewire ];
     };

@@ -67,7 +67,7 @@ set modeline
 " Enable syntax highlighting.
 "colorscheme nofrils-dark
 " True colors.
-set termguicolors
+"set termguicolors
 "set background=dark
 set t_Co=256
 colorscheme srcery
