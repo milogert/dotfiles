@@ -10,9 +10,20 @@
       ./hardware-configuration.nix
     ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # Use the GRUB 2 boot loader.
+  boot.loader.grub.enable = true;
+  boot.loader.grub.version = 2;
+  boot.loader.grub.device = "nodev";
+  boot.loader.grub.copyKernels = true;
+  boot.loader.grub.fsIdentifier = "label";
+  boot.loader.grub.extraConfig = "serial; terminal_input serial; terminal_outputt
+ serial";
+  boot.kernelParams = [ "console=ttyS0" ];
+  # boot.loader.grub.efiSupport = true;
+  # boot.loader.grub.efiInstallAsRemovable = true;
+  # boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  # Define on which hard drive you want to install Grub.
+  # boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
 
   # Set your time zone.
   time.timeZone = "America/New_York";
@@ -26,31 +37,12 @@
 
   systemd.services.mount-pstore.enable = false;
 
-  # Enable the X11 windowing system.
-  services.xserver = {
-    enable = false;
-
-    videoDrivers = [ "amdgpu" ];
-
-    # Enable the GNOME 3 Desktop Environment.
-    displayManager.gdm = {
-      enable = true;
-      wayland = true;
-    };
-    desktopManager.gnome.enable = true;
-  };
-  services.gnome.core-utilities.enable = false;
-
   # Configure keymap in X11
   # services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e";
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
-
-  # Enable sound.
-  sound.enable = false;
-  hardware.pulseaudio.enable = false;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
