@@ -1,20 +1,8 @@
 .DS_Store
 
-.config/coc/*
-!.config/coc/extensions
-.config/coc/extensions/*
-!.config/coc/extensions/*.json
+hosts/_common/config/tmuxinator/rise*
 
-.config/nvim/.netrwhist
-.config/nvim/autoload/plug.vim.old
-.config/nvim/blackvenv/
-.config/nvim/plugged/
-.config/nvim/spell/
-.config/nvim/undodir/
+result
+state.file
 
-.config/tmuxinator/rise*
-
-.tmux/plugins
-.tmux/resurrect
-
-
+.*priv
