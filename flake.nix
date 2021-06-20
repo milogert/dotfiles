@@ -98,5 +98,15 @@
           };
         };
       };
+
+      nixosConfigurations = {
+        rig = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = mkNixosConfig {
+            host = "rig";
+            user = "milo";
+          };
+        };
+      };
     };
 }
