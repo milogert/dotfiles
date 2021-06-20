@@ -29,7 +29,8 @@ rec {
 
   environment.variables = {
     EDITOR = "nvim";
-    MANPAGER = "sh -c 'col -b | bat -l man -p'";
+    MANPAGER = "nvim +Man!";
+    MANWIDTH = "999";
     NPM_TOKEN = "`cat $HOME/.npmrc 2>/dev/null | grep authToken | tr \"=\" \"\\n\" | tail -n 1`";
     PATH = builtins.concatStringsSep ":" [
       "/usr/local/sbin"

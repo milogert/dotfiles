@@ -33,6 +33,7 @@ rec {
     clinfo
     firefox
     flatpak
+    gnome.dconf-editor
     gnome.gnome-tweaks
     gnome.nautilus
     gnomeExtensions.appindicator

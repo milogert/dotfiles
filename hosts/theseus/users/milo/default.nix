@@ -12,6 +12,7 @@ in rec {
     (common_dir + /home/default.nix)
     ./sway.nix
     ./waybar.nix
+    #./desktop.nix
   ];
 
   home.stateVersion = "21.05";

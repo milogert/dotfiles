@@ -18,7 +18,6 @@ in rec {
 
     localVariables = {
       EDITOR = "nvim";
-      MANPAGER = "col -b | bat -l man -p";
     };
 
     envExtra = ''
