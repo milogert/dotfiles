@@ -47,7 +47,15 @@ _worktop-build:
 _worktop-switch:
 	./result/sw/bin/darwin-rebuild switch --flake ".#worktop"
 
-worktop: install_requirements _worktop-build _worktop-switch
+worktop: install_requirements worktop-build worktop-switch
+
+_rig-build:
+	nix build ".#nixosConfigurations.rig.config.system.build.toplevel"
+
+_rig-switch:
+	sudo nixos-rebuild switch --flake ".#rig"
+
+_rig: rig-build rig-switch
 
 update: install_requirements
 	nix flake update
