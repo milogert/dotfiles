@@ -5,9 +5,9 @@
     #  "1.0.0.1"
     #  "8.8.8.8"
     #];
-    #computerName = "theseus";
-    hostName = "theseus"; # Define your hostname.
-    #localHostName = "theseus";
+    #computerName = "rig";
+    hostName = "rig"; # Define your hostname.
+    #localHostName = "rig";
     #knownNetworkServices = [
     #  "USB 10/100/1000 LAN"
     #  "Wi-Fi"
