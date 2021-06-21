@@ -70,6 +70,7 @@ rec {
     exa
     findutils
     fzf
+    gh
     gitAndTools.delta
     gitAndTools.gh
     gnumake
@@ -81,9 +82,7 @@ rec {
     neovim
     nix-prefetch-git
     procs # https://github.com/dalance/procs
-    #python3Full
     python-with-packages
-    qmk
     rename
     ripgrep
     rnix-lsp

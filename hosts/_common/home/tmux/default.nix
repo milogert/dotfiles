@@ -35,9 +35,9 @@ in rec {
       unbind-key C-b
       bind-key C-Space send-prefix
 
-  # Set the default shell.
-  set-option -g default-shell ${pkgs.zsh}/bin/zsh
-  set-option -ga terminal-overrides ",xterm-256color:Tc"
+      # Set the default shell.
+      set-option -g default-shell ${pkgs.zsh}/bin/zsh
+      set-option -ga terminal-overrides ",xterm-256color:Tc"
 
       # Swap layout switch and previous buffer keys.
       unbind Space
@@ -52,33 +52,26 @@ in rec {
       unbind r
       bind r source-file ~/.config/tmux/tmux.conf \; display "tmux config reloaded"
 
-  # Quick pane cycling
-  unbind ^A
-  bind ^A select-pane -t :.+
+      # Set window notifications
+      setw -g monitor-activity on
+      set -g visual-activity on
 
-  # Set window notifications
-  setw -g monitor-activity on
-  set -g visual-activity on
+      # Start window numbering at 1 for easier switching.
+      setw -g pane-base-index 1
+      bind | split-window -h -c "#{pane_current_path}"
+      bind - split-window -v -c "#{pane_current_path}"
 
-  # Start window numbering at 1 for easier switching.
-  setw -g pane-base-index 1
-  bind | split-window -h -c "#{pane_current_path}"
-  bind - split-window -v -c "#{pane_current_path}"
+      # Allow mousewheel scrolling.
+      set-option -g mouse on
+      #set -g mode-mouse on
+      #set -g mouse-select-window on
+      #set -g mouse-select-pane on
+      unbind -T copy-mode-vi MouseDragEnd1Pane
+      bind-key -T copy-mode-vi v send-keys -X begin-selection
+      bind-key -T copy-mode-vi y send-keys -X copy-selection
 
-  # Allow mousewheel scrolling.
-  set-option -g mouse on
-  #set -g mode-mouse on
-  #set -g mouse-select-window on
-  #set -g mouse-select-pane on
-  unbind -T copy-mode-vi MouseDragEnd1Pane
-  bind-key -T copy-mode-vi v send-keys -X begin-selection
-  bind-key -T copy-mode-vi y send-keys -X copy-selection
-
-  # Focus events
-  set -g focus-events on
-
-  # Focus last session when exiting a session totally.
-  set-hook session-closed 'switch-client -l'
+      # Focus last session when exiting a session totally.
+      set-hook session-closed 'switch-client -l'
 
       ## Enable clipboard interactivity
       #set -g set-clipboard on
@@ -88,7 +81,7 @@ in rec {
       #set -g visual-activity on
 
       ## Update files on focus (using for neovim)
-      #set -g focus-events on
+      set -g focus-events on
 
       ## macOS Command+K (Clear scrollback buffer)
       #bind -n C-k clear-history

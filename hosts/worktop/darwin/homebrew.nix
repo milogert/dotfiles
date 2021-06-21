@@ -12,39 +12,40 @@
 
   homebrew.brews = [
     "awscli"
+    "gnu-sed"
+    "gnupg@2.2"
     "mas"
     "openvpn"
-    "postgres"
-    "gnupg@2.2"
-    #"zsh-completions"
     "pinentry-mac"
-    "gnu-sed"
+    "postgres"
+    #"zsh-completions"
 
     # REMOVE THESE ENVENTUALLY
     "node@14"
   ];
 
   homebrew.casks = [
-    #"deckset"
+    "1password"
     "alacritty"
+    "cloudapp"
     "docker"
     "firefox-developer-edition"
     "flux"
-    "joplin"
-    #"font-hack-nerd-font"
-    #"font-lilex"
     "google-chrome"
     "insomnia"
-    #"oversight"
-    #"pgadmin4"
+    "joplin"
+    "microsoft-edge"
+    "muzzle"
+    "postgres"
     "postico"
     "slack"
     "spotify"
     "zoom"
-    "1password"
-    "postgres"
-    "microsoft-edge"
-    "cloudapp"
+    #"deckset"
+    #"font-hack-nerd-font"
+    #"font-lilex"
+    #"oversight"
+    #"pgadmin4"
   ];
 
   homebrew.masApps = {
