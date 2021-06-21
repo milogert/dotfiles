@@ -4,7 +4,7 @@ rec {
   imports = [
     ./configuration.nix
     ./hardware-configuration.nix
-    ../_common/default.nix
+    ../_common/default-headless.nix
     ./networking.nix
     ./services.nix
     #../_common/services.nix
