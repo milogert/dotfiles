@@ -23,6 +23,9 @@ set rtp+=/usr/local/bin/fzf
 let g:any_jump_search_prefered_engine = 'ag'
 let g:any_jump_results_ui_style = 'filename_last'
 
+" Opening new files
+map gF :e <cfile><CR>
+
 " CoC.nvim
 nmap <silent> <leader>aj <Plug>(coc-diagnostic-next)
 nmap <silent> <leader>ak <Plug>(coc-diagnostic-prev)

@@ -1,21 +1,53 @@
-all:
+HOST=${HOSTNAME}
+
+define usage
+@echo "Usage:"
+@echo "  config"
+@echo "    Requires that HOSTNAME be set. Configures that machine."
+@echo "  install_requirements"
+@echo "    Installs any missing requirements, used on nix-darwin."
+@echo "  update"
+@echo "    Updates the flake.lock file so new versions can be installed."
+@echo
+@echo "Anything prefixed with '_' is internal, but can be run separately if\nyou need granular output."
+endef
+
+all: help
+
+help:
+	$(usage)
+
+check:
+ifeq (${HOST},)
+	@echo "\033[0;31mCall make with \033[1;34mHOSTNAME=your_host make config\033[0;31m instead.\033[0m"
+	exit 1
+else
+	@echo "\033[0;32mChecks passed for ${HOST}, proceeding with build and switch\033[0m"
+endif
+
+config: check ${HOST}
+	@echo "\033[0;32mDone configuring ${HOST}\033[0m"
+	@echo "\033[0;32m  Run \033[1;34mmake update && make config\033[0;32m if your programs are out of date\033[0m"
 
 install_requirements:
 	./installers/homebrew
 	./installers/nix
 
-theseus-build:
+_theseus-build:
 	nix build ".#nixosConfigurations.theseus.config.system.build.toplevel"
 
-theseus-switch:
+_theseus-switch:
 	sudo nixos-rebuild switch --flake ".#theseus"
 
-theseus: theseus-build theseus-switch
+theseus: _theseus-build _theseus-switch
 
-worktop-build:
+_worktop-build:
 	nix build ".#darwinConfigurations.worktop.system" --experimental-features "nix-command flakes"
 
-worktop-switch:
+_worktop-switch:
 	./result/sw/bin/darwin-rebuild switch --flake ".#worktop"
 
-worktop: install_requirements worktop-build worktop-switch
+worktop: install_requirements _worktop-build _worktop-switch
+
+update: install_requirements
+	nix flake update

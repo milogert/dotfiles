@@ -50,6 +50,7 @@
           (./. + "/hosts/${host}/default.nix")
           home-manager.darwinModules.home-manager
           {
+            environment.variables.HOSTNAME = host;
             nixpkgs = nixpkgsConfig;
             users.users.${user}.home = "/Users/${user}";
             home-manager.useUserPackages = true;
@@ -67,6 +68,7 @@
           (./. + "/hosts/${host}/default.nix")
           home-manager.nixosModules.home-manager
           ({ pkgs, ... }: {
+            environment.variables.HOSTNAME = host;
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
             users.users.${user} = import (./. + "/hosts/${host}/users/${user}/config.nix")
               { inherit pkgs user; };

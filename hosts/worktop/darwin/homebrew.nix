@@ -51,6 +51,7 @@
   homebrew.masApps = {
     Kindle = 405399194;
     Xcode = 497799835;
+    "Typewriter for Markdown" = 1556419263;
   };
 
   homebrew.extraConfig = ''

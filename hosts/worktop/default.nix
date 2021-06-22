@@ -9,11 +9,22 @@ rec {
     ./networking.nix
   ];
 
+  # This goes here since it's different between nixos and darwin.
+  fonts.enableFontDir = true;
+
+  # This is nix-darwin specific.
   system.stateVersion = 4;
   users.nix.configureBuildUsers = true;
   services.nix-daemon.enable = true;
-  #services.activate-system.enable = true;
 
-  # This is required here for nix?.
-  programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+
+    #shellInit = ''
+    #  alias ll="exa -l -g --git --color always --icons -a -s type";
+    #  alias ls="exa --color auto --icons -a -s type";
+    #'';
+
+    promptInit = "";
+  };
 }
