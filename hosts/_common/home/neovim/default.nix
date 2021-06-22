@@ -24,7 +24,7 @@ in rec {
       else
         rm -rf ${xdg.configHome}/coc/
         mkdir ${xdg.configHome}/coc/
-        cp -r ${cocConfig}* ${xdg.configHome}/coc/
+        cp -r -p ${cocConfig}* ${xdg.configHome}/coc/
         echo "!! To install all the Coc.nvim extensions run:"
         echo "    pushd ~/.config/coc/extensions; npm install; popd"
       fi
