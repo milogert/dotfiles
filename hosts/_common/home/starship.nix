@@ -57,6 +57,7 @@
       time = {
         disabled = false;
       };
+      command_timeout = 1000;
     };
   };
 }

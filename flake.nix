@@ -43,43 +43,40 @@
         ];
       };
 
-      mkDarwinConfig =
+      mkCommonConfig =
         { host
         , user
         }: [
           (./. + "/hosts/${host}/default.nix")
-          home-manager.darwinModules.home-manager
-          {
+          ({ pkgs, ... }: {
             environment.variables.HOSTNAME = host;
             nixpkgs = nixpkgsConfig;
-            users.users.${user}.home = "/Users/${user}";
+            home-manager.verbose = false;
             home-manager.useUserPackages = true;
             home-manager.users.${user} = with self.homeManagerModules; {
               imports = [ (./. + "/hosts/${host}/users/${user}") ];
               nixpkgs.overlays = nixpkgsConfig.overlays;
             };
-          }
+            users.users.${user} =
+              import (./. + "/hosts/${host}/users/${user}/config.nix")
+                { inherit pkgs user; };
+          })
+        ];
+
+      mkDarwinConfig = { host, user }:
+        (mkCommonConfig { inherit host user; }) ++ [
+          home-manager.darwinModules.home-manager
         ];
 
       mkNixosConfig =
         { host
         , user
-        }: [
-          (./. + "/hosts/${host}/default.nix")
+        }: (mkCommonConfig { inherit host user; }) ++ [
           home-manager.nixosModules.home-manager
-          ({ pkgs, ... }: {
-            environment.variables.HOSTNAME = host;
-            system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
-            users.users.${user} = import (./. + "/hosts/${host}/users/${user}/config.nix")
-              { inherit pkgs user; };
-            nixpkgs = nixpkgsConfig;
-            home-manager.verbose = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.${user} = with self.homeManagerModules; {
-              imports = [ (./. + "/hosts/${host}/users/${user}") ];
-              nixpkgs = nixpkgsConfig;
-            };
-          })
+          {
+            system.configurationRevision =
+              nixpkgs.lib.mkIf (self ? rev) self.rev;
+          }
         ];
     in rec {
       darwinConfigurations = {

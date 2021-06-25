@@ -48,14 +48,8 @@ windows:
   - home:
   - spotify: spt
   - lazydocker: lazydocker
-  - zprezto:
-      layout: even-horizontal
-      root: ~/.zprezto
-      panes:
-        - nvim
-        - ls
   - dotfiles:
-      layout: even-horizontal
+      layout: main-horizontal
       root: ~/.dotfiles
       panes:
         - nvim

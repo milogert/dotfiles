@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, host, ... }:
 
 rec {
   imports = [
@@ -9,6 +9,7 @@ rec {
     ./networking.nix
   ];
 
+  #environment.variables.HOSTNAME = "worktop";
   # This goes here since it's different between nixos and darwin.
   fonts.enableFontDir = true;
 
