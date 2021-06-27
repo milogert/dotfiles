@@ -1,0 +1,4 @@
+[stores]
+  [stores.default]
+    style_path = "~/.config/ripasso/style.toml"
+

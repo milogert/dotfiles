@@ -61,6 +61,9 @@ in rec {
         unsetopt XTRACE
         exec 2>&3 3>&-
       fi
+
+      alias ll="exa -l -g --git --color always --icons -a -s type";
+      alias ls="exa --color auto --icons -a -s type";
       ## initExtra end
     '';
 

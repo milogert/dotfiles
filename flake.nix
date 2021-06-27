@@ -55,7 +55,7 @@
             home-manager.useUserPackages = true;
             home-manager.users.${user} = with self.homeManagerModules; {
               imports = [ (./. + "/hosts/${host}/users/${user}") ];
-              nixpkgs.overlays = nixpkgsConfig.overlays;
+              nixpkgs = nixpkgsConfig;
             };
             users.users.${user} =
               import (./. + "/hosts/${host}/users/${user}/config.nix")

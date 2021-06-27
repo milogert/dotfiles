@@ -45,9 +45,6 @@ in rec {
       unbind b
       bind b next-layout
 
-
-
-
       # Force a reload of the config file
       unbind r
       bind r source-file ~/.config/tmux/tmux.conf \; display "tmux config reloaded"
@@ -105,13 +102,13 @@ in rec {
       set -g status-interval 1
 
       ## Set the position of window lists.
-      set -g status-justify centre # [left | centre | right]
+      set -g status-justify left # [left | centre | right]
 
       ## Set Vi style keybinding in the status line
       set -g status-keys vi
 
       ## Set the status bar position
-      set -g status-position top # [top, bottom]
+      set -g status-position bottom # [top, bottom]
 
       ## Set status bar background and foreground color.
       #set -g status-style fg=colour136,bg="#002b36"
@@ -122,15 +119,13 @@ in rec {
 
       ## Display the session name
       #set -g status-left "#[fg=green] ❐ #S #[default]"
-      set -g status-left " ❐ #S "
+      set -g status-left "#S@#H "
 
       ## Display the os version (Mac Os)
       #set -ag status-left " #[fg=black] #[fg=green,bright]  #(sw_vers -productVersion) #[default]"
-      set -ag status-left "  #(sw_vers -productVersion) "
 
       ## Display the battery percentage (Mac OS)
       #set -ag status-left "#[fg=green,bg=default,bright] 🔋 #(pmset -g batt | tail -1 | awk '{print $3}' | tr -d ';') #[default]"
-      set -ag status-left " 🔋 #(pmset -g batt | tail -1 | awk '{print $3}' | tr -d ';') "
 
       ## Set right side status bar length and style
       set -g status-right-length 140
@@ -138,18 +133,18 @@ in rec {
 
       ## Display the cpu load (Mac OS)
       #set -g status-right "#[fg=green,bg=default,bright]  #(top -l 1 | grep -E "^CPU" | sed 's/.*://') #[default]"
-      set -g status-right "  #(top -l 1 | grep -E "^CPU" | sed 's/.*://') "
+      set -g status-right "#(top -l 1 | grep -E "^CPU" | sed 's/.*:/  /') "
 
       ## Display the date
-      set -ag status-right "#[fg=white,bg=default]  %a %d #[default]"
+      #set -ag status-right "#[fg=white,bg=default]  %a %d #[default]"
 
       ## Display the time
       #set -ag status-right "#[fg=colour172,bright,bg=default] ⌚︎%l:%M %p #[default]"
-      set -ag status-right " ⌚︎%l:%M %p "
+      #set -ag status-right " ⌚︎%l:%M %p "
 
       ## Display the hostname
       #set -ag status-right "#[fg=cyan,bg=default] ☠ #H #[default]"
-      set -ag status-right " ☠ #H "
+      #set -ag status-right " ☠ #H "
 
       #############
       ## Windows ##

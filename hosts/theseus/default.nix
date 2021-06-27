@@ -21,6 +21,8 @@ rec {
       ll = "exa -l -g --git --color always --icons -a -s type";
       ls = "exa --color auto --icons -a -s type";
     };
+
+    promptInit = "";
   };
 
   programs.steam.enable = true;
@@ -34,6 +36,7 @@ rec {
     gnome.gnome-tweaks
     gnome.nautilus
     gnomeExtensions.appindicator
+    gnomeExtensions.caffeine
     gnomeExtensions.system-monitor
     lshw
     protontricks

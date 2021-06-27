@@ -2,11 +2,23 @@
 
 {
   xdg.desktopEntries = {
+    ripasso = {
+      name = "ripasso";
+      #icon = "org.gnome.Nautilus";
+      type = "Application";
+      exec = "alacritty -e ripasso-cursive";
+      terminal = false;
+      categories = [
+        "ConsoleOnly"
+        "X-Security"
+        "X-Passwords"
+      ];
+    };
     ranger = {
-      name = "Ranger - Home Manager";
+      name = "Ranger";
       icon = "org.gnome.Nautilus";
       type = "Application";
-      exec = "alacritty -c ranger";
+      exec = "alacritty -e ranger";
       terminal = false;
       categories = [
         "ConsoleOnly"

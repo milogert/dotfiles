@@ -49,7 +49,7 @@ windows:
   - spotify: spt
   - lazydocker: lazydocker
   - dotfiles:
-      layout: main-horizontal
+      layout: main-vertical
       root: ~/.dotfiles
       panes:
         - nvim

@@ -43,6 +43,17 @@
         libva
       ] ++ lib.optionals config.services.pipewire.enable [ pipewire ];
     };
-    pulseaudio.support32Bit = true;
+
+    pulseaudio = {
+      enable = true;
+      package = pkgs.pulseaudioFull;
+      support32Bit = true;
+      extraModules = [ pkgs.pulseaudio-modules-bt ];
+    };
+
+    bluetooth = {
+      enable = true;
+      settings.General.Enable = "Source,Sink,Media,Socket";
+    };
   };
 }

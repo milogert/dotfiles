@@ -5,26 +5,34 @@
 
 let
   common_dir = ../../../_common;
-  xdg = import (common_dir + /home/xdg.nix) { inherit config; };
+  xdg_common = import (common_dir + /home/xdg.nix) { inherit config; };
 in rec {
-  inherit xdg;
+  xdg = {
+    configFile = {
+      ripasso = {
+        source = ./config/ripasso;
+        target = "ripasso";
+        recursive = true;
+      };
+
+      tmuxinator = {
+        source = common_dir + "/config/tmuxinator/";
+        target = "tmuxinator";
+        recursive = true;
+      };
+    };
+  } // xdg_common;
+
   imports = [
     (common_dir + /home/default.nix)
     ./sway.nix
     ./waybar.nix
-    #./desktop.nix
+    ./desktop.nix
   ];
 
   home.stateVersion = "21.05";
 
   programs.git.signing.key = "7291258F2B7C086E";
-
-  home.file = {
-    "${xdg.configHome}/tmuxinator/" = {
-      recursive = true;
-      source = common_dir + "/config/tmuxinator/";
-    };
-  };
 
   home.packages = with pkgs; [
     calibre
@@ -34,7 +42,6 @@ in rec {
     joplin-desktop
     nodejs
     ripasso-cursive
-    ruby
     spotify
     wyvern
     yarn
