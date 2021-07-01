@@ -22,7 +22,7 @@
     useDHCP = false;
     interfaces.wlp6s0.useDHCP = true;
     interfaces.enp9s0.useDHCP = true;
-    enableIPv6 = false;
+    enableIPv6 = true;
 
     # Configure network proxy if necessary
     #proxy.default = "http://user:password@proxy:port/";
