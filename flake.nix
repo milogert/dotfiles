@@ -63,8 +63,10 @@
           })
         ];
 
-      mkDarwinConfig = { host, user }:
-        (mkCommonConfig { inherit host user; }) ++ [
+      mkDarwinConfig =
+        { host
+        , user
+        }: (mkCommonConfig { inherit host user; }) ++ [
           home-manager.darwinModules.home-manager
         ];
 
