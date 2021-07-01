@@ -6,11 +6,14 @@
 let
   common_dir = ../../../_common;
   xdg = import (common_dir + /home/xdg.nix) { inherit config; };
+  direnv = import ./direnv.nix { inherit config; };
 in rec {
   inherit xdg;
   imports = [
     (common_dir + /home/default.nix)
   ];
+
+  programs.direnv = direnv;
 
   home.stateVersion = "21.05";
 

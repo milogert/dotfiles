@@ -9,11 +9,11 @@
     userName  = "Milo Gertjejansen";
     userEmail = "milo@milogert.com";
 
-    #signing = {
-    #  # NOTE: `key` is set by user home files
-    #  signByDefault = true;
-    #  gpgPath = "gpg";
-    #};
+    signing = {
+      # NOTE: `key` is set by user home files
+      signByDefault = true;
+      gpgPath = "gpg";
+    };
 
     aliases = {
       a = "add";
@@ -36,7 +36,8 @@
       sw = "switch";
       unpushed = "log @{u}";
       wc = "whatchanged";
-      wip = "rebase -i @{u}";
+      #wip = "rebase -i @{u}";
+      wip = "for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads";
       zap = "fetch -p";
     };
 
@@ -46,27 +47,17 @@
       };
 
       core = {
-        editor = "vim";
+        editor = "nvim";
         excludesfile = "$HOME/.config/git/ignore";
         #hooksPath = "$HOME/.config/git/hooks";
         pager = "delta";
       };
 
       delta = {
-        features = "unobtrusive-line-numbers decorations";
-        whitespace-error-style = "22 reverse";
-        syntax-theme = "Monokai Extended Bright";
-      };
-
-      "delta \"unobtrusive-line-numbers\"" = {
+        features = "decorations";
         line-numbers = true;
-        line-numbers-minus-style = "#444444";
-        line-numbers-zero-style = "#444444";
-        line-numbers-plus-style = "#444444";
-        line-numbers-left-format = "{nm:>4}┊";
-        line-numbers-right-format = "{np:>4}│";
-        line-numbers-left-style = "#444444";
-        line-numbers-right-style = "#444444";
+        whitespace-error-style = "22 reverse";
+        syntax-theme = "srcery";
       };
 
       "delta \"decorations\"" = {
@@ -93,7 +84,7 @@
       };
 
       pull = {
-        rebase = true;
+        rebase = false;
       };
     };
   };

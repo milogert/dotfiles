@@ -70,8 +70,8 @@
   # Trackpad - Enable tap to click for current user and the login screen
   system.defaults.NSGlobalDomain."com.apple.mouse.tapBehavior" = 1;
 
-  # Trackpad - Disable natural scrolling
-  system.defaults.NSGlobalDomain."com.apple.swipescrolldirection" = false;
+  # Mouse - Enable natural scrolling
+  system.defaults.NSGlobalDomain."com.apple.swipescrolldirection" = true;
 
   # Trackpad: Enable trackpad tap to click
   system.defaults.trackpad.Clicking = true;
