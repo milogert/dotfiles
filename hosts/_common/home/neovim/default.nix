@@ -80,7 +80,6 @@ in rec {
       vim-nix
       vim-pug
       vim-terraform
-      markdown-preview-nvim
     ];
 
     viAlias = true;

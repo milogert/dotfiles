@@ -6,8 +6,7 @@ rec {
     ./hardware-configuration.nix
     ../_common/default-headless.nix
     ./networking.nix
-    ./services.nix
-    #./overlays.nix
+    ./services
     #../_common/services.nix
   ];
 
