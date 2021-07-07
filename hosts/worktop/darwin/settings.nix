@@ -17,8 +17,9 @@
   # Finder - Show filename extensions.
   system.defaults.NSGlobalDomain.AppleShowAllExtensions = true;
 
-  # System - Automatically show scroll bars
-  system.defaults.NSGlobalDomain.AppleShowScrollBars = "Automatic";
+  # System - Show scrollbars only when scrolling
+  #   WhenScrolling, Automatic, Always
+  system.defaults.NSGlobalDomain.AppleShowScrollBars = "WhenScrolling";
 
   # System - What temperature unit to use
   system.defaults.NSGlobalDomain.AppleTemperatureUnit = "Celsius";
@@ -115,8 +116,8 @@
   # Dock - Minimize apps to their icon
   system.defaults.dock.minimize-to-application = true;
 
-  # Dock - Only show open applications in the dock
-  system.defaults.dock.static-only = true;
+  # Dock - Show pinned and open applications in the dock
+  system.defaults.dock.static-only = false;
 
   # Finder - Disable the warning when changing a file extension
   system.defaults.finder.FXEnableExtensionChangeWarning = false;
