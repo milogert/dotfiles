@@ -37,6 +37,7 @@
       nixpkgsConfig = with inputs; {
         config = {
           allowUnfree = true;
+          firefox.drmSupport = true;
         };
         overlays = [
           neovim-nightly-overlay.overlay
@@ -51,7 +52,7 @@
           ({ pkgs, ... }: {
             environment.variables.HOSTNAME = host;
             nixpkgs = nixpkgsConfig;
-            home-manager.verbose = false;
+            home-manager.verbose = true;
             home-manager.useUserPackages = true;
             home-manager.users.${user} = with self.homeManagerModules; {
               imports = [ (./. + "/hosts/${host}/users/${user}") ];

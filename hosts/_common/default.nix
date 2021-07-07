@@ -37,7 +37,7 @@ rec {
       "$HOME/.yarn/bin"
       "$PATH"
     ];
-    RIPGREP_CONFIG_PATH = "$HOME/.ripgreprc";
+    #RIPGREP_CONFIG_PATH = "$HOME/.ripgreprc";
     SHELL = "${pkgs.zsh}/bin/zsh";
     TERM = "xterm-256color";
   };

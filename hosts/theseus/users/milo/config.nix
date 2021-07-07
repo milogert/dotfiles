@@ -6,5 +6,8 @@
   description = "Milo Gertjejansen";
   createHome = true;
   isNormalUser = true;
-  extraGroups = [ "wheel" ];
+  extraGroups = [
+    "wheel"
+    "networkmanager"
+  ];
 }
