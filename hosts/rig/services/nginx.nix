@@ -65,8 +65,14 @@ rec {
         ];
 
         locations."/" = {
-          proxyPass = "http://localhost:8080";
+          proxyPass = "http://localhost:8083";
         };
+      };
+
+      "cloud.milogert.com" = {
+        listen = [
+          { addr = "0.0.0.0"; port = 443; }
+        ];
       };
     };
   };

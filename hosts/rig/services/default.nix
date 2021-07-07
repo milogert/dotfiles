@@ -2,7 +2,8 @@
 
 rec {
   imports = [
-    #./calibre-server.nix
+    ./calibre-web.nix
+    ./nextcloud.nix
     ./nginx.nix
   ];
 

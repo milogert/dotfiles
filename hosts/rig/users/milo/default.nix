@@ -27,7 +27,7 @@ in rec {
     cargo
     elixir
     nodejs
-    ripasso-cursive
+    #ripasso-cursive
     ruby
     yarn
   ];
