@@ -49,5 +49,13 @@ _worktop-switch:
 
 worktop: install_requirements _worktop-build _worktop-switch
 
-update: install_requirements
+_rig-build:
+	nix build ".#nixosConfigurations.rig.config.system.build.toplevel"
+
+_rig-switch:
+	sudo nixos-rebuild switch --flake ".#rig"
+
+rig: _rig-build _rig-switch
+
+update:
 	nix flake update
