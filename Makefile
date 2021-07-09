@@ -51,5 +51,7 @@ theseus: _nixos-build _nixos-switch
 
 worktop: install_requirements _nix-darwin-build _nix-darwin-switch
 
-update: install_requirements
+rig: _nixos-build _nixos-switch
+
+update:
 	nix flake update

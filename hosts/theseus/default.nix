@@ -45,8 +45,10 @@ rec {
     flatpak
     gnome.dconf-editor
     gnome.gnome-tweaks
-    gnome.nautilus
+    gnome.gnome-keyring
     gnome.gnome-system-monitor
+    gnome.nautilus
+    gnome.seahorse
     gnomeExtensions.appindicator
     gnomeExtensions.caffeine
     gnomeExtensions.vitals

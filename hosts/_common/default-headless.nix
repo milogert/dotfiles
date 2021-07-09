@@ -3,12 +3,11 @@
 rec {
   imports = [
     ./aliases.nix
-    ./fonts.nix
   ];
 
   nix.useSandbox = false;
   nix.gc.automatic = true;
-  nix.gc.options = "--delete-older-than 7d";
+  nix.gc.options = "--delete-older-than 30d";
   nix.package = pkgs.nixUnstable;
   nix.extraOptions = "experimental-features = nix-command flakes ca-references";
   nix.trustedUsers = [ "root" "@admin" ];
@@ -30,6 +29,7 @@ rec {
   environment.variables = {
     EDITOR = "nvim";
     MANPAGER = "nvim +Man!";
+    MANWIDTH = "999";
     NPM_TOKEN = "`cat $HOME/.npmrc 2>/dev/null | grep authToken | tr \"=\" \"\\n\" | tail -n 1`";
     PATH = builtins.concatStringsSep ":" [
       "/usr/local/sbin"
@@ -37,7 +37,7 @@ rec {
       "$HOME/.yarn/bin"
       "$PATH"
     ];
-    #RIPGREP_CONFIG_PATH = "$HOME/.ripgreprc";
+    RIPGREP_CONFIG_PATH = "$HOME/.ripgreprc";
     SHELL = "${pkgs.zsh}/bin/zsh";
     TERM = "xterm-256color";
   };
@@ -52,7 +52,6 @@ rec {
   let
     my-python-packages = python-packages: with python-packages; [
       pip
-      #virutalenv
     ];
     python-with-packages = python38.withPackages my-python-packages;
   in [
@@ -60,7 +59,6 @@ rec {
     bash
     bash-completion
     bat
-    browserpass
     cachix
     cargo
     coreutils
@@ -69,7 +67,6 @@ rec {
     exa
     findutils
     fzf
-    gh
     gitAndTools.delta
     gitAndTools.gh
     gnumake

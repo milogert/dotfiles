@@ -24,7 +24,7 @@ in rec {
       else
         rm -rf ${xdg.configHome}/coc/
         mkdir ${xdg.configHome}/coc/
-        cp -r ${cocConfig}* ${xdg.configHome}/coc/
+        cp -r -p ${cocConfig}* ${xdg.configHome}/coc/
         echo "!! To install all the Coc.nvim extensions run:"
         echo "    pushd ~/.config/coc/extensions; npm install; popd"
       fi
@@ -41,13 +41,12 @@ in rec {
 
       # Tooling
       coc-nvim
-      #fzf
       fzf-vim
       vim-arpeggio
+      vim-commentary
       vim-dirvish
       vim-dirvish-git
       vim-fugitive
-      #vim-matchit
       vim-nuuid
       vim-obsession
       vim-signify
@@ -55,12 +54,8 @@ in rec {
       vim-tmux-navigator
       vim-unimpaired
       vimux
-      vim-commentary
 
       # Themes
-      #moonlight-nvim
-      #nord-nvim
-      #onedark-vim
       srcery-vim
 
       # UI
@@ -80,7 +75,6 @@ in rec {
       vim-nix
       vim-pug
       vim-terraform
-      markdown-preview-nvim
     ];
 
     viAlias = true;
