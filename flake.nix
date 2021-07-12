@@ -34,39 +34,41 @@
         };
       };
 
-      mkCommonConfig =
-        { host
-        , user
-        }: [
-          (./. + "/hosts/${host}/default.nix")
-          ({ pkgs, ... }: {
-            environment.variables.HOSTNAME = host;
-            nixpkgs = nixpkgsConfig;
-            home-manager.verbose = false;
-            home-manager.useUserPackages = true;
-            home-manager.users.${user} = with self.homeManagerModules; {
-              imports = [ (./. + "/hosts/${host}/users/${user}") ];
-              nixpkgs = nixpkgsConfig;
-            };
-            users.users.${user} =
-              import (./. + "/hosts/${host}/users/${user}/config.nix")
-                { inherit pkgs user; };
-          })
-        ];
+      mkUserConfig = { pkgs, host, user }: let
+        user_path = (./. + "/hosts/${host}/users/${user}");
+        config_path = (user_path + "/config.nix");
+        config = import config_path { inherit pkgs user; };
+      in {
+        home-manager.users.${user} = with self.homeManagerModules; {
+          imports = [ user_path ];
+          nixpkgs = nixpkgsConfig;
+        };
+        users.users.${user} = config;
+      };
 
-      mkDarwinConfig = { host, user }:
-        (mkCommonConfig { inherit host user; }) ++ [
+      mkCommonConfig = { host, users }: let
+        mkUserConfigWrapped = user:
+          ({ pkgs, ... }: mkUserConfig { inherit pkgs host user; });
+      in [
+        (./. + "/hosts/${host}/default.nix")
+        ({ pkgs, ... }: {
+          environment.variables.HOSTNAME = host;
+          nixpkgs = nixpkgsConfig;
+          home-manager.verbose = false;
+          home-manager.useUserPackages = true;
+        })
+      ] ++ (builtins.map mkUserConfigWrapped users);
+
+      mkDarwinConfig = { host, users }:
+        (mkCommonConfig { inherit host users; }) ++ [
           home-manager.darwinModules.home-manager
         ];
 
-      mkNixosConfig =
-        { host
-        , user
-        }: (mkCommonConfig { inherit host user; }) ++ [
+      mkNixosConfig = { host, users }:
+        (mkCommonConfig { inherit host users; }) ++ [
           home-manager.nixosModules.home-manager
           {
-            system.configurationRevision =
-              nixpkgs.lib.mkIf (self ? rev) self.rev;
+            system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
           }
         ];
     in rec {
@@ -75,7 +77,7 @@
           inputs = inputs;
           modules = mkDarwinConfig {
             host = "worktop";
-            user = "milo";
+            users = ["milo"];
           };
         };
       };
@@ -85,7 +87,7 @@
           system = "x86_64-linux";
           modules = mkNixosConfig {
             host = "theseus";
-            user = "milo";
+            user = ["milo"];
           };
         };
 
@@ -93,7 +95,7 @@
           system = "x86_64-linux";
           modules = mkNixosConfig {
             host = "rig";
-            user = "milo";
+            user = ["milo"];
           };
         };
       };
