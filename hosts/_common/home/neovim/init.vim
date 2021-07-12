@@ -126,10 +126,12 @@ noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
 " Folding.
-set foldmethod=indent   " Fold based on indent.
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+"set foldmethod=indent   " Fold based on indent.
 set foldnestmax=10      " Deepest fold is 10 levels.
 set nofoldenable        " Don't fold by default.
-set foldlevel=1         " This is just what I use.
+"set foldlevel=1         " This is just what I use.
 
 " Helpful remaps.
 inoremap jj <Esc>
@@ -342,6 +344,28 @@ function! GetCommandFrequency()
 endf
 
 " Skeleton configs
-autocmd FileType gitcommit 0r ~/.config/nvim/skeletons/gitcommit.skeleton
+autocmd FileType gitcommit 0r ~/.config/nvim/skkeletons/gitcommit.skeleton
 
+" nvim-treesitter config.
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  --ignore_install = { "javascript" }, -- List of parsers to ignore installing
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = {  -- list of language that will be disabled
+    },
+  },
 
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+  },
+
+}
+EOF

@@ -42,6 +42,7 @@ in rec {
       # Tooling
       coc-nvim
       fzf-vim
+      nvim-treesitter
       vim-arpeggio
       vim-commentary
       vim-dirvish

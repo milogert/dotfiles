@@ -30,4 +30,14 @@
       sha256 = "1lzpr5x7zvpc252j6ipp2rfjfd25a0mrkikq8vdsbxbamp8cyqpb";
     };
   };
+
+  nvim-treesitter = pkgs.vimUtils.buildVimPlugin {
+    name = "nvim-treesitter";
+    src = pkgs.fetchFromGitHub {
+      owner = "nvim-treesitter";
+      repo = "nvim-treesitter";
+      rev = "c37e79803e21abfae960174a6c661da166c87e8b";
+      sha256 = "1dd4qmv6yrmx1b5qdz5yc5sipgag3qkgrkkw0y7wnvvw42vgz916";
+    };
+  };
 }
