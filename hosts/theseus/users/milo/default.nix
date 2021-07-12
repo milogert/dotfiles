@@ -5,24 +5,10 @@
 
 let
   common_dir = ../../../_common;
-  xdg_common = import (common_dir + /home/xdg.nix) { inherit config; };
+  xdg = import (common_dir + /home/xdg.nix) { inherit config; };
+  direnv = import ./direnv.nix { inherit config; };
 in rec {
-  xdg = {
-    configFile = {
-      ripasso = {
-        source = ./config/ripasso;
-        target = "ripasso";
-        recursive = true;
-      };
-
-      tmuxinator = {
-        source = common_dir + "/config/tmuxinator/";
-        target = "tmuxinator";
-        recursive = true;
-      };
-    };
-  } // xdg_common;
-
+  inherit xdg;
   imports = [
     (common_dir + /home/default.nix)
     ./sway.nix
@@ -32,7 +18,27 @@ in rec {
 
   home.stateVersion = "21.05";
 
+  programs.direnv = direnv;
+
   programs.git.signing.key = "7291258F2B7C086E";
+
+  home.file = {
+    "${xdg.configHome}/tmuxinator/" = {
+      recursive = true;
+      source = common_dir + "/config/tmuxinator/";
+    };
+  };
+
+  services.spotifyd = {
+    enable = true;
+    package = pkgs.spotifyd;
+
+    settings.global = {
+      username = "milo@milogert.com";
+      password_cmd = "jq -r \".spotifyd.password\" /etc/nixos/secrets.nix"; 
+      device_name = "theseus";
+    };
+  };
 
   home.packages = with pkgs; [
     calibre
@@ -41,8 +47,11 @@ in rec {
     elixir
     joplin-desktop
     nodejs
-    ripasso-cursive
+    qtpass
+    #ripasso-cursive
+    ruby
     spotify
+    spotify-tui
     wyvern
     yarn
   ];

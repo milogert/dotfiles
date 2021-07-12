@@ -31,6 +31,7 @@
       nixpkgsConfig = with inputs; {
         config = {
           allowUnfree = true;
+          firefox.drmSupport = true;
         };
       };
 
@@ -54,7 +55,7 @@
         ({ pkgs, ... }: {
           environment.variables.HOSTNAME = host;
           nixpkgs = nixpkgsConfig;
-          home-manager.verbose = false;
+          home-manager.verbose = true;
           home-manager.useUserPackages = true;
         })
       ] ++ (builtins.map mkUserConfigWrapped users);

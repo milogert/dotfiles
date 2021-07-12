@@ -27,6 +27,17 @@ rec {
 
   programs.steam.enable = true;
 
+  #security.pam = {
+  #  u2f.enable = true;
+  #  services.gdm-password.text = ''
+  #    auth      required      pam_u2f.so
+  #    auth      substack      login
+  #    account   include       login
+  #    password  substack      login
+  #    session   include       login
+  #  '';
+  #};
+
   environment.systemPackages = with pkgs; [
     chromium
     clinfo
@@ -34,10 +45,13 @@ rec {
     flatpak
     gnome.dconf-editor
     gnome.gnome-tweaks
+    gnome.gnome-keyring
+    gnome.gnome-system-monitor
     gnome.nautilus
+    gnome.seahorse
     gnomeExtensions.appindicator
     gnomeExtensions.caffeine
-    gnomeExtensions.system-monitor
+    gnomeExtensions.vitals
     lshw
     protontricks
     ranger
