@@ -26,6 +26,9 @@ let g:any_jump_results_ui_style = 'filename_last'
 " Opening new files
 map gF :e <cfile><CR>
 
+" Highlight the current line.
+set cursorline
+
 " CoC.nvim
 nmap <silent> <leader>aj <Plug>(coc-diagnostic-next)
 nmap <silent> <leader>ak <Plug>(coc-diagnostic-prev)
@@ -344,7 +347,7 @@ function! GetCommandFrequency()
 endf
 
 " Skeleton configs
-autocmd FileType gitcommit 0r ~/.config/nvim/skkeletons/gitcommit.skeleton
+autocmd FileType gitcommit 0r ~/.config/nvim/skeletons/gitcommit.skeleton
 
 " nvim-treesitter config.
 lua <<EOF
