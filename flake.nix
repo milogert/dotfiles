@@ -88,7 +88,7 @@
           system = "x86_64-linux";
           modules = mkNixosConfig {
             host = "theseus";
-            user = ["milo"];
+            users = ["milo"];
           };
         };
 
@@ -96,7 +96,7 @@
           system = "x86_64-linux";
           modules = mkNixosConfig {
             host = "rig";
-            user = ["milo"];
+            users = ["milo"];
           };
         };
       };

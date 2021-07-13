@@ -10,6 +10,7 @@ let
 
 in rec {
   inherit xdg;
+  home.packages = with pkgs; [tree-sitter];
   home.file = {
     "${xdg.configHome}/nvim/" = {
       recursive = true;
