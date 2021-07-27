@@ -34,6 +34,7 @@
     "google-chrome"
     "insomnia"
     "joplin"
+    "krisp"
     "microsoft-edge"
     "muzzle"
     "postgres"
