@@ -77,7 +77,6 @@ rec {
     ncdu
     neovim
     nix-prefetch-git
-    procs # https://github.com/dalance/procs
     python-with-packages
     rename
     ripgrep
@@ -85,7 +84,6 @@ rec {
     shellcheck
     speedtest-cli
     starship
-    tokei # https://github.com/XAMPPRocky/tokei
     tree
     zsh-autosuggestions
     zsh-completions

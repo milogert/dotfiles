@@ -45,7 +45,7 @@
     };
 
     pulseaudio = {
-      enable = true;
+      enable = false;
       package = pkgs.pulseaudioFull;
       support32Bit = true;
       extraModules = [ pkgs.pulseaudio-modules-bt ];

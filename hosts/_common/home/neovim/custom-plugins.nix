@@ -40,4 +40,14 @@
       sha256 = "1dd4qmv6yrmx1b5qdz5yc5sipgag3qkgrkkw0y7wnvvw42vgz916";
     };
   };
+
+  wilder-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "wilder.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "gelguy";
+      repo = "wilder.nvim";
+      rev = "a8a2feda01b8d498b49ef133f648297959de2fa8";
+      sha256 = "0sbcgv6zw9i7mv8plv7kr14zpvd24wlbgpx1k0hdfs3wbb8md9ya";
+    };
+  };
 }

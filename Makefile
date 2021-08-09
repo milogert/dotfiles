@@ -9,11 +9,12 @@ define usage
 @echo "  update"
 @echo "    Updates the flake.lock file so new versions can be installed."
 @echo
-@echo "Anything prefixed with '_' is internal, but can be run separately if\nyou need granular output."
+@echo "Anything prefixed with '_' is internal, but can be run separately if you need granular output."
 endef
 
 all: help
 
+usage: help
 help:
 	$(usage)
 

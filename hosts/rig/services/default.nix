@@ -5,7 +5,10 @@ rec {
     ./calibre-web.nix
     ./nextcloud.nix
     ./nginx.nix
+    ./openssh.nix
   ];
+
+  systemd.services.mount-pstore.enable = false;
 
   services = {
     # This is not needed, but I'll be explicit.

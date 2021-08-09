@@ -11,7 +11,7 @@
     ];
 
     pgmanage = {
-      enable = true;
+      enable = false;
       allowCustomConnections = true;
 
       connections = {

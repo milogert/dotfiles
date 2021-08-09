@@ -56,6 +56,7 @@ in rec {
       vim-tmux-navigator
       vim-unimpaired
       vimux
+      wilder-nvim
 
       # Themes
       srcery-vim
