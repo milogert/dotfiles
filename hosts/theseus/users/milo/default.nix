@@ -45,6 +45,8 @@ in rec {
     cargo
     discord
     elixir
+    insomnia
+    joplin
     joplin-desktop
     nodejs
     qtpass
