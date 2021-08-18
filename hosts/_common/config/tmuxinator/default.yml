@@ -46,8 +46,6 @@ root: ~/
 
 windows:
   - home:
-  - spotify: spt
-  - lazydocker: lazydocker
   - dotfiles:
       layout: main-vertical
       root: ~/.dotfiles

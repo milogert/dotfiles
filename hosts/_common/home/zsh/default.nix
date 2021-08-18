@@ -67,6 +67,10 @@ in rec {
       ## initExtra end
     '';
 
+    shellAliases = {
+      find_aliases = "zsh -ixc : -o sourcetrace 2>&1 | grep -w alias";
+    };
+
     shellGlobalAliases = {
       G = "| grep";
     };

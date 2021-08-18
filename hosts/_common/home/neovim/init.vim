@@ -131,7 +131,6 @@ noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 " Folding.
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
-"set foldmethod=indent   " Fold based on indent.
 set foldnestmax=10      " Deepest fold is 10 levels.
 set nofoldenable        " Don't fold by default.
 "set foldlevel=1         " This is just what I use.
@@ -233,10 +232,9 @@ let g:fzf_action = {
 let g:ackhighlight = 1
 
 " Fugitive aliases.
-cnoreabbrev G vert<space>G
-cnoreabbrev Gstatus vert<space>Gstatus
-
-" GitGutter options.
+" cnoreabbrev G vert<space>G
+" cnoreabbrev Gstatus vert<space>Gstatus
+nmap <Leader>g :G<CR>
 
 " Netrw
 "noremap <silent> <C-n> :20Lex<CR>
