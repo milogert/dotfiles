@@ -7,7 +7,6 @@
     historyWidgetOptions = [
       "--sort"
       "--reverse"
-      #"--exact"
     ];
   };
 }

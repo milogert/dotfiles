@@ -106,7 +106,7 @@
         bold_italic = {
           style = "Bold Italic";
         };
-        size = 11.0;
+        #size = 11.0;
         # Offset is the extra space around each character. `offset.y` can be thought of
         # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
         #offset:

@@ -7,7 +7,6 @@ rec {
     ../_common/default-headless.nix
     ./networking.nix
     ./services
-    #../_common/services.nix
   ];
 
   # This is required here for nix-darwin.

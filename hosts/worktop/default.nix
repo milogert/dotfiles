@@ -9,7 +9,6 @@ rec {
     ./networking.nix
   ];
 
-  #environment.variables.HOSTNAME = "worktop";
   # This goes here since it's different between nixos and darwin.
   fonts.enableFontDir = true;
 
@@ -21,11 +20,7 @@ rec {
   programs.zsh = {
     enable = true;
 
-    #shellInit = ''
-    #  alias ll="exa -l -g --git --color always --icons -a -s type";
-    #  alias ls="exa --color auto --icons -a -s type";
-    #'';
-
+    # Disable any sort of prompt that is not Starship.
     promptInit = "";
   };
 }

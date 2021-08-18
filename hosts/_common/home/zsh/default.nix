@@ -27,12 +27,13 @@ in rec {
       fi
 
       # Custom dir hashes.
-      if [[ -d ~/git ]]; then
-        for i in $(ls ~/git); do
-          hash -d $i=~/git/$i
-        done
-      fi
-      [[ -d ~/.zprezto ]] && hash -d zsh=~/.zprezto
+      for parent in git projects; do
+        if [[ -d ~/$parent ]]; then
+          for i in $(ls ~/$parent); do
+            hash -d $i=~/$parent/$i
+          done
+        fi
+      done
       [[ -d ~/.dotfiles ]] && hash -d dotfiles=~/.dotfiles
       ## envExtra end
     '';
