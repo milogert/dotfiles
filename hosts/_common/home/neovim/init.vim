@@ -191,7 +191,10 @@ let g:black_virtualenv = "~/.config/nvim/blackvenv"
 " Python syntax
 let g:python_highlight_all = 1
 
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.snap     " MacOSX/Linux
+" Wild menu config
+set wildmode=longest,list,full
+set wildmenu
+set wildignore+=*.o,*~,*/tmp/*,*.so,*.swp,*.zip,*.snap     " MacOSX/Linux
 
 " fzf config.
 nnoremap <silent> <C-p> :GFiles <CR>
@@ -301,8 +304,16 @@ nnoremap <silent> <Leader>ppj :PrettyPrintJsonFile<CR>
 "command! -range PrettyPrintJsonRange call PrettyPrintJsonRange()
 "vnoremap <silent> <Leader>ppj :PrettyPrintJsonRange<CR>
 
-" Profile functions.
-source ~/.config/nvim/profile.vim
+" Function to source only if file exists.
+function! SourceIfExists(file)
+  if filereadable(expand(a:file))
+    exe 'source' a:file
+  endif
+endfunction
+
+" Source other files.
+call SourceIfExists("~/.config/nvim/profile.vim")
+call SourceIfExists("~/.config/nvim/playground.vim")
 
 " Thank you next please, from https://ctoomey.com/writing/using-vims-arglist-as-a-todo-list/
 function! s:ThankYouNext() abort
@@ -347,11 +358,24 @@ endf
 " Skeleton configs
 autocmd FileType gitcommit 0r ~/.config/nvim/skeletons/gitcommit.skeleton
 
+" Fancy stuff
+" Fast switch between buffers by pressing leader twice.
+nnoremap <leader><leader> <c-^>
+" Enter key starts prompt.
+nnoremap <CR> :
+" Indent blocks without losing selection.
+xnoremap < <gv
+xnoremap > >gv
+" Swap ` and ' for marks, since ` (by default) jumps to line and column.
+nnoremap ' `
+nnoremap ` '
+" Make Y act like C and D
+nnoremap Y y$
+
 " nvim-treesitter config.
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  --ignore_install = { "javascript" }, -- List of parsers to ignore installing
   highlight = {
     enable = true,              -- false will disable the whole extension
     disable = {  -- list of language that will be disabled
