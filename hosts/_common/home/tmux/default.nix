@@ -53,8 +53,9 @@ in rec {
       bind r source-file ~/.config/tmux/tmux.conf \; display "tmux config reloaded"
 
       # Set window notifications
-      setw -g monitor-activity on
-      set -g visual-activity on
+      # setw -g monitor-activity on
+      # set -g visual-activity on
+      # set -g monitor-silence on
 
       # Start window numbering at 1 for easier switching.
       setw -g pane-base-index 1
@@ -87,11 +88,11 @@ in rec {
       #bind -n C-k clear-history
 
       ## A quiter setup
-      ##set -g visual-activity off
-      ##set -g visual-bell off
-      ##set -g visual-silence off
-      ##setw -g monitor-activity off
-      ##set -g bell-action none
+      set -g visual-activity off
+      set -g visual-bell off
+      set -g visual-silence off
+      setw -g monitor-activity off
+      set -g bell-action none
 
       ###########
       ## Status #

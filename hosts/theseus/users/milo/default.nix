@@ -51,7 +51,6 @@ in rec {
     nodejs
     qtpass
     #ripasso-cursive
-    ruby
     spotify
     spotify-tui
     wyvern

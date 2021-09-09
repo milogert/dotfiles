@@ -24,7 +24,7 @@ let g:any_jump_search_prefered_engine = 'ag'
 let g:any_jump_results_ui_style = 'filename_last'
 
 " Opening new files
-map gF :e <cfile><CR>
+map gF <c-w><c-f>
 
 " Highlight the current line.
 set cursorline
@@ -32,10 +32,6 @@ set cursorline
 " CoC.nvim
 nmap <silent> <leader>aj <Plug>(coc-diagnostic-next)
 nmap <silent> <leader>ak <Plug>(coc-diagnostic-prev)
-"nnoremap <silent> <leader>agd :ALEGoToDefinition<CR>
-"nnoremap <silent> <leader>agt :ALEGoToTypeDefinition<CR>
-"nnoremap <silent> <leader>ah :ALEHover<CR>
-"nnoremap <silent> <leader>af :ALEFindReferences<CR>
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -55,6 +51,9 @@ function! s:show_documentation()
     execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
+
+" coc-explorer
+nmap <Leader>e :CocCommand explorer<CR>
 
 " ShaDa
 set shada='50
@@ -81,16 +80,37 @@ colorscheme srcery
 " Encoding.
 set encoding=utf-8
 
-" Set line numbers.
+" milo-sensible (from neovim-sensible, but even more sensible)
+" Absolute numbers for your cursor line and relative for the surrounding ones.
 set number
 set relativenumber
+
+" Special characters for spacing.
 set list
 set listchars=eol:$,tab:-->,trail:~,extends:>,precedes:<,space:·
 
-" Setup proper tabs.
+" Tab does two spaces.
 set expandtab
 set tabstop=2 shiftwidth=2
 set softtabstop=-1
+
+" Use a 80-character color column.
+set colorcolumn=80
+
+" Use the system clipboard (in addition to other things?), y/p uses it.
+set clipboard+=unnamed
+
+" Mouse doesn't belong in terminal.
+set mouse=""
+
+" Enter key starts prompt.
+nnoremap <CR> :
+
+" Fast switch between buffers by pressing leader twice.
+nnoremap <leader><leader> <c-^>
+
+" Make Y act like C and D
+nnoremap Y y$
 
 " Searching.
 set hlsearch
@@ -182,15 +202,6 @@ set backspace=indent,eol,start
 set undodir=~/.config/nvim/undodir
 set undofile
 
-" y/p uses system clipboard now.
-set clipboard+=unnamed
-
-" Black location
-let g:black_virtualenv = "~/.config/nvim/blackvenv"
-
-" Python syntax
-let g:python_highlight_all = 1
-
 " Wild menu config
 set wildmode=longest,list,full
 set wildmenu
@@ -241,24 +252,17 @@ nmap <Leader>g :G<CR>
 
 " Netrw
 "noremap <silent> <C-n> :20Lex<CR>
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-"let g:netrw_winsize = 20
-let g:netrw_preview = 1
-let g:netrw_alto = 1
-let g:netrw_altv = 1
-"augroup ProjectDrawer
-"  autocmd!
-"  autocmd VimEnter * :Vexplore
-"augroup END
-function! NetRWFind()
-  Lex %:p:h
-endfunction
-command! NetRWFind call NetRWFind()
-
-" coc-explorer
-nmap <Leader>e :CocCommand explorer<CR>
+"let g:netrw_banner = 0
+"let g:netrw_liststyle = 3
+"let g:netrw_browse_split = 4
+""let g:netrw_winsize = 20
+"let g:netrw_preview = 1
+"let g:netrw_alto = 1
+"let g:netrw_altv = 1
+" function! NetRWFind()
+"   Lex %:p:h
+" endfunction
+" command! NetRWFind call NetRWFind()
 
 " Airline theme
 let g:airline#extensions#ale#enabled = 1
@@ -308,12 +312,16 @@ nnoremap <silent> <Leader>ppj :PrettyPrintJsonFile<CR>
 function! SourceIfExists(file)
   if filereadable(expand(a:file))
     exe 'source' a:file
+  else
+    echo "Could not source " . a:file
   endif
 endfunction
 
 " Source other files.
 call SourceIfExists("~/.config/nvim/profile.vim")
 call SourceIfExists("~/.config/nvim/playground.vim")
+call SourceIfExists("~/.config/nvim/treesitter.vim")
+call SourceIfExists("~/.config/nvim/persistence.lua")
 
 " Thank you next please, from https://ctoomey.com/writing/using-vims-arglist-as-a-todo-list/
 function! s:ThankYouNext() abort
@@ -329,77 +337,8 @@ command! ThankYouNext call <sid>ThankYouNext()
 " Tmux config stuff
 cnoreabbrev Mux !tmuxinator
 
-" Run from an empty buffer
-function! GetCommandFrequency()
-  " Be sure to change viminfo path if you put yours elsewhere (like nvim's shada or my vim-cache).
-  .! grep -e"^:"  ~/.viminfo
-  %v/^:/d
-  %sm/\v^:(silent|verb\w*) /:
-  %sm,[ /].*
-  %sm/^:..,../:
-  %sm/^:%/:
-  %g/\v^:?\s*$/d
-  %sort
-  %g/^:\W/d
-  %! uniq -c
-  %sort n
-  " Ignore single use items
-  %g/   1 :/d
-  10,$-10delete
-  0put ='Bottom (but more than once) usage:'
-  10put ='Top usage:'
-  $put ='out of total non-unique commands'
-  $put =''
-  $! grep -e"^:"  ~/.viminfo | wc -l
-  " Indent for posting to reddit.
-  exec "norm! gg0\<C-v>GI    "
-endf
-
 " Skeleton configs
 autocmd FileType gitcommit 0r ~/.config/nvim/skeletons/gitcommit.skeleton
 
 " Fancy stuff
-" Fast switch between buffers by pressing leader twice.
-nnoremap <leader><leader> <c-^>
-" Enter key starts prompt.
-nnoremap <CR> :
-" Indent blocks without losing selection.
-xnoremap < <gv
-xnoremap > >gv
-" Swap ` and ' for marks, since ` (by default) jumps to line and column.
-nnoremap ' `
-nnoremap ` '
-" Make Y act like C and D
-nnoremap Y y$
 
-" wilder.nvim
-" call wilder#enable_cmdline_enter()
-" set wildcharm=<Tab>
-" cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
-" cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
-
-" only / and ? are enabled by default
-" call wilder#set_option('modes', ['/', '?', ':'])
-
-" nvim-treesitter config.
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  highlight = {
-    enable = true,              -- false will disable the whole extension
-    disable = {  -- list of language that will be disabled
-    },
-  },
-
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
-    },
-  },
-
-}
-EOF

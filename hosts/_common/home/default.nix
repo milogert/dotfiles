@@ -13,4 +13,10 @@ rec {
     ./tmux
     ./zsh
   ];
+
+  home.packages = with pkgs; [
+    imlib2
+    neofetch
+    w3m
+  ];
 }

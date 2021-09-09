@@ -1,4 +1,8 @@
 {
+  "diagnostic.enableMessage": "never",
+  "diagnostic.virtualText": true,
+  "diagnostic.virtualTextCurrentLineOnly": true,
+  "codelens.enable": true,
   "eslint.nodePath": "./node_modules",
   "eslint.autoFixOnSave": true,
   "eslint.packageManager": "yarn",

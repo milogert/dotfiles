@@ -50,4 +50,15 @@
       sha256 = "0sbcgv6zw9i7mv8plv7kr14zpvd24wlbgpx1k0hdfs3wbb8md9ya";
     };
   };
+
+  persistence-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "persistence.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "folke";
+      repo = "persistence.nvim";
+      rev = "2f2b0cc69d13a91b6ec2d72de882586dceae19bb";
+      sha256 = "10bjvpbi9bmpiy8zr76xaab223yh023lqkq1v0dcfnqx5v4caw17";
+    };
+  };
+
 }

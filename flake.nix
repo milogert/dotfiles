@@ -55,6 +55,7 @@
       in [
         (./. + "/hosts/${host}/default.nix")
         ({ pkgs, ... }: {
+          nix.registry.nixpkgs.flake = nixpkgs;
           environment.variables.HOSTNAME = host;
           nixpkgs = nixpkgsConfig;
           home-manager.verbose = true;

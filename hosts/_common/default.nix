@@ -30,7 +30,7 @@ rec {
   environment.variables = {
     EDITOR = "nvim";
     MANPAGER = "nvim +Man!";
-    NPM_TOKEN = "`cat $HOME/.npmrc 2>/dev/null | grep authToken | tr \"=\" \"\\n\" | tail -n 1`";
+    NPM_TOKEN = "`jq -r \".NPM_TOKEN\" $HOME/.secrets.json`";
     PATH = builtins.concatStringsSep ":" [
       "/usr/local/sbin"
       "$HOME/.local/bin"
@@ -90,6 +90,7 @@ rec {
     starship
     tokei # https://github.com/XAMPPRocky/tokei
     tree
+    yq
     zsh-autosuggestions
     zsh-completions
   ];

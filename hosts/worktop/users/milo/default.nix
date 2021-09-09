@@ -30,7 +30,6 @@ in rec {
     elixir
     git-lfs
     nodejs-14_x
-    ruby
     (yarn.override { nodejs = nodejs-14_x; })
   ];
 
