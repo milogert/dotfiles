@@ -22,9 +22,7 @@ in rec {
 
     envExtra = ''
       ## envExtra start
-      if [[ -s "''${ZDOTDIR:-$HOME}/.zshenv_priv" ]]; then
-        source "''${ZDOTDIR:-$HOME}/.zshenv_priv"
-      fi
+      [[ -s "''${ZDOTDIR:-$HOME}/.zshenv_priv" ]] && source "''${ZDOTDIR:-$HOME}/.zshenv_priv"
 
       # Custom dir hashes.
       for parent in git projects; do

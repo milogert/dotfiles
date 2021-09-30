@@ -36,55 +36,59 @@ in rec {
         "eslint.lintTask.options" = ["." "--ext" ".jsx,.js"];
         languageserver = {
           nix = {
-            "command" = "rnix-lsp";
-            "filetypes" = [ "nix" ];
+            command = "rnix-lsp";
+            filetypes = [ "nix" ];
+          };
+          terraform = {
+            command = "terraform-lsp";
+            filetypes = ["terraform"];
+            initializationOptions = {};
           };
         };
+        "suggest.enablePreselect" = true;
       };
     };
 
     extraConfig = builtins.readFile ./init.vim;
 
     plugins = with vimPlugins; [
-      # Tooling
-      # coc-nvim
+      coc-nvim
+      elm-vim
       fzf-vim
-      nvim-treesitter
-      vim-arpeggio
+      rust-vim
+      srcery-vim
+      vim-airline
+      vim-airline-themes
+      vim-coffee-script
       vim-commentary
       vim-dirvish
       vim-dirvish-git
-      vim-fugitive
-      vim-nuuid
-      vim-obsession
-      vim-signify
-      vim-surround
-      vim-tmux-navigator
-      vim-unimpaired
-      vimux
-      # wilder-nvim
-      persistence-nvim
-
-      # Themes
-      srcery-vim
-
-      # UI
-      # any-jump-vim
-      vim-airline
-      vim-airline-themes
-
-      # Languages
-      elm-vim
-      rust-vim
-      vim-coffee-script
       vim-elixir
       vim-elm-syntax
+      vim-fugitive
       vim-graphql
       vim-javascript
       vim-jsx-pretty
       vim-nix
+      vim-obsession
       vim-pug
+      vim-signify
+      vim-surround
       vim-terraform
+      vim-tmux-navigator
+      vim-unimpaired
+      vimux
+
+      # Custom
+      # alpha-nvim
+      # any-jump-vim
+      nui-nvim
+      nvim-treesitter
+      package-info-nvim
+      persistence-nvim
+      vim-arpeggio
+      vim-nuuid
+      # wilder-nvim
     ];
 
     viAlias = true;

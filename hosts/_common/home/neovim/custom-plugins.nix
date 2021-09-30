@@ -1,23 +1,13 @@
 { fetchFromGitHub, pkgs }:
 
 {
-  vim-arpeggio = pkgs.vimUtils.buildVimPlugin {
-    name = "vim-arpeggio";
+  alpha-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "alpha-nvim";
     src = pkgs.fetchFromGitHub {
-      owner = "kana";
-      repo = "vim-arpeggio";
-      rev = "01c8fc1a72ef58e490ee0490c65ee313b1b6e843";
-      sha256 = "0405yp1273kzsr3g5j6mj2dfs73qvw716474phkdr67md8ln12dy";
-    };
-  };
-
-  vim-nuuid = pkgs.vimUtils.buildVimPlugin {
-    name = "vim-nuuid";
-    src = pkgs.fetchFromGitHub {
-      owner = "kburdett";
-      repo = "vim-nuuid";
-      rev = "6abc11a7943e5777c27b6271f3b6243f426d68fd";
-      sha256 = "1yx3c6fgq8paa3mxzrzi61alvsvjyqihrlla2ip8fqmxd420vjsx";
+      owner = "goolord";
+      repo = "alpha-nvim";
+      rev = "d99cf5d2fafedfaf3361374f2f1fd18439ee97ef";
+      sha256 = "002piqwlz93kdl7jzspv37kk6yq63al0mwz3d0k178x1kr8c8i7l";
     };
   };
 
@@ -41,13 +31,23 @@
     };
   };
 
-  wilder-nvim = pkgs.vimUtils.buildVimPlugin {
-    name = "wilder.nvim";
+  nui-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "nui.nvim";
     src = pkgs.fetchFromGitHub {
-      owner = "gelguy";
-      repo = "wilder.nvim";
-      rev = "a8a2feda01b8d498b49ef133f648297959de2fa8";
-      sha256 = "0sbcgv6zw9i7mv8plv7kr14zpvd24wlbgpx1k0hdfs3wbb8md9ya";
+      owner = "MunifTanjim";
+      repo = "nui.nvim";
+      rev = "dbe08f29529b6b30e793718fd45eaa4e484410e8";
+      sha256 = "02g46p0290yrhzbx63gzk95myc7y2v2bh9c66nfzryfdc728i113";
+    };
+  };
+
+  package-info-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "package-info.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "vuki656";
+      repo = "package-info.nvim";
+      rev = "7f5d4f8583de1eaf1ae998c369cb1c81565205d7";
+      sha256 = "1xmxkzwspi10417jvnwc50vd56s9bn8f1604ag8vzb7i6mxl2s79";
     };
   };
 
@@ -61,4 +61,33 @@
     };
   };
 
+  vim-arpeggio = pkgs.vimUtils.buildVimPlugin {
+    name = "vim-arpeggio";
+    src = pkgs.fetchFromGitHub {
+      owner = "kana";
+      repo = "vim-arpeggio";
+      rev = "01c8fc1a72ef58e490ee0490c65ee313b1b6e843";
+      sha256 = "0405yp1273kzsr3g5j6mj2dfs73qvw716474phkdr67md8ln12dy";
+    };
+  };
+
+  vim-nuuid = pkgs.vimUtils.buildVimPlugin {
+    name = "vim-nuuid";
+    src = pkgs.fetchFromGitHub {
+      owner = "kburdett";
+      repo = "vim-nuuid";
+      rev = "6abc11a7943e5777c27b6271f3b6243f426d68fd";
+      sha256 = "1yx3c6fgq8paa3mxzrzi61alvsvjyqihrlla2ip8fqmxd420vjsx";
+    };
+  };
+
+  wilder-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "wilder.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "gelguy";
+      repo = "wilder.nvim";
+      rev = "a8a2feda01b8d498b49ef133f648297959de2fa8";
+      sha256 = "0sbcgv6zw9i7mv8plv7kr14zpvd24wlbgpx1k0hdfs3wbb8md9ya";
+    };
+  };
 }

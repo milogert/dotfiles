@@ -10,8 +10,8 @@ packadd vim-arpeggio
 let mapleader = " "
 
 " Reload the config.
-nnoremap <leader>ce :tabnew $MYVIMRC<CR>
-nnoremap <leader>cs :so $MYVIMRC<CR>
+nnoremap <leader>ve :tabnew $MYVIMRC<CR>
+nnoremap <leader>vs :so $MYVIMRC<CR>
 
 :set viminfo='1000,f1
 ":mark V $MYVIMRC
@@ -24,36 +24,10 @@ let g:any_jump_search_prefered_engine = 'ag'
 let g:any_jump_results_ui_style = 'filename_last'
 
 " Opening new files
-map gF <c-w><c-f>
+map gF <c-w>vgf
 
 " Highlight the current line.
 set cursorline
-
-" CoC.nvim
-nmap <silent> <leader>aj <Plug>(coc-diagnostic-next)
-nmap <silent> <leader>ak <Plug>(coc-diagnostic-prev)
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
-
-" coc-explorer
-nmap <Leader>e :CocCommand explorer<CR>
 
 " ShaDa
 set shada='50
@@ -75,7 +49,10 @@ set modeline
 "set termguicolors
 "set background=dark
 set t_Co=256
+let g:srcery_italic = 1
+" let g:srcery_inverse_match_paren = 1
 colorscheme srcery
+" highlight StatusLine ctermfg=15 ctermbg=236 guifg=#FCE8C3 guibg=#FBB829
 
 " Encoding.
 set encoding=utf-8
@@ -113,6 +90,7 @@ nnoremap <leader><leader> <c-^>
 nnoremap Y y$
 
 " Searching.
+set exrc " Source rc's in project directory
 set hlsearch
 set incsearch
 set ignorecase
@@ -123,6 +101,7 @@ set hidden
 set cmdheight=2
 set updatetime=10
 set shortmess+=c
+set scrolloff=8
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
@@ -224,7 +203,13 @@ nnoremap <Leader>b :Buffer <CR>
 "  \   <bang>0
 "  \ )
 "make :Rg from fzf.vim only search contents of files and not include the file names
-command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   "rg --column --line-number --with-filename --no-heading --color=always --smart-case ".shellescape(<q-args>),
+  \   1,
+  \   fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}),
+  \   <bang>0
+  \ )
 nnoremap <Leader>/ :Rg<CR>
 " An action can be a reference to a function that processes selected lines
 function! s:build_quickfix_list(lines)
@@ -290,12 +275,6 @@ Arpeggio nmap <silent> vz :VimuxZoomRunner<CR>
 noremap <Leader>vs :VimuxInterruptRunner<CR>
 Arpeggio nmap <silent> vs :VimuxInterruptRunner<CR>
 
-" UltiSnips config
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<c-b>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-"let g:UltiSnipsEditSplit="vertical"
-
 " Pretty print json
 function! PrettyPrintJsonFile()
   %!python -m json.tool
@@ -318,10 +297,14 @@ function! SourceIfExists(file)
 endfunction
 
 " Source other files.
+call SourceIfExists("~/.config/nvim/coc.vim")
+call SourceIfExists("~/.config/nvim/priv.vim")
 call SourceIfExists("~/.config/nvim/profile.vim")
 call SourceIfExists("~/.config/nvim/playground.vim")
-call SourceIfExists("~/.config/nvim/treesitter.vim")
+" call SourceIfExists("~/.config/nvim/alpha-nvim.lua")
+call SourceIfExists("~/.config/nvim/package-info.lua")
 call SourceIfExists("~/.config/nvim/persistence.lua")
+call SourceIfExists("~/.config/nvim/treesitter.lua")
 
 " Thank you next please, from https://ctoomey.com/writing/using-vims-arglist-as-a-todo-list/
 function! s:ThankYouNext() abort
@@ -339,6 +322,12 @@ cnoreabbrev Mux !tmuxinator
 
 " Skeleton configs
 autocmd FileType gitcommit 0r ~/.config/nvim/skeletons/gitcommit.skeleton
+
+" augroup BgHighlight
+"   autocmd!
+"   autocmd WinEnter * set cul
+"   autocmd WinLeave * set nocul
+" augroup END
 
 " Fancy stuff
 

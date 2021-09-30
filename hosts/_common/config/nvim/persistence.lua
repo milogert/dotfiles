@@ -1,5 +1,7 @@
 require("persistence").setup {
-  -- your configuration comes here
-  -- or leave it empty to use the default settings
-  -- refer to the configuration section below
-}
+  -- Defaults are below:
+  -- dir = vim.fn.expand(vim.fn.stdpath("config") .. "/sessions/"),
+  -- options = { "buffers", "curdir", "tabpages", "winsize" },
+} 
+
+vim.api.nvim_set_keymap("n", "<leader>sr", [[<cmd>lua require("persistence").load()<cr>]], {noremap = true})

@@ -42,9 +42,6 @@
     };
 
     extraConfig = {
-      color = {
-        ui = true;
-      };
 
       core = {
         editor = "nvim";
@@ -52,6 +49,15 @@
         #hooksPath = "$HOME/.config/git/hooks";
         pager = "delta";
       };
+
+      color.ui = true;
+      commit.verbose = true;
+      fetch.prune = true;
+      grep.lineNumber = true;
+      help.autocorrect = 1;
+      interactive.diffFilter = "delta --dark --color-only";
+      pull.rebase = false;
+      push.default = "upstream";
 
       delta = {
         features = "decorations";
@@ -65,26 +71,6 @@
         file-style = "bold yellow ul";
         file-decoration-style = "none";
         hunk-header-decoration-style = "yellow box";
-      };
-
-      fetch = {
-        prune = true;
-      };
-
-      grep = {
-        lineNumber = true;
-      };
-
-      help = {
-        autocorrect = 1;
-      };
-
-      interactive = {
-        diffFilter = "delta --dark --color-only";
-      };
-
-      pull = {
-        rebase = false;
       };
     };
   };
