@@ -4,13 +4,8 @@
 }:
 
 let
-  #tmuxinatorPriv = ../../config/tmuxinator/priv + "/";
   tmuxPlugins = pkgs.tmuxPlugins // pkgs.callPackage ./custom-plugins.nix {};
 in rec {
-  #home.activation.copyPrivTmuxinatorProfiles =
-  #  config.lib.dag.entryAfter ["writeBoundary"] ''
-  #    #cp -r ${tmuxinatorPriv}* ${xdg.configHome}/tmuxinator/
-  #'';
   xdg.configFile.tmuxinator = {
     source = ../../config/tmuxinator;
     target = "tmuxinator";
