@@ -18,7 +18,7 @@
         #env.TERM = "xterm-256color";
       };
 
-      #window:
+      window = {
         # Window dimensions (changes require restart)
         #
         # Specified in number of columns/lines, not pixels.
@@ -55,7 +55,7 @@
         # Values for `decorations` (macOS only):
         #     - transparent: Title bar, transparent background and title bar buttons
         #     - buttonless: Title bar, transparent background, but no title bar buttons
-        #decorations: full
+        decorations = "none";
 
         # Startup Mode (changes require restart)
         #
@@ -66,7 +66,7 @@
         #
         # Values for `startup_mode` (macOS only):
         #   - SimpleFullscreen
-        #startup_mode: Windowed
+        startup_mode = "Maximized";
 
         # Window title
         #title: Alacritty
@@ -83,6 +83,7 @@
         # Override the variant of the GTK theme. Commonly supported values are `dark` and `light`.
         # Set this to `None` to use the default theme variant.
         #gtk_theme_variant: None
+      };
 
       #scrolling:
         # Maximum number of lines in the scrollback buffer.
