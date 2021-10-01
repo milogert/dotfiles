@@ -41,6 +41,7 @@
     "postico"
     "slack"
     "spotify"
+    "virtualbox"
     "zoom"
     #"deckset"
     #"font-hack-nerd-font"

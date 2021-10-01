@@ -10,8 +10,8 @@ packadd vim-arpeggio
 let mapleader = " "
 
 " Reload the config.
-nnoremap <leader>ce :tabnew $MYVIMRC<CR>
-nnoremap <leader>cs :so $MYVIMRC<CR>
+nnoremap <leader>ve :tabnew $MYVIMRC<CR>
+nnoremap <leader>vs :so $MYVIMRC<CR>
 
 :set viminfo='1000,f1
 ":mark V $MYVIMRC
@@ -24,37 +24,10 @@ let g:any_jump_search_prefered_engine = 'ag'
 let g:any_jump_results_ui_style = 'filename_last'
 
 " Opening new files
-map gF :e <cfile><CR>
+map gF <c-w>vgf
 
 " Highlight the current line.
 set cursorline
-
-" CoC.nvim
-nmap <silent> <leader>aj <Plug>(coc-diagnostic-next)
-nmap <silent> <leader>ak <Plug>(coc-diagnostic-prev)
-"nnoremap <silent> <leader>agd :ALEGoToDefinition<CR>
-"nnoremap <silent> <leader>agt :ALEGoToTypeDefinition<CR>
-"nnoremap <silent> <leader>ah :ALEHover<CR>
-"nnoremap <silent> <leader>af :ALEFindReferences<CR>
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
 
 " ShaDa
 set shada='50
@@ -76,23 +49,48 @@ set modeline
 "set termguicolors
 "set background=dark
 set t_Co=256
+let g:srcery_italic = 1
+" let g:srcery_inverse_match_paren = 1
 colorscheme srcery
+" highlight StatusLine ctermfg=15 ctermbg=236 guifg=#FCE8C3 guibg=#FBB829
 
 " Encoding.
 set encoding=utf-8
 
-" Set line numbers.
+" milo-sensible (from neovim-sensible, but even more sensible)
+" Absolute numbers for your cursor line and relative for the surrounding ones.
 set number
 set relativenumber
+
+" Special characters for spacing.
 set list
 set listchars=eol:$,tab:-->,trail:~,extends:>,precedes:<,space:·
 
-" Setup proper tabs.
+" Tab does two spaces.
 set expandtab
 set tabstop=2 shiftwidth=2
 set softtabstop=-1
 
+" Use a 80-character color column.
+set colorcolumn=80
+
+" Use the system clipboard (in addition to other things?), y/p uses it.
+set clipboard+=unnamed
+
+" Mouse doesn't belong in terminal.
+set mouse=""
+
+" Enter key starts prompt.
+nnoremap <CR> :
+
+" Fast switch between buffers by pressing leader twice.
+nnoremap <leader><leader> <c-^>
+
+" Make Y act like C and D
+nnoremap Y y$
+
 " Searching.
+set exrc " Source rc's in project directory
 set hlsearch
 set incsearch
 set ignorecase
@@ -103,6 +101,7 @@ set hidden
 set cmdheight=2
 set updatetime=10
 set shortmess+=c
+set scrolloff=8
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
@@ -182,15 +181,6 @@ set backspace=indent,eol,start
 set undodir=~/.config/nvim/undodir
 set undofile
 
-" y/p uses system clipboard now.
-set clipboard+=unnamed
-
-" Black location
-let g:black_virtualenv = "~/.config/nvim/blackvenv"
-
-" Python syntax
-let g:python_highlight_all = 1
-
 " Wild menu config
 set wildmode=longest,list,full
 set wildmenu
@@ -213,7 +203,13 @@ nnoremap <Leader>b :Buffer <CR>
 "  \   <bang>0
 "  \ )
 "make :Rg from fzf.vim only search contents of files and not include the file names
-command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   "rg --column --line-number --with-filename --no-heading --color=always --smart-case ".shellescape(<q-args>),
+  \   1,
+  \   fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}),
+  \   <bang>0
+  \ )
 nnoremap <Leader>/ :Rg<CR>
 " An action can be a reference to a function that processes selected lines
 function! s:build_quickfix_list(lines)
@@ -241,24 +237,17 @@ nmap <Leader>g :G<CR>
 
 " Netrw
 "noremap <silent> <C-n> :20Lex<CR>
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-"let g:netrw_winsize = 20
-let g:netrw_preview = 1
-let g:netrw_alto = 1
-let g:netrw_altv = 1
-"augroup ProjectDrawer
-"  autocmd!
-"  autocmd VimEnter * :Vexplore
-"augroup END
-function! NetRWFind()
-  Lex %:p:h
-endfunction
-command! NetRWFind call NetRWFind()
-
-" coc-explorer
-nmap <Leader>e :CocCommand explorer<CR>
+"let g:netrw_banner = 0
+"let g:netrw_liststyle = 3
+"let g:netrw_browse_split = 4
+""let g:netrw_winsize = 20
+"let g:netrw_preview = 1
+"let g:netrw_alto = 1
+"let g:netrw_altv = 1
+" function! NetRWFind()
+"   Lex %:p:h
+" endfunction
+" command! NetRWFind call NetRWFind()
 
 " Airline theme
 let g:airline#extensions#ale#enabled = 1
@@ -286,12 +275,6 @@ Arpeggio nmap <silent> vz :VimuxZoomRunner<CR>
 noremap <Leader>vs :VimuxInterruptRunner<CR>
 Arpeggio nmap <silent> vs :VimuxInterruptRunner<CR>
 
-" UltiSnips config
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<c-b>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-"let g:UltiSnipsEditSplit="vertical"
-
 " Pretty print json
 function! PrettyPrintJsonFile()
   %!python -m json.tool
@@ -308,12 +291,20 @@ nnoremap <silent> <Leader>ppj :PrettyPrintJsonFile<CR>
 function! SourceIfExists(file)
   if filereadable(expand(a:file))
     exe 'source' a:file
+  else
+    echo "Could not source " . a:file
   endif
 endfunction
 
 " Source other files.
+call SourceIfExists("~/.config/nvim/coc.vim")
+call SourceIfExists("~/.config/nvim/priv.vim")
 call SourceIfExists("~/.config/nvim/profile.vim")
 call SourceIfExists("~/.config/nvim/playground.vim")
+" call SourceIfExists("~/.config/nvim/alpha-nvim.lua")
+call SourceIfExists("~/.config/nvim/package-info.lua")
+call SourceIfExists("~/.config/nvim/persistence.lua")
+call SourceIfExists("~/.config/nvim/treesitter.lua")
 
 " Thank you next please, from https://ctoomey.com/writing/using-vims-arglist-as-a-todo-list/
 function! s:ThankYouNext() abort
@@ -329,34 +320,14 @@ command! ThankYouNext call <sid>ThankYouNext()
 " Tmux config stuff
 cnoreabbrev Mux !tmuxinator
 
-" Run from an empty buffer
-function! GetCommandFrequency()
-  " Be sure to change viminfo path if you put yours elsewhere (like nvim's shada or my vim-cache).
-  .! grep -e"^:"  ~/.viminfo
-  %v/^:/d
-  %sm/\v^:(silent|verb\w*) /:
-  %sm,[ /].*
-  %sm/^:..,../:
-  %sm/^:%/:
-  %g/\v^:?\s*$/d
-  %sort
-  %g/^:\W/d
-  %! uniq -c
-  %sort n
-  " Ignore single use items
-  %g/   1 :/d
-  10,$-10delete
-  0put ='Bottom (but more than once) usage:'
-  10put ='Top usage:'
-  $put ='out of total non-unique commands'
-  $put =''
-  $! grep -e"^:"  ~/.viminfo | wc -l
-  " Indent for posting to reddit.
-  exec "norm! gg0\<C-v>GI    "
-endf
-
 " Skeleton configs
 autocmd FileType gitcommit 0r ~/.config/nvim/skeletons/gitcommit.skeleton
+
+" augroup BgHighlight
+"   autocmd!
+"   autocmd WinEnter * set cul
+"   autocmd WinLeave * set nocul
+" augroup END
 
 " Fancy stuff
 " Fast switch between buffers by pressing leader twice.
@@ -369,34 +340,3 @@ nnoremap ` '
 " Make Y act like C and D
 nnoremap Y y$
 
-" wilder.nvim
-" call wilder#enable_cmdline_enter()
-" set wildcharm=<Tab>
-" cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
-" cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
-
-" only / and ? are enabled by default
-" call wilder#set_option('modes', ['/', '?', ':'])
-
-" nvim-treesitter config.
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  highlight = {
-    enable = true,              -- false will disable the whole extension
-    disable = {  -- list of language that will be disabled
-    },
-  },
-
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
-    },
-  },
-
-}
-EOF
