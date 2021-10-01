@@ -363,9 +363,6 @@ autocmd FileType gitcommit 0r ~/.config/nvim/skeletons/gitcommit.skeleton
 nnoremap <leader><leader> <c-^>
 " Enter key starts prompt.
 nnoremap <CR> :
-" Indent blocks without losing selection.
-xnoremap < <gv
-xnoremap > >gv
 " Swap ` and ' for marks, since ` (by default) jumps to line and column.
 nnoremap ' `
 nnoremap ` '
