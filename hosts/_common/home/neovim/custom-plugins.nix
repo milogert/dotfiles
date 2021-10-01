@@ -2,7 +2,8 @@
 
 {
   vim-arpeggio = pkgs.vimUtils.buildVimPlugin {
-    name = "vim-arpeggio";
+    pname = "vim-arpeggio";
+    version = "2021-09-17";
     src = pkgs.fetchFromGitHub {
       owner = "kana";
       repo = "vim-arpeggio";
@@ -12,7 +13,8 @@
   };
 
   vim-nuuid = pkgs.vimUtils.buildVimPlugin {
-    name = "vim-nuuid";
+    pname = "vim-nuuid";
+    version = "2021-09-17";
     src = pkgs.fetchFromGitHub {
       owner = "kburdett";
       repo = "vim-nuuid";
@@ -22,7 +24,8 @@
   };
 
   any-jump-vim = pkgs.vimUtils.buildVimPlugin {
-    name = "any-jump.vim";
+    pname = "any-jump.vim";
+    version = "2021-09-17";
     src = pkgs.fetchFromGitHub {
       owner = "pechorin";
       repo = "any-jump.vim";
@@ -32,7 +35,8 @@
   };
 
   nvim-treesitter = pkgs.vimUtils.buildVimPlugin {
-    name = "nvim-treesitter";
+    pname = "nvim-treesitter";
+    version = "2021-09-17";
     src = pkgs.fetchFromGitHub {
       owner = "nvim-treesitter";
       repo = "nvim-treesitter";
@@ -42,7 +46,8 @@
   };
 
   wilder-nvim = pkgs.vimUtils.buildVimPlugin {
-    name = "wilder.nvim";
+    pname = "wilder.nvim";
+    version = "2021-09-17";
     src = pkgs.fetchFromGitHub {
       owner = "gelguy";
       repo = "wilder.nvim";
