@@ -40,7 +40,7 @@
       # This is for steam support. Needs pipewire at the moment
       extraPackages32 = with pkgs.pkgsi686Linux; [
         #amdvlk
-        libva
+        # libva
       ] ++ lib.optionals config.services.pipewire.enable [ pipewire ];
     };
 
