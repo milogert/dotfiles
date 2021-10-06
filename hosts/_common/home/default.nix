@@ -9,14 +9,13 @@ rec {
     ./git
     ./neovim
     ./password-store.nix
+    ./ranger.nix
     ./starship.nix
     ./tmux
     ./zsh
   ];
 
   home.packages = with pkgs; [
-    imlib2
     neofetch
-    w3m
   ];
 }

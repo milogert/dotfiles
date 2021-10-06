@@ -4,14 +4,14 @@
 "
 
 " Load Arpeggio early?
-packadd vim-arpeggio
+packadd vimplugin-vim-arpeggio
 
 " Set the leader key to space.
 let mapleader = " "
 
 " Reload the config.
-nnoremap <leader>ve :tabnew $MYVIMRC<CR>
-nnoremap <leader>vs :so $MYVIMRC<CR>
+nnoremap <leader>re :tabnew $MYVIMRC<CR>
+nnoremap <leader>rs :so $MYVIMRC<CR>
 
 :set viminfo='1000,f1
 ":mark V $MYVIMRC
@@ -44,7 +44,6 @@ filetype indent on
 set modeline
 
 " Enable syntax highlighting.
-"colorscheme nofrils-dark
 " True colors.
 "set termguicolors
 "set background=dark

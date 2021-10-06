@@ -7,10 +7,10 @@ let
   vimPlugins = pkgs.vimPlugins // pkgs.callPackage ./custom-plugins.nix {};
   xdg = import ../xdg.nix { inherit config; };
   cocConfig = ../../config/coc + "/";
-
 in rec {
   inherit xdg;
   home.packages = with pkgs; [tree-sitter];
+
   home.file = {
     "${xdg.configHome}/nvim/" = {
       recursive = true;

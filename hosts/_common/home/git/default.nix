@@ -3,6 +3,12 @@
 }:
 
 {
+  home.packages = with pkgs; [
+    gh
+    gitAndTools.delta
+    gitAndTools.gh
+  ];
+
   programs.git = {
     package = pkgs.gitAndTools.gitFull;
     enable = true;

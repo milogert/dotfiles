@@ -30,7 +30,7 @@ rec {
   environment.variables = {
     EDITOR = "nvim";
     MANPAGER = "nvim +Man!";
-    NPM_TOKEN = "`jq -r \".NPM_TOKEN\" $HOME/.secrets.json`";
+    NPM_TOKEN = "`cat $HOME/.npmrc 2>/dev/null | grep authToken | tr \"=\" \"\\n\" | tail -n 1`";
     PATH = builtins.concatStringsSep ":" [
       "/usr/local/sbin"
       "$HOME/.local/bin"
@@ -59,8 +59,6 @@ rec {
     ag
     bash
     bash-completion
-    bat
-    browserpass
     cachix
     cargo
     coreutils
@@ -68,17 +66,12 @@ rec {
     diskonaut
     exa
     findutils
-    fzf
-    gh
-    gitAndTools.delta
-    gitAndTools.gh
     gnumake
     gnupg
     htop
     jq
     lazydocker
     ncdu
-    neovim
     nix-prefetch-git
     procs # https://github.com/dalance/procs
     python-with-packages
@@ -87,7 +80,6 @@ rec {
     rnix-lsp
     shellcheck
     speedtest-cli
-    starship
     tokei # https://github.com/XAMPPRocky/tokei
     tree
     yq

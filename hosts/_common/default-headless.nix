@@ -58,7 +58,6 @@ rec {
     ag
     bash
     bash-completion
-    bat
     cachix
     cargo
     coreutils
@@ -66,16 +65,12 @@ rec {
     diskonaut
     exa
     findutils
-    fzf
-    gitAndTools.delta
-    gitAndTools.gh
     gnumake
     gnupg
     htop
     jq
     lazydocker
     ncdu
-    neovim
     nix-prefetch-git
     python-with-packages
     rename
@@ -83,10 +78,7 @@ rec {
     rnix-lsp
     shellcheck
     speedtest-cli
-    starship
     tree
-    zsh-autosuggestions
-    zsh-completions
   ];
 
   programs.gnupg.agent.enable = true;
