@@ -6,7 +6,7 @@ rec {
     ./hardware-configuration.nix
     ../_common/default.nix
     ./networking.nix
-    ../_common/services.nix
+    ../_common/services
     ./services
   ];
 
