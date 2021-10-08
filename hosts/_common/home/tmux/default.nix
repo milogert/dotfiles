@@ -28,6 +28,8 @@ in rec {
       srcery-tmux
     ];
     extraConfig = ''
+      set-option -sa terminal-overrides ',alacritty:RGB'
+
       # Rebind prefix key from C-b to C-Space
       set -g prefix C-Space
       unbind-key C-b

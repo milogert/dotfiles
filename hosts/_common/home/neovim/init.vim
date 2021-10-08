@@ -45,7 +45,7 @@ set modeline
 
 " Enable syntax highlighting.
 " True colors.
-"set termguicolors
+set termguicolors
 "set background=dark
 set t_Co=256
 let g:srcery_italic = 1
