@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    # nixpkgs.url = "path:///home/milo/git/nixpkgs";
 
     darwin = {
       url = "github:LnL7/nix-darwin/master";
@@ -87,7 +88,6 @@
         ({ pkgs, ... }: {
           nix.registry.nixpkgs.flake = nixpkgs;
           environment.variables.HOSTNAME = host;
-          nix.registry.nixpkgs.flake = nixpkgs;
           nixpkgs = nixpkgsConfig;
           home-manager.verbose = true;
           home-manager.useUserPackages = true;
