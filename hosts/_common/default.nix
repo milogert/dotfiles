@@ -66,6 +66,7 @@ rec {
     diskonaut
     exa
     findutils
+    gcc
     gnumake
     gnupg
     htop
@@ -73,6 +74,7 @@ rec {
     lazydocker
     ncdu
     nix-prefetch-git
+    # nixops
     procs # https://github.com/dalance/procs
     python-with-packages
     rename

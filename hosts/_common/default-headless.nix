@@ -65,6 +65,7 @@ rec {
     diskonaut
     exa
     findutils
+    gcc
     gnumake
     gnupg
     htop
