@@ -2,8 +2,7 @@
 
 rec {
   imports = [
-    ./homelab
-    ./rsnapshot.nix
+    ../../hog/services/homelab
   ];
 
   systemd.services.mount-pstore.enable = false;
