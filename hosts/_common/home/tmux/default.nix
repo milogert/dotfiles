@@ -6,10 +6,11 @@
 let
   tmuxPlugins = pkgs.tmuxPlugins // pkgs.callPackage ./custom-plugins.nix {};
 in rec {
-  xdg.configFile.tmuxinator = {
-    source = ../../config/tmuxinator;
-    target = "tmuxinator";
-    recursive = true;
+  home.file = {
+    "${config.xdg.configHome}/tmuxinator/" = {
+      recursive = true;
+      source = ../../config/tmuxinator;
+    };
   };
 
   programs.tmux = {

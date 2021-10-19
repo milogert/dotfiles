@@ -1,10 +1,6 @@
 { pkgs, ... }:
 
 rec {
-  imports = [
-    ../../hog/services/homelab
-  ];
-
   systemd.services.mount-pstore.enable = false;
 
   services = {

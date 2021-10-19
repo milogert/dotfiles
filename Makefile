@@ -54,5 +54,7 @@ worktop: install_requirements _nix-darwin-build _nix-darwin-switch
 
 rig: _nixos-build _nixos-switch
 
+hog: _nixos-build _nixos-switch
+
 update:
 	nix flake update

@@ -46,7 +46,6 @@
             name = "${old.pname}-${version}";
             src = super.fetchurl {
               url = "https://downloads.plex.tv/plex-media-server-new/${version}/debian/plexmediaserver_${version}_amd64.deb";
-              # url = "https://downloads.plex.tv/plex-media-server-new/${version}/redhat/plexmediaserver-${version}.x86_64.rpm";
               sha256 = "sha256-NVAWuDPMj0Rilh+jaiREXQhy7SlLJNwLz1XWgynwL54=";
             };
           });
@@ -131,6 +130,14 @@
           system = "x86_64-linux";
           modules = mkNixosConfig {
             host = "rig";
+            users = ["milo"];
+          };
+        };
+
+        hog = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = mkNixosConfig {
+            host = "hog";
             users = ["milo"];
           };
         };

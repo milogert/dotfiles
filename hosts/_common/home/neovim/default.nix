@@ -5,14 +5,12 @@
 
 let
   vimPlugins = pkgs.vimPlugins // pkgs.callPackage ./custom-plugins.nix {};
-  xdg = import ../xdg.nix { inherit config; };
   cocConfig = ../../config/coc + "/";
 in rec {
-  inherit xdg;
   home.packages = with pkgs; [tree-sitter];
 
   home.file = {
-    "${xdg.configHome}/nvim/" = {
+    "${config.xdg.configHome}/nvim/" = {
       recursive = true;
       source = ../../config/nvim + "/";
     };
@@ -95,4 +93,11 @@ in rec {
     vimAlias = true;
     vimdiffAlias = true;
   };
+
+  home.activation.setVimDirs =
+    config.lib.dag.entryAfter ["writeBoundary"] ''
+      mkdir -p ${config.xdg.dataHome}/nvim/backup/
+      mkdir -p ${config.xdg.dataHome}/nvim/swap/
+      mkdir -p ${config.xdg.dataHome}/nvim/undo/
+    '';
 }

@@ -23,6 +23,17 @@
       # caServer = "https://acme-staging-v02.api.letsencrypt.org/directory";
     };
 
+    # http = {
+    #   middlewares = {
+    #     errorPage = {
+    #       errors = {
+    #         status = "400-599";
+    #         service = "heimdall";
+    #       };
+    #     };
+    #   };
+    # };
+
     entryPoints = {
       web = {
         address = ":80";
