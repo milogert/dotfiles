@@ -14,7 +14,11 @@ in rec {
 
   home.stateVersion = "21.05";
 
-  programs.git.signing.key = "7291258F2B7C086E";
+  programs.git.signing = {
+    key = "7291258F2B7C086E";
+    signByDefault = true;
+    gpgPath = "gpg";
+  };
 
   home.packages = with pkgs; [
     elixir
