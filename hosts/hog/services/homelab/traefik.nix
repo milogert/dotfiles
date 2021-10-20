@@ -23,17 +23,6 @@
       # caServer = "https://acme-staging-v02.api.letsencrypt.org/directory";
     };
 
-    # http = {
-    #   middlewares = {
-    #     errorPage = {
-    #       errors = {
-    #         status = "400-599";
-    #         service = "heimdall";
-    #       };
-    #     };
-    #   };
-    # };
-
     entryPoints = {
       web = {
         address = ":80";
@@ -66,6 +55,30 @@
             sans = [ "*.milogert.dev" ];
           }
         ];
+      };
+    };
+
+    routers.wishlist = {
+      entryPoints = [ "websecure" ];
+      rule = "Host(`rrw.milogert.com`) || Host(`wishlist.milogert.com`)";
+      service = "noop@internal";
+
+      middlewares = [ "wishlistRedirect" ];
+      tls = {
+        certResolver = "letsEncrypt";
+        domains = [ {
+          main = "rrw.milogert.com";
+          sans = [ "wishlist.milogert.com" ];
+        } ];
+      };
+    };
+
+    middlewares = {
+      wishlistRedirect = {
+        redirectRegex = {
+          regex = "^https://(rrw|wishlist)\\.milogert\\.com";
+          replacement = "https://docs.google.com/document/d/1d_6DNthHECSEpW3XY1tLePD0gOmzdiNruiwzrbQ6pYc/edit?usp=sharing";
+        };
       };
     };
   };
