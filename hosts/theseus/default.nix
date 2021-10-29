@@ -43,7 +43,7 @@ rec {
 
   environment.systemPackages = with pkgs; [
     awscli
-    chromium
+    beekeeper-studio
     clinfo
     firefox
     gjs
