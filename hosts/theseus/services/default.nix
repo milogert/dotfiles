@@ -1,13 +1,19 @@
 { pkgs, ... }:
 
 rec {
-  imports = [
-    ../../hog/services/homelab
-  ];
-
   systemd.services.mount-pstore.enable = false;
 
   services = {
+    printing = {
+      enable = true;
+      drivers = with pkgs; [ cups-brother-hll2340dw ];
+    };
+
+    avahi = {
+      enable = true;
+      openFirewall = true;
+    };
+
     xserver = {
       enable = true;
 
