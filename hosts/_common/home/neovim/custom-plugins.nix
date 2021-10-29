@@ -22,6 +22,17 @@
     };
   };
 
+  copilot-vim = pkgs.vimUtils.buildVimPlugin {
+    pname = "copilot.vim";
+    version = "1.0.1";
+    src = pkgs.fetchFromGitHub {
+      owner = "github";
+      repo = "copilot.vim";
+      rev = "e1be74e21a7daf88ca52116386c5acdb22265c76";
+      sha256 = "01m2xqibxl9p27zhyx86rjrihm90jla7pbsnqgjzgm3hyg8fp1g8";
+    };
+  };
+
   nvim-treesitter = pkgs.vimUtils.buildVimPlugin {
     pname = "nvim-treesitter";
     version = "2021-09-17";

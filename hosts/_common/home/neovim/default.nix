@@ -82,6 +82,7 @@ in rec {
       # Custom
       # alpha-nvim
       # any-jump-vim
+      copilot-vim
       nui-nvim
       nvim-treesitter
       package-info-nvim
