@@ -5,12 +5,11 @@
 
 let
   common_dir = ../../../_common;
-  xdg = import (common_dir + /home/xdg.nix) { inherit config; };
-  direnv = import ./direnv.nix { inherit config; };
 in rec {
-  inherit xdg;
   imports = [
     (common_dir + /home/default.nix)
+    (common_dir + /home/direnv.nix)
+    (common_dir + /home/types/dekstop.nix)
     ./sway.nix
     ./waybar.nix
     ./desktop.nix
@@ -18,15 +17,10 @@ in rec {
 
   home.stateVersion = "21.05";
 
-  programs.direnv = direnv;
-
-  programs.git.signing.key = "7291258F2B7C086E";
-
-  home.file = {
-    "${xdg.configHome}/tmuxinator/" = {
-      recursive = true;
-      source = common_dir + "/config/tmuxinator/";
-    };
+  programs.git.signing = {
+    key = "7291258F2B7C086E";
+    signByDefault = true;
+    gpgPath = "gpg";
   };
 
   services.spotifyd = {
@@ -69,11 +63,4 @@ in rec {
         ${npmSet} init.license "MIT"
         ${npmSet} init.version "0.0.1"
       '';
-
-  home.activation.setVimDirs =
-    config.lib.dag.entryAfter ["writeBoundary"] ''
-      mkdir -p ${xdg.dataHome}/nvim/backup/
-      mkdir -p ${xdg.dataHome}/nvim/swap/
-      mkdir -p ${xdg.dataHome}/nvim/undo/
-    '';
 }

@@ -16,5 +16,11 @@
     ./radarr.nix
     ./sonarr.nix
     # ./tautulli.nix
+    ./tt-rss
+
+    # Future
+    # ./scrutiny.nix # https://github.com/stephenlang/scrutiny
+    # ./overseerr.nix # https://overseerr.dev/
+    # ./tdarr.nix # https://tdarr.io/
   ];
 }

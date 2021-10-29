@@ -8,6 +8,7 @@ rec {
     ../_common/types/headless.nix
     ./networking.nix
     ./services
+    ../_common/services
   ];
 
   # This is required here for nix-darwin.

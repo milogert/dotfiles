@@ -2,7 +2,6 @@
 
 let
   common_dir = ../../_common;
-  xdg = import ./xdg.nix { inherit config; };
 in rec {
   home.packages = with pkgs; [
     imlib2
@@ -11,7 +10,7 @@ in rec {
   ];
 
   home.file = {
-    "${xdg.configHome}/ranger/" = {
+    "${config.xdg.configHome}/ranger/" = {
       recursive = true;
       source = common_dir + "/config/ranger/";
     };

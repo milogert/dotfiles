@@ -3,6 +3,7 @@
 rec {
   imports = [
     ../_common/default.nix
+    ../_common/types/desktop.nix
     ./darwin/settings.nix
     ./darwin/homebrew.nix
     ./darwin/nix-apps.nix

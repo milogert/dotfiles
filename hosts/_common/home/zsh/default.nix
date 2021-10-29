@@ -1,10 +1,6 @@
 { config, pkgs, ... }:
 
-let
-  xdg = import ../xdg.nix { inherit config; };
-in rec {
-  inherit xdg;
-
+{
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
