@@ -5,8 +5,10 @@ rec {
     ./configuration.nix
     ./hardware-configuration.nix
     ../_common/default.nix
+    ../_common/types/headless.nix
     ./networking.nix
-    ../_common/services.nix
+    ../_common/services
+    ./services
   ];
 
   # This goes here since it's different between nixos and darwin.
@@ -27,6 +29,8 @@ rec {
 
   programs.steam.enable = true;
 
+  virtualisation.lxd.enable = true;
+
   #security.pam = {
   #  u2f.enable = true;
   #  services.gdm-password.text = ''
@@ -39,10 +43,11 @@ rec {
   #};
 
   environment.systemPackages = with pkgs; [
-    chromium
+    awscli
+    beekeeper-studio
     clinfo
     firefox
-    flatpak
+    gjs
     gnome.dconf-editor
     gnome.gnome-tweaks
     gnome.gnome-keyring
@@ -50,7 +55,8 @@ rec {
     gnome.nautilus
     gnome.seahorse
     gnomeExtensions.appindicator
-    gnomeExtensions.caffeine
+    gnomeExtensions.espresso
+    gnomeExtensions.screenshot-tool
     gnomeExtensions.vitals
     lshw
     protontricks

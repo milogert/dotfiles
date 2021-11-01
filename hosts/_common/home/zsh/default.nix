@@ -1,15 +1,6 @@
 { config, pkgs, ... }:
 
-let
-  xdg = import ../xdg.nix { inherit config; };
-in rec {
-  inherit xdg;
-  home.file = {
-    # Need to find a way around this: I can't commit this file but nix won't
-    # let me import it unless it's in the repo
-    #".zshrc_priv".source = ./.zshrc_priv;
-  };
-
+{
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;

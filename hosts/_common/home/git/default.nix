@@ -3,17 +3,17 @@
 }:
 
 {
+  home.packages = with pkgs; [
+    gh
+    gitAndTools.delta
+    gitAndTools.gh
+  ];
+
   programs.git = {
     package = pkgs.gitAndTools.gitFull;
     enable = true;
     userName  = "Milo Gertjejansen";
     userEmail = "milo@milogert.com";
-
-    signing = {
-      # NOTE: `key` is set by user home files
-      signByDefault = true;
-      gpgPath = "gpg";
-    };
 
     aliases = {
       a = "add";

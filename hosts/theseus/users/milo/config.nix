@@ -9,5 +9,9 @@
   extraGroups = [
     "wheel"
     "networkmanager"
+    "audio"
+    "lxd"
+    "kubernetes"
+    "docker"
   ];
 }

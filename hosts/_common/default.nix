@@ -3,12 +3,11 @@
 rec {
   imports = [
     ./aliases.nix
-    ./fonts.nix
   ];
 
   nix.useSandbox = false;
   nix.gc.automatic = true;
-  nix.gc.options = "--delete-older-than 7d";
+  nix.gc.options = "--delete-older-than 30d";
   nix.package = pkgs.nixUnstable;
   nix.extraOptions = "experimental-features = nix-command flakes ca-references";
   nix.trustedUsers = [ "root" "@admin" ];
@@ -28,16 +27,17 @@ rec {
   ];
 
   environment.variables = {
+    BAT_THEME = "srcery";
     EDITOR = "nvim";
     MANPAGER = "nvim +Man!";
-    NPM_TOKEN = "`jq -r \".NPM_TOKEN\" $HOME/.secrets.json`";
+    NPM_TOKEN = "`cat $HOME/.npmrc 2>/dev/null | grep authToken | tr \"=\" \"\\n\" | tail -n 1`";
     PATH = builtins.concatStringsSep ":" [
       "/usr/local/sbin"
       "$HOME/.local/bin"
       "$HOME/.yarn/bin"
       "$PATH"
     ];
-    #RIPGREP_CONFIG_PATH = "$HOME/.ripgreprc";
+    # RIPGREP_CONFIG_PATH = "$HOME/.ripgreprc";
     SHELL = "${pkgs.zsh}/bin/zsh";
     TERM = "xterm-256color";
   };
@@ -59,8 +59,7 @@ rec {
     ag
     bash
     bash-completion
-    bat
-    browserpass
+    bat # Need this for aliases.
     cachix
     cargo
     coreutils
@@ -68,18 +67,17 @@ rec {
     diskonaut
     exa
     findutils
-    fzf
-    gh
-    gitAndTools.delta
-    gitAndTools.gh
+    fzf # Need this for aliases.
+    gcc
     gnumake
     gnupg
     htop
     jq
     lazydocker
     ncdu
-    neovim
     nix-prefetch-git
+    # nixops
+    neovim # Need this for aliases.
     procs # https://github.com/dalance/procs
     python-with-packages
     rename
@@ -87,8 +85,7 @@ rec {
     rnix-lsp
     shellcheck
     speedtest-cli
-    starship
-    tokei # https://github.com/XAMPPRocky/tokei
+    starship # Need this for aliases.
     tree
     yq
     zsh-autosuggestions

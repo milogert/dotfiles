@@ -4,17 +4,13 @@
 }:
 
 let
-  #tmuxinatorPriv = ../../config/tmuxinator/priv + "/";
   tmuxPlugins = pkgs.tmuxPlugins // pkgs.callPackage ./custom-plugins.nix {};
 in rec {
-  #home.activation.copyPrivTmuxinatorProfiles =
-  #  config.lib.dag.entryAfter ["writeBoundary"] ''
-  #    #cp -r ${tmuxinatorPriv}* ${xdg.configHome}/tmuxinator/
-  #'';
-  xdg.configFile.tmuxinator = {
-    source = ../../config/tmuxinator;
-    target = "tmuxinator";
-    recursive = true;
+  home.file = {
+    "${config.xdg.configHome}/tmuxinator/" = {
+      recursive = true;
+      source = ../../config/tmuxinator;
+    };
   };
 
   programs.tmux = {
@@ -33,6 +29,8 @@ in rec {
       srcery-tmux
     ];
     extraConfig = ''
+      set-option -sa terminal-overrides ',alacritty:RGB'
+
       # Rebind prefix key from C-b to C-Space
       set -g prefix C-Space
       unbind-key C-b

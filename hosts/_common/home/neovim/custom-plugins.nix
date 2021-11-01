@@ -12,7 +12,8 @@
   };
 
   any-jump-vim = pkgs.vimUtils.buildVimPlugin {
-    name = "any-jump.vim";
+    pname = "any-jump.vim";
+    version = "2021-09-17";
     src = pkgs.fetchFromGitHub {
       owner = "pechorin";
       repo = "any-jump.vim";
@@ -21,8 +22,20 @@
     };
   };
 
+  copilot-vim = pkgs.vimUtils.buildVimPlugin {
+    pname = "copilot.vim";
+    version = "1.0.1";
+    src = pkgs.fetchFromGitHub {
+      owner = "github";
+      repo = "copilot.vim";
+      rev = "e1be74e21a7daf88ca52116386c5acdb22265c76";
+      sha256 = "01m2xqibxl9p27zhyx86rjrihm90jla7pbsnqgjzgm3hyg8fp1g8";
+    };
+  };
+
   nvim-treesitter = pkgs.vimUtils.buildVimPlugin {
-    name = "nvim-treesitter";
+    pname = "nvim-treesitter";
+    version = "2021-09-17";
     src = pkgs.fetchFromGitHub {
       owner = "nvim-treesitter";
       repo = "nvim-treesitter";
@@ -82,7 +95,8 @@
   };
 
   wilder-nvim = pkgs.vimUtils.buildVimPlugin {
-    name = "wilder.nvim";
+    pname = "wilder.nvim";
+    version = "2021-09-17";
     src = pkgs.fetchFromGitHub {
       owner = "gelguy";
       repo = "wilder.nvim";

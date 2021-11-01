@@ -57,7 +57,6 @@ export cheat
 
 # Starship prompt
 # Docs: https://starship.rs/config/#command-duration
-if [ "$(command -v starship)" ]; then
-  #eval "$(starship init zsh)"
-  echo "fake starship init"
-fi
+# if [ "$(command -v starship)" ]; then
+#   echo "fake starship init"
+# fi

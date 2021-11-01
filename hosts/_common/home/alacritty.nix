@@ -55,7 +55,7 @@
         # Values for `decorations` (macOS only):
         #     - transparent: Title bar, transparent background and title bar buttons
         #     - buttonless: Title bar, transparent background, but no title bar buttons
-        decorations = "buttonless";
+        decorations = "none";
 
         # Startup Mode (changes require restart)
         #
@@ -66,7 +66,7 @@
         #
         # Values for `startup_mode` (macOS only):
         #   - SimpleFullscreen
-        #startup_mode: Windowed
+        startup_mode = "Maximized";
 
         # Window title
         #title: Alacritty

@@ -4,7 +4,8 @@ rec {
   imports = [
     ./configuration.nix
     ./hardware-configuration.nix
-    ../_common/default-headless.nix
+    ../_common/default.nix
+    ../_common/types/headless.nix
     ./networking.nix
     ./services
   ];
