@@ -19,7 +19,7 @@
 
   # System - Show scrollbars only when scrolling
   #   WhenScrolling, Automatic, Always
-  system.defaults.NSGlobalDomain.AppleShowScrollBars = "WhenScrolling";
+  system.defaults.NSGlobalDomain.AppleShowScrollBars = "Always";
 
   # System - What temperature unit to use
   system.defaults.NSGlobalDomain.AppleTemperatureUnit = "Celsius";

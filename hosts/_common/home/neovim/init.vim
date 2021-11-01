@@ -46,7 +46,7 @@ set modeline
 " Enable syntax highlighting.
 "colorscheme nofrils-dark
 " True colors.
-"set termguicolors
+set termguicolors
 "set background=dark
 set t_Co=256
 let g:srcery_italic = 1
@@ -64,7 +64,8 @@ set relativenumber
 
 " Special characters for spacing.
 set list
-set listchars=eol:$,tab:-->,trail:~,extends:>,precedes:<,space:·
+" set listchars=eol:$,tab:-->,trail:~,extends:>,precedes:<,space:·
+set listchars=tab:-->,trail:~,extends:>,precedes:<
 
 " Tab does two spaces.
 set expandtab
@@ -88,6 +89,10 @@ nnoremap <leader><leader> <c-^>
 
 " Make Y act like C and D
 nnoremap Y y$
+
+" Swap ` and ' for marks, since ` (by default) jumps to line and column.
+nnoremap ' `
+nnoremap ` '
 
 " Searching.
 set exrc " Source rc's in project directory
@@ -147,7 +152,7 @@ function! AppendModeline()
   let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
   call append(line("$"), l:modeline)
 endfunction
-nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
+nnoremap <silent> <Leader>l :call AppendModeline()<CR>
 
 " Functional logger.
 function! AddFunctionalLogger()
@@ -250,7 +255,7 @@ nmap <Leader>g :G<CR>
 " command! NetRWFind call NetRWFind()
 
 " Airline theme
-let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#coc#enabled = 1
 let g:airline_theme='srcery'
 let g:airline#extensions#default#section_truncate_width = {
   \ 'b': 128,
@@ -298,6 +303,7 @@ endfunction
 
 " Source other files.
 call SourceIfExists("~/.config/nvim/coc.vim")
+call SourceIfExists("~/.config/nvim/feline.lua")
 call SourceIfExists("~/.config/nvim/priv.vim")
 call SourceIfExists("~/.config/nvim/profile.vim")
 call SourceIfExists("~/.config/nvim/playground.vim")
@@ -318,7 +324,9 @@ endfunction
 command! ThankYouNext call <sid>ThankYouNext()
 
 " Tmux config stuff
-cnoreabbrev Mux !tmuxinator
+cabbrev Mux !tmuxinator
+nnoremap <silent> <Leader>ms :Mux start 
+nnoremap <silent> <Leader>mc :Mux stop 
 
 " Skeleton configs
 autocmd FileType gitcommit 0r ~/.config/nvim/skeletons/gitcommit.skeleton
@@ -328,6 +336,3 @@ autocmd FileType gitcommit 0r ~/.config/nvim/skeletons/gitcommit.skeleton
 "   autocmd WinEnter * set cul
 "   autocmd WinLeave * set nocul
 " augroup END
-
-" Fancy stuff
-

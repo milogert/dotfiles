@@ -28,12 +28,13 @@ in rec {
         "diagnostic.enableMessage" = "never";
         "diagnostic.virtualText" = true;
         "diagnostic.virtualTextCurrentLineOnly" = true;
-        "codelens.enable" = true;
+        "codeLens.enable" = true;
         "eslint.nodePath" = "./node_modules";
         "eslint.autoFixOnSave"= true;
         "eslint.packageManager"= "yarn";
         "eslint.debug"= false;
         "eslint.lintTask.options" = ["." "--ext" ".jsx,.js"];
+        "explorer.file.showHiddenFiles" = true;
         languageserver = {
           nix = {
             command = "rnix-lsp";
