@@ -1,6 +1,6 @@
 .DS_Store
 
-hosts/_common/config/tmuxinator/rise*
+hosts/_common/config/tmuxinator/priv/
 
 result
 state.file

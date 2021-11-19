@@ -19,6 +19,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @
@@ -27,6 +32,7 @@
   , flake-utils
   , home-manager
   , nixpkgs
+  , neovim-nightly-overlay
   }:
     let
       overlays = self: super:
@@ -62,6 +68,7 @@
         };
         overlays = [
           overlays
+          neovim-nightly-overlay.overlay
         ];
       };
 
@@ -109,6 +116,7 @@
 
       darwinConfigurations = {
         worktop = darwin.lib.darwinSystem {
+          system = "x86_64-darwin";
           inputs = inputs;
           modules = mkDarwinConfig {
             host = "worktop";

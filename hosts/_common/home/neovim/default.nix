@@ -19,43 +19,14 @@ in rec {
   programs.neovim = {
     enable = true;
 
-    coc = {
-      enable = true;
-
-      settings = {
-        "diagnostic.enableMessage" = "never";
-        "diagnostic.virtualText" = true;
-        "diagnostic.virtualTextCurrentLineOnly" = true;
-        "codeLens.enable" = true;
-        "eslint.nodePath" = "./node_modules";
-        "eslint.autoFixOnSave"= true;
-        "eslint.packageManager"= "yarn";
-        "eslint.debug"= false;
-        "eslint.lintTask.options" = ["." "--ext" ".jsx,.js"];
-        "explorer.file.showHiddenFiles" = true;
-        languageserver = {
-          nix = {
-            command = "rnix-lsp";
-            filetypes = [ "nix" ];
-          };
-          terraform = {
-            command = "terraform-lsp";
-            filetypes = ["terraform"];
-            initializationOptions = {};
-          };
-        };
-        "suggest.enablePreselect" = true;
-      };
-    };
-
     extraConfig = builtins.readFile ./init.vim;
 
     plugins = with vimPlugins; [
-      coc-nvim
-      elm-vim
       fzf-vim
-      rust-vim
+      plenary-nvim
       srcery-vim
+      telescope-fzf-native-nvim
+      telescope-nvim
       vim-airline
       vim-airline-themes
       vim-coffee-script
@@ -72,28 +43,40 @@ in rec {
       vim-obsession
       vim-pug
       vim-signify
+      vim-startuptime
       vim-surround
       vim-terraform
       vim-tmux-navigator
       vim-unimpaired
       vimux
 
+      # Built in LSP.
+      nvim-lspconfig
+      nvim-lsp-installer
+      lspkind-nvim
+      lsp-status-nvim
+      nvim-cmp
+      cmp-nvim-lsp
+      cmp_luasnip
+      LuaSnip
+
       # Custom
       # alpha-nvim
-      # any-jump-vim
       copilot-vim
+      impatient-nvim
       nui-nvim
       nvim-treesitter
       package-info-nvim
       persistence-nvim
       vim-arpeggio
-      vim-nuuid
-      # wilder-nvim
     ];
 
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
+
+    withNodeJs = true;
+    withRuby = false;
   };
 
   home.activation.setVimDirs =
