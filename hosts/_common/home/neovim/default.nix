@@ -33,19 +33,19 @@ in rec {
       vim-commentary
       vim-dirvish
       vim-dirvish-git
-      vim-elixir
-      vim-elm-syntax
+      # vim-elixir
+      # vim-elm-syntax
       vim-fugitive
-      vim-graphql
-      vim-javascript
-      vim-jsx-pretty
-      vim-nix
+      # vim-graphql
+      # vim-javascript
+      # vim-jsx-pretty
+      # vim-nix
       vim-obsession
-      vim-pug
+      # vim-pug
       vim-signify
       vim-startuptime
       vim-surround
-      vim-terraform
+      # vim-terraform
       vim-tmux-navigator
       vim-unimpaired
       vimux

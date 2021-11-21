@@ -137,13 +137,13 @@ nnoremap <silent> <Leader>ppj :PrettyPrintJsonFile<CR>
 call SourceIfExists("~/.config/nvim/cmp.lua")
 call SourceIfExists("~/.config/nvim/keybindings.lua")
 call SourceIfExists("~/.config/nvim/lsp.lua")
-" call SourceIfExists("~/.config/nvim/luasnip.lua")
+call SourceIfExists("~/.config/nvim/luasnip.lua")
 call SourceIfExists("~/.config/nvim/package-info.lua")
 call SourceIfExists("~/.config/nvim/persistence.lua")
 call SourceIfExists("~/.config/nvim/playground.vim")
 call SourceIfExists("~/.config/nvim/priv.vim")
 call SourceIfExists("~/.config/nvim/profile.vim")
-" call SourceIfExists("~/.config/nvim/telescope.lua")
+call SourceIfExists("~/.config/nvim/telescope.lua")
 call SourceIfExists("~/.config/nvim/treesitter.lua")
 
 " Thank you next please, from https://ctoomey.com/writing/using-vims-arglist-as-a-todo-list/

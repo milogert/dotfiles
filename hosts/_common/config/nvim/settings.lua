@@ -117,4 +117,4 @@ cabbrev Mux !tmuxinator
 " cnoreabbrev Gstatus vert<space>Gstatus
 ]]
 
-vim.opt.lazyredraw = true
+vim.opt.lazyredraw = false
