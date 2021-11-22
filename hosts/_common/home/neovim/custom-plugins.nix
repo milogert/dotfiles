@@ -65,7 +65,6 @@
     };
   };
 
-<<<<<<< HEAD
   octo-nvim = pkgs.vimUtils.buildVimPlugin {
     name = "octo.nvim";
     src = pkgs.fetchFromGitHub {
@@ -76,8 +75,6 @@
     };
   };
 
-  package-info-nvim = pkgs.vimUtils.buildVimPlugin {
-=======
   nvim-lsp-installer = pkgs.vimUtils.buildVimPlugin rec {
     name = "nvim-lsp-installer";
     src = pkgs.fetchFromGitHub {
@@ -100,7 +97,6 @@
   };
 
   package-info-nvim = pkgs.vimUtils.buildVimPlugin rec {
->>>>>>> dcfb765fd3061d1ef96b4698ec9d932e84a3493b
     name = "package-info.nvim";
     src = pkgs.fetchFromGitHub {
       owner = "vuki656";
