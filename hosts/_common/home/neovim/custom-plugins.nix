@@ -54,6 +54,16 @@
     };
   };
 
+  octo-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "octo.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "pwntester";
+      repo = "octo.nvim";
+      rev = "848990b8d7f7f28293cfb5a1ad19abf66e27f08a";
+      sha256 = "09ibp9m47jinzjvs7ql5hvmavcg46hgyyhn8907w3dr8snadrwgs";
+    };
+  };
+
   package-info-nvim = pkgs.vimUtils.buildVimPlugin {
     name = "package-info.nvim";
     src = pkgs.fetchFromGitHub {

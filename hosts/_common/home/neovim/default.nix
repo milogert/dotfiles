@@ -53,8 +53,11 @@ in rec {
       coc-nvim
       elm-vim
       fzf-vim
+      nvim-web-devicons
       rust-vim
       srcery-vim
+      telescope-nvim
+      telescope-fzf-native-nvim
       vim-airline
       vim-airline-themes
       vim-coffee-script
@@ -83,6 +86,7 @@ in rec {
       copilot-vim
       nui-nvim
       nvim-treesitter
+      octo-nvim
       package-info-nvim
       persistence-nvim
       vim-arpeggio

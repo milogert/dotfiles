@@ -66,6 +66,7 @@ rec {
     ctop
     diskonaut
     exa
+    fd
     findutils
     fzf # Need this for aliases.
     gcc
