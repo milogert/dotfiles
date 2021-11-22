@@ -37,7 +37,8 @@
       unpushed = "log @{u}";
       wc = "whatchanged";
       #wip = "rebase -i @{u}";
-      wip = "for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads";
+      wipp = "for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads";
+      wip = "!git wipp | fzf --tac --bind 'enter:execute(git checkout {-1})+abort'";
       zap = "fetch -p";
     };
 

@@ -33,7 +33,7 @@ in rec {
       npmSet = "$DRY_RUN_CMD ${pkgs.nodejs-16_x}/bin/npm set";
     in
       config.lib.dag.entryAfter ["writeBoundary"] ''
-        ${npmSet} init.author.name "Milo Gertjejanse"
+        ${npmSet} init.author.name "Milo Gertjejansen"
         ${npmSet} init.author.email "milo@milogert.com"
         ${npmSet} init.author.url "https://milogert.com"
         ${npmSet} init.license "MIT"

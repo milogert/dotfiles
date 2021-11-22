@@ -14,6 +14,7 @@
     ./plex.nix
     ./prometheus.nix
     ./radarr.nix
+    ./readarr.nix
     ./sonarr.nix
     # ./tautulli.nix
     ./tt-rss
