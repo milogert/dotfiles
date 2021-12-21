@@ -23,6 +23,7 @@ in rec {
 
     plugins = with vimPlugins; [
       fzf-vim
+      nvim-web-devicons
       plenary-nvim
       srcery-vim
       vim-airline
