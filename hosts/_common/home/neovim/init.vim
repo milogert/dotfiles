@@ -33,18 +33,6 @@ function! AppendModeline()
 endfunction
 nnoremap <silent> <Leader>l :call AppendModeline()<CR>
 
-" Functional logger.
-function! AddFunctionalLogger()
-  let l:logger = printf("const fl = tag => logData => ( console.log(`%s: ${tag}`, logData), logData )", expand('%:t'))
-  call append(0, l:logger)
-endfunction
-nnoremap <silent> <Leader>fl :call AddFunctionalLogger()<CR>
-function! AddConditionalFunctionalLogger()
-  let l:logger = printf("const cfl = tag => predicate => logData => ( console.log(`CONDITION ${predicate(logData) ? '' : 'NOT '}MET: ${tag}`, logData) , logData )")
-  call append(0, l:logger)
-endfunction
-nnoremap <silent> <Leader>cfl :call AddConditionalFunctionalLogger()<CR>
-
 " Twiddle case by highlighting text and hitting ~
 function! TwiddleCase(str)
   if a:str ==# toupper(a:str)
@@ -59,12 +47,10 @@ endfunction
 vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 
 " fzf config.
-nnoremap <silent> <C-p> :GFiles <CR>
 command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 command! -bang -nargs=? -complete=dir GFiles
     \ call fzf#vim#gitfiles(join([<q-args>, '--cached --others --exclude-standard'], ' '), fzf#vim#with_preview(), <bang>0)
-nnoremap <Leader>b :Buffer <CR>
 " Use `:command Rg` to see current config
 " Old command!
 "command! -bang -nargs=* Rg
@@ -82,7 +68,6 @@ command! -bang -nargs=* Rg
   \   fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}),
   \   <bang>0
   \ )
-nnoremap <silent> <Leader>/ :Rg<CR>
 " An action can be a reference to a function that processes selected lines
 function! s:build_quickfix_list(lines)
   call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
@@ -115,11 +100,6 @@ let g:airline#extensions#default#section_truncate_width = {
   \ }
 let g:airline_section_y = ''
 
-" Vimux config.
-let g:VimuxHeight = "25"
-let g:VimuxOrientation = "h"
-let g:VimuxUseNearest = 0
-
 " Pretty print json
 function! PrettyPrintJsonFile()
   %!python -m json.tool
@@ -143,8 +123,9 @@ call SourceIfExists("~/.config/nvim/persistence.lua")
 call SourceIfExists("~/.config/nvim/playground.vim")
 call SourceIfExists("~/.config/nvim/priv.vim")
 call SourceIfExists("~/.config/nvim/profile.vim")
-call SourceIfExists("~/.config/nvim/telescope.lua")
+" call SourceIfExists("~/.config/nvim/telescope.lua")
 call SourceIfExists("~/.config/nvim/treesitter.lua")
+call SourceIfExists("~/.config/nvim/which-key.lua")
 
 " Thank you next please, from https://ctoomey.com/writing/using-vims-arglist-as-a-todo-list/
 function! s:ThankYouNext() abort
@@ -157,14 +138,8 @@ function! s:ThankYouNext() abort
 endfunction
 command! ThankYouNext call <sid>ThankYouNext()
 
-" Skeleton configs
-autocmd FileType gitcommit 0r ~/.config/nvim/skeletons/gitcommit.skeleton
-
 " augroup BgHighlight
 "   autocmd!
 "   autocmd WinEnter * set cul
 "   autocmd WinLeave * set nocul
 " augroup END
-
-" Disable copilot by default
-autocmd VimEnter * Copilot disable

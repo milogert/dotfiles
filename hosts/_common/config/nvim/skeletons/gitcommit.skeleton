@@ -1,9 +1,21 @@
-someTitle
+<!-- Feel free to add more sections for your PR -->
 
-Some description here.
+Description
+---
+
+This addresses...
+
+Testing
+---
+
+Here's how to test it:
+
+1. Do this
+1. Do that
+1. Make sure it works
 
 Links
-===
+---
 
-- Issue: prUrlHere
-- [Project Board](projectBoardUrlHere)
+- Issue: link
+- [Project Board](link)

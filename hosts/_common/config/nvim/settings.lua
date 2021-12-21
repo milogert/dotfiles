@@ -118,3 +118,33 @@ cabbrev Mux !tmuxinator
 ]]
 
 vim.opt.lazyredraw = false
+
+-- GitHub Copilot.
+vim.g.copilot_no_tab_map = true
+vim.g.copilot_assume_mapped = true
+
+-- fzf.vim config
+vim.g.fzf_buffers_jump = true
+
+-- augroups and autocmd
+vim.cmd [[
+" augroup ElixirFormat
+  " autocmd!
+  " autocmd BufWritePost *.exs silent :!mix format %
+  " autocmd BufWritePost *.ex silent :!mix format %
+" augroup END
+
+augroup Skeletons
+  autocmd!
+  autocmd FileType gitcommit 0r ~/.config/nvim/skeletons/gitcommit.skeleton
+augroup END
+
+augroup Commands
+  autocmd VimEnter * Copilot disable
+augroup END
+]]
+
+-- Vimux.
+vim.g.VimuxHeight = "25"
+vim.g.VimuxOrientation = "h"
+vim.g.VimuxUseNearest = 0

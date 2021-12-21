@@ -9,7 +9,7 @@ rec {
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 30d";
   nix.package = pkgs.nixUnstable;
-  nix.extraOptions = "experimental-features = nix-command flakes ca-references";
+  nix.extraOptions = "experimental-features = nix-command flakes";
   nix.trustedUsers = [ "root" "@admin" ];
 
   nix.trustedBinaryCaches = [
@@ -66,6 +66,7 @@ rec {
     ctop
     diskonaut
     exa
+    fd
     findutils
     fzf # Need this for aliases.
     gcc

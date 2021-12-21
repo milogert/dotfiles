@@ -11,26 +11,6 @@
     };
   };
 
-  cmp_luasnip = pkgs.vimUtils.buildVimPlugin rec {
-    name = "cmp_luasnip";
-    src = pkgs.fetchFromGitHub {
-      owner = "saadparwaiz1";
-      repo = name;
-      rev = "16832bb50e760223a403ffa3042859845dd9ef9d";
-      sha256 = "0hc6flnvdgd7a93p8y9msp92bc1r10nh00wvw9msr40442m8viqc";
-    };
-  };
-
-  copilot-vim = pkgs.vimUtils.buildVimPlugin rec {
-    name = "copilot.vim";
-    src = pkgs.fetchFromGitHub {
-      owner = "github";
-      repo = name;
-      rev = "e1be74e21a7daf88ca52116386c5acdb22265c76";
-      sha256 = "01m2xqibxl9p27zhyx86rjrihm90jla7pbsnqgjzgm3hyg8fp1g8";
-    };
-  };
-
   impatient-nvim = pkgs.vimUtils.buildVimPlugin rec {
     name = "impatient.nvim";
     src = pkgs.fetchFromGitHub {
@@ -43,28 +23,6 @@
     dontBuild = true;
   };
 
-  LuaSnip = pkgs.vimUtils.buildVimPlugin rec {
-    name = "LuaSnip";
-    src = pkgs.fetchFromGitHub {
-      owner = "L3MON4D3";
-      repo = name;
-      rev = "366fd76ea226bed11966cd8b1a229cba08fa4394";
-      sha256 = "17jla5yvi0vzgi0himl8fyfmc8sl8xg1k5bzl58iq0d2ycmr08as";
-    };
-    # Only skips tests.
-    dontBuild = true;
-  };
-
-  nui-nvim = pkgs.vimUtils.buildVimPlugin rec {
-    name = "nui.nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "MunifTanjim";
-      repo = name;
-      rev = "dbe08f29529b6b30e793718fd45eaa4e484410e8";
-      sha256 = "02g46p0290yrhzbx63gzk95myc7y2v2bh9c66nfzryfdc728i113";
-    };
-  };
-
   nvim-lsp-installer = pkgs.vimUtils.buildVimPlugin rec {
     name = "nvim-lsp-installer";
     src = pkgs.fetchFromGitHub {
@@ -75,24 +33,13 @@
     };
   };
 
-  nvim-treesitter = pkgs.vimUtils.buildVimPlugin rec {
-    pname = "nvim-treesitter";
-    version = "2021-11-14";
+  octo-nvim =  pkgs.vimUtils.buildVimPlugin rec {
+    name = "octo.nvim";
     src = pkgs.fetchFromGitHub {
-      owner = "nvim-treesitter";
-      repo = pname;
-      rev = "a47df48e7d4232fd771f2537a4fb43f582c026c9";
-      sha256 = "0w3v6416b8a7y20awjdkh9ag3xrnqyg2va25nvv9d8n4zw2aqp02";
-    };
-  };
-
-  package-info-nvim = pkgs.vimUtils.buildVimPlugin rec {
-    name = "package-info.nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "vuki656";
+      owner = "pwntester";
       repo = name;
-      rev = "7f5d4f8583de1eaf1ae998c369cb1c81565205d7";
-      sha256 = "1xmxkzwspi10417jvnwc50vd56s9bn8f1604ag8vzb7i6mxl2s79";
+      rev = "b33e00cd3066b03164d17e69d7ce9aa656caeda8";
+      sha256 = "099vv6ac0zjy0sij00fs1pppj8pa9cy6lvhgw2pq33vpg5c2x7cm";
     };
   };
 

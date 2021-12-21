@@ -25,30 +25,20 @@ in rec {
       fzf-vim
       plenary-nvim
       srcery-vim
-      telescope-fzf-native-nvim
-      telescope-nvim
       vim-airline
       vim-airline-themes
-      vim-coffee-script
       vim-commentary
       vim-dirvish
       vim-dirvish-git
-      # vim-elixir
-      # vim-elm-syntax
       vim-fugitive
-      # vim-graphql
-      # vim-javascript
-      # vim-jsx-pretty
-      # vim-nix
       vim-obsession
-      # vim-pug
       vim-signify
       vim-startuptime
       vim-surround
-      # vim-terraform
       vim-tmux-navigator
       vim-unimpaired
       vimux
+      which-key-nvim
 
       # Built in LSP.
       nvim-lspconfig
@@ -58,7 +48,7 @@ in rec {
       nvim-cmp
       cmp-nvim-lsp
       cmp_luasnip
-      LuaSnip
+      luasnip
 
       # Custom
       # alpha-nvim
@@ -66,6 +56,7 @@ in rec {
       impatient-nvim
       nui-nvim
       nvim-treesitter
+      octo-nvim
       package-info-nvim
       persistence-nvim
       vim-arpeggio

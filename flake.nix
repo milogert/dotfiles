@@ -37,16 +37,6 @@
     let
       overlays = self: super:
         {
-          # kubernetes = super.kubernetes.overrideAttrs (old: {
-          #   version = "1.21.1";
-
-          #   src = super.fetchFromGitHub {
-          #     owner = "kubernetes";
-          #     repo = "kubernetes";
-          #     rev = "v1.21.1";
-          #     sha256 = "sha256-gJjCw28SqU49kIiRH+MZgeYN4VBgKVEaRPr5A/2c5Pc=";
-          #   };
-          # });
           plexPassRaw = super.plexRaw.overrideAttrs (old: rec {
             version = "1.24.4.5081-e362dc1ee";
             name = "${old.pname}-${version}";

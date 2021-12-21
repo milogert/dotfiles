@@ -42,8 +42,8 @@ vim.cmd("noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')")
 u.nmap('<Leader>g', ':G<CR>')
 
 -- Tmuxinator helpers.
-u.nmap('<Leader>ms', ':Mux start ')
-u.nmap('<Leader>mc ', 'Mux stop ')
+u.nmap('<Leader>ms', ':Mux start ', { silent = false })
+u.nmap('<Leader>mc', ':Mux stop ', { silent = false })
 
 -- Escape quickly.
 u.imap('jj', '<Esc>')
@@ -65,5 +65,14 @@ for _, map in ipairs(vimuxMaps) do
 end
 
 -- GitHub Copilot.
-u.nmap('<leader>cpe', ':Copilot enable')
-u.nmap('<leader>cpd', ':Copilot disable')
+u.nmap('<leader>cpe', ':Copilot enable<CR>')
+u.nmap('<leader>cpd', ':Copilot disable<CR>')
+
+-- FZF.
+u.nmap('<C-p>', ':GFiles<CR>')
+u.nmap('<leader>b', ':Buffer<CR>')
+u.nmap('<Leader>/', ':Rg<CR>')
+
+-- Function keybindings.
+u.nmap('<leader>fl', [[<cmd>lua require('functions').addFunctionalLogger(false)<CR>]])
+u.nmap('<Leader>cfl', [[<cmd>lua require('functions').addFunctionalLogger(true)<CR>]])
