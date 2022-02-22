@@ -55,7 +55,8 @@
         # Values for `decorations` (macOS only):
         #     - transparent: Title bar, transparent background and title bar buttons
         #     - buttonless: Title bar, transparent background, but no title bar buttons
-        decorations = "none";
+        # Configured in hosts/<host>/users/_common/default.nix
+        # decorations = "none";
 
         # Startup Mode (changes require restart)
         #
@@ -107,7 +108,8 @@
         bold_italic = {
           style = "Bold Italic";
         };
-        #size = 11.0;
+        # Configured in hosts/<host>/users/_common/default.nix
+        # size = 11.0;
         # Offset is the extra space around each character. `offset.y` can be thought of
         # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
         #offset:

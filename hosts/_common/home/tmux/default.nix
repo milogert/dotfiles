@@ -29,6 +29,9 @@ in rec {
       srcery-tmux
     ];
     extraConfig = ''
+      # Mostly my own config but...
+      # Tips from https://dev.to/iggredible/useful-tmux-configuration-examples-k3g
+
       set-option -sa terminal-overrides ',alacritty:RGB'
 
       # Rebind prefix key from C-b to C-Space
@@ -56,9 +59,15 @@ in rec {
       # set -g monitor-silence on
 
       # Start window numbering at 1 for easier switching.
+      setw -g base-index 1
       setw -g pane-base-index 1
       bind | split-window -h -c "#{pane_current_path}"
       bind - split-window -v -c "#{pane_current_path}"
+      set -g renumber-windows on
+
+      # Rejoin panes
+      bind j choose-window 'join-pane -h -s "%%"'
+      bind J choose-window 'join-pane -s "%%"'
 
       # Allow mousewheel scrolling.
       set-option -g mouse on
@@ -148,25 +157,9 @@ in rec {
       #set -ag status-right "#[fg=cyan,bg=default] ☠ #H #[default]"
       #set -ag status-right " ☠ #H "
 
-      #############
-      ## Windows ##
-      #############
+      # Marking Panes #########################################################
 
-      ## Set the inactive window color and style
-      #set -g window-status-style fg=colour244,bg=default
-      #set -g window-status-format ' #I #W '
-
-      ## Set the active window color and style
-      #set -g window-status-current-style fg=black,bg=colour136
-      #set -g window-status-current-format ' #I #W '
-
-      ## Colors for pane borders(default)
-      #setw -g pane-border-style fg=green,bg=black
-      #setw -g pane-active-border-style fg=white,bg=black
-
-      ## Active pane normal, other shaded out
-      #setw -g window-style fg=colour240,bg=colour235
-      #setw -g window-active-style fg=white,bg=black
+      bind \` switch-client -t'{marked}'
     '';
   };
 }

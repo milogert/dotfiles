@@ -27,6 +27,7 @@
   homebrew.casks = [
     "1password"
     "alacritty"
+    "beekeeper-studio"
     "cloudapp"
     "docker"
     "firefox-developer-edition"
@@ -37,6 +38,7 @@
     "krisp"
     "microsoft-edge"
     "muzzle"
+    "openvpn-connect"
     "postgres"
     "postico"
     "slack"

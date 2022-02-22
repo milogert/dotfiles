@@ -1,96 +1,65 @@
 { fetchFromGitHub, pkgs }:
 
 {
-  alpha-nvim = pkgs.vimUtils.buildVimPlugin {
+  alpha-nvim = pkgs.vimUtils.buildVimPlugin rec {
     name = "alpha-nvim";
     src = pkgs.fetchFromGitHub {
       owner = "goolord";
-      repo = "alpha-nvim";
-      rev = "d99cf5d2fafedfaf3361374f2f1fd18439ee97ef";
-      sha256 = "002piqwlz93kdl7jzspv37kk6yq63al0mwz3d0k178x1kr8c8i7l";
+      repo = name;
+      rev = "7a49086bf9197f573b396d4ac46262c02dfb9aec";
+      sha256 = "0qfxyf25yw5yrxrmbsi0gbd0bhzpmsw9ls4blhhb8q1jpkvbcmgw";
     };
   };
 
-  any-jump-vim = pkgs.vimUtils.buildVimPlugin {
-    pname = "any-jump.vim";
-    version = "2021-09-17";
+  impatient-nvim = pkgs.vimUtils.buildVimPlugin rec {
+    name = "impatient.nvim";
     src = pkgs.fetchFromGitHub {
-      owner = "pechorin";
-      repo = "any-jump.vim";
-      rev = "c5c319fdf588c9ed53e6a32eb2608bd1eb2f9c92";
-      sha256 = "1lzpr5x7zvpc252j6ipp2rfjfd25a0mrkikq8vdsbxbamp8cyqpb";
+      owner = "lewis6991";
+      repo = name;
+      rev = "f4a45e4be49ce417ef2e15e34861994603e3deab";
+      sha256 = "0q034irf77rlk07fd350zbg73p4daj7bakklk0q0rf3z31npwx8l";
     };
+    # Only skips tests.
+    dontBuild = true;
   };
 
-  nvim-treesitter = pkgs.vimUtils.buildVimPlugin {
-    pname = "nvim-treesitter";
-    version = "2021-09-17";
+  nvim-lsp-installer = pkgs.vimUtils.buildVimPlugin rec {
+    name = "nvim-lsp-installer";
     src = pkgs.fetchFromGitHub {
-      owner = "nvim-treesitter";
-      repo = "nvim-treesitter";
-      rev = "c37e79803e21abfae960174a6c661da166c87e8b";
-      sha256 = "1dd4qmv6yrmx1b5qdz5yc5sipgag3qkgrkkw0y7wnvvw42vgz916";
+      owner = "williamboman";
+      repo = name;
+      rev = "35d4b08d60c17b79f8e16e9e66f0d7693c99d612";
+      sha256 = "1zf9r6qg8s8zz2n63fmz01xphvyz1jxg1bqy4mdlglj2h16i2jpj";
     };
   };
 
-  nui-nvim = pkgs.vimUtils.buildVimPlugin {
-    name = "nui.nvim";
+  octo-nvim =  pkgs.vimUtils.buildVimPlugin rec {
+    name = "octo.nvim";
     src = pkgs.fetchFromGitHub {
-      owner = "MunifTanjim";
-      repo = "nui.nvim";
-      rev = "dbe08f29529b6b30e793718fd45eaa4e484410e8";
-      sha256 = "02g46p0290yrhzbx63gzk95myc7y2v2bh9c66nfzryfdc728i113";
+      owner = "pwntester";
+      repo = name;
+      rev = "b33e00cd3066b03164d17e69d7ce9aa656caeda8";
+      sha256 = "099vv6ac0zjy0sij00fs1pppj8pa9cy6lvhgw2pq33vpg5c2x7cm";
     };
   };
 
-  package-info-nvim = pkgs.vimUtils.buildVimPlugin {
-    name = "package-info.nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "vuki656";
-      repo = "package-info.nvim";
-      rev = "7f5d4f8583de1eaf1ae998c369cb1c81565205d7";
-      sha256 = "1xmxkzwspi10417jvnwc50vd56s9bn8f1604ag8vzb7i6mxl2s79";
-    };
-  };
-
-  persistence-nvim = pkgs.vimUtils.buildVimPlugin {
+  persistence-nvim = pkgs.vimUtils.buildVimPlugin rec {
     name = "persistence.nvim";
     src = pkgs.fetchFromGitHub {
       owner = "folke";
-      repo = "persistence.nvim";
+      repo = name;
       rev = "2f2b0cc69d13a91b6ec2d72de882586dceae19bb";
       sha256 = "10bjvpbi9bmpiy8zr76xaab223yh023lqkq1v0dcfnqx5v4caw17";
     };
   };
 
-  vim-arpeggio = pkgs.vimUtils.buildVimPlugin {
+  vim-arpeggio = pkgs.vimUtils.buildVimPlugin rec {
     name = "vim-arpeggio";
     src = pkgs.fetchFromGitHub {
       owner = "kana";
-      repo = "vim-arpeggio";
+      repo = name;
       rev = "01c8fc1a72ef58e490ee0490c65ee313b1b6e843";
       sha256 = "0405yp1273kzsr3g5j6mj2dfs73qvw716474phkdr67md8ln12dy";
-    };
-  };
-
-  vim-nuuid = pkgs.vimUtils.buildVimPlugin {
-    name = "vim-nuuid";
-    src = pkgs.fetchFromGitHub {
-      owner = "kburdett";
-      repo = "vim-nuuid";
-      rev = "6abc11a7943e5777c27b6271f3b6243f426d68fd";
-      sha256 = "1yx3c6fgq8paa3mxzrzi61alvsvjyqihrlla2ip8fqmxd420vjsx";
-    };
-  };
-
-  wilder-nvim = pkgs.vimUtils.buildVimPlugin {
-    pname = "wilder.nvim";
-    version = "2021-09-17";
-    src = pkgs.fetchFromGitHub {
-      owner = "gelguy";
-      repo = "wilder.nvim";
-      rev = "a8a2feda01b8d498b49ef133f648297959de2fa8";
-      sha256 = "0sbcgv6zw9i7mv8plv7kr14zpvd24wlbgpx1k0hdfs3wbb8md9ya";
     };
   };
 }

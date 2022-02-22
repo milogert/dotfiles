@@ -5,7 +5,7 @@ rec {
     ./configuration.nix
     ./hardware-configuration.nix
     ../_common/default.nix
-    ../_common/types/headless.nix
+    ../_common/types/desktop.nix
     ./networking.nix
     ../_common/services
     ./services
@@ -44,7 +44,7 @@ rec {
 
   environment.systemPackages = with pkgs; [
     awscli
-    chromium
+    beekeeper-studio
     clinfo
     firefox
     gjs

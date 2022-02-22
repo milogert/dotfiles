@@ -19,6 +19,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @
@@ -27,20 +32,11 @@
   , flake-utils
   , home-manager
   , nixpkgs
+  , neovim-nightly-overlay
   }:
     let
       overlays = self: super:
         {
-          # kubernetes = super.kubernetes.overrideAttrs (old: {
-          #   version = "1.21.1";
-
-          #   src = super.fetchFromGitHub {
-          #     owner = "kubernetes";
-          #     repo = "kubernetes";
-          #     rev = "v1.21.1";
-          #     sha256 = "sha256-gJjCw28SqU49kIiRH+MZgeYN4VBgKVEaRPr5A/2c5Pc=";
-          #   };
-          # });
           plexPassRaw = super.plexRaw.overrideAttrs (old: rec {
             version = "1.24.4.5081-e362dc1ee";
             name = "${old.pname}-${version}";
@@ -62,6 +58,7 @@
         };
         overlays = [
           overlays
+          neovim-nightly-overlay.overlay
         ];
       };
 
@@ -109,6 +106,7 @@
 
       darwinConfigurations = {
         worktop = darwin.lib.darwinSystem {
+          system = "x86_64-darwin";
           inputs = inputs;
           modules = mkDarwinConfig {
             host = "worktop";

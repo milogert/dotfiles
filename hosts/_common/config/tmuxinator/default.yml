@@ -49,4 +49,4 @@ windows:
       root: ~/.dotfiles
       panes:
         - nvim
-        - ls
+        -

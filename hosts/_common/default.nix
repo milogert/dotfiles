@@ -9,7 +9,7 @@ rec {
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 30d";
   nix.package = pkgs.nixUnstable;
-  nix.extraOptions = "experimental-features = nix-command flakes ca-references";
+  nix.extraOptions = "experimental-features = nix-command flakes";
   nix.trustedUsers = [ "root" "@admin" ];
 
   nix.trustedBinaryCaches = [
@@ -30,7 +30,7 @@ rec {
     BAT_THEME = "srcery";
     EDITOR = "nvim";
     MANPAGER = "nvim +Man!";
-    NPM_TOKEN = "`cat $HOME/.npmrc 2>/dev/null | grep authToken | tr \"=\" \"\\n\" | tail -n 1`";
+    NPM_TOKEN = "`cat $HOME/.npmrc 2>/dev/null | grep npmjs | grep authToken | tr \"=\" \"\\n\" | tail -n 1`";
     PATH = builtins.concatStringsSep ":" [
       "/usr/local/sbin"
       "$HOME/.local/bin"
@@ -66,6 +66,7 @@ rec {
     ctop
     diskonaut
     exa
+    fd
     findutils
     fzf # Need this for aliases.
     gcc

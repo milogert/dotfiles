@@ -39,12 +39,13 @@ _nixos-switch:
 
 # nix-darwin commands.
 _nix-darwin-build:
-	nix build ".#darwinConfigurations.${HOST}.system" --experimental-features "nix-command flakes"
+	nix build ".#darwinConfigurations.${HOST}.system"
 
 _nix-darwin-switch:
 	./result/sw/bin/darwin-rebuild switch --flake ".#${HOST}"
 
 install_requirements:
+	@echo -e "\033[0;32mInstalling required programs\033[0m"
 	./installers/homebrew
 	./installers/nix
 

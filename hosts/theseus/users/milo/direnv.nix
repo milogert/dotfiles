@@ -8,7 +8,6 @@ in rec {
   enableZshIntegration = true;
 
   nix-direnv.enable = true;
-  nix-direnv.enableFlakes = true;
 
   config = {
     whitelist = {
