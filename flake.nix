@@ -19,11 +19,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = inputs @
@@ -32,7 +27,6 @@
   , flake-utils
   , home-manager
   , nixpkgs
-  , neovim-nightly-overlay
   }:
     let
       overlays = self: super:
@@ -58,7 +52,6 @@
         };
         overlays = [
           overlays
-          neovim-nightly-overlay.overlay
         ];
       };
 
@@ -85,7 +78,7 @@
           nix.registry.nixpkgs.flake = nixpkgs;
           environment.variables.HOSTNAME = host;
           nixpkgs = nixpkgsConfig;
-          home-manager.verbose = true;
+          home-manager.verbose = false;
           home-manager.useUserPackages = true;
         })
       ] ++ (builtins.map mkUserConfigWrapped users);

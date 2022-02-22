@@ -1,6 +1,23 @@
 -- vim.lsp.set_log_level("debug")
 -- require('vim.lsp.log').set_format_func(vim.inspect)
 
+-- lsp-status -----------------------------------------------------------------
+local lsp_status = require('lsp-status')
+lsp_status.register_progress()
+lsp_status.config({
+  indicator_errors = '✗',
+  indicator_warnings = '⚠',
+  indicator_info = '',
+  indicator_hint = '',
+  indicator_ok = '✔',
+  current_function = false,
+  diagnostics = false,
+  select_symbol = nil,
+  update_interval = 100,
+  status_symbol = ' 🔍',
+})
+
+
 -- lsp-config -----------------------------------------------------------------
 -- options for lsp diagnostic
 vim.diagnostic.config({
@@ -74,6 +91,9 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<space>fi', lsp('formatting'),      opts)
   end
 
+  -- Add lsp status to config.
+  lsp_status.on_attach(client)
+
 end
 
 -- lspkind --------------------------------------------------------------------
@@ -112,23 +132,6 @@ require('lspkind').init({
 })
 
 
--- lsp-status -----------------------------------------------------------------
-require('lsp-status').status()
-require('lsp-status').register_progress()
-require('lsp-status').config({
-  indicator_errors = '✗',
-  indicator_warnings = '⚠',
-  indicator_info = '',
-  indicator_hint = '',
-  indicator_ok = '✔',
-  current_function = true,
-  diagnostics = false,
-  select_symbol = nil,
-  update_interval = 100,
-  status_symbol = ' 🇻',
-})
-
-
 -- nvim-lsp-installer ---------------------------------------------------------
 local lsp_installer = require("nvim-lsp-installer")
 
@@ -149,15 +152,16 @@ lsp_installer.settings {
 }
 
 local servers = {
-  "cssls",              -- for css, scss, less
-  "diagnosticls",       -- for diagnostics
-  "elixirls",           -- for elixir
-  "eslint",             -- for eslint
-  "jsonls",             -- for json
-  "sumneko_lua",        -- for lua
-  "tailwindcss",        -- for tailwindcss
-  "terraformls",        -- for terraform
-  "tsserver",           -- for javascript
+  "cssls",
+  "elixirls",
+  "eslint",
+  "jsonls",
+  "rnix",
+  "sumneko_lua",
+  "tailwindcss",
+  "terraformls",
+  "tsserver",
+  "html",
 }
 
 local server_configs = {
@@ -180,7 +184,11 @@ local server_configs = {
     },
   },
   sumneko_lua = {
-    settings = { Lua = { diagnostics = { globals = { 'vim' } } } },
+    settings = { Lua = { diagnostics = { globals = {
+      'vim',
+      'love',
+      'hs',
+    } } } },
   },
   tsserver = {
     on_attach = function (client, bufnr)
@@ -212,7 +220,7 @@ local on_server_ready = function(server)
     opts = opts_data
   end
 
-  opts = vim.tbl_extend("keep", opts, server_defaults)
+  opts = vim.tbl_extend("keep", opts, server_defaults)--, lsp_status.capabilities)
 
   -- This setup() function is exactly the same as lspconfig's setup function
   -- (:help lspconfig-quickstart)

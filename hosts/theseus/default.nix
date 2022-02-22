@@ -43,7 +43,6 @@ rec {
   #};
 
   environment.systemPackages = with pkgs; [
-    awscli
     beekeeper-studio
     clinfo
     firefox

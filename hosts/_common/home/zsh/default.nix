@@ -11,6 +11,10 @@
       EDITOR = "nvim";
     };
 
+    profileExtra = ''
+      export EDITOR=nvim
+    '';
+
     envExtra = ''
       ## envExtra start
       [[ -s "''${ZDOTDIR:-$HOME}/.zshenv_priv" ]] && source "''${ZDOTDIR:-$HOME}/.zshenv_priv"

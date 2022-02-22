@@ -9,5 +9,9 @@
     rel = ". ~/.zshrc";
     reset-yubikey = "gpg-connect-agent \"scd serialno\" \"learn --force\" /bye";
     srv = "python -m SimpleHTTPServer \${1:-8000}";
+
+    # Nix stuff.
+    ns = "nix-shell ";
+    nsp = "nix-shell -p ";
   };
 }

@@ -39,7 +39,9 @@ _nixos-switch:
 
 # nix-darwin commands.
 _nix-darwin-build:
-	nix build ".#darwinConfigurations.${HOST}.system"
+	# Remove the flags here eventually. This is to bootstrap flakes on your
+	# system. After these same flags should be inside the configuration files.
+	nix build ".#darwinConfigurations.${HOST}.system" --experimental-features "nix-command flakes"
 
 _nix-darwin-switch:
 	./result/sw/bin/darwin-rebuild switch --flake ".#${HOST}"

@@ -52,10 +52,3 @@ previous generation.
   the case remained the same.
 - `rig` - formerly `pig` but now it's remote, so **R**emote P**ig**.
 - `worktop` - my work laptop. It's a Mac, so it uses `nix-darwin`.
-
-# ⚠️ Troubleshooting
-
-## Error when building relating to `~/.config/coc` not being present
-
-I don't know how to solve this one yet. So far my solution is to just manually
-create the directory and copy `Coc.nvim` stuff over.

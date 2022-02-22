@@ -80,7 +80,8 @@ vim.opt.hidden = true
 vim.opt.cmdheight = 2
 vim.opt.updatetime = 10
 vim.opt.shortmess = vim.opt.shortmess + 'c'
-vim.opt.scrolloff = 8
+vim.opt.scrolloff = 16
+vim.opt.swapfile = false
 
 vim.opt.signcolumn = 'yes'
 

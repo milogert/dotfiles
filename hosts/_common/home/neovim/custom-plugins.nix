@@ -11,26 +11,48 @@
     };
   };
 
-  impatient-nvim = pkgs.vimUtils.buildVimPlugin rec {
-    name = "impatient.nvim";
+  fzf-lua = pkgs.vimUtils.buildVimPlugin rec {
+    name = "fzf-lua";
     src = pkgs.fetchFromGitHub {
-      owner = "lewis6991";
+      owner = "ibhagwan";
       repo = name;
-      rev = "f4a45e4be49ce417ef2e15e34861994603e3deab";
-      sha256 = "0q034irf77rlk07fd350zbg73p4daj7bakklk0q0rf3z31npwx8l";
+      rev = "30f4c0cb37460a82a42e1956eea136bbe10c4417";
+      sha256 = "1ykawxi86ax86zqv54qdiaa0g6kx2ii708gcxhvwl70h209frbil";
     };
-    # Only skips tests.
-    dontBuild = true;
   };
+
+  heirline-nvim = pkgs.vimUtils.buildVimPlugin rec {
+    name = "heirline.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "rebelot";
+      repo = name;
+      rev = "93c75cbe231573fe43bfb8f98491a83dfe44d504";
+      sha256 = "17hngyd2hcm902ra1xl28sl3b01syfgn9n7brammsikklby04nqm";
+    };
+  };
+
+  /* impatient-nvim = pkgs.vimUtils.buildVimPlugin rec { */
+  /*   name = "impatient.nvim"; */
+  /*   src = pkgs.fetchFromGitHub { */
+  /*     owner = "lewis6991"; */
+  /*     repo = name; */
+  /*     rev = "f4a45e4be49ce417ef2e15e34861994603e3deab"; */
+  /*     sha256 = "0q034irf77rlk07fd350zbg73p4daj7bakklk0q0rf3z31npwx8l"; */
+  /*   }; */
+  /*   # Only skips tests. */
+  /*   dontBuild = true; */
+  /* }; */
 
   nvim-lsp-installer = pkgs.vimUtils.buildVimPlugin rec {
     name = "nvim-lsp-installer";
     src = pkgs.fetchFromGitHub {
       owner = "williamboman";
       repo = name;
-      rev = "35d4b08d60c17b79f8e16e9e66f0d7693c99d612";
-      sha256 = "1zf9r6qg8s8zz2n63fmz01xphvyz1jxg1bqy4mdlglj2h16i2jpj";
+      rev = "88e44bbbe2e03523e08f2bd3c9a954675bc438f4";
+      sha256 = "16sqmc484q2jlzy4mq1zh01ymvx01z66l70fn2nd4x3mmnx8agdy";
     };
+    # Only skips tests.
+    dontBuild = true;
   };
 
   octo-nvim =  pkgs.vimUtils.buildVimPlugin rec {

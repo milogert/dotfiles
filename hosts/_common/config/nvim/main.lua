@@ -1,26 +1,60 @@
-"
-" .vimrc file.
-" Written by: Milo Gertjejansen
-"
+local log = require('logger')
 
+-- require("impatient")
+
+-- Set the leader key. This should be first.
+require("settings")
+
+vim.cmd [[ packadd vimplugin-vim-arpeggio ]]
+
+-- Source plugin configs.
+local plugins = {
+  -- "alpha-nvim",
+  "cmp",
+  "fzf-lua",
+  "gitsigns",
+  -- "gps",
+  "keybindings",
+  "lsp",
+  "luasnip",
+  "package-info",
+  "persistence",
+  -- "telescope",
+  "treesitter",
+  -- "which-key",
+
+  -- Needs to be last since it uses info from other imports
+  "heirline",
+}
+
+for _, plugin in ipairs(plugins) do
+  local ok, _ = pcall(require, 'plugins.' .. plugin)
+  if not ok then
+    log.error('Failed to load plugin config: ' .. plugin)
+  end
+end
+
+-- Load optional files.
+local optionals = {
+  'playground',
+  'priv',
+}
+
+for _, mod in ipairs(optionals) do
+  local ok, _ = pcall(require, mod)
+  if not ok then
+    log.info('Failed to load file: ' .. mod .. '.lua')
+  end
+end
+
+
+vim.cmd [[
 " Function to source only if file exists.
 function! SourceIfExists(file)
   if filereadable(expand(a:file))
     exe 'source' a:file
-  else
-    echo "Could not source " . a:file
   endif
 endfunction
-
-" Set the leader key. This should be first.
-call SourceIfExists("~/.config/nvim/settings.lua")
-
-lua require('impatient')
-
-" Load Arpeggio early.
-packadd vimplugin-vim-arpeggio
-
-" Helpful remaps.
 
 " Append modeline after last line in buffer.
 " Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
@@ -81,51 +115,10 @@ let g:fzf_action = {
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
 
-" Silver Searcher config
-"if executable('rg')
-  "let g:ackprg = 'rg --nogroup --nocolor --column --smart-case --hidden'
-"endif
-let g:ackhighlight = 1
-
-" Airline theme
-let g:airline#extensions#coc#enabled = 1
-let g:airline_theme='srcery'
-let g:airline#extensions#default#section_truncate_width = {
-  \ 'b': 128,
-  \ 'x': 60,
-  \ 'y': 88,
-  \ 'z': 45,
-  \ 'warning': 80,
-  \ 'error': 80,
-  \ }
-let g:airline_section_y = ''
-
-" Pretty print json
-function! PrettyPrintJsonFile()
-  %!python -m json.tool
-endfunction
-command! -range PrettyPrintJsonFile call PrettyPrintJsonFile()
-nnoremap <silent> <Leader>ppj :PrettyPrintJsonFile<CR>
-"function! PrettyPrintJsonRange()
-"  '<,'>!python -m json.tool
-"endfunction
-"command! -range PrettyPrintJsonRange call PrettyPrintJsonRange()
-"vnoremap <silent> <Leader>ppj :PrettyPrintJsonRange<CR>
+" let g:ackhighlight = 1
 
 " Source other files.
-" call SourceIfExists("~/.config/nvim/alpha-nvim.lua")
-call SourceIfExists("~/.config/nvim/cmp.lua")
-call SourceIfExists("~/.config/nvim/keybindings.lua")
-call SourceIfExists("~/.config/nvim/lsp.lua")
-call SourceIfExists("~/.config/nvim/luasnip.lua")
-call SourceIfExists("~/.config/nvim/package-info.lua")
-call SourceIfExists("~/.config/nvim/persistence.lua")
-call SourceIfExists("~/.config/nvim/playground.vim")
-call SourceIfExists("~/.config/nvim/priv.vim")
 call SourceIfExists("~/.config/nvim/profile.vim")
-" call SourceIfExists("~/.config/nvim/telescope.lua")
-call SourceIfExists("~/.config/nvim/treesitter.lua")
-call SourceIfExists("~/.config/nvim/which-key.lua")
 
 " Thank you next please, from https://ctoomey.com/writing/using-vims-arglist-as-a-todo-list/
 function! s:ThankYouNext() abort
@@ -143,3 +136,5 @@ command! ThankYouNext call <sid>ThankYouNext()
 "   autocmd WinEnter * set cul
 "   autocmd WinLeave * set nocul
 " augroup END
+
+]]

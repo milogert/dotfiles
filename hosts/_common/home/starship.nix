@@ -55,7 +55,7 @@
         error_symbol = "[✖](bold red)";
       };
       time = {
-        disabled = false;
+        disabled = true;
       };
       command_timeout = 1000;
     };
