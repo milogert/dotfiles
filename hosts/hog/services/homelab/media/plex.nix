@@ -7,7 +7,7 @@
     openFirewall = true;
   };
 
-  users.users.plex.extraGroups = [ "render" ];
+  users.users.plex.extraGroups = [ "render" "nzbget" ];
 
   environment.systemPackages = with pkgs; [
     # libav

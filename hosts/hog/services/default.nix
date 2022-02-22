@@ -3,7 +3,6 @@
 rec {
   imports = [
     ./avahi.nix
-    ./home-assistant
     ./homelab
     ./nginx.nix
     ./openssh.nix

@@ -14,7 +14,8 @@ in {
       "auth_internal"
     ];
     pluginPackages = [
-      extraPlugins.tt-rss-plugin-feediron
+      # extraPlugins.tt-rss-plugin-feediron
+      pkgs.tt-rss-plugin-feediron
     ];
   };
 

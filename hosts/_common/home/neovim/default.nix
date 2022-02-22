@@ -32,6 +32,7 @@ in rec {
         "eslint.packageManager"= "yarn";
         "eslint.debug"= false;
         "eslint.lintTask.options" = ["." "--ext" ".jsx,.js"];
+        "explorer.trash.command" = "mv --backup=t %l ~/.trash/";
         languageserver = {
           nix = {
             command = "rnix-lsp";

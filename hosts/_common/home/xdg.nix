@@ -10,6 +10,12 @@ in rec {
     cacheHome = "${home_dir}/.cache";
     configHome = "${home_dir}/.config";
     dataHome = "${home_dir}/.data";
+    # userDirs = {
+      # enabled = true;
+      # extraConfig = {
+      #   TRASH = 
+      # };
+    # };
     #configFile = {
     #  coc = {
     #    source = ../config/coc;
