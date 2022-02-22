@@ -5,7 +5,6 @@
 
 let
   vimPlugins = pkgs.vimPlugins // pkgs.callPackage ./custom-plugins.nix {};
-  cocConfig = ../../config/coc + "/";
 in rec {
   home.packages = with pkgs; [tree-sitter];
 
@@ -19,46 +18,50 @@ in rec {
   programs.neovim = {
     enable = true;
 
-    extraConfig = builtins.readFile ./init.vim;
+    extraConfig = ''
+      source ~/.config/nvim/main.lua
+    '';
 
     plugins = with vimPlugins; [
-      fzf-vim
+      {
+        type = "lua";
+        plugin = cmp-nvim-lsp;
+      }
+      cmp_luasnip
+      copilot-vim
+      /* fzf-vim */
+      gitsigns-nvim
+      lsp-status-nvim
+      lspkind-nvim
+      luasnip
+      nui-nvim
+      nvim-cmp
+      /* nvim-gps */
+      nvim-lspconfig
+      nvim-treesitter
       nvim-web-devicons
+      package-info-nvim
       plenary-nvim
       srcery-vim
-      vim-airline
-      vim-airline-themes
       vim-commentary
       vim-dirvish
       vim-dirvish-git
       vim-fugitive
       vim-obsession
-      vim-signify
       vim-startuptime
       vim-surround
       vim-tmux-navigator
       vim-unimpaired
       vimux
-      which-key-nvim
-
-      # Built in LSP.
-      nvim-lspconfig
-      nvim-lsp-installer
-      lspkind-nvim
-      lsp-status-nvim
-      nvim-cmp
-      cmp-nvim-lsp
-      cmp_luasnip
-      luasnip
+      /* which-key-nvim */
 
       # Custom
-      # alpha-nvim
-      copilot-vim
-      impatient-nvim
-      nui-nvim
-      nvim-treesitter
+      /* alpha-nvim */
+      fzf-lua
+      heirline-nvim
+      /* impatient-nvim */
+      nvim-lsp-installer
       octo-nvim
-      package-info-nvim
       persistence-nvim
       vim-arpeggio
     ];
@@ -77,4 +80,8 @@ in rec {
       mkdir -p ${config.xdg.dataHome}/nvim/swap/
       mkdir -p ${config.xdg.dataHome}/nvim/undo/
     '';
+
+  xdg.configFile = {
+    "nvim/init.generated.lua".text = config.programs.neovim.generatedConfigs.lua;
+  };
 }

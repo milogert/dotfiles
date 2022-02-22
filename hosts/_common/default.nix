@@ -6,9 +6,9 @@ rec {
   ];
 
   nix.useSandbox = false;
-  nix.gc.automatic = true;
+  nix.gc.automatic = false;
   nix.gc.options = "--delete-older-than 30d";
-  nix.package = pkgs.nixUnstable;
+  nix.package = pkgs.nixStable;
   nix.extraOptions = "experimental-features = nix-command flakes";
   nix.trustedUsers = [ "root" "@admin" ];
 
@@ -88,6 +88,7 @@ rec {
     speedtest-cli
     starship # Need this for aliases.
     tree
+    wget
     yq
     zsh-autosuggestions
     zsh-completions

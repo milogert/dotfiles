@@ -23,20 +23,19 @@ u.nmap("'", '`')
 u.nmap('`', "'")
 
 -- Remap the arrow keys to do nothing.
-u.map('', '<Up>', '<nop>')
-u.map('', '<Down>', '<nop>')
-u.map('', '<Left>', '<nop>')
-u.map('', '<Right>', '<nop>')
+u.map('<Up>', '<nop>')
+u.map('<Down>', '<nop>')
+u.map('<Left>', '<nop>')
+u.map('<Right>', '<nop>')
 u.imap('<Up>', '<nop>')
 u.imap('<Down>', '<nop>')
 u.imap('<Left>', '<nop>')
 u.imap('<Right>', '<nop>')
 
 -- Remap j/k to gj/gk but only when we are not counting.
-vim.cmd("noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')")
-vim.cmd("noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')")
--- u.map('', 'j', "<expr> j (v:count == 0 ? 'gj' : 'j')<cr>")
--- u.map('', 'k', "<expr> k (v:count == 0 ? 'gk' : 'k')<cr>")
+local jkMapOpts = { noremap = true, silent = true, expr = true }
+u.map('j', '(v:count == 0 ? "gj" : "j")', jkMapOpts)
+u.map('k', '(v:count == 0 ? "gk" : "k")', jkMapOpts)
 
 -- Fugitive
 u.nmap('<Leader>g', ':G<CR>')
@@ -57,7 +56,6 @@ local vimuxMaps = {
   { key = 'vs', command = 'InterruptRunner' },
 }
 
--- For each entry in vimuxMaps, call u.map and u.arpeggio for the key and command.
 for _, map in ipairs(vimuxMaps) do
   local command = ':Vimux' .. map.command .. '<CR>'
   u.nmap(                '<Leader>' .. map.key, command)
@@ -69,10 +67,18 @@ u.nmap('<leader>cpe', ':Copilot enable<CR>')
 u.nmap('<leader>cpd', ':Copilot disable<CR>')
 
 -- FZF.
-u.nmap('<C-p>', ':GFiles<CR>')
-u.nmap('<leader>b', ':Buffer<CR>')
-u.nmap('<Leader>/', ':Rg<CR>')
+local fzf = function(cmd)
+  return "<cmd>lua require('fzf-lua')." .. cmd .."<CR>"
+end
+
+u.nmap('<C-p>', [[<cmd>lua require('functions').fzfFiles()<CR>]])
+u.nmap('<leader>b', fzf('buffers()'))
+u.nmap('<Leader>/', fzf('live_grep_native({ search = "" })'))
+u.nmap('<leader>fg', fzf('git_branches()'))
+u.nmap('<leader>fb', fzf('builtin()'))
 
 -- Function keybindings.
 u.nmap('<leader>fl', [[<cmd>lua require('functions').addFunctionalLogger(false)<CR>]])
 u.nmap('<Leader>cfl', [[<cmd>lua require('functions').addFunctionalLogger(true)<CR>]])
+u.nmap('<Leader>ppj', [[<cmd>lua require('functions').prettyPrintJson(true)<CR>]])
+u.xmap('<Leader>ppj', [[<cmd>lua require('functions').prettyPrintJson(false)<CR>]])

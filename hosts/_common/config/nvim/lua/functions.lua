@@ -24,15 +24,28 @@ M.addFunctionalLogger = function(isConditional)
   vim.fn.append(0, line)
 end
 
-M.thankYouNext = function()
-  vim.cmd [[
-  update
-  argdelete %
-  bdelete
-  ]]
-  if !vim.fn.empty(vim.fn.argv()) then
-    vim.cmd 'argument'
-  end
+-- M.thankYouNext = function()
+--   vim.cmd [[
+--   update
+--   argdelete %
+--   bdelete
+--   ]]
+--   if !vim.fn.empty(vim.fn.argv()) then
+--     vim.cmd 'argument'
+--   end
+-- end
+
+M.prettyPrintJson = function(wholeFile)
+  local area = tern(wholeFile, "%", "'<,'>")
+  vim.cmd(area .. "!python -m json.tool")
+end
+
+M.fzfFiles = function()
+  local gitStatus = vim.g.gitsigns_head
+
+  local cmd = tern(gitStatus == nil, 'files', 'git_files')
+
+  return require('fzf-lua')[cmd]()
 end
 
 return M

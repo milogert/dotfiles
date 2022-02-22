@@ -4,7 +4,7 @@ require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained",
 
   -- List of parsers to ignore installing
-  ignore_install = { "ocamllex", "gdscript", "elixir" },
+  ignore_install = { "ocamllex", "gdscript", "swift" },
 
   highlight = {
     -- false will disable the whole extension

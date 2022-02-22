@@ -11,14 +11,10 @@
   ];
 
   homebrew.brews = [
-    "awscli"
     "gnu-sed"
-    "gnupg@2.2"
-    "mas"
     "openvpn"
     "pinentry-mac"
     "postgres"
-    #"zsh-completions"
 
     # REMOVE THESE ENVENTUALLY
     "node@14"
@@ -26,36 +22,30 @@
 
   homebrew.casks = [
     "1password"
-    "alacritty"
+    "alacritty" # Removable, but drops back a few versions
     "beekeeper-studio"
     "cloudapp"
     "docker"
     "firefox-developer-edition"
     "flux"
     "google-chrome"
+    "hammerspoon"
     "insomnia"
-    "joplin"
     "krisp"
+    "love"
     "microsoft-edge"
     "muzzle"
+    "notion"
     "openvpn-connect"
     "postgres"
-    "postico"
     "slack"
     "spotify"
-    "virtualbox"
     "zoom"
-    #"deckset"
-    #"font-hack-nerd-font"
-    #"font-lilex"
-    #"oversight"
-    #"pgadmin4"
   ];
 
   homebrew.masApps = {
     Kindle = 405399194;
     Xcode = 497799835;
-    "Typewriter for Markdown" = 1556419263;
   };
 
   homebrew.extraConfig = ''

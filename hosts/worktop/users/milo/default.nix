@@ -8,8 +8,9 @@ let
 in rec {
   imports = [
     (common_dir + /home/default.nix)
-    (common_dir + /home/direnv.nix)
+    /* (common_dir + /home/direnv.nix) */
     (common_dir + /home/types/desktop.nix)
+    ./hammerspoon
   ];
 
   home.stateVersion = "21.05";
@@ -23,6 +24,7 @@ in rec {
   home.packages = with pkgs; [
     elixir
     git-lfs
+    mas
     nodejs-14_x
     (yarn.override { nodejs = nodejs-14_x; })
   ];
