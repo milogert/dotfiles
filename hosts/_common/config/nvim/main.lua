@@ -17,6 +17,7 @@ local plugins = {
   "keybindings",
   "lsp",
   "luasnip",
+  -- "null-ls",
   "package-info",
   "persistence",
   -- "telescope",

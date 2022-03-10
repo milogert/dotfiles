@@ -35,6 +35,7 @@ in rec {
       lspkind-nvim
       luasnip
       nui-nvim
+      null-ls-nvim
       nvim-cmp
       /* nvim-gps */
       nvim-lspconfig

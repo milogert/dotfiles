@@ -1,3 +1,5 @@
+local utils = require('utils')
+
 -- Set the leader key. This should be first.
 vim.g.mapleader = ' '
 
@@ -128,22 +130,35 @@ vim.g.copilot_assume_mapped = true
 vim.g.fzf_buffers_jump = true
 
 -- augroups and autocmd
-vim.cmd [[
-" augroup ElixirFormat
-  " autocmd!
-  " autocmd BufWritePost *.exs silent :!mix format %
-  " autocmd BufWritePost *.ex silent :!mix format %
-" augroup END
+vim.api.nvim_create_augroup('formatting', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePost', {
+  group = 'formatting',
+  desc = 'Format Elixir files on save',
+  pattern = { '*.exs', '*.ex' },
+  command = 'silent !mix format %',
+})
 
-augroup Skeletons
-  autocmd!
-  autocmd FileType gitcommit 0r ~/.config/nvim/skeletons/gitcommit.skeleton
-augroup END
+vim.api.nvim_create_augroup('skeletons', { clear = true })
+vim.api.nvim_create_autocmd('FileType', {
+  group = 'skeletons',
+  desc = 'Insert a common git commit format, unless it\'s a merge commit',
+  pattern = 'gitcommit',
+  callback = function()
+    local first_line = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]
+    local is_merge = string.sub(first_line, 1, 5) == 'Merge'
+    if not is_merge then
+      vim.api.nvim_command('0r ~/.config/nvim/skeletons/gitcommit.skeleton')
+    end
+  end
+})
 
-augroup Commands
-  autocmd VimEnter * Copilot disable
-augroup END
-]]
+vim.api.nvim_create_augroup('startup', { clear = true })
+vim.api.nvim_create_autocmd('VimEnter', {
+  group = 'startup',
+  desc = 'Disable copilot on startup since it interferes with cmp',
+  pattern = '*',
+  command = 'Copilot disable',
+})
 
 -- Vimux.
 vim.g.VimuxHeight = "25"

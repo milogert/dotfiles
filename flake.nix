@@ -19,6 +19,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @
@@ -27,9 +32,10 @@
   , flake-utils
   , home-manager
   , nixpkgs
+  , neovim-nightly-overlay
   }:
     let
-      overlays = self: super:
+      plexOverlays = self: super:
         {
           plexPassRaw = super.plexRaw.overrideAttrs (old: rec {
             version = "1.24.4.5081-e362dc1ee";
@@ -51,7 +57,8 @@
           ];
         };
         overlays = [
-          overlays
+          plexOverlays
+          neovim-nightly-overlay.overlay
         ];
       };
 

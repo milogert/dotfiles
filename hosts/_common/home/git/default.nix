@@ -31,6 +31,7 @@
       m = "merge";
       one = "log --pretty=oneline";
       outstanding = "rebase -i @{u}";
+      pb = "!git add package.json yarn.lock && git commit -m \"Package bump\" && git push";
       praise = "blame";
       s = "status";
       sw = "switch";

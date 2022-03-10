@@ -93,8 +93,21 @@ local on_attach = function(client, bufnr)
 
   -- Add lsp status to config.
   lsp_status.on_attach(client)
-
 end
+
+-- null-ls --------------------------------------------------------------------
+local null_ls = require("null-ls")
+
+null_ls.setup {
+  on_attach = on_attach,
+  sources = {
+    null_ls.builtins.code_actions.gitsigns,
+    null_ls.builtins.diagnostics.deadnix,
+    null_ls.builtins.formatting.json_tool,
+    null_ls.builtins.formatting.mix,
+    null_ls.builtins.formatting.prettier,
+  }
+}
 
 -- lspkind --------------------------------------------------------------------
 require('lspkind').init({
@@ -162,6 +175,7 @@ local servers = {
   "terraformls",
   "tsserver",
   "html",
+  "vuels",
 }
 
 local server_configs = {

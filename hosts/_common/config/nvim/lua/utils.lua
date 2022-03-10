@@ -46,4 +46,21 @@ Utils.arpeggio = function(type, lhs, rhs)
   vim.cmd('Arpeggio ' .. type .. ' <silent> ' .. lhs .. ' ' .. rhs)
 end
 
+-- From http://lua-users.org/wiki/FileInputOutput
+Utils.file_exists = function(file)
+  local f = io.open(file, "rb")
+  if f then f:close() end
+  return f ~= nil
+end
+
+Utils.lines_from = function(file)
+  if not Utils.file_exists(file) then return {} end
+
+  local lines = {}
+  for line in io.lines(file) do 
+    lines[#lines + 1] = line
+  end
+  return lines
+end
+
 return Utils
