@@ -1,6 +1,8 @@
+local M = {}
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attachs to the current buffer
-local on_attach = function(registrees)
+M.on_attach = function(registrees)
   return function(client, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -57,5 +59,5 @@ local on_attach = function(registrees)
   end
 end
 
-return on_attach
+return M
 

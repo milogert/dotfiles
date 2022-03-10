@@ -31,7 +31,9 @@ local servers = {
 
 local lsp_status = require('plugins.lsp.status')
 
-local on_attach = require('plugins.lsp.on_attach')
+local attach_fn = require('plugins.lsp.on_attach')
+local on_attach = attach_fn.on_attach
+
 
 local server_configs = {
   elixirls = function(server)
