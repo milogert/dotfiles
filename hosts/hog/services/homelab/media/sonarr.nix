@@ -1,9 +1,12 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
-  services.sonarr.enable = true;
-
-  users.users.sonarr.extraGroups = [ "nzbget" ];
+  services.sonarr = {
+    enable = true;
+    user = "media";
+    group = "media";
+    dataDir = "${config.users.users.media.home}/config/sonarr";
+  };
 
   services.traefik.dynamicConfigOptions.http = {
     routers.sonarr = {

@@ -5,26 +5,33 @@ rec {
     ./aliases.nix
   ];
 
-  nix.useSandbox = false;
-  nix.gc.automatic = false;
-  nix.gc.options = "--delete-older-than 30d";
-  nix.package = pkgs.nixStable;
-  nix.extraOptions = "experimental-features = nix-command flakes";
-  nix.trustedUsers = [ "root" "@admin" ];
+  nix = {
+    settings = {
+      sandbox = false;
+      trusted-users = [ "root" "@admin" ];
 
-  nix.trustedBinaryCaches = [
-    https://cache.nixos.org
-    https://nix-community.cachix.org
-    https://milogert.cachix.org
-  ];
+      trusted-substituters = [
+        https://cache.nixos.org
+        https://nix-community.cachix.org
+        https://milogert.cachix.org
+      ];
+      substituters = nix.settings.trusted-substituters;
+      trusted-public-keys = [
+        cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+        nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
+        milogert.cachix.org-1:MaZAAWJXDV85HpLm2yyLX9b52wQghRxljAZJg0dEjkY=
+      ];
+    };
 
-  nix.binaryCaches = nix.trustedBinaryCaches;
+    # Garbage collection.
+    gc.automatic = false;
+    gc.options = "--delete-older-than 30d";
 
-  nix.binaryCachePublicKeys = [
-    cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-    nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
-    milogert.cachix.org-1:MaZAAWJXDV85HpLm2yyLX9b52wQghRxljAZJg0dEjkY=
-  ];
+    # Which package set to use.
+    package = pkgs.nixStable;
+
+    extraOptions = "experimental-features = nix-command flakes";
+  };
 
   environment.variables = {
     BAT_THEME = "srcery";
@@ -43,7 +50,6 @@ rec {
   };
 
   environment.pathsToLink = [ "/share/zsh" ];
-
 
   environment.shellAliases = {
     adj = "echo ADJACENT";
@@ -88,6 +94,7 @@ rec {
     speedtest-cli
     starship # Need this for aliases.
     tree
+    unzip
     wget
     yq
     zsh-autosuggestions

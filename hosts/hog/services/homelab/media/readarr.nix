@@ -1,40 +1,23 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
-  userGroupName = "readarr";
-  userGroupId = 276;
   servicePort = "8787";
   externalPort = servicePort;
   image = "ghcr.io/hotio/readarr:pr-a78ffba";
 in {
-  users.users.readarr = {
-    home = "/var/lib/readarr";
-    createHome = true;
-    group = "readarr";
-    extraGroups = [ "nzbget" ];
-    uid = userGroupId;
-    isSystemUser = true;
-  };
-
-  users.groups.readarr = {
-    members = [ "readarr" ];
-    gid = userGroupId;
-  };
-
-
-  virtualisation.oci-containers.containers."${userGroupName}" = {
+  virtualisation.oci-containers.containers.readarr = {
     image = image;
     ports = ["${servicePort}:${externalPort}"];
     volumes = [
-      "/var/lib/${userGroupName}:/config"
-      "/mnt/media/downloads/dst/Books:/downloads"
-      "/mnt/media/Books:/library"
+      "${config.users.users.media.home}/config/readarr:/config"
+      "${config.users.users.media.home}/downloads/dst/Books:/downloads"
+      "${config.users.users.media.home}/content/books:/library"
     ];
     environment = {
       # PUID = "1000";
       # PGID = "1000";
-      PUID = builtins.toString userGroupId;
-      PGID = builtins.toString userGroupId;
+      PUID = builtins.toString config.users.users.media.uid;
+      PGID = builtins.toString config.users.groups.media.gid;
     };
   };
 

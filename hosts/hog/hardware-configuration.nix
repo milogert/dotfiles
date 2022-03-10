@@ -25,7 +25,7 @@
       fsType = "vfat";
     };
 
-  fileSystems."/mnt/media" =
+  fileSystems."/var/lib/media/content" =
     { device = "media-pool";
       fsType = "zfs";
     };

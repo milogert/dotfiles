@@ -4,7 +4,7 @@
   services.nzbhydra2 = {
     enable = true;
     openFirewall = true;
-  };
+                                       };
 
   services.traefik.dynamicConfigOptions.http = {
     routers.hydra = {

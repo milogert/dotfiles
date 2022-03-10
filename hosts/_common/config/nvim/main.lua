@@ -15,7 +15,10 @@ local plugins = {
   "gitsigns",
   -- "gps",
   "keybindings",
-  "lsp",
+  "lsp.settings",
+  "lsp.status",
+  "lsp.kind",
+  "lsp.installer",
   "luasnip",
   "package-info",
   "persistence",
@@ -28,9 +31,10 @@ local plugins = {
 }
 
 for _, plugin in ipairs(plugins) do
-  local ok, _ = pcall(require, 'plugins.' .. plugin)
+  local ok, result = pcall(require, 'plugins.' .. plugin)
   if not ok then
     log.error('Failed to load plugin config: ' .. plugin)
+    log.error(result)
   end
 end
 
