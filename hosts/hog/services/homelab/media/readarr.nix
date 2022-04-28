@@ -10,12 +10,10 @@ in {
     ports = ["${servicePort}:${externalPort}"];
     volumes = [
       "${config.users.users.media.home}/config/readarr:/config"
-      "${config.users.users.media.home}/downloads/dst/Books:/downloads"
-      "${config.users.users.media.home}/content/books:/library"
+      "/mnt/download-stream-cache/downloads/dst/Books:/downloads"
+      "/mnt/media/Books:/library"
     ];
     environment = {
-      # PUID = "1000";
-      # PGID = "1000";
       PUID = builtins.toString config.users.users.media.uid;
       PGID = builtins.toString config.users.groups.media.gid;
     };
