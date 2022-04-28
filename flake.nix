@@ -3,7 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    # nixpkgs.url = "path:///home/milo/git/nixpkgs";
+    /* nixpkgs.url = "github:NixOS/nixpkgs/master"; */
+    /* nixpkgs.url = "path:///Users/milo/git/nixpkgs"; */
 
     darwin = {
       url = "github:LnL7/nix-darwin/master";
@@ -110,7 +111,7 @@
           inputs = inputs;
           modules = mkDarwinConfig {
             host = "worktop";
-            users = ["milo"];
+            users = ["milo" "cassie"];
           };
         };
       };
