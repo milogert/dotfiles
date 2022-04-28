@@ -10,9 +10,6 @@ rec {
     ./networking.nix
   ];
 
-  # This goes here since it's different between nixos and darwin.
-  fonts.enableFontDir = true;
-
   # This is nix-darwin specific.
   system.stateVersion = 4;
   users.nix.configureBuildUsers = true;

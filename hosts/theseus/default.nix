@@ -11,9 +11,6 @@ rec {
     ./services
   ];
 
-  # This goes here since it's different between nixos and darwin.
-  fonts.fontDir.enable = true;
-
   programs.sway.enable = true;
 
   programs.zsh = {

@@ -14,7 +14,8 @@ lsp_status.config({
   diagnostics = false,
   select_symbol = nil,
   update_interval = 100,
-  status_symbol = ' 🔍',
+  -- status_symbol = ' 🔍',
+  status_symbol = '',
 })
 
 
@@ -102,7 +103,7 @@ null_ls.setup {
   on_attach = on_attach,
   sources = {
     null_ls.builtins.code_actions.gitsigns,
-    null_ls.builtins.diagnostics.deadnix,
+    -- null_ls.builtins.diagnostics.deadnix,
     null_ls.builtins.formatting.json_tool,
     null_ls.builtins.formatting.mix,
     null_ls.builtins.formatting.prettier,
@@ -201,6 +202,7 @@ local server_configs = {
     settings = { Lua = { diagnostics = { globals = {
       'vim',
       'love',
+      'playdate',
       'hs',
     } } } },
   },

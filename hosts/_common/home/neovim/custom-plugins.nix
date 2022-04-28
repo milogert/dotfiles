@@ -11,6 +11,29 @@
     };
   };
 
+  copilot-lua = pkgs.vimUtils.buildVimPlugin rec {
+    # This one is special. Needs no name prefix because it tries to find itself
+    # in the pack path.
+    namePrefix = "";
+    name = "copilot.lua";
+    src = pkgs.fetchFromGitHub {
+      owner = "zbirenbaum";
+      repo = name;
+      rev = "a6dc35750e7ba6926e79d006b9e0585dc74cf93c";
+      sha256 = "16akr3i977618acy7f4k53iahspm6rbr79b56ybbhayk90mvb8f5";
+    };
+  };
+
+  copilot-cmp = pkgs.vimUtils.buildVimPlugin rec {
+    name = "copilot-cmp";
+    src = pkgs.fetchFromGitHub {
+      owner = "zbirenbaum";
+      repo = name;
+      rev = "03dfaf106aa7727354684f697074805a7bb7515d";
+      sha256 = "1vi3h80qnawz189hh6xcb9d99myqaq6r9iq5qj2za3pyr9n26q5v";
+    };
+  };
+
   fzf-lua = pkgs.vimUtils.buildVimPlugin rec {
     name = "fzf-lua";
     src = pkgs.fetchFromGitHub {

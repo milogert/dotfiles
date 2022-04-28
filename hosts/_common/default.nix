@@ -87,6 +87,7 @@ rec {
     shellcheck
     speedtest-cli
     starship # Need this for aliases.
+    terraform
     tree
     wget
     yq

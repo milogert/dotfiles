@@ -122,21 +122,17 @@ cabbrev Mux !tmuxinator
 
 vim.opt.lazyredraw = false
 
--- GitHub Copilot.
-vim.g.copilot_no_tab_map = true
-vim.g.copilot_assume_mapped = true
-
 -- fzf.vim config
 vim.g.fzf_buffers_jump = true
 
 -- augroups and autocmd
 vim.api.nvim_create_augroup('formatting', { clear = true })
-vim.api.nvim_create_autocmd('BufWritePost', {
-  group = 'formatting',
-  desc = 'Format Elixir files on save',
-  pattern = { '*.exs', '*.ex' },
-  command = 'silent !mix format %',
-})
+-- vim.api.nvim_create_autocmd('BufWritePost', {
+--   group = 'formatting',
+--   desc = 'Format Elixir files on save',
+--   pattern = { '*.exs', '*.ex' },
+--   command = 'silent !mix format %',
+-- })
 
 vim.api.nvim_create_augroup('skeletons', { clear = true })
 vim.api.nvim_create_autocmd('FileType', {
@@ -151,14 +147,10 @@ vim.api.nvim_create_autocmd('FileType', {
     end
   end
 })
-
-vim.api.nvim_create_augroup('startup', { clear = true })
-vim.api.nvim_create_autocmd('VimEnter', {
-  group = 'startup',
-  desc = 'Disable copilot on startup since it interferes with cmp',
-  pattern = '*',
-  command = 'Copilot disable',
-})
+-- vim.api.nvim_create_autocmd('BufNew,BufRead', {
+--   pattern = '*/pre-incidents/*',
+-- })
+-- autocmd BufNewFile,BufRead /specificPath/** imap <buffer> ....
 
 -- Vimux.
 vim.g.VimuxHeight = "25"

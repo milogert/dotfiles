@@ -25,6 +25,8 @@ in rec {
     elixir
     git-lfs
     mas
+    rWrapper
+    rPackages.tidyverse
     nodejs-14_x
     (yarn.override { nodejs = nodejs-14_x; })
   ];

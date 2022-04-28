@@ -62,10 +62,6 @@ for _, map in ipairs(vimuxMaps) do
   u.arpeggio('nnoremap', map.key,               command)
 end
 
--- GitHub Copilot.
-u.nmap('<leader>cpe', ':Copilot enable<CR>')
-u.nmap('<leader>cpd', ':Copilot disable<CR>')
-
 -- FZF.
 local fzf = function(cmd)
   return "<cmd>lua require('fzf-lua')." .. cmd .."<CR>"
@@ -82,3 +78,11 @@ u.nmap('<leader>fl', [[<cmd>lua require('functions').addFunctionalLogger(false)<
 u.nmap('<Leader>cfl', [[<cmd>lua require('functions').addFunctionalLogger(true)<CR>]])
 u.nmap('<Leader>ppj', [[<cmd>lua require('functions').prettyPrintJson(true)<CR>]])
 u.xmap('<Leader>ppj', [[<cmd>lua require('functions').prettyPrintJson(false)<CR>]])
+
+-- Split lines? Probably not..
+-- nnoremap S :keeppatterns substitute/\s*\%#\s*/\r/e <bar> normal! ==<CR>
+
+-- Sort while highlighting something.
+u.xmap('u', [[:'<,'>sort<cr>]])
+
+

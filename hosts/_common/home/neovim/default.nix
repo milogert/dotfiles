@@ -4,7 +4,19 @@
 }:
 
 let
-  vimPlugins = pkgs.vimPlugins // pkgs.callPackage ./custom-plugins.nix {};
+  vimPlugins = pkgs.callPackage ./custom-plugins.nix {};
+  customPlugins = with vimPlugins; [
+      /* alpha-nvim            # Custom */
+      /* impatient-nvim        # Custom */
+      copilot-cmp           # Custom
+      copilot-lua           # Custom
+      fzf-lua               # Custom
+      heirline-nvim         # Custom
+      nvim-lsp-installer    # Custom
+      octo-nvim             # Custom
+      persistence-nvim      # Custom
+      vim-arpeggio          # Custom
+  ];
 in rec {
   home.packages = with pkgs; [tree-sitter];
 
@@ -22,14 +34,21 @@ in rec {
       source ~/.config/nvim/main.lua
     '';
 
-    plugins = with vimPlugins; [
+    plugins = with pkgs.vimPlugins; [
       {
         type = "lua";
         plugin = cmp-nvim-lsp;
       }
+
+      /* nvim-gps */
+      /* which-key-nvim */
+      cmp-buffer
+      cmp-calc
+      cmp-cmdline
+      cmp-nvim-lsp
+      cmp-nvim-lua
+      cmp-path
       cmp_luasnip
-      copilot-vim
-      /* fzf-vim */
       gitsigns-nvim
       lsp-status-nvim
       lspkind-nvim
@@ -37,7 +56,6 @@ in rec {
       nui-nvim
       null-ls-nvim
       nvim-cmp
-      /* nvim-gps */
       nvim-lspconfig
       nvim-treesitter
       nvim-web-devicons
@@ -54,18 +72,7 @@ in rec {
       vim-tmux-navigator
       vim-unimpaired
       vimux
-      /* which-key-nvim */
-
-      # Custom
-      /* alpha-nvim */
-      fzf-lua
-      heirline-nvim
-      /* impatient-nvim */
-      nvim-lsp-installer
-      octo-nvim
-      persistence-nvim
-      vim-arpeggio
-    ];
+    ] ++ customPlugins;
 
     viAlias = true;
     vimAlias = true;

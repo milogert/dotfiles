@@ -1,4 +1,4 @@
-local log = require('logger')
+local log = require("logger")
 
 -- require("impatient")
 
@@ -10,6 +10,7 @@ vim.cmd [[ packadd vimplugin-vim-arpeggio ]]
 -- Source plugin configs.
 local plugins = {
   -- "alpha-nvim",
+  "copilot",
   "cmp",
   "fzf-lua",
   "gitsigns",
@@ -29,9 +30,10 @@ local plugins = {
 }
 
 for _, plugin in ipairs(plugins) do
-  local ok, _ = pcall(require, 'plugins.' .. plugin)
+  local ok, err = pcall(require, 'plugins.' .. plugin)
   if not ok then
     log.error('Failed to load plugin config: ' .. plugin)
+    log.error(err)
   end
 end
 
