@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    /* nixpkgs.url = "github:NixOS/nixpkgs/master"; */
     /* nixpkgs.url = "path:///Users/milo/git/nixpkgs"; */
 
     darwin = {

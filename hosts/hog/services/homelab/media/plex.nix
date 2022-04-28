@@ -1,13 +1,14 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   services.plex = {
     enable = true;
     package = pkgs.plexPass;
     openFirewall = true;
+    user = "media";
+    group = "media";
+    dataDir = "${config.users.users.media.home}/config/plex";
   };
-
-  users.users.plex.extraGroups = [ "render" ];
 
   environment.systemPackages = with pkgs; [
     # libav

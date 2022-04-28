@@ -22,6 +22,8 @@ rec {
   };
 
   environment.systemPackages = with pkgs; [
+    backblaze-b2
     ranger
+    rclone
   ];
 }

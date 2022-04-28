@@ -6,10 +6,10 @@
   services.traefik.enable = true;
 
   services.traefik.staticConfigOptions = {
-    log = {
-      filePath = "/var/lib/traefik/traefik.system.log";
-      level = "DEBUG";
-    };
+    /* log = { */
+    /*   filePath = "/var/lib/traefik/traefik.system.log"; */
+    /*   level = "DEBUG"; */
+    /* }; */
 
     accessLog.filePath = "/var/lib/traefik/traefik.access.log";
 

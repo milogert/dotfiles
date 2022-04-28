@@ -1,7 +1,14 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
-  services.nzbget.enable = true;
+  services.nzbget = {
+    enable = true;
+    user = "media";
+    group = "media";
+    settings = {
+      MainDir = "${config.users.users.media.home}/content/downloads";
+    };
+  };
 
   services.traefik.dynamicConfigOptions.http = {
     routers.nzbget = {

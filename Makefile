@@ -12,7 +12,7 @@ define usage
 @echo "Anything prefixed with '_' is internal, but can be run separately if you need granular output."
 endef
 
-all: help
+all: config
 
 usage: help
 help:
