@@ -49,6 +49,7 @@ in rec {
       cmp-nvim-lua
       cmp-path
       cmp_luasnip
+      fidget-nvim
       gitsigns-nvim
       lsp-status-nvim
       lspkind-nvim

@@ -19,8 +19,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "zbirenbaum";
       repo = name;
-      rev = "a6dc35750e7ba6926e79d006b9e0585dc74cf93c";
-      sha256 = "16akr3i977618acy7f4k53iahspm6rbr79b56ybbhayk90mvb8f5";
+      rev = "917e8ae64dfd2a227573289ca12e9a185020ccd3";
+      sha256 = "0f7qv929vqj6p5may5k64r8169pk39fqb9bfij1dp444swzn40d3";
     };
   };
 
@@ -29,8 +29,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "zbirenbaum";
       repo = name;
-      rev = "03dfaf106aa7727354684f697074805a7bb7515d";
-      sha256 = "1vi3h80qnawz189hh6xcb9d99myqaq6r9iq5qj2za3pyr9n26q5v";
+      rev = "b02fb3c1dc7e9efb498f8af019f39809e333888a";
+      sha256 = "0rd9y19liyacm6yygi7qw5g0g8l01j5qy073kw03nzrdmfibx87c";
     };
   };
 
@@ -49,8 +49,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "rebelot";
       repo = name;
-      rev = "93c75cbe231573fe43bfb8f98491a83dfe44d504";
-      sha256 = "17hngyd2hcm902ra1xl28sl3b01syfgn9n7brammsikklby04nqm";
+      rev = "a39890cd79efbc4dc016bf83b77acca3bc7a8658";
+      sha256 = "1arkg65h9j5rsvncyzf54ykk77m6hqi4amffw4c6hjyisdpgy4y2";
     };
   };
 
@@ -71,8 +71,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "williamboman";
       repo = name;
-      rev = "88e44bbbe2e03523e08f2bd3c9a954675bc438f4";
-      sha256 = "16sqmc484q2jlzy4mq1zh01ymvx01z66l70fn2nd4x3mmnx8agdy";
+      rev = "8603cdc1692f2c3078e328a2ed9554cf9047594d";
+      sha256 = "0rwnm9bvd8gf5ipg7mbysbs13dzi0ijjarv3x4a9czmgc4b48h7q";
     };
     # Only skips tests.
     dontBuild = true;
@@ -93,8 +93,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "folke";
       repo = name;
-      rev = "2f2b0cc69d13a91b6ec2d72de882586dceae19bb";
-      sha256 = "10bjvpbi9bmpiy8zr76xaab223yh023lqkq1v0dcfnqx5v4caw17";
+      rev = "77cf5a6ee162013b97237ff25450080401849f85";
+      sha256 = "19wgihch5ypa08pscsqd01cixmgbnkcvsgapq6xh9bdcp59fcji4";
     };
   };
 

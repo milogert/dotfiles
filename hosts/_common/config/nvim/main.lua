@@ -53,7 +53,6 @@ for _, mod in ipairs(optionals) do
   end
 end
 
-
 vim.cmd [[
 " Function to source only if file exists.
 function! SourceIfExists(file)
