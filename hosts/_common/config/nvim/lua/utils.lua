@@ -1,7 +1,6 @@
 --[[
 Utils functions for vim.
 ]]
-
 local Utils = {}
 
 --[[

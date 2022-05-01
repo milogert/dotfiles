@@ -1,7 +1,7 @@
 -- Copied from https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menu,menuone,noselect'
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
 -- Require function for tab to work with luasnip.
 local has_words_before = function()
@@ -22,9 +22,6 @@ local source_menu_names = {
 -- nvim-cmp setup
 local cmp = require 'cmp'
 cmp.setup {
-  completion = {
-    --completeopt = 'menu,menuone,noinsert',
-  },
   snippet = {
     expand = function(args)
       require('luasnip').lsp_expand(args.body)
@@ -93,18 +90,20 @@ cmp.setup {
 }
 
 cmp.setup.cmdline("/", {
+  mapping = cmp.mapping.preset.cmdline(),
   sources = {
     { name = "buffer" },
   }
 })
 
 cmp.setup.cmdline(":", {
+  mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources(
     {
-      { name = "path" }
+      { name = "path" },
     },
     {
-      { name = "cmdline" }
+      { name = "cmdline" },
     }
   )
 })

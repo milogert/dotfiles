@@ -153,7 +153,7 @@ local ViMode = {
   -- Same goes for the highlight. Now the foreground will change according to the current mode.
   hl = function(self)
     local mode = self.mode:sub(1, 1) -- get only the first mode character
-    return { fg = self.mode_colors[mode], style = "bold", }
+    return { fg = self.mode_colors[mode], bold = true }
   end,
 
   Space,
@@ -221,7 +221,7 @@ local FileNameModifer = {
   hl = function()
     if vim.bo.modified then
       -- use `force` because we need to override the child's hl foreground
-      return { fg = colors.cyan, style = 'bold', force=true }
+      return { fg = colors.cyan, bold = true, force = true }
     end
   end,
 }
@@ -241,7 +241,7 @@ local FileType = {
     -- return string.upper(vim.bo.filetype)
     return vim.bo.filetype
   end,
-  hl = { fg = utils.get_highlight("Type").fg, style = 'bold' },
+  hl = { fg = utils.get_highlight("Type").fg, bold = true },
   Space,
 }
 
@@ -324,7 +324,7 @@ local LSPActive = {
     return text
   end,
 
-  hl = { fg = colors.green, style = "bold" },
+  hl = { fg = colors.green, bold = true },
 
   Space,
 }
@@ -403,7 +403,7 @@ local GitBranch = {
 
   {
     provider = function(self) return " " .. self.status_dict.head end,
-    hl = {style = 'bold'}
+    hl = { bold = true }
   }
 }
 
@@ -476,7 +476,7 @@ local FugitiveStatus = {
 
   {
     provider = function() return " " .. vim.g.gitsigns_head end,
-    hl = {style = 'bold'}
+    hl = { bold = true }
   },
 }
 
@@ -547,7 +547,7 @@ local StatusLines = {
     end
   end,
 
-  stop_at_first = true,
+  init = utils.pick_child_on_condition,
 
   SpecialStatusline, TerminalStatusline, InactiveStatusline, DefaultStatusline,
 }

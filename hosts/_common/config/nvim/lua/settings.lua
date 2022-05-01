@@ -1,5 +1,3 @@
-local utils = require('utils')
-
 -- Set the leader key. This should be first.
 vim.g.mapleader = ' '
 
@@ -46,14 +44,12 @@ vim.opt.relativenumber = true
 
 -- Special characters for spacing.
 vim.opt.list = true
--- set listchars=eol:$,tab:-->,trail:~,extends:>,precedes:<,space:·
--- vim.opt.listchars = {
---   'tab:-->',
---   'trail:~',
---   'extends:>',
---   'precedes:<',
--- }
-vim.cmd([[set listchars=tab:-->,trail:~,extends:>,precedes:<]])
+vim.opt.listchars = {
+  tab = '-->',
+  trail = '~',
+  extends = '>',
+  precedes = '<',
+}
 
 -- Tab does two spaces.
 vim.opt.expandtab = true
@@ -100,19 +96,6 @@ vim.opt.backspace = { 'indent', 'eol', 'start' }
 vim.opt.undodir = os.getenv('HOME') .. '/.config/nvim/undodir'
 vim.opt.undofile = true
 
--- Wild menu config
-vim.opt.wildmenu = true
-vim.opt.wildmode = { 'longest', 'list' , 'full' }
-vim.opt.wildignore = vim.opt.wildignore + {
-  '=*.o',
-  '*~',
-  '*/tmp/*',
-  '*.so',
-  '*.swp',
-  '*.zip',
-  '*.snap',
-}
-
 -- Abbreviations.
 vim.cmd [[
 cabbrev Mux !tmuxinator
@@ -156,3 +139,7 @@ vim.api.nvim_create_autocmd('FileType', {
 vim.g.VimuxHeight = "25"
 vim.g.VimuxOrientation = "h"
 vim.g.VimuxUseNearest = 0
+
+-- Filetype.lua
+-- vim.g.do_filetype_lua = 1 -- Enables filetype.lua
+-- vim.g.did_load_filetypes = 0 -- Disables filetype.vim
