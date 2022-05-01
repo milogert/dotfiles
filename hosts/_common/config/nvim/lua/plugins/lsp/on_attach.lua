@@ -52,7 +52,7 @@ local on_attach = function(client, bufnr)
   end
 
   -- Add lsp status to config.
-  require('plugins.lsp.status').on_attach(client)
+  -- require('plugins.lsp.status').on_attach(client)
 end
 
 return on_attach

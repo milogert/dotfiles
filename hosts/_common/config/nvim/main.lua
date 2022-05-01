@@ -12,6 +12,7 @@ local plugins = {
   -- "alpha-nvim",
   "copilot",
   "cmp",
+  "fidget",
   "fzf-lua",
   "gitsigns",
   -- "gps",

@@ -497,7 +497,7 @@ local DefaultStatusline = {
 
   --[[Gps,]] --[[DAPMessages,]] Align,
 
-  LSPActive, LSPMessages, FileType, Ruler, ScrollBar
+  LSPActive, --[[LSPMessages,]] FileType, Ruler, ScrollBar
 }
 
 local InactiveStatusline = {
