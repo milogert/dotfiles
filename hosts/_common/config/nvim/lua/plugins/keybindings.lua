@@ -85,4 +85,33 @@ u.xmap('<Leader>ppj', [[<cmd>lua require('functions').prettyPrintJson(false)<CR>
 -- Sort while highlighting something.
 u.xmap('u', [[:'<,'>sort<cr>]])
 
-
+-- Open tada for current folder.
+-- u.nmap("<leader>td", "", {
+--   callback = function()
+-- 
+--     local path = os.getenv("PWD") or io.popen("cd"):read()
+--     local splitPath = u.split(path, "/")
+--     local dir = splitPath[#splitPath]
+-- 
+--     local file = os.getenv("HOME").."/todos/"..dir..".tada"
+--     -- if not u.file_exists(file) then
+--     --   u.create_file(file)
+--     -- end
+--     local buf = vim.api.nvim_create_buf(false, true)
+--     vim.api.nvim_buf_set_lines(buf, 0, -1, true, u.lines_from(file))
+-- 
+--     local windowWidth = vim.api.nvim_win_get_width(0)
+--     local windowHeight = vim.api.nvim_win_get_height(0)
+-- 
+--     local opts = {
+--       relative = 'editor',
+--       width = math.ceil(windowWidth * 0.8),
+--       height = math.ceil(windowHeight * 0.8),
+--       col = math.floor(windowWidth * 0.1),
+--       row = math.floor(windowHeight * 0.1),
+--       anchor = 'NW',
+--       border = 'single',
+--     }
+--     local win = vim.api.nvim_open_win(buf, 0, opts)
+--   end,
+-- })

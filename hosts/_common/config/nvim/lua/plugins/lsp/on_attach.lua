@@ -32,7 +32,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '[d',       diag('goto_prev()'),    opts)
   buf_set_keymap('n', ']d',       diag('goto_next()'),    opts)
   buf_set_keymap('n', '<space>q', diag('setloclist()'),   opts)
-  -- buf_set_keymap('n', '<space>c',  diag('setqflist()'),    opts)
+  buf_set_keymap('n', '<space>c', diag('setqflist()'),    opts)
 
   buf_set_keymap('n', 'gD',       lsp('declaration'),     opts)
   buf_set_keymap('n', 'gd',       lsp('definition'),      opts)
@@ -50,9 +50,6 @@ local on_attach = function(client, bufnr)
   elseif client.resolved_capabilities.document_range_formatting then
     buf_set_keymap('n', '<space>fi', lsp('formatting'),      opts)
   end
-
-  -- Add lsp status to config.
-  -- require('plugins.lsp.status').on_attach(client)
 end
 
 return on_attach

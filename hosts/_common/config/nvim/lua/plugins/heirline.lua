@@ -329,15 +329,6 @@ local LSPActive = {
   Space,
 }
 
--- I personally use it only to display progress messages!
--- See lsp-status/README.md for configuration options.
--- https://github.com/nvim-lua/lsp-status.nvim
-local LSPMessages = {
-  provider = function() return require("lsp-status").status() end,
-  hl = { fg = colors.gray2 },
-  Space,
-}
-
 local Diagnostics = {
   condition = conditions.has_diagnostics,
 

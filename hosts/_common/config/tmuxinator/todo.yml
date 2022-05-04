@@ -1,0 +1,9 @@
+name: todo
+root: ~/todos
+
+windows:
+  - playground:
+      layout: fa95,393x100,0,0{71x100,0,0,24,321x100,72,0,49}
+      panes:
+        - echo "nvim --server ./todos.sock <file>"
+        - nvim --listen ./todos.sock

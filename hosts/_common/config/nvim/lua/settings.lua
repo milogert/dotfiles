@@ -1,5 +1,8 @@
+local u = require('utils')
+
 -- Set the leader key. This should be first.
 vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
 vim.opt.viminfo = [['1000,f1]]
 
@@ -143,3 +146,13 @@ vim.g.VimuxUseNearest = 0
 -- Filetype.lua
 -- vim.g.do_filetype_lua = 1 -- Enables filetype.lua
 -- vim.g.did_load_filetypes = 0 -- Disables filetype.vim
+
+-- Vim Tada
+local path = os.getenv("PWD") or io.popen("cd"):read()
+local splitPath = u.split(path, "/")
+local dir = string.gsub(splitPath[#splitPath], '^%.', '_')
+local file = os.getenv("HOME").."/todos/"..dir..".tada"
+vim.g.tada_todo_pane_file = file
+vim.g.tada_todo_pane_map = '<Leader>td'
+vim.g.tada_map_box = '<C-CR>'
+vim.g.tada_todo_switch_status_mapping = '<CR>'

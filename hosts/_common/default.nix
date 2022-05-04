@@ -10,15 +10,15 @@ rec {
     trustedUsers = [ "root" "@admin" ];
 
     trustedBinaryCaches = [
-      https://cache.nixos.org
-      https://nix-community.cachix.org
-      https://milogert.cachix.org
+      "https://cache.nixos.org"
+      "https://nix-community.cachix.org"
+      "https://milogert.cachix.org"
     ];
     binaryCaches = nix.trustedBinaryCaches;
     binaryCachePublicKeys = [
-      cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-      nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
-      milogert.cachix.org-1:MaZAAWJXDV85HpLm2yyLX9b52wQghRxljAZJg0dEjkY=
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "milogert.cachix.org-1:MaZAAWJXDV85HpLm2yyLX9b52wQghRxljAZJg0dEjkY="
     ];
 
     # Garbage collection.
@@ -91,6 +91,7 @@ rec {
     silver-searcher
     speedtest-cli
     starship # Need this for aliases.
+    statix
     terraform
     tree
     unzip

@@ -18,11 +18,10 @@ local plugins = {
   -- "gps",
   "keybindings",
   "lsp.settings",
-  "lsp.status",
   "lsp.kind",
   "lsp.installer",
   "luasnip",
-  -- "null-ls",
+  "null-ls",
   "package-info",
   "persistence",
   -- "telescope",
@@ -48,9 +47,10 @@ local optionals = {
 }
 
 for _, mod in ipairs(optionals) do
-  local ok, _ = pcall(require, mod)
+  local ok, err = pcall(require, mod)
   if not ok then
     log.info('Failed to load file: ' .. mod .. '.lua')
+    log.error(err)
   end
 end
 

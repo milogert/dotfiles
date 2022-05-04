@@ -6,16 +6,17 @@
 let
   vimPlugins = pkgs.callPackage ./custom-plugins.nix {};
   customPlugins = with vimPlugins; [
-      /* alpha-nvim            # Custom */
-      /* impatient-nvim        # Custom */
-      copilot-cmp           # Custom
-      copilot-lua           # Custom
-      fzf-lua               # Custom
-      heirline-nvim         # Custom
-      nvim-lsp-installer    # Custom
-      octo-nvim             # Custom
-      persistence-nvim      # Custom
-      vim-arpeggio          # Custom
+      /* alpha-nvim */
+      /* impatient-nvim */
+      copilot-cmp
+      copilot-lua
+      fzf-lua
+      heirline-nvim
+      nvim-lsp-installer
+      octo-nvim
+      persistence-nvim
+      vim-arpeggio
+      vim-tada
   ];
 in rec {
   home.packages = with pkgs; [tree-sitter];
@@ -54,7 +55,6 @@ in rec {
       cmp_luasnip
       fidget-nvim
       gitsigns-nvim
-      lsp-status-nvim
       lspkind-nvim
       luasnip
       nui-nvim

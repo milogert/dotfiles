@@ -87,7 +87,7 @@ local on_server_ready = function(server)
     opts = opts_data
   end
 
-  opts = vim.tbl_extend("keep", opts, server_defaults)--, lsp_status.capabilities)
+  opts = vim.tbl_extend("keep", opts, server_defaults)
 
   -- This setup() function is exactly the same as lspconfig's setup function
   -- (:help lspconfig-quickstart)

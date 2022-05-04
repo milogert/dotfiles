@@ -45,6 +45,15 @@ Utils.arpeggio = function(type, lhs, rhs)
   vim.cmd('Arpeggio ' .. type .. ' <silent> ' .. lhs .. ' ' .. rhs)
 end
 
+--[[
+TODO: this doesn't work.
+]]
+Utils.create_file = function(file, data)
+  local f = io.open(file, "w")
+  f:write(data or "")
+  f:close()
+end
+
 -- From http://lua-users.org/wiki/FileInputOutput
 Utils.file_exists = function(file)
   local f = io.open(file, "rb")
@@ -61,5 +70,18 @@ Utils.lines_from = function(file)
   end
   return lines
 end
+
+-- From https://stackoverflow.com/questions/1426954/split-string-in-lua
+Utils.split = function(inputstr, sep)
+  if sep == nil then
+    sep = "%s"
+  end
+  local t={}
+  for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+    table.insert(t, str)
+  end
+  return t
+end
+
 
 return Utils

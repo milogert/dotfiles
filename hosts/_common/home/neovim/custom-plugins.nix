@@ -107,4 +107,14 @@
       sha256 = "0405yp1273kzsr3g5j6mj2dfs73qvw716474phkdr67md8ln12dy";
     };
   };
+
+  vim-tada = pkgs.vimUtils.buildVimPlugin rec {
+    name = "vim-tada";
+    src = pkgs.fetchFromGitHub {
+      owner = "dewyze";
+      repo = name;
+      rev = "acfda7229fc487ee6da44650164cb770d1cc608c";
+      sha256 = "0rjhbxpma8k6fgn5wm66bf01f22fr6g89rmmim9x13nm79pwnjzn";
+    };
+  };
 }
