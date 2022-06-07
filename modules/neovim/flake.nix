@@ -10,14 +10,11 @@
     /* }; */
   };
 
-  outputs = inputs @
-  { self
+  outputs = { self
   , nixpkgs
   /* , neovim-nightly-overlay */
-  }: let
-    configDir = ./config;
-  in {
-    overlays.default = final: prev: {
+  }: {
+    overlays.default = final: _prev: {
       neovim-custom = final.callPackage ./neovim.nix {};
     };
 
