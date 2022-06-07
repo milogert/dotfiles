@@ -5,7 +5,7 @@
     ./bat.nix
     ./fzf.nix
     ./git
-    ./neovim
+    /* ./neovim */
     ./password-store.nix
     ./starship.nix
     ./tmux

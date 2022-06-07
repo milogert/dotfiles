@@ -27,6 +27,7 @@
       dc = "diff --changed";
       ds = "diff --staged";
       f = "fetch";
+      ignore = "!gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;}; gi";
       loll = "log --abbrev-commit --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --";
       m = "merge";
       one = "log --pretty=oneline";

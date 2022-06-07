@@ -6,7 +6,7 @@ let
   image = "ghcr.io/hotio/readarr:pr-a78ffba";
 in {
   virtualisation.oci-containers.containers.readarr = {
-    image = image;
+    inherit image;
     ports = ["${servicePort}:${externalPort}"];
     volumes = [
       "${config.users.users.media.home}/config/readarr:/config"

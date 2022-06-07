@@ -5,7 +5,7 @@
 
 let
   common_dir = ../../../_common;
-in rec {
+in {
   imports = [
     (common_dir + /home/default.nix)
     /* (common_dir + /home/direnv.nix) */

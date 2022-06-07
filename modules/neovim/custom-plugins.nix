@@ -19,8 +19,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "zbirenbaum";
       repo = name;
-      rev = "917e8ae64dfd2a227573289ca12e9a185020ccd3";
-      sha256 = "0f7qv929vqj6p5may5k64r8169pk39fqb9bfij1dp444swzn40d3";
+      rev = "0dfa2b5434a09d795e304721b08503c96ce9b314";
+      sha256 = "1ah911l8ncbl4vzbngmkdvg1p49yajr95i8jy153ws70qf7scis2";
     };
   };
 
@@ -29,8 +29,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "zbirenbaum";
       repo = name;
-      rev = "b02fb3c1dc7e9efb498f8af019f39809e333888a";
-      sha256 = "0rd9y19liyacm6yygi7qw5g0g8l01j5qy073kw03nzrdmfibx87c";
+      rev = "a3ea9493c9c9385dcb78cb0b3db4b86708232504";
+      sha256 = "1i32bsf7gs5j1hvj2a7jnc5asps7bg9znv9qwmx9846pr2z92i54";
     };
   };
 
@@ -49,8 +49,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "rebelot";
       repo = name;
-      rev = "a39890cd79efbc4dc016bf83b77acca3bc7a8658";
-      sha256 = "1arkg65h9j5rsvncyzf54ykk77m6hqi4amffw4c6hjyisdpgy4y2";
+      rev = "08a9c4eaeb8da53b8f68279f5d6ba2b98bfd885b";
+      sha256 = "02dg04l3sih0rfr7pvk3rqngb1386hbhl6bj5ibfwlmf74zaf20f";
     };
   };
 
@@ -73,6 +73,18 @@
       repo = name;
       rev = "8603cdc1692f2c3078e328a2ed9554cf9047594d";
       sha256 = "0rwnm9bvd8gf5ipg7mbysbs13dzi0ijjarv3x4a9czmgc4b48h7q";
+    };
+    # Only skips tests.
+    dontBuild = true;
+  };
+
+  nvim-remote-containers = pkgs.vimUtils.buildVimPlugin rec {
+    name = "nvim-remote-containers";
+    src = pkgs.fetchFromGitHub {
+      owner = "jamestthompson3";
+      repo = name;
+      rev = "d635bea9c24be1656c7e16e4b46ecb39b4b70093";
+      sha256 = "04gsz02543q2gi2jqa5hkfmh56vxdll471bp2dm3hlmagv245zfi";
     };
     # Only skips tests.
     dontBuild = true;

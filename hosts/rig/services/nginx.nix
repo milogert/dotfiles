@@ -1,6 +1,6 @@
 { pkgs, ... }:
 
-rec {
+{
   security.acme = {
     email = "milo@milogert.com";
     acceptTerms = true;

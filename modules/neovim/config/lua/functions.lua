@@ -1,4 +1,4 @@
-local M = {}
+local Functions = {}
 
 local tern = function(pred, t, f)
   if pred then
@@ -8,7 +8,7 @@ local tern = function(pred, t, f)
   end
 end
 
-M.addFunctionalLogger = function(isConditional)
+Functions.addFunctionalLogger = function(isConditional)
   local fileName = vim.fn.expand("%:t")
   local functionName = tern(isConditional, "cfl", "fl")
 
@@ -22,6 +22,9 @@ M.addFunctionalLogger = function(isConditional)
   vim.fn.append(0, line)
 end
 
+Functions.addNonConditionalLogger = function () Functions.addFunctionalLogger(false) end
+Functions.addConditionalLogger = function () Functions.addFunctionalLogger(true) end
+
 -- M.thankYouNext = function()
 --   vim.cmd [[
 --   update
@@ -33,12 +36,15 @@ end
 --   end
 -- end
 
-M.prettyPrintJson = function(wholeFile)
+Functions.prettyPrintJson = function(wholeFile)
   local area = tern(wholeFile, "%", "'<,'>")
   vim.cmd(area .. "!python -m json.tool")
 end
 
-M.fzfFiles = function()
+Functions.prettyPrintJsonFile = function () Functions.prettyPrintJson(true) end
+Functions.prettyPrintJsonVisual = function () Functions.prettyPrintJson(false) end
+
+Functions.fzfFiles = function()
   local gitStatus = vim.g.gitsigns_head
 
   local cmd = tern(gitStatus == nil, 'files', 'git_files')
@@ -46,4 +52,21 @@ M.fzfFiles = function()
   return require('fzf-lua')[cmd]()
 end
 
-return M
+Functions.twiddleCase = function (str)
+  local is_upper = str == string.upper(str)
+  local is_lower = str == string.lower(str)
+  if is_upper then
+    return string.lower(str)
+  elseif is_lower then
+    local match, _ = string.gsub(
+      str,
+      '(%a)(%a*)',
+      function(head, rest) return string.upper(head)..rest end
+    )
+    return match
+  else
+    return string.upper(str)
+  end
+end
+
+return Functions

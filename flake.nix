@@ -10,29 +10,23 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
+    neovim-custom = {
+      url = "path:modules/neovim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs = inputs @
   { self
-  , darwin
-  , flake-utils
-  , home-manager
   , nixpkgs
-  , neovim-nightly-overlay
+  , darwin
+  , home-manager
+  , neovim-custom
   }:
     let
       overlays = final: prev:
@@ -48,7 +42,7 @@
 
           plexPass = prev.plex.override { plexRaw = final.plexPassRaw; };
 
-          kitty = prev.kitty.overrideAttrs (old: rec {
+          kitty = prev.kitty.overrideAttrs (old: {
             doCheck = false;
             installCheckPhase = "";
           });
@@ -63,8 +57,8 @@
           ];
         };
         overlays = [
-          neovim-nightly-overlay.overlay
           overlays
+          neovim-custom.overlays.default
         ];
       };
 
@@ -108,8 +102,7 @@
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
           }
         ];
-    in rec {
-
+    in {
       darwinConfigurations = {
         worktop = darwin.lib.darwinSystem {
           inherit inputs;

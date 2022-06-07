@@ -2,12 +2,15 @@ HOST=${HOSTNAME}
 
 define usage
 @echo "Usage:"
+@echo "  <default>"
 @echo "  config"
 @echo "    Requires that HOSTNAME be set. Configures that machine."
 @echo "  install_requirements"
 @echo "    Installs any missing requirements, used on nix-darwin."
 @echo "  update"
 @echo "    Updates the flake.lock file so new versions can be installed."
+@echo "  update-nvim"
+@echo "    Updates the neovim module."
 @echo
 @echo "Anything prefixed with '_' is internal, but can be run separately if you need granular output."
 endef
@@ -28,7 +31,7 @@ endif
 
 config: check ${HOST}
 	@echo -e "\033[0;32mDone configuring ${HOST}\033[0m"
-	@echo -e "\033[0;32m  Run \033[1;34mmake update && make config\033[0;32m if your programs are out of date\033[0m"
+	@echo -e "\033[0;32m  Run \033[1;34mmake update && make\033[0;32m if your programs are out of date\033[0m"
 
 # NixOS commands.
 _nixos-build:
@@ -61,3 +64,6 @@ hog: _nixos-build _nixos-switch
 
 update:
 	nix flake update
+
+update-nvim:
+	nix flake update ./modules/neovim

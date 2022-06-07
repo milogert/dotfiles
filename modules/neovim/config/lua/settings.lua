@@ -128,8 +128,9 @@ vim.api.nvim_create_autocmd('FileType', {
   callback = function()
     local first_line = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]
     local is_merge = string.sub(first_line, 1, 5) == 'Merge'
-    if not is_merge then
-      vim.api.nvim_command('0r ~/.config/nvim/skeletons/gitcommit.skeleton')
+    local is_template = string.match(first_line, "Feel free") ~= nil
+    if not (is_merge or is_template) then
+      vim.api.nvim_command('0r '..vim.g.configPath..'/skeletons/gitcommit.skeleton')
     end
   end
 })
@@ -154,5 +155,5 @@ local dir = string.gsub(splitPath[#splitPath], '^%.', '_')
 local file = os.getenv("HOME").."/todos/"..dir..".tada"
 vim.g.tada_todo_pane_file = file
 vim.g.tada_todo_pane_map = '<Leader>td'
-vim.g.tada_map_box = '<C-CR>'
-vim.g.tada_todo_switch_status_mapping = '<CR>'
+vim.g.tada_map_box = '<C-\\>'
+vim.g.tada_todo_switch_status_mapping = '\\'

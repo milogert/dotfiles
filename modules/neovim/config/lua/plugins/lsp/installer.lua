@@ -68,10 +68,12 @@ local server_configs = {
   },
 }
 
+local default_capabilities = vim.lsp.protocol.make_client_capabilities()
+default_capabilities.textDocument.completion.completionItem.snippetSupport = true
+default_capabilities = require("cmp_nvim_lsp").update_capabilities(default_capabilities)
+
 local server_defaults = {
-  capabilities = require("cmp_nvim_lsp").update_capabilities(
-    vim.lsp.protocol.make_client_capabilities()
-  ),
+  capabilities = default_capabilities,
   flags = { debounce_text_changes = 150 },
   on_attach = on_attach,
 }

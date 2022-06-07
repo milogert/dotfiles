@@ -1,6 +1,6 @@
 { pkgs, host, ... }:
 
-rec {
+{
   imports = [
     ../_common/default.nix
     ../_common/types/desktop.nix

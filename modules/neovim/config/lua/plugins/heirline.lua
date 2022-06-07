@@ -543,4 +543,35 @@ local StatusLines = {
   SpecialStatusline, TerminalStatusline, InactiveStatusline, DefaultStatusline,
 }
 
-require('heirline').setup(StatusLines)
+local WinBars = {
+  init = utils.pick_child_on_condition,
+  {   -- Hide the winbar for special buffers
+    condition = function()
+      return conditions.buffer_matches({
+        buftype = { "nofile", "prompt", "help", "quickfix" },
+        filetype = { "^git.*", "fugitive" },
+      })
+    end,
+    provider = "",
+  },
+  {   -- A special winbar for terminals
+    condition = function()
+      return conditions.buffer_matches({ buftype = { "terminal" } })
+    end,
+    utils.surround({ "", "" }, colors.dark_red, {
+      FileType,
+      Space,
+      -- TerminalName,
+    }),
+  },
+  {   -- An inactive winbar for regular files
+    condition = function()
+      return not conditions.is_active()
+    end,
+    utils.surround({ "", "" }, colors.bright_bg, { hl = { fg = "gray", force = true }, FileNameBlock }),
+  },
+  -- A winbar for regular files
+  utils.surround({ "", "" }, colors.bright_bg, FileNameBlock),
+}
+
+require('heirline').setup(StatusLines)--, WinBars)

@@ -1,6 +1,12 @@
 { pkgs, ... }:
 
-rec {
+let
+  binaryCaches = [
+    "https://cache.nixos.org"
+    "https://nix-community.cachix.org"
+    "https://milogert.cachix.org"
+  ];
+in {
   imports = [
     ./aliases.nix
   ];
@@ -9,12 +15,8 @@ rec {
     useSandbox = false;
     trustedUsers = [ "root" "@admin" ];
 
-    trustedBinaryCaches = [
-      "https://cache.nixos.org"
-      "https://nix-community.cachix.org"
-      "https://milogert.cachix.org"
-    ];
-    binaryCaches = nix.trustedBinaryCaches;
+    inherit binaryCaches;
+    trustedBinaryCaches = binaryCaches;
     binaryCachePublicKeys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
@@ -52,7 +54,7 @@ rec {
   environment.shellAliases = {
     adj = "echo ADJACENT";
   };
-  environment.systemPackages = with pkgs; 
+  environment.systemPackages = with pkgs;
   let
     my-python-packages = python-packages: with python-packages; [
       pip
@@ -81,8 +83,9 @@ rec {
     ncdu
     nix-prefetch-git
     # nixops
-    neovim # Need this for aliases.
-    procs # https://github.com/dalance/procs
+    /* neovim # Need this for aliases. */
+    neovim-custom
+    /* procs # https://github.com/dalance/procs */
     python-with-packages
     rename
     ripgrep

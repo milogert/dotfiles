@@ -35,6 +35,10 @@ Utils.xmap = function(shortcut, command, options)
   Utils._map('x', shortcut, command, options)
 end
 
+Utils.vmap = function(shortcut, command, options)
+  Utils._map('v', shortcut, command, options)
+end
+
 --[[
 Arpeggio maps.
   @param `type` Where the map is available, such as `innoremap`
@@ -81,6 +85,24 @@ Utils.split = function(inputstr, sep)
     table.insert(t, str)
   end
   return t
+end
+
+Utils.join = function(tab, sep)
+  local table_length = #tab
+  if table_length == 0 then
+    return ''
+  end
+  if table_length == 1 then
+    return tab[1]
+  end
+  if sep == nil then
+    sep = ''
+  end
+  local str = tab[1]
+  for i = 2, table_length do
+    str = str..sep..tab[i]
+  end
+  return str
 end
 
 

@@ -1,6 +1,6 @@
 { pkgs, ... }:
 
-rec {
+{
   imports = [
     ./avahi.nix
     ./homelab

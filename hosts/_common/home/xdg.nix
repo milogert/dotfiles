@@ -4,7 +4,7 @@
 
 let
   home_dir = "${config.home.homeDirectory}";
-in rec {
+in {
   xdg = {
     enable = true;
     cacheHome = "${home_dir}/.cache";
