@@ -1,10 +1,7 @@
-name: deadnix
+name: Create PR based on output of Deadnix
 
 on:
-  pull_request:
-  push:
-    branches:
-      - main
+  [push]
 
 jobs:
   deadnix:
