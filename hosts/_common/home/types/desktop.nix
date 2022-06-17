@@ -8,7 +8,8 @@
     /* ../ranger.nix */
   ];
 
-  /* home.packages = with pkgs; [ */
+  home.packages = with pkgs; [
   /*   notion-app-enhanced */
-  /* ]; */
+    beekeeper-studio
+  ];
 }

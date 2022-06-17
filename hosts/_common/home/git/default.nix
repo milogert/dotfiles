@@ -44,8 +44,15 @@
       zap = "fetch -p";
     };
 
-    extraConfig = {
+    ignores = [
+      "*~"
+      ".DS_Store"
+      ".idea"
+      ".vscode"
+      "node_modules"
+    ];
 
+    extraConfig = {
       core = {
         editor = "nvim";
         excludesfile = "$HOME/.config/git/ignore";

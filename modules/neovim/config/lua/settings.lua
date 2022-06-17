@@ -139,6 +139,15 @@ vim.api.nvim_create_autocmd('FileType', {
 -- })
 -- autocmd BufNewFile,BufRead /specificPath/** imap <buffer> ....
 
+-- vim-commentary
+-- vim.api.nvim_create_augroup('vim-commentary', { clear = true })
+-- vim.api.nvim_create_autocmd('FileType', {
+--   group = 'vim-commentary',
+--   desc = 'React comments',
+--   pattern = 'javascriptreact',
+--   command = 'setlocal commentstring={/* %s */}'
+-- })
+
 -- Vimux.
 vim.g.VimuxHeight = "25"
 vim.g.VimuxOrientation = "h"

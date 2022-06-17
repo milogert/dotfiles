@@ -44,7 +44,6 @@ in {
     joplin-desktop
     nodejs
     qtpass
-    #ripasso-cursive
     spotify
     spotify-tui
     wyvern

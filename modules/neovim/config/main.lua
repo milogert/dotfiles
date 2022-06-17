@@ -28,8 +28,8 @@ local plugins = {
   "treesitter",
   -- "which-key",
 
-  -- Needs to be last since it uses info from other imports
-  "heirline",
+  -- "dap", -- After lsp
+  "heirline", -- Needs to be last since it uses info from other imports
 }
 
 for _, plugin in ipairs(plugins) do

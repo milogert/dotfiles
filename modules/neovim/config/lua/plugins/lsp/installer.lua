@@ -33,6 +33,7 @@ local on_attach = require('plugins.lsp.on_attach')
 
 local server_configs = {
   elixirls = function(server)
+    vim.g.elixir_ls_server_path = server.root_dir .. "/elixir-ls"
     return { cmd = { server.root_dir .. "/elixir-ls/language_server.sh" } }
   end,
   eslint = {

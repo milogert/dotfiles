@@ -53,6 +53,9 @@ in
           nui-nvim
           null-ls-nvim
           nvim-cmp
+          nvim-dap
+          nvim-dap-ui
+          nvim-dap-virtual-text
           nvim-lspconfig
           nvim-treesitter
           nvim-web-devicons

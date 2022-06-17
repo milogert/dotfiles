@@ -22,8 +22,7 @@
 
   homebrew.casks = [
     "1password"
-    "alacritty" # Removable, but drops back a few versions
-    "beekeeper-studio"
+    "alfred"
     "cloudapp"
     "docker"
     "firefox-developer-edition"
