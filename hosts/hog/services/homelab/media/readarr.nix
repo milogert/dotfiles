@@ -1,13 +1,13 @@
 { config, pkgs, ... }:
 
 let
-  servicePort = "8787";
-  externalPort = servicePort;
-  image = "ghcr.io/hotio/readarr:pr-a78ffba";
+  hostPort = "8787";
+  containerPort = hostPort;
+  image = "hotio/readarr:testing";
 in {
   virtualisation.oci-containers.containers.readarr = {
     image = image;
-    ports = ["${servicePort}:${externalPort}"];
+    ports = ["${hostPort}:${containerPort}"];
     volumes = [
       "${config.users.users.media.home}/config/readarr:/config"
       "/mnt/download-stream-cache/downloads/dst/Books:/downloads"
@@ -31,7 +31,7 @@ in {
       };
     };
 
-    services.readarr.loadBalancer.servers = [ { url = "http://localhost:${servicePort}"; } ];
+    services.readarr.loadBalancer.servers = [ { url = "http://localhost:${hostPort}"; } ];
   };
 }
 
