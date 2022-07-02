@@ -17,7 +17,7 @@
       email = "milo@milogert.com";
       storage = "/var/lib/traefik/acme-prod.json";
 
-      dnsChallenge.provider = "linode";
+      dnsChallenge.provider = "route53";
 
       # Remove for production.
       # caServer = "https://acme-staging-v02.api.letsencrypt.org/directory";
@@ -84,5 +84,5 @@
   };
 
   systemd.services.traefik.serviceConfig.EnvironmentFile =
-    "/etc/secrets/linode-milogert.com.env";
+    "/etc/secrets/route53.env";
 }
