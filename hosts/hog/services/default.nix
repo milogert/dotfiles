@@ -4,8 +4,10 @@ rec {
   imports = [
     ./avahi.nix
     ./homelab
+    ./livebook.nix
     ./nginx.nix
     ./openssh.nix
+    /* ./openvpn.nix */
     ./printing.nix
     ./rclone.nix
   ];
