@@ -29,7 +29,7 @@ local servers = {
   "html",
 }
 
-local on_attach = require('plugins.lsp.on_attach')
+local on_attach = require("milogert.config.lsp.on_attach")
 
 local server_configs = {
   elixirls = function(server)

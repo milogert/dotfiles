@@ -1,8 +1,8 @@
 -- Keybindings.
 
-local u = require "utils"
-local f = require "functions"
-local log = require 'logger'
+local u = require "milogert.utils"
+local f = require "milogert.functions"
+local log = require "milogert.logger"
 
 -- Config maps.
 u.nmap('<leader>re', ':tabnew $MYVIMRC<CR>')
@@ -71,7 +71,7 @@ end
 
 u.nmap('<C-p>', '', {
   -- Command for calling files or git_files based on the current repo status.
-  callback = require('functions').fzfFiles
+  callback = require('milogert.functions').fzfFiles
 })
 u.nmap('<leader>b', '', {
   callback = fzf().buffers

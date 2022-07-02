@@ -1,4 +1,4 @@
-local u = require('utils')
+local u = require('milogert.utils')
 
 -- Set the leader key. This should be first.
 vim.g.mapleader = ' '
@@ -101,7 +101,13 @@ vim.opt.undofile = true
 
 -- Abbreviations.
 vim.cmd [[
-cabbrev Mux !tmuxinator
+" `vert help command-complete` for completion
+"fun TmuxinatorProfiles(A,L,P)
+"    return system("ls ~/.config/tmuxinator/")
+"endfun
+"command! -nargs=* -complete=custom,TmuxinatorProfiles mux !tmuxinator <args>
+command! -nargs=* Mux !tmuxinator <args>
+"cabbrev Mux !tmuxinator
 " cnoreabbrev G vert<space>G
 " cnoreabbrev Gstatus vert<space>Gstatus
 ]]

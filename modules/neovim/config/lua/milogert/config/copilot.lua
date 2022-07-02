@@ -1,4 +1,4 @@
-local u = require('utils')
+local u = require('milogert.utils')
 
 vim.defer_fn(function()
   require("copilot").setup({

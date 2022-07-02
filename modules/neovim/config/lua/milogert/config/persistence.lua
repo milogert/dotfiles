@@ -1,4 +1,4 @@
-local u = require 'utils'
+local u = require "milogert.utils"
 
 require("persistence").setup {
   -- Defaults are below:

@@ -1,7 +1,7 @@
 local null_ls = require("null-ls")
 
 null_ls.setup {
-  on_attach = require("plugins.lsp.on_attach"),
+  on_attach = require("milogert.config.lsp.on_attach"),
   sources = {
     null_ls.builtins.code_actions.gitsigns,
     null_ls.builtins.code_actions.statix,

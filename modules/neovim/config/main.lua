@@ -1,9 +1,9 @@
-local log = require("logger")
+local log = require("milogert.logger")
 
 -- require("impatient")
 
 -- Set the leader key. This should be first.
-require("settings")
+require("milogert.settings")
 
 vim.cmd [[ packadd vimplugin-vim-arpeggio ]]
 
@@ -12,6 +12,7 @@ local plugins = {
   -- "alpha-nvim",
   "copilot",
   "cmp",
+  "devcontainer",
   "fidget",
   "fzf-lua",
   "gitsigns",
@@ -33,7 +34,7 @@ local plugins = {
 }
 
 for _, plugin in ipairs(plugins) do
-  local ok, err = pcall(require, 'plugins.' .. plugin)
+  local ok, err = pcall(require, 'milogert.config.' .. plugin)
   if not ok then
     log.error('Failed to load plugin config: ' .. plugin)
     log.error(err)
