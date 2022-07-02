@@ -7,9 +7,7 @@ in {
     enable = true;
     selfUrlPath = "https://rss.milogert.com";
     auth.autoLogin = false;
-    # Virtual host is not generated here at all. It's generated below. I might
-    # not need to do this still, but I am sticking with it.
-    virtualHost = null;
+    virtualHost = "rss.milogert.com";
     plugins = [
       "auth_internal"
     ];
@@ -19,8 +17,12 @@ in {
     ];
   };
 
+  # Override the php package since tt-rss is out of date.
+  services.phpfpm.pools.tt-rss.phpPackage = pkgs.php80;
+
   services.nginx.virtualHosts = {
     "rss.milogert.com" = {
+      # Need to override the listener because of Traefik
       listen = [
         {
           addr = "localhost";
@@ -28,25 +30,11 @@ in {
         }
       ];
 
-      root = "${config.services.tt-rss.root}/www";
-
-      locations."/" = {
-        index = "index.php";
-      };
-
-      locations."^~ /feed-icons" = {
-        root = "${config.services.tt-rss.root}";
-      };
-
-      locations."~ \\.php$" = {
-        extraConfig = ''
-          fastcgi_buffers 16 16k;
-          fastcgi_buffer_size 32k;
-          fastcgi_split_path_info ^(.+\.php)(/.+)$;
-          fastcgi_pass unix:/run/phpfpm/tt-rss.sock;
-          fastcgi_index index.php;
-        '';
-      };
+      # Optimal php config?
+      locations."~ \\.php$".extraConfig = ''
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+      '';
     };
   };
 
