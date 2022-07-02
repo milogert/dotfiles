@@ -23,6 +23,7 @@
   homebrew.casks = [
     "1password"
     "alfred"
+    "brave-browser"
     "cloudapp"
     "docker"
     "firefox-developer-edition"

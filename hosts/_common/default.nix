@@ -77,13 +77,13 @@ in {
     gcc
     gnumake
     gnupg
+    go
     htop
     jq
     lazydocker
     ncdu
     nix-prefetch-git
     # nixops
-    /* neovim # Need this for aliases. */
     neovim-custom
     /* procs # https://github.com/dalance/procs */
     python-with-packages
@@ -98,6 +98,7 @@ in {
     terraform
     tree
     unzip
+    viddy
     wget
     yq
     zsh-autosuggestions
