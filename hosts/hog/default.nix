@@ -25,5 +25,6 @@ rec {
     backblaze-b2
     ranger
     rclone
+    terraform
   ];
 }
