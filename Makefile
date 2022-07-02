@@ -35,7 +35,9 @@ _nixos-build:
 	nix build ".#nixosConfigurations.${HOST}.config.system.build.toplevel"
 
 _nixos-switch:
-	sudo nixos-rebuild switch --flake ".#${HOST}"
+	# Old command: sudo nixos-rebuild switch --flake ".#${HOST}"
+	# See https://github.com/NixOS/nixpkgs/issues/169193
+	nixos-rebuild --use-remote-sudo switch --flake ".#${HOST}"
 
 # nix-darwin commands.
 _nix-darwin-build:

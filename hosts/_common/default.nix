@@ -62,7 +62,6 @@ rec {
     ];
     python-with-packages = python38.withPackages my-python-packages;
   in [
-    ag
     bash
     bash-completion
     bat # Need this for aliases.
@@ -91,6 +90,7 @@ rec {
     ripgrep
     rnix-lsp
     shellcheck
+    silver-searcher
     speedtest-cli
     starship # Need this for aliases.
     tree
