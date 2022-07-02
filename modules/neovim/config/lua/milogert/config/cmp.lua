@@ -1,7 +1,7 @@
 -- Copied from https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
 -- Require function for tab to work with luasnip.
 local has_words_before = function()
@@ -10,15 +10,21 @@ local has_words_before = function()
 end
 local luasnip = require("luasnip")
 
+local source_menu_names = {
+  buffer = "[Buff]",
+  -- dictionary = "[Dict]",
+  latex_symbols = "[LaTeX]",
+  luasnip = "[LuaSnip]",
+  nvim_lsp = "[LSP]",
+  nvim_lua = "[Lua]",
+}
+
 -- nvim-cmp setup
 local cmp = require 'cmp'
 cmp.setup {
-  completion = {
-    --completeopt = 'menu,menuone,noinsert',
-  },
   snippet = {
     expand = function(args)
-      require('luasnip').lsp_expand(args.body)
+      luasnip.lsp_expand(args.body)
     end,
   },
   formatting = {
@@ -26,13 +32,7 @@ cmp.setup {
       -- fancy icons and a name of kind
       vim_item.kind = require("lspkind").presets.default[vim_item.kind]
       -- set a name for each source
-      vim_item.menu = ({
-        buffer = "[Buff]",
-        nvim_lsp = "[LSP]",
-        luasnip = "[LuaSnip]",
-        nvim_lua = "[Lua]",
-        latex_symbols = "[LaTeX]",
-      })[entry.source.name]
+      vim_item.menu = source_menu_names[entry.source.name]
       return vim_item
     end,
   },
@@ -75,14 +75,35 @@ cmp.setup {
     ),
   },
   sources = {
-    { name = 'nvim_lsp' },
-    { name = 'nvim_lua' },
-    { name = 'path' },
-    { name = 'luasnip' },
-    { name = 'buffer', keyword_length=1 },
-    { name = 'calc' },
+    { name = "nvim_lsp", priority = 99 },
+    { name = "nvim_lua" },
+    { name = "path" },
+    { name = "luasnip" },
+    { name = "buffer", keyword_length = 1 },
+    { name = "calc" },
+    { name = "copilot" },
+    -- { name = 'dictionary', keyword_length = 2 },
   },
   experimental = {
-    -- ghost_text = true,
+    ghost_text = true,
   },
 }
+
+cmp.setup.cmdline("/", {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = "buffer" },
+  }
+})
+
+cmp.setup.cmdline(":", {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources(
+    {
+      { name = "path" },
+    },
+    {
+      { name = "cmdline" },
+    }
+  )
+})

@@ -1,27 +1,27 @@
 { pkgs, ... }:
 
-rec {
+let
+  binaryCaches = [
+    "https://cache.nixos.org"
+    "https://nix-community.cachix.org"
+    "https://milogert.cachix.org"
+  ];
+in {
   imports = [
     ./aliases.nix
   ];
 
   nix = {
-    settings = {
-      sandbox = false;
-      trusted-users = [ "root" "@admin" ];
+    useSandbox = false;
+    trustedUsers = [ "root" "@admin" ];
 
-      trusted-substituters = [
-        https://cache.nixos.org
-        https://nix-community.cachix.org
-        https://milogert.cachix.org
-      ];
-      substituters = nix.settings.trusted-substituters;
-      trusted-public-keys = [
-        cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-        nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
-        milogert.cachix.org-1:MaZAAWJXDV85HpLm2yyLX9b52wQghRxljAZJg0dEjkY=
-      ];
-    };
+    inherit binaryCaches;
+    trustedBinaryCaches = binaryCaches;
+    binaryCachePublicKeys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "milogert.cachix.org-1:MaZAAWJXDV85HpLm2yyLX9b52wQghRxljAZJg0dEjkY="
+    ];
 
     # Garbage collection.
     gc.automatic = false;
@@ -54,7 +54,7 @@ rec {
   environment.shellAliases = {
     adj = "echo ADJACENT";
   };
-  environment.systemPackages = with pkgs; 
+  environment.systemPackages = with pkgs;
   let
     my-python-packages = python-packages: with python-packages; [
       pip
@@ -77,14 +77,15 @@ rec {
     gcc
     gnumake
     gnupg
+    go
     htop
     jq
     lazydocker
     ncdu
     nix-prefetch-git
     # nixops
-    neovim # Need this for aliases.
-    procs # https://github.com/dalance/procs
+    neovim-custom
+    /* procs # https://github.com/dalance/procs */
     python-with-packages
     rename
     ripgrep
@@ -93,8 +94,11 @@ rec {
     silver-searcher
     speedtest-cli
     starship # Need this for aliases.
+    statix
+    terraform
     tree
     unzip
+    viddy
     wget
     yq
     zsh-autosuggestions

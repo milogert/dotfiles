@@ -40,7 +40,7 @@ let
         runHook postInstall
       '';
     }));
-in rec {
+in {
   srcery-tmux = mkTmuxPlugin {
     pluginName = "srcery";
     version = "now";

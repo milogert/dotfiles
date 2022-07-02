@@ -2,7 +2,7 @@
 
 let
   common_dir = ../../_common;
-in rec {
+in {
   home.packages = with pkgs; [
     imlib2
     ranger

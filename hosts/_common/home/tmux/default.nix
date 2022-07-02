@@ -5,7 +5,7 @@
 
 let
   tmuxPlugins = pkgs.tmuxPlugins // pkgs.callPackage ./custom-plugins.nix {};
-in rec {
+in {
   home.file = {
     "${config.xdg.configHome}/tmuxinator/" = {
       recursive = true;

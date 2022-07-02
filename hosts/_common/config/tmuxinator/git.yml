@@ -2,4 +2,20 @@ name: <%= @args[0] %>
 root: ~/git/<%= @args[0] %>
 
 windows:
-  - editor: nvim
+  - editor: |
+      if [[ -d ~/git/<%= @args[0] %> ]]; then
+        nvim
+      else
+        pushd ~/git
+        read "user?User (default is 'milogert'): "
+        read -q "ssh?SSH: "
+        if [[ ${ssh} -eq 'y' ]]; then
+          url=git@github.com:${user:-milogert}/<%= @args[0] %>.git
+        else
+          url=https://github.com/${user:-milogert}/<%= @args[0] %>.git
+        fi
+        git clone ${url}
+        pushd ~/git/<%= @args[0] %>
+        # tmux attach-session -t . -c ~/project/<%= @args[0] %>
+        nvim
+      fi

@@ -8,6 +8,7 @@ let
   };
 in {
   fonts = {
+    fontDir.enable = true;
     fonts = [
       nerdfonts
     ];

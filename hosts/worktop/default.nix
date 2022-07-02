@@ -1,6 +1,6 @@
 { pkgs, host, ... }:
 
-rec {
+{
   imports = [
     ../_common/default.nix
     ../_common/types/desktop.nix
@@ -9,9 +9,6 @@ rec {
     ./darwin/nix-apps.nix
     ./networking.nix
   ];
-
-  # This goes here since it's different between nixos and darwin.
-  fonts.enableFontDir = true;
 
   # This is nix-darwin specific.
   system.stateVersion = 4;

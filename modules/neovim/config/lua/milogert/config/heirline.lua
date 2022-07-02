@@ -153,7 +153,7 @@ local ViMode = {
   -- Same goes for the highlight. Now the foreground will change according to the current mode.
   hl = function(self)
     local mode = self.mode:sub(1, 1) -- get only the first mode character
-    return { fg = self.mode_colors[mode], style = "bold", }
+    return { fg = self.mode_colors[mode], bold = true }
   end,
 
   Space,
@@ -221,7 +221,7 @@ local FileNameModifer = {
   hl = function()
     if vim.bo.modified then
       -- use `force` because we need to override the child's hl foreground
-      return { fg = colors.cyan, style = 'bold', force=true }
+      return { fg = colors.cyan, bold = true, force = true }
     end
   end,
 }
@@ -241,7 +241,7 @@ local FileType = {
     -- return string.upper(vim.bo.filetype)
     return vim.bo.filetype
   end,
-  hl = { fg = utils.get_highlight("Type").fg, style = 'bold' },
+  hl = { fg = utils.get_highlight("Type").fg, bold = true },
   Space,
 }
 
@@ -324,17 +324,8 @@ local LSPActive = {
     return text
   end,
 
-  hl = { fg = colors.green, style = "bold" },
+  hl = { fg = colors.green, bold = true },
 
-  Space,
-}
-
--- I personally use it only to display progress messages!
--- See lsp-status/README.md for configuration options.
--- https://github.com/nvim-lua/lsp-status.nvim
-local LSPMessages = {
-  provider = function() return require("lsp-status").status() end,
-  hl = { fg = colors.gray2 },
   Space,
 }
 
@@ -403,7 +394,7 @@ local GitBranch = {
 
   {
     provider = function(self) return " " .. self.status_dict.head end,
-    hl = {style = 'bold'}
+    hl = { bold = true }
   }
 }
 
@@ -420,39 +411,39 @@ local Git = {
   GitBranch,
 
   -- You could handle delimiters, icons and counts similar to Diagnostics
-  {
-    condition = function(self)
-      return self.has_changes
-    end,
-    provider = "("
-  },
-  {
-    provider = function(self)
-      local count = self.status_dict.added or 0
-      return count > 0 and ("+" .. count)
-    end,
-    hl = { fg = colors.git.add },
-  },
-  {
-    provider = function(self)
-      local count = self.status_dict.removed or 0
-      return count > 0 and ("-" .. count)
-    end,
-    hl = { fg = colors.git.del },
-  },
-  {
-    provider = function(self)
-      local count = self.status_dict.changed or 0
-      return count > 0 and ("~" .. count)
-    end,
-    hl = { fg = colors.git.change },
-  },
-  {
-    condition = function(self)
-      return self.has_changes
-    end,
-    provider = ")",
-  },
+  -- {
+  --   condition = function(self)
+  --     return self.has_changes
+  --   end,
+  --   provider = "("
+  -- },
+  -- {
+  --   provider = function(self)
+  --     local count = self.status_dict.added or 0
+  --     return count > 0 and ("+" .. count)
+  --   end,
+  --   hl = { fg = colors.git.add },
+  -- },
+  -- {
+  --   provider = function(self)
+  --     local count = self.status_dict.removed or 0
+  --     return count > 0 and ("-" .. count)
+  --   end,
+  --   hl = { fg = colors.git.del },
+  -- },
+  -- {
+  --   provider = function(self)
+  --     local count = self.status_dict.changed or 0
+  --     return count > 0 and ("~" .. count)
+  --   end,
+  --   hl = { fg = colors.git.change },
+  -- },
+  -- {
+  --   condition = function(self)
+  --     return self.has_changes
+  --   end,
+  --   provider = ")",
+  -- },
   Space,
 }
 
@@ -476,7 +467,7 @@ local FugitiveStatus = {
 
   {
     provider = function() return " " .. vim.g.gitsigns_head end,
-    hl = {style = 'bold'}
+    hl = { bold = true }
   },
 }
 
@@ -497,7 +488,7 @@ local DefaultStatusline = {
 
   --[[Gps,]] --[[DAPMessages,]] Align,
 
-  LSPActive, LSPMessages, FileType, Ruler, ScrollBar
+  LSPActive, --[[LSPMessages,]] FileType, Ruler, ScrollBar
 }
 
 local InactiveStatusline = {
@@ -505,7 +496,7 @@ local InactiveStatusline = {
     return not conditions.is_active()
   end,
 
-  FileNameBlock, FileType, Align,
+  FileNameBlock, Align, FileType,
 }
 
 local SpecialStatusline = {
@@ -547,9 +538,40 @@ local StatusLines = {
     end
   end,
 
-  stop_at_first = true,
+  init = utils.pick_child_on_condition,
 
   SpecialStatusline, TerminalStatusline, InactiveStatusline, DefaultStatusline,
 }
 
-require('heirline').setup(StatusLines)
+local WinBars = {
+  init = utils.pick_child_on_condition,
+  {   -- Hide the winbar for special buffers
+    condition = function()
+      return conditions.buffer_matches({
+        buftype = { "nofile", "prompt", "help", "quickfix" },
+        filetype = { "^git.*", "fugitive" },
+      })
+    end,
+    provider = "",
+  },
+  {   -- A special winbar for terminals
+    condition = function()
+      return conditions.buffer_matches({ buftype = { "terminal" } })
+    end,
+    utils.surround({ "", "" }, colors.dark_red, {
+      FileType,
+      Space,
+      -- TerminalName,
+    }),
+  },
+  {   -- An inactive winbar for regular files
+    condition = function()
+      return not conditions.is_active()
+    end,
+    utils.surround({ "", "" }, colors.bright_bg, { hl = { fg = "gray", force = true }, FileNameBlock }),
+  },
+  -- A winbar for regular files
+  utils.surround({ "", "" }, colors.bright_bg, FileNameBlock),
+}
+
+require('heirline').setup(StatusLines)--, WinBars)

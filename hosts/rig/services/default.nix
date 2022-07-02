@@ -1,9 +1,9 @@
 { pkgs, ... }:
 
-rec {
+{
   imports = [
     ./calibre-web.nix
-    ./nextcloud.nix
+    /* ./nextcloud.nix */
     ./nginx.nix
     ./openssh.nix
   ];

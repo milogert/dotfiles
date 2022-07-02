@@ -2,7 +2,7 @@
 
 let
   home_dir = "${config.home.homeDirectory}";
-in rec {
+in {
   enable = true;
 
   enableZshIntegration = true;

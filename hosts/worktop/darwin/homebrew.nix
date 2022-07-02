@@ -1,6 +1,6 @@
 {
   homebrew.enable = true;
-  homebrew.autoUpdate = true;
+  homebrew.autoUpdate = false;
   homebrew.cleanup = "zap";
   homebrew.global.brewfile = true;
   homebrew.global.noLock = true;
@@ -22,18 +22,15 @@
 
   homebrew.casks = [
     "1password"
-    "alacritty" # Removable, but drops back a few versions
-    "beekeeper-studio"
+    "alfred"
+    "brave-browser"
     "cloudapp"
     "docker"
     "firefox-developer-edition"
-    "flux"
     "google-chrome"
     "hammerspoon"
     "insomnia"
     "krisp"
-    "love"
-    "microsoft-edge"
     "muzzle"
     "notion"
     "openvpn-connect"

@@ -17,6 +17,8 @@
 
     envExtra = ''
       ## envExtra start
+      zmodload zsh/zprof
+
       [[ -s "''${ZDOTDIR:-$HOME}/.zshenv_priv" ]] && source "''${ZDOTDIR:-$HOME}/.zshenv_priv"
 
       # Custom dir hashes.
@@ -58,6 +60,7 @@
 
       alias ll="exa -l -g --git --color always --icons -a -s type";
       alias ls="exa --color auto --icons -a -s type";
+      #zprof
       ## initExtra end
     '';
 
@@ -71,30 +74,29 @@
 
     prezto = {
       enable = true;
-      # Use starship here.
-      prompt = {
-        theme = "off";
-      };
       pmodules = [
+        /* "prompt" */
         "environment"
-        "terminal"
+        /* "terminal" */
         "editor"
         "history"
         "directory"
         "spectrum"
-        "wakeonlan"
-        "utility"
-        "completion"
+        /* "wakeonlan" */
         "docker"
         "git"
+        "utility"
+        "completion"
       ];
       terminal.autoTitle = true;
       editor.dotExpansion = true;
-      #prompt = {
-      #  showReturnVal = true;
-      #};
+      prompt = {
+        # Use starship here.
+        theme = "none";
+        /* theme = "pure"; */
+        /* showReturnVal = true; */
+      };
       color = true;
-      #pmoduleDirs = [ "$HOME/.zprezto-contrib" ];
     };
   };
 }

@@ -6,7 +6,7 @@ let
   image = "hotio/readarr:testing";
 in {
   virtualisation.oci-containers.containers.readarr = {
-    image = image;
+    inherit image;
     ports = ["${hostPort}:${containerPort}"];
     volumes = [
       "${config.users.users.media.home}/config/readarr:/config"

@@ -5,7 +5,7 @@
 
 let
   common_dir = ../../../_common;
-in rec {
+in {
   imports = [
     (common_dir + /home/default.nix)
     (common_dir + /home/direnv.nix)
@@ -44,7 +44,6 @@ in rec {
     joplin-desktop
     nodejs
     qtpass
-    #ripasso-cursive
     spotify
     spotify-tui
     wyvern
@@ -57,10 +56,11 @@ in rec {
       npmSet = "$DRY_RUN_CMD ${pkgs.nodejs}/bin/npm set";
     in
       config.lib.dag.entryAfter ["writeBoundary"] ''
-        ${npmSet} init.author.name "Milo Gertjejansen"
-        ${npmSet} init.author.email "milo@milogert.com"
-        ${npmSet} init.author.url "https://milogert.com"
-        ${npmSet} init.license "MIT"
-        ${npmSet} init.version "0.0.1"
+        ${npmSet} \
+          init-author-name="Milo Gertjejansen" \
+          init-author-email="milo@milogert.com" \
+          init-author-url="https://milogert.com" \
+          init-license="MIT" \
+          init-version="0.0.1" \
       '';
 }

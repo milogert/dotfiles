@@ -1,6 +1,6 @@
-local u = require 'utils'
+local u = require "milogert.utils"
 
-require('telescope').setup {
+require("telescope").setup {
 --   defaults = {
 --     -- Default configuration for telescope goes here:
 --     -- config_key = value,

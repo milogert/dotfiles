@@ -29,14 +29,11 @@ local servers = {
   "html",
 }
 
-local lsp_status = require('plugins.lsp.status')
-
-local attach_fn = require('plugins.lsp.on_attach')
-local on_attach = attach_fn.on_attach
-
+local on_attach = require("milogert.config.lsp.on_attach")
 
 local server_configs = {
   elixirls = function(server)
+    vim.g.elixir_ls_server_path = server.root_dir .. "/elixir-ls"
     return { cmd = { server.root_dir .. "/elixir-ls/language_server.sh" } }
   end,
   eslint = {
@@ -72,10 +69,12 @@ local server_configs = {
   },
 }
 
+local default_capabilities = vim.lsp.protocol.make_client_capabilities()
+default_capabilities.textDocument.completion.completionItem.snippetSupport = true
+default_capabilities = require("cmp_nvim_lsp").update_capabilities(default_capabilities)
+
 local server_defaults = {
-  capabilities = require("cmp_nvim_lsp").update_capabilities(
-    vim.lsp.protocol.make_client_capabilities()
-  ),
+  capabilities = default_capabilities,
   flags = { debounce_text_changes = 150 },
   on_attach = on_attach,
 }
@@ -91,7 +90,7 @@ local on_server_ready = function(server)
     opts = opts_data
   end
 
-  opts = vim.tbl_extend("keep", opts, server_defaults)--, lsp_status.capabilities)
+  opts = vim.tbl_extend("keep", opts, server_defaults)
 
   -- This setup() function is exactly the same as lspconfig's setup function
   -- (:help lspconfig-quickstart)

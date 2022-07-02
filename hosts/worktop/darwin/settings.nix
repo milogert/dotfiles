@@ -1,141 +1,158 @@
 {
-  # System - Enable font smoothing
-  # Enables subpixel font rendering on non-Apple LCDs
-  # Reference: https://github.com/kevinSuttle/macOS-Defaults/issues/17#issuecomment-266633501
-  system.defaults.NSGlobalDomain.AppleFontSmoothing = 1;
 
-  # System - Enable dark mode
-  system.defaults.NSGlobalDomain.AppleInterfaceStyle = "Dark";
+  system.defaults = {
+    NSGlobalDomain = {
+      ## Inputs
 
-  # Keyboard - Enable full keyboard access for all controls.
-  # (e.g., enable Tab in modal dialogs)
-  system.defaults.NSGlobalDomain.AppleKeyboardUIMode = 3;
+      # Trackpad - Enable tap to click for current user and the login screen
+      "com.apple.mouse.tapBehavior" = 1;
 
-  # Keyboard - Disable press-and-hold for keys in favor of key repeat
-  system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false;
+      # Mouse - Enable natural scrolling
+      "com.apple.swipescrolldirection" = true;
 
-  # Finder - Show filename extensions.
-  system.defaults.NSGlobalDomain.AppleShowAllExtensions = true;
+      # Keyboard - Disable press-and-hold for keys in favor of key repeat
+      ApplePressAndHoldEnabled = false;
 
-  # System - Show scrollbars only when scrolling
-  #   WhenScrolling, Automatic, Always
-  system.defaults.NSGlobalDomain.AppleShowScrollBars = "Always";
+      # Keyboard - Set a short Delay until key repeat.
+      InitialKeyRepeat = 15;
 
-  # System - What temperature unit to use
-  system.defaults.NSGlobalDomain.AppleTemperatureUnit = "Celsius";
+      # Keyboard - Set a fast keyboard repeat rate.
+      KeyRepeat = 1;
 
-  # Keyboard - Set a short Delay until key repeat.
-  system.defaults.NSGlobalDomain.InitialKeyRepeat = 15;
+      # Keyboard - Enable full keyboard access for all controls. (e.g., enable Tab in modal dialogs)
+      AppleKeyboardUIMode = 3;
 
-  # Keyboard - Set a fast keyboard repeat rate.
-  system.defaults.NSGlobalDomain.KeyRepeat = 1;
+      ## System
 
-  # System - Disable automatic capitalization as it’s annoying when typing code
-  system.defaults.NSGlobalDomain.NSAutomaticCapitalizationEnabled = false;
+      # System - Enable font smoothing
+      # Enables subpixel font rendering on non-Apple LCDs
+      # Reference: https://github.com/kevinSuttle/macOS-Defaults/issues/17#issuecomment-266633501
+      AppleFontSmoothing = 1;
 
-  # System - Disable smart dashes as they’re annoying when typing code
-  system.defaults.NSGlobalDomain.NSAutomaticDashSubstitutionEnabled = false;
+      # Show scrollbars only when scrolling, WhenScrolling, Automatic, Always
+      AppleShowScrollBars = "Always";
 
-  # System - Disable automatic period substitution as it’s annoying when typing code
-  system.defaults.NSGlobalDomain.NSAutomaticPeriodSubstitutionEnabled = false;
+      # Enable dark mode
+      AppleInterfaceStyle = "Dark";
 
-  # System - Disable smart quotes as they’re annoying when typing code
-  system.defaults.NSGlobalDomain.NSAutomaticQuoteSubstitutionEnabled = false;
+      # What temperature unit to use
+      AppleTemperatureUnit = "Fahrenheit";
 
-  # System - Disable auto-correct
-  system.defaults.NSGlobalDomain.NSAutomaticSpellingCorrectionEnabled = false;
+      # Disable automatic capitalization as it’s annoying when typing code
+      NSAutomaticCapitalizationEnabled = false;
 
-  # iCloud - Don't save new documents to iCloud by default
-  system.defaults.NSGlobalDomain.NSDocumentSaveNewDocumentsToCloud = false;
+      # Disable smart dashes as they’re annoying when typing code
+      NSAutomaticDashSubstitutionEnabled = false;
 
-  # System - Expand save panel by default.
-  system.defaults.NSGlobalDomain.NSNavPanelExpandedStateForSaveMode = true;
-  system.defaults.NSGlobalDomain.NSNavPanelExpandedStateForSaveMode2 = true;
+      # Disable automatic period substitution as it’s annoying when typing code
+      NSAutomaticPeriodSubstitutionEnabled = false;
 
-  # System - Decrease window resize duration
-  system.defaults.NSGlobalDomain.NSWindowResizeTime = "0.001";
+      # Disable smart quotes as they’re annoying when typing code
+      NSAutomaticQuoteSubstitutionEnabled = false;
 
-  # Printer - Expand print panel by default.
-  system.defaults.NSGlobalDomain.PMPrintingExpandedStateForPrint = true;
-  system.defaults.NSGlobalDomain.PMPrintingExpandedStateForPrint2 = true;
+      # Disable auto-correct
+      NSAutomaticSpellingCorrectionEnabled = false;
 
-  # System - Auto hide menu bar
-  system.defaults.NSGlobalDomain._HIHideMenuBar = false;
+      # Expand save panel by default.
+      NSNavPanelExpandedStateForSaveMode = true;
+      NSNavPanelExpandedStateForSaveMode2 = true;
 
-  # System - Disable 'Are you sure you want to open this application?' dialog
-  system.defaults.LaunchServices.LSQuarantine = false;
+      # Decrease window resize duration
+      NSWindowResizeTime = "0.001";
 
-  # System - Disable audio feedback when volume is changed
-  system.defaults.NSGlobalDomain."com.apple.sound.beep.feedback" = 0;
+      # Auto hide menu bar
+      _HIHideMenuBar = false;
 
-  # Trackpad - Enable tap to click for current user and the login screen
-  system.defaults.NSGlobalDomain."com.apple.mouse.tapBehavior" = 1;
+      # Disable audio feedback when volume is changed
+      "com.apple.sound.beep.feedback" = 0;
 
-  # Mouse - Enable natural scrolling
-  system.defaults.NSGlobalDomain."com.apple.swipescrolldirection" = true;
+      ## Misc
 
-  # Trackpad: Enable trackpad tap to click
-  system.defaults.trackpad.Clicking = true;
+      # iCloud - Don't save new documents to iCloud by default
+      NSDocumentSaveNewDocumentsToCloud = false;
 
-  # Dock - Automatically hide and show
-  system.defaults.dock.autohide = true;
+      # Finder - Show filename extensions.
+      AppleShowAllExtensions = true;
 
-  # Dock - Remove the auto-hiding delay
-  system.defaults.dock.autohide-delay = "0";
+      # Printer - Expand print panel by default.
+      PMPrintingExpandedStateForPrint = true;
+      PMPrintingExpandedStateForPrint2 = true;
+    };
 
-  # Dock - Remove the animation when hiding/showing
-  system.defaults.dock.autohide-time-modifier = "0";
+    # Disable 'Are you sure you want to open this application?' dialog
+    LaunchServices.LSQuarantine = false;
 
-  # Dock - Don’t show Dashboard as a Space
-  system.defaults.dock.dashboard-in-overlay = true;
+    # Trackpad - Enable trackpad tap to click
+    trackpad.Clicking = true;
 
-  # Dock - Don't group windows by application in Mission Control's Exposé
-  system.defaults.dock.expose-group-by-app = false;
+    ## Dock
+    dock = {
+      # Automatically hide and show
+      autohide = true;
 
-  # Dock - Don’t animate opening applications
-  system.defaults.dock.launchanim = false;
+      # Remove the auto-hiding delay
+      autohide-delay = "0";
 
-  # Dock - Set the minimize/maximize window effect
-  system.defaults.dock.mineffect = "scale";
+      # Remove the animation when hiding/showing
+      autohide-time-modifier = "0";
 
-  # Dock - Don’t automatically rearrange Spaces based on most recent use
-  system.defaults.dock.mru-spaces = false;
+      # Don’t show Dashboard as a Space
+      dashboard-in-overlay = true;
 
-  # Dock - Orient to the bottom
-  system.defaults.dock.orientation = "bottom";
+      # Don't group windows by application in Mission Control's Exposé
+      expose-group-by-app = false;
 
-  # Dock - Show indicator lights for open applications
-  system.defaults.dock.show-process-indicators = true;
+      # Don’t animate opening applications
+      launchanim = false;
 
-  # Dock - Don’t show recent applications in Dock
-  system.defaults.dock.show-recents = false;
+      # Set the minimize/maximize window effect
+      mineffect = "scale";
 
-  # Dock - Make icons of hidden applications translucent
-  system.defaults.dock.showhidden = true;
+      # Don’t automatically rearrange Spaces based on most recent use
+      mru-spaces = false;
 
-  # Dock - Minimize apps to their icon
-  system.defaults.dock.minimize-to-application = true;
+      # Orient to the bottom
+      orientation = "bottom";
 
-  # Dock - Show pinned and open applications in the dock
-  system.defaults.dock.static-only = false;
+      # Show indicator lights for open applications
+      show-process-indicators = true;
 
-  # Finder - Disable the warning when changing a file extension
-  system.defaults.finder.FXEnableExtensionChangeWarning = false;
+      # Don’t show recent applications in Dock
+      show-recents = false;
 
-  # Finder - Display full POSIX path as window title.
-  system.defaults.finder._FXShowPosixPathInTitle = true;
+      # Make icons of hidden applications translucent
+      showhidden = true;
 
-  # Finder - Add quit option
-  system.defaults.finder.QuitMenuItem = true;
+      # Minimize apps to their icon
+      minimize-to-application = true;
 
-  # Screencapture - Save screenshots to the desktop
-  system.defaults.screencapture.location = "$HOME/Desktop";
+      # Show pinned and open applications in the dock
+      static-only = false;
+    };
 
-  # Keyboard - Enable keyboard mappings
-  system.keyboard.enableKeyMapping = true;
+    ## Finder
+    finder = {
+      # Disable the warning when changing a file extension
+      FXEnableExtensionChangeWarning = false;
 
-  # Keyboard - Remap Caps Lock key to Control
-  system.keyboard.remapCapsLockToControl = true;
+      # Display full POSIX path as window title.
+      _FXShowPosixPathInTitle = true;
+
+      # Add quit option
+      QuitMenuItem = true;
+    };
+
+    # Screencapture - Save screenshots to the desktop
+    screencapture.location = "$HOME/Desktop";
+  };
+
+  system.keyboard = {
+    # Enable keyboard mappings
+    enableKeyMapping = true;
+
+    # Remap Caps Lock key to Control
+    remapCapsLockToControl = true;
+  };
 
   #defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
   #defaults write com.apple.AppleMultitouchTrackpad Clicking -int 1

@@ -1,5 +1,8 @@
+local u = require('milogert.utils')
+
 -- Set the leader key. This should be first.
 vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
 vim.opt.viminfo = [['1000,f1]]
 
@@ -44,14 +47,12 @@ vim.opt.relativenumber = true
 
 -- Special characters for spacing.
 vim.opt.list = true
--- set listchars=eol:$,tab:-->,trail:~,extends:>,precedes:<,space:·
--- vim.opt.listchars = {
---   'tab:-->',
---   'trail:~',
---   'extends:>',
---   'precedes:<',
--- }
-vim.cmd([[set listchars=tab:-->,trail:~,extends:>,precedes:<]])
+vim.opt.listchars = {
+  tab = '-->',
+  trail = '~',
+  extends = '>',
+  precedes = '<',
+}
 
 -- Tab does two spaces.
 vim.opt.expandtab = true
@@ -98,54 +99,76 @@ vim.opt.backspace = { 'indent', 'eol', 'start' }
 vim.opt.undodir = os.getenv('HOME') .. '/.config/nvim/undodir'
 vim.opt.undofile = true
 
--- Wild menu config
-vim.opt.wildmenu = true
-vim.opt.wildmode = { 'longest', 'list' , 'full' }
-vim.opt.wildignore = vim.opt.wildignore + {
-  '=*.o',
-  '*~',
-  '*/tmp/*',
-  '*.so',
-  '*.swp',
-  '*.zip',
-  '*.snap',
-}
-
 -- Abbreviations.
 vim.cmd [[
-cabbrev Mux !tmuxinator
+" `vert help command-complete` for completion
+"fun TmuxinatorProfiles(A,L,P)
+"    return system("ls ~/.config/tmuxinator/")
+"endfun
+"command! -nargs=* -complete=custom,TmuxinatorProfiles mux !tmuxinator <args>
+command! -nargs=* Mux !tmuxinator <args>
+"cabbrev Mux !tmuxinator
 " cnoreabbrev G vert<space>G
 " cnoreabbrev Gstatus vert<space>Gstatus
 ]]
 
 vim.opt.lazyredraw = false
 
--- GitHub Copilot.
-vim.g.copilot_no_tab_map = true
-vim.g.copilot_assume_mapped = true
-
 -- fzf.vim config
 vim.g.fzf_buffers_jump = true
 
 -- augroups and autocmd
-vim.cmd [[
-" augroup ElixirFormat
-  " autocmd!
-  " autocmd BufWritePost *.exs silent :!mix format %
-  " autocmd BufWritePost *.ex silent :!mix format %
-" augroup END
+vim.api.nvim_create_augroup('formatting', { clear = true })
+-- vim.api.nvim_create_autocmd('BufWritePost', {
+--   group = 'formatting',
+--   desc = 'Format Elixir files on save',
+--   pattern = { '*.exs', '*.ex' },
+--   command = 'silent !mix format %',
+-- })
 
-augroup Skeletons
-  autocmd!
-  autocmd FileType gitcommit 0r ~/.config/nvim/skeletons/gitcommit.skeleton
-augroup END
+vim.api.nvim_create_augroup('skeletons', { clear = true })
+vim.api.nvim_create_autocmd('FileType', {
+  group = 'skeletons',
+  desc = 'Insert a common git commit format, unless it\'s a merge commit',
+  pattern = 'gitcommit',
+  callback = function()
+    local first_line = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]
+    local is_merge = string.sub(first_line, 1, 5) == 'Merge'
+    local is_template = string.match(first_line, "Feel free") ~= nil
+    if not (is_merge or is_template) then
+      vim.api.nvim_command('0r '..vim.g.configPath..'/skeletons/gitcommit.skeleton')
+    end
+  end
+})
+-- vim.api.nvim_create_autocmd('BufNew,BufRead', {
+--   pattern = '*/pre-incidents/*',
+-- })
+-- autocmd BufNewFile,BufRead /specificPath/** imap <buffer> ....
 
-augroup Commands
-  autocmd VimEnter * Copilot disable
-augroup END
-]]
+-- vim-commentary
+-- vim.api.nvim_create_augroup('vim-commentary', { clear = true })
+-- vim.api.nvim_create_autocmd('FileType', {
+--   group = 'vim-commentary',
+--   desc = 'React comments',
+--   pattern = 'javascriptreact',
+--   command = 'setlocal commentstring={/* %s */}'
+-- })
 
 -- Vimux.
 vim.g.VimuxHeight = "25"
 vim.g.VimuxOrientation = "h"
 vim.g.VimuxUseNearest = 0
+
+-- Filetype.lua
+-- vim.g.do_filetype_lua = 1 -- Enables filetype.lua
+-- vim.g.did_load_filetypes = 0 -- Disables filetype.vim
+
+-- Vim Tada
+local path = os.getenv("PWD") or io.popen("cd"):read()
+local splitPath = u.split(path, "/")
+local dir = string.gsub(splitPath[#splitPath], '^%.', '_')
+local file = os.getenv("HOME").."/todos/"..dir..".tada"
+vim.g.tada_todo_pane_file = file
+vim.g.tada_todo_pane_map = '<Leader>td'
+vim.g.tada_map_box = '<C-\\>'
+vim.g.tada_todo_switch_status_mapping = '\\'
