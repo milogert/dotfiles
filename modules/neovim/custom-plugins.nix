@@ -78,6 +78,18 @@
     dontBuild = true;
   };
 
+  nvim-dev-container = pkgs.vimUtils.buildVimPlugin rec {
+    name = "nvim-dev-container";
+    src = pkgs.fetchFromGitHub {
+      owner = "esensar";
+      repo = name;
+      rev = "db519080a3f6e87a10e17f0822eb325532e3dbbc";
+      sha256 = "16gpdzyzdvpzffzpkyj4m72zkbimn44daacrbaid4ilg4vfv5k3m";
+    };
+    # Only skips tests.
+    dontBuild = true;
+  };
+
   nvim-remote-containers = pkgs.vimUtils.buildVimPlugin rec {
     name = "nvim-remote-containers";
     src = pkgs.fetchFromGitHub {

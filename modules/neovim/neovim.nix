@@ -9,6 +9,8 @@ let
     copilot-lua
     fzf-lua
     heirline-nvim
+    nvim-dev-container
+    nvim-remote-containers
     nvim-lsp-installer
     octo-nvim
     persistence-nvim
@@ -27,12 +29,23 @@ in
   pkgs.wrapNeovim pkgs.neovim-unwrapped {
     configure = {
       customRC = ''
+        " Only load lua ft plugins
         let g:do_filetype_lua = 1
         let g:did_load_filetypes = 0
+
+        " Set flake directory, controlled by nix
         let g:flakePackages = '${flakePackageDir}'
+
+        " Set config dir from nix
         let g:configPath = '${configDir}'
 
+        " Disable netrw
+        let g:loaded_netrw = 1
+        let g:loaded_netrwPlugin = 1
+
+        " Add the config directory to the start of the rtp
         set runtimepath^=${configDir}
+
         source ${configDir}/main.lua
       '';
       packages.${flakePackageDir} = with pkgs.vimPlugins; {
