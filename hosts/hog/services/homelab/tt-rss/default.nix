@@ -17,9 +17,6 @@ in {
     ];
   };
 
-  # Override the php package since tt-rss is out of date.
-  services.phpfpm.pools.tt-rss.phpPackage = pkgs.php80;
-
   services.nginx.virtualHosts = {
     "rss.milogert.com" = {
       # Need to override the listener because of Traefik
