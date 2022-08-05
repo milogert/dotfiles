@@ -42,7 +42,7 @@
 
           plexPass = prev.plex.override { plexRaw = final.plexPassRaw; };
 
-          kitty = prev.kitty.overrideAttrs (old: {
+          kitty = prev.kitty.overrideAttrs (_old: {
             doCheck = false;
             installCheckPhase = "";
           });
