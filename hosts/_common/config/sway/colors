@@ -1,4 +1,0 @@
-# <type>                <border> <background> <text>  <indicator> <child_border>
-client.focused          #2c78bf  #2c78bf      #fce8c3 #68a8e4     #2c78bf
-client.focused_inactive #1c1b19  #1c1b19      #918175 #2c78bf     #2D2C29
-client.unfocused        #1c1b19  #1c1b19      #918175 #2c78bf     #2D2C29

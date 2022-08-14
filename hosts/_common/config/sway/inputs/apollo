@@ -1,8 +1,0 @@
-# Touchpad tapping.
-input "2:14:ETPS/2_Elantech_Touchpad" {
-    tap enabled
-    natural_scroll enabled
-}
-
-input "1241:361:USB_Keyboard_Consumer_Control" xkb_numlock enabled
-input "1241:361:USB_Keyboard" xkb_numlock enabled
