@@ -1,30 +1,37 @@
 { pkgs, ... }:
 
-rec {
+let
+  binaryCaches = [
+    "https://cache.nixos.org"
+    "https://nix-community.cachix.org"
+    "https://milogert.cachix.org"
+  ];
+in {
   imports = [
     ./aliases.nix
   ];
 
-  nix.useSandbox = false;
-  nix.gc.automatic = true;
-  nix.gc.options = "--delete-older-than 30d";
-  nix.package = pkgs.nixUnstable;
-  nix.extraOptions = "experimental-features = nix-command flakes";
-  nix.trustedUsers = [ "root" "@admin" ];
+  nix = {
+    useSandbox = false;
+    trustedUsers = [ "root" "@admin" ];
 
-  nix.trustedBinaryCaches = [
-    https://cache.nixos.org
-    https://nix-community.cachix.org
-    https://milogert.cachix.org
-  ];
+    inherit binaryCaches;
+    trustedBinaryCaches = binaryCaches;
+    binaryCachePublicKeys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "milogert.cachix.org-1:MaZAAWJXDV85HpLm2yyLX9b52wQghRxljAZJg0dEjkY="
+    ];
 
-  nix.binaryCaches = nix.trustedBinaryCaches;
+    # Garbage collection.
+    gc.automatic = false;
+    gc.options = "--delete-older-than 30d";
 
-  nix.binaryCachePublicKeys = [
-    cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-    nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
-    milogert.cachix.org-1:MaZAAWJXDV85HpLm2yyLX9b52wQghRxljAZJg0dEjkY=
-  ];
+    # Which package set to use.
+    package = pkgs.nixStable;
+
+    extraOptions = "experimental-features = nix-command flakes";
+  };
 
   environment.variables = {
     BAT_THEME = "srcery";
@@ -44,11 +51,10 @@ rec {
 
   environment.pathsToLink = [ "/share/zsh" ];
 
-
   environment.shellAliases = {
     adj = "echo ADJACENT";
   };
-  environment.systemPackages = with pkgs; 
+  environment.systemPackages = with pkgs;
   let
     my-python-packages = python-packages: with python-packages; [
       pip
@@ -72,13 +78,13 @@ rec {
     gcc
     gnumake
     gnupg
+    go
     htop
     jq
     lazydocker
     ncdu
-    neovim # Need this for aliases.
     nix-prefetch-git
-    procs # https://github.com/dalance/procs
+    neovim-custom
     python-with-packages
     rename
     ripgrep
@@ -87,8 +93,11 @@ rec {
     silver-searcher
     speedtest-cli
     starship # Need this for aliases.
+    statix
+    terraform
     tree
     unzip
+    viddy
     wget
     yq
     zsh-autosuggestions

@@ -1,6 +1,6 @@
 { pkgs, ... }:
 
-rec {
+{
   imports = [
     ./configuration.nix
     ./hardware-configuration.nix
@@ -22,6 +22,8 @@ rec {
   };
 
   environment.systemPackages = with pkgs; [
+    backblaze-b2
     ranger
+    rclone
   ];
 }

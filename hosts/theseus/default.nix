@@ -1,6 +1,6 @@
 { pkgs, ... }:
 
-rec {
+{
   imports = [
     ./configuration.nix
     ./hardware-configuration.nix
@@ -10,9 +10,6 @@ rec {
     ../_common/services
     ./services
   ];
-
-  # This goes here since it's different between nixos and darwin.
-  fonts.fontDir.enable = true;
 
   programs.sway.enable = true;
 
@@ -43,7 +40,6 @@ rec {
   #};
 
   environment.systemPackages = with pkgs; [
-    awscli
     clinfo
     gjs
     gnome.dconf-editor

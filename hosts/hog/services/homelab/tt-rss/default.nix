@@ -15,6 +15,7 @@ in {
     ];
     pluginPackages = [
       extraPlugins.tt-rss-plugin-feediron
+      # pkgs.tt-rss-plugin-feediron
     ];
   };
 

@@ -19,7 +19,7 @@
 
   home.activation.rebuildBatCache =
     config.lib.dag.entryAfter ["writeBoundary"] ''
-      bat cache --build
+      $DRY_RUN_CMD bat cache --build
   '';
 
 }

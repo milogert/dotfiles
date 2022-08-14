@@ -1,6 +1,6 @@
 { pkgs, ... }:
 
-rec {
+{
   imports = [
     ./configuration.nix
     ./hardware-configuration.nix

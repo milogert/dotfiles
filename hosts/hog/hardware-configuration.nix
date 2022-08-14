@@ -25,9 +25,9 @@
       fsType = "vfat";
     };
 
-  fileSystems."/mnt/media" =
-    { device = "media-pool";
-      fsType = "zfs";
+  fileSystems."/mnt/download-stream-cache" =
+    { device = "/dev/disk/by-uuid/85a5a6eb-b23a-451a-a36c-c1e51b1c7299";
+      fsType = "ext4";
     };
 
   swapDevices =

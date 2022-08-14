@@ -1,6 +1,6 @@
 { pkgs, ... }:
 
-rec {
+{
   systemd.services.mount-pstore.enable = false;
 
   virtualisation.docker.enable = true;

@@ -5,11 +5,12 @@
 
 let
   common_dir = ../../../_common;
-in rec {
+in {
   imports = [
     (common_dir + /home/default.nix)
-    (common_dir + /home/direnv.nix)
+    /* (common_dir + /home/direnv.nix) */
     (common_dir + /home/types/desktop.nix)
+    ./hammerspoon
   ];
 
   home.stateVersion = "21.05";
@@ -23,6 +24,7 @@ in rec {
   home.packages = with pkgs; [
     elixir
     git-lfs
+    mas
     nodejs-14_x
     (yarn.override { nodejs = nodejs-14_x; })
   ];
@@ -33,10 +35,11 @@ in rec {
       npmSet = "$DRY_RUN_CMD ${pkgs.nodejs-16_x}/bin/npm set";
     in
       config.lib.dag.entryAfter ["writeBoundary"] ''
-        ${npmSet} init.author.name "Milo Gertjejansen"
-        ${npmSet} init.author.email "milo@milogert.com"
-        ${npmSet} init.author.url "https://milogert.com"
-        ${npmSet} init.license "MIT"
-        ${npmSet} init.version "0.0.1"
+        ${npmSet} \
+          init-author-name="Milo Gertjejansen" \
+          init-author-email="milo@milogert.com" \
+          init-author-url="https://milogert.com" \
+          init-license="MIT" \
+          init-version="0.0.1" \
       '';
 }

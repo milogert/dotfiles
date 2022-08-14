@@ -3,15 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    # nixpkgs.url = "path:///home/milo/git/nixpkgs";
+    /* nixpkgs.url = "path:///Users/milo/git/nixpkgs"; */
 
     darwin = {
       url = "github:LnL7/nix-darwin/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    flake-utils = {
-      url = "github:numtide/flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -20,42 +15,37 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
+    neovim-custom = {
+      url = "path:modules/neovim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs = inputs @
   { self
-  , darwin
-  , flake-utils
-  , home-manager
   , nixpkgs
-  , neovim-nightly-overlay
+  , darwin
+  , home-manager
+  , neovim-custom
   }:
     let
-      overlays = self: super:
+      overlays = final: prev:
         {
-          # kubernetes = super.kubernetes.overrideAttrs (old: {
-          #   version = "1.21.1";
-
-          #   src = super.fetchFromGitHub {
-          #     owner = "kubernetes";
-          #     repo = "kubernetes";
-          #     rev = "v1.21.1";
-          #     sha256 = "sha256-gJjCw28SqU49kIiRH+MZgeYN4VBgKVEaRPr5A/2c5Pc=";
-          #   };
-          # });
-          plexPassRaw = super.plexRaw.overrideAttrs (old: rec {
+          plexPassRaw = prev.plexRaw.overrideAttrs (old: rec {
             version = "1.24.4.5081-e362dc1ee";
             name = "${old.pname}-${version}";
-            src = super.fetchurl {
+            src = prev.fetchurl {
               url = "https://downloads.plex.tv/plex-media-server-new/${version}/debian/plexmediaserver_${version}_amd64.deb";
               sha256 = "sha256-NVAWuDPMj0Rilh+jaiREXQhy7SlLJNwLz1XWgynwL54=";
             };
           });
-          plexPass = super.plex.override { plexRaw = self.plexPassRaw; };
+
+          plexPass = prev.plex.override { plexRaw = final.plexPassRaw; };
+
+          kitty = prev.kitty.overrideAttrs (old: {
+            doCheck = false;
+            installCheckPhase = "";
+          });
         };
 
       nixpkgsConfig = with inputs; {
@@ -68,15 +58,15 @@
         };
         overlays = [
           overlays
-          neovim-nightly-overlay.overlay
+          neovim-custom.overlays.default
         ];
       };
 
       mkUserConfig = { pkgs, host, user }: let
-        user_host_path = (./. + "/hosts/${host}/users");
-        common_config = (user_host_path + "/_common");
-        user_path = (user_host_path + "/${user}");
-        config_path = (user_path + "/config.nix");
+        user_host_path = ./. + "/hosts/${host}/users";
+        common_config = user_host_path + "/_common";
+        user_path = user_host_path + "/${user}";
+        config_path = user_path + "/config.nix";
         config = import config_path { inherit pkgs user; };
       in {
         home-manager.users.${user} = with self.homeManagerModules; {
@@ -95,7 +85,7 @@
           nix.registry.nixpkgs.flake = nixpkgs;
           environment.variables.HOSTNAME = host;
           nixpkgs = nixpkgsConfig;
-          home-manager.verbose = true;
+          home-manager.verbose = false;
           home-manager.useUserPackages = true;
         })
       ] ++ (builtins.map mkUserConfigWrapped users);
@@ -112,15 +102,14 @@
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
           }
         ];
-    in rec {
-
+    in {
       darwinConfigurations = {
         worktop = darwin.lib.darwinSystem {
+          inherit inputs;
           system = "x86_64-darwin";
-          inputs = inputs;
           modules = mkDarwinConfig {
             host = "worktop";
-            users = ["milo"];
+            users = ["milo" /*"cassie"*/];
           };
         };
       };

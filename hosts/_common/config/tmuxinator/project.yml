@@ -2,4 +2,20 @@ name: <%= @args[0] %>
 root: ~/projects/<%= @args[0] %>
 
 windows:
-  - editor: nvim
+  - editor: |
+      if [[ -d ~/projects/<%= @args[0] %> ]]; then
+        nvim
+      else
+        pushd ~/projects
+        read "user?User (default is 'articulate'): "
+        read -q "ssh?SSH: "
+        if [[ ${ssh} -eq 'y' ]]; then
+          url=git@github.com:${user:-articulate}/<%= @args[0] %>.git
+        else
+          url=https://github.com/${user:-articulate}/<%= @args[0] %>.git
+        fi
+        git clone ${url}
+        pushd ~/projects/<%= @args[0] %>
+        # tmux attach-session -t . -c ~/project/<%= @args[0] %>
+        nvim
+      fi

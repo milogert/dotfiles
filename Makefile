@@ -2,17 +2,20 @@ HOST=${HOSTNAME}
 
 define usage
 @echo "Usage:"
+@echo "  <default>"
 @echo "  config"
 @echo "    Requires that HOSTNAME be set. Configures that machine."
 @echo "  install_requirements"
 @echo "    Installs any missing requirements, used on nix-darwin."
 @echo "  update"
 @echo "    Updates the flake.lock file so new versions can be installed."
+@echo "  update-nvim"
+@echo "    Updates the neovim module."
 @echo
 @echo "Anything prefixed with '_' is internal, but can be run separately if you need granular output."
 endef
 
-all: help
+all: config
 
 usage: help
 help:
@@ -28,7 +31,7 @@ endif
 
 config: check ${HOST}
 	@echo -e "\033[0;32mDone configuring ${HOST}\033[0m"
-	@echo -e "\033[0;32m  Run \033[1;34mmake update && make config\033[0;32m if your programs are out of date\033[0m"
+	@echo -e "\033[0;32m  Run \033[1;34mmake update && make\033[0;32m if your programs are out of date\033[0m"
 
 # NixOS commands.
 _nixos-build:
@@ -39,12 +42,15 @@ _nixos-switch:
 
 # nix-darwin commands.
 _nix-darwin-build:
+	# Remove the flags here eventually. This is to bootstrap flakes on your
+	# system. After these same flags should be inside the configuration files.
 	nix build ".#darwinConfigurations.${HOST}.system" --experimental-features "nix-command flakes"
 
 _nix-darwin-switch:
 	./result/sw/bin/darwin-rebuild switch --flake ".#${HOST}"
 
 install_requirements:
+	@echo -e "\033[0;32mInstalling required programs\033[0m"
 	./installers/homebrew
 	./installers/nix
 
@@ -58,3 +64,6 @@ hog: _nixos-build _nixos-switch
 
 update:
 	nix flake update
+
+update-nvim:
+	nix flake update ./modules/neovim

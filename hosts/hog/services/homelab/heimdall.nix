@@ -1,32 +1,34 @@
 { pkgs, ... }:
 
 let
-  hiemdallId = 991;
+  userGroupName = "heimdall";
+  userGroupId = 991;
+  servicePort = "81";
+  externalPort = "80";
+  image = "linuxserver/heimdall:latest";
 in {
-  users.users.heimdall = {
-    home = "/var/lib/heimdall";
+  users.users."${userGroupName}" = {
+    home = "/var/lib/${userGroupName}";
     createHome = true;
-    group = "heimdall";
-    uid = hiemdallId;
+    group = userGroupName;
+    uid = userGroupId;
     isSystemUser = true;
   };
 
-  users.groups.heimdall = {
-    members = [ "heimdall" ];
-    gid = hiemdallId;
+  users.groups."${userGroupName}" = {
+    members = [ userGroupName ];
+    gid = userGroupId;
   };
 
-  virtualisation.oci-containers.containers = {
-    heimdall = {
-      image = "linuxserver/heimdall:latest";
-      ports = ["81:80"];
-      volumes = [
-        "/var/lib/heimdall:/config"
-      ];
-      environment = {
-        PUID = "991";
-        PGID = "991";
-      };
+  virtualisation.oci-containers.containers."${userGroupName}" = {
+    image = image;
+    ports = ["${servicePort}:${externalPort}"];
+    volumes = [
+      "/var/lib/${userGroupName}:/config"
+    ];
+    environment = {
+      PUID = builtins.toString userGroupId;
+      PGID = builtins.toString userGroupId;
     };
   };
 
@@ -42,6 +44,6 @@ in {
       };
     };
 
-    services.heimdall.loadBalancer.servers = [ { url = "http://localhost:81"; } ];
+    services.heimdall.loadBalancer.servers = [ { url = "http://localhost:${servicePort}"; } ];
   };
 }

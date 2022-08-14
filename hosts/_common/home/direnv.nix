@@ -12,7 +12,10 @@ in {
 
     config = {
       whitelist = {
-        prefix = [ "${home_dir}/git" ];
+        prefix = [
+          "${home_dir}/git"
+          "${home_dir}/projects"
+        ];
       };
     };
   };
