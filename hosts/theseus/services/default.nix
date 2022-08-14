@@ -66,16 +66,5 @@ rec {
     openssh.openFirewall = true;
 
     flatpak.enable = true;
-
-    nfs = {
-      server = {
-        enable = true;
-
-        exports = ''
-        /opt/k8s-data-nfs       192.168.50.208(rw,sync,no_subtree_check)
-        '';
-        # /opt/k8s-data-nfs       theseus(rw,sync,no_subtree_check) k8s-rpi-1(rw,sync,no_subtree_check) k8s-rpi-2(rw,sync,no_subtree_check)
-      };
-    };
   };
 }

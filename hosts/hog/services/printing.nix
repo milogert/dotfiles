@@ -2,7 +2,7 @@
 
 {
   services.printing = {
-    enable = true;
+    enable = false;
     listenAddresses = [ "*:631" ];
     browsing = true;
     allowFrom = [ "all" ];

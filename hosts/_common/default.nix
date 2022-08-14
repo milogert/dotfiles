@@ -9,7 +9,7 @@ rec {
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 30d";
   nix.package = pkgs.nixUnstable;
-  nix.extraOptions = "experimental-features = nix-command flakes ca-references";
+  nix.extraOptions = "experimental-features = nix-command flakes";
   nix.trustedUsers = [ "root" "@admin" ];
 
   nix.trustedBinaryCaches = [
@@ -56,7 +56,7 @@ rec {
     ];
     python-with-packages = python38.withPackages my-python-packages;
   in [
-    ag
+    # nixops
     bash
     bash-completion
     bat # Need this for aliases.
@@ -76,18 +76,20 @@ rec {
     jq
     lazydocker
     ncdu
-    nix-prefetch-git
-    # nixops
     neovim # Need this for aliases.
+    nix-prefetch-git
     procs # https://github.com/dalance/procs
     python-with-packages
     rename
     ripgrep
     rnix-lsp
     shellcheck
+    silver-searcher
     speedtest-cli
     starship # Need this for aliases.
     tree
+    unzip
+    wget
     yq
     zsh-autosuggestions
     zsh-completions

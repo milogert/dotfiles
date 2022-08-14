@@ -11,7 +11,6 @@
     "networkmanager"
     "audio"
     "lxd"
-    "kubernetes"
     "docker"
   ];
 }

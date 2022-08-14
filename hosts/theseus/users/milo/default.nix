@@ -23,6 +23,8 @@ in rec {
     gpgPath = "gpg";
   };
 
+  /* programs.light.enable = true; */
+
   services.spotifyd = {
     enable = true;
     package = pkgs.spotifyd;
@@ -35,8 +37,10 @@ in rec {
   };
 
   home.packages = with pkgs; [
+    blueman
     calibre
     cargo
+    cockatrice
     discord
     elixir
     insomnia

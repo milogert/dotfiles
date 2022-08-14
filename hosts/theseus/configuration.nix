@@ -46,6 +46,7 @@
       ];
     };
   };
+
   services.gnome.core-utilities.enable = false;
 
   # Enable CUPS to print documents.
@@ -68,10 +69,6 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  services.openssh.openFirewall = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
