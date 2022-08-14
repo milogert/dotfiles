@@ -44,9 +44,7 @@ rec {
 
   environment.systemPackages = with pkgs; [
     awscli
-    beekeeper-studio
     clinfo
-    firefox
     gjs
     gnome.dconf-editor
     gnome.gnome-tweaks
@@ -60,8 +58,6 @@ rec {
     gnomeExtensions.vitals
     lshw
     protontricks
-    ranger
-    solaar
     vulkan-tools
     wineWowPackages.stable
     winetricks

@@ -37,7 +37,9 @@ in rec {
   };
 
   home.packages = with pkgs; [
+    beekeeper-studio
     blueman
+    brave
     calibre
     cargo
     cockatrice
@@ -48,7 +50,8 @@ in rec {
     joplin-desktop
     nodejs
     qtpass
-    #ripasso-cursive
+    ranger
+    solaar
     spotify
     spotify-tui
     wyvern
