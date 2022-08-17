@@ -67,12 +67,14 @@ in {
     bat # Need this for aliases.
     cachix
     cargo
+    # Why do I have this?
     coreutils
     ctop
     diskonaut
     exa
     fd
     findutils
+    fswatch
     fzf # Need this for aliases.
     gcc
     gnumake
@@ -89,7 +91,7 @@ in {
     python-with-packages
     rename
     ripgrep
-    rnix-lsp
+    /* rnix-lsp */
     shellcheck
     silver-searcher
     speedtest-cli

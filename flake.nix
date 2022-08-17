@@ -139,5 +139,15 @@
           };
         };
       };
+
+      packages = {
+        x86_64-linux = {
+          neovim = neovim-custom.packages.x86_64-linux.default;
+        };
+
+        x86_64-darwin = {
+          neovim = neovim-custom.packages.x86_64-darwin.default;
+        };
+      };
     };
 }

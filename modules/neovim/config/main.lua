@@ -10,13 +10,14 @@ vim.cmd [[ packadd vimplugin-vim-arpeggio ]]
 -- Source plugin configs.
 local plugins = {
   -- "alpha-nvim",
-  "copilot",
+  -- "copilot",
   "cmp",
+  "colorizer",
+  "dap",
   "devcontainer",
   "fidget",
   "fzf-lua",
   "gitsigns",
-  -- "gps",
   "keybindings",
   "lsp.settings",
   "lsp.kind",
@@ -29,7 +30,6 @@ local plugins = {
   "treesitter",
   -- "which-key",
 
-  -- "dap", -- After lsp
   "heirline", -- Needs to be last since it uses info from other imports
 }
 
@@ -77,15 +77,4 @@ vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 
 " Source other files.
 call SourceIfExists("~/.config/nvim/profile.vim")
-
-" Thank you next please, from https://ctoomey.com/writing/using-vims-arglist-as-a-todo-list/
-function! s:ThankYouNext() abort
-  update
-  argdelete %
-  bdelete
-  if !empty(argv())
-    argument
-  endif
-endfunction
-command! ThankYouNext call <sid>ThankYouNext()
 ]]

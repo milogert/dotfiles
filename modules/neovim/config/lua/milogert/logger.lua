@@ -8,10 +8,10 @@ Logger.log = function(msg, level, opts, fn)
   end
 
   if fn == nil then
-    fn = vim.api.nvim_notify
+    vim.api.nvim_notify(msg, level, opts)
+  else
+    fn(msg, level, opts)
   end
-
-  fn(msg, level, opts)
 
   return msg
 end
