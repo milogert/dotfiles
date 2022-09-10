@@ -1,23 +1,25 @@
 require'nvim-treesitter.configs'.setup {
+  auto_install = true,
+
   -- Either "all" or a list of languages. List below is from
   -- https://github.com/nvim-treesitter/nvim-treesitter/tree/b4ab9daed1f144200e826a656bd25b013f0949eb
   ensure_installed = {
     -- "astro", -- (maintained)
     "bash", -- (maintained)
     -- "beancount", -- (maintained)
-    "bibtex", -- (maintained)
-    "c", -- (maintained)
-    "c_sharp", -- (maintained)
-    "clojure", -- (maintained)
-    "cmake", -- (maintained)
+    -- "bibtex", -- (maintained)
+    -- "c", -- (maintained)
+    -- "c_sharp", -- (maintained)
+    -- "clojure", -- (maintained)
+    -- "cmake", -- (maintained)
     "comment", -- (maintained)
-    "commonlisp", -- (maintained)
+    -- "commonlisp", -- (maintained)
     -- "cooklang", -- (maintained)
-    "cpp", -- (maintained)
+    -- "cpp", -- (maintained)
     "css", -- (maintained)
     -- "cuda", -- (maintained)
     -- "d", -- (experimental, maintained)
-    "dart", -- (maintained)
+    -- "dart", -- (maintained)
     -- "devicetree", -- (maintained)
     "dockerfile", -- (maintained)
     -- "dot", -- (maintained)
@@ -55,9 +57,9 @@ require'nvim-treesitter.configs'.setup {
     -- "json", -- (maintained)
     -- "json5", -- (maintained)
     "jsonc", -- (maintained)
-    "julia", -- (maintained)
+    -- "julia", -- (maintained)
     "kotlin", -- (maintained)
-    "lalrpop", -- (maintained)
+    -- "lalrpop", -- (maintained)
     "latex", -- (maintained)
     -- "ledger", -- (maintained)
     "llvm", -- (maintained)
@@ -68,11 +70,11 @@ require'nvim-treesitter.configs'.setup {
     -- "ninja", -- (maintained)
     "nix", -- (maintained)
     -- "norg", -- (maintained)
-    "ocaml", -- (maintained)
-    "ocaml_interface", -- (maintained)
-    "ocamllex", -- (maintained)
+    -- "ocaml", -- (maintained)
+    -- "ocaml_interface", -- (maintained)
+    -- "ocamllex", -- (maintained)
     -- "org", -- (NOT maintained, 2022-04-28)
-    "pascal", -- (maintained)
+    -- "pascal", -- (maintained)
     "perl", -- (maintained)
     "php", -- (maintained)
     -- "phpdoc", -- (experimental, maintained), NOTE: causes problems 2022-04-28.
@@ -86,20 +88,20 @@ require'nvim-treesitter.configs'.setup {
     "r", -- (maintained)
     -- "rasi", -- (maintained)
     "regex", -- (maintained)
-    "rego", -- (maintained)
+    -- "rego", -- (maintained)
     -- "rst", -- (maintained)
-    "ruby", -- (maintained)
+    -- "ruby", -- (maintained)
     "rust", -- (maintained)
-    "scala", -- (maintained)
-    "scheme", -- (maintained)
+    -- "scala", -- (maintained)
+    -- "scheme", -- (maintained)
     "scss", -- (maintained)
-    "slint", -- (experimental, maintained)
+    -- "slint", -- (experimental, maintained)
     -- "solidity", -- (maintained)
     -- "sparql", -- (maintained)
     -- "supercollider", -- (maintained)
     -- "surface", -- (maintained)
     -- "svelte", -- (maintained)
-    "swift", -- (NOT maintained, 2022-04-28)
+    -- "swift", -- (NOT maintained, 2022-04-28)
     -- "teal", -- (maintained)
     -- "tlaplus", -- (maintained)
     "todotxt", -- (experimental, maintained)
@@ -118,13 +120,20 @@ require'nvim-treesitter.configs'.setup {
   },
 
   -- List of parsers to ignore installing
-  ignore_install = { "ocamllex", "gdscript", "swift" },
+  -- ignore_install = { "ocamllex", "gdscript", "swift" },
 
   highlight = {
     -- false will disable the whole extension
     enable = true,
     -- list of language that will be disabled
     disable = {},
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same
+    -- time. Set this to `true` if you depend on 'syntax' being enabled (like
+    -- for indentation). Using this option may slow down your editor, and you
+    -- may see some duplicate highlights. Instead of true it can also be a list
+    -- of languages
+    additional_vim_regex_highlighting = false,
   },
 
   incremental_selection = {
@@ -137,10 +146,11 @@ require'nvim-treesitter.configs'.setup {
     },
   },
 
-  -- Setting this to true will run `:h syntax` and tree-sitter at the same
-  -- time. Set this to `true` if you depend on 'syntax' being enabled (like
-  -- for indentation). Using this option may slow down your editor, and you
-  -- may see some duplicate highlights. Instead of true it can also be a list
-  -- of languages
-  additional_vim_regex_highlighting = false,
+  textobjects = {
+    enable = true,
+  },
+
+  indent = {
+    enable = true,
+  },
 }

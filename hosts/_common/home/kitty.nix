@@ -8,11 +8,16 @@ let
   };
 in {
   programs.kitty = {
-    enable = false;
+    enable = true;
 
+    /* font = { */
+    /*   package = nerdfonts; */
+    /*   name = "MesloLGS Nerd Font Mono"; */
+    /*   size = 11; */
+    /* }; */
     font = {
-      package = nerdfonts;
-      name = "MesloLGS Nerd Font Mono";
+      package = pkgs.fira-code;
+      name = "Fira Code";
       size = 11;
     };
 
@@ -23,10 +28,5 @@ in {
     };
 
     theme = "Srcery";
-  };
-
-  home.file."Applications/kitty.app" = {
-    recursive = true;
-    source = pkgs.kitty + /Applications/kitty.app;
   };
 }

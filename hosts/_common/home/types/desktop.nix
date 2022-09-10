@@ -4,13 +4,13 @@
   imports = [
     ../alacritty.nix
     ../browserpass.nix
-    /* ../kitty.nix */
+    ../kitty.nix
     /* ../ranger.nix */
     ../wezterm.nix
   ];
 
   home.packages = with pkgs; [
-  /*   notion-app-enhanced */
-    beekeeper-studio
+    /* notion-app-enhanced */
+    /* beekeeper-studio */
   ];
 }

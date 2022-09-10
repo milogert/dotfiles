@@ -28,6 +28,7 @@ local servers = {
   eslint = false,
   html = false,
   jsonls = false,
+  stylelint_lsp = false,
   tailwindcss = false,
 }
 
@@ -35,6 +36,7 @@ local on_attach = require("milogert.config.lsp.on_attach")
 
 local server_configs = {
   elixirls = { cmd = vim.g.ls_locations.elixirls },
+
   eslint = {
     on_attach = function (client, bufnr)
       -- Force eslint to accept formatting requests.
@@ -50,7 +52,9 @@ local server_configs = {
       },
     },
   },
+
   rnix = { cmd = vim.g.ls_locations.rnix },
+
   sumneko_lua = {
     settings = { Lua = { diagnostics = { globals = {
       'vim',
@@ -58,6 +62,15 @@ local server_configs = {
       'hs',
     } } } },
   },
+
+  tailwindcss = {
+    init_options = {
+      userLanguages = {
+        heex = "html-eex",
+      },
+    },
+  },
+
   tsserver = {
     cmd = vim.g.ls_locations.tsserver,
     on_attach = function (client, bufnr)

@@ -39,9 +39,11 @@
     src = pkgs.fetchFromGitHub {
       owner = "ibhagwan";
       repo = name;
-      rev = "30f4c0cb37460a82a42e1956eea136bbe10c4417";
-      sha256 = "1ykawxi86ax86zqv54qdiaa0g6kx2ii708gcxhvwl70h209frbil";
+      rev = "0e0bc7a6009059da25078ec1eb551dc8f87d219b";
+      sha256 = "0ap40l3dcdj8qya4cpyvgh5zdak20bbr7vv77pss8z0cvqpzv9r5";
     };
+    # Only skips tests.
+    dontBuild = true;
   };
 
   heirline-nvim = pkgs.vimUtils.buildVimPlugin rec {
@@ -122,6 +124,19 @@
     # Only skips tests.
     dontBuild = true;
   };
+
+  nvim-treesitter-custom = pkgs.vimUtils.buildVimPlugin rec {
+    name = "nvim-treesitter";
+    src = pkgs.fetchFromGitHub {
+      owner = "nvim-treesitter";
+      repo = name;
+      rev = "09b13e9edb80d3890aa8f7dbebfdb21e34430212";
+      sha256 = "1c17j81crh238xykmimdnlfm45lgah4iaw7c5rhf759d0xpn1c6v";
+    };
+    # Only skips tests.
+    dontBuild = true;
+  };
+
 
   octo-nvim =  pkgs.vimUtils.buildVimPlugin rec {
     name = "octo.nvim";

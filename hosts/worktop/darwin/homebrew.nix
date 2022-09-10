@@ -1,9 +1,6 @@
 {
   homebrew.enable = true;
-  homebrew.autoUpdate = false;
-  homebrew.cleanup = "zap";
-  homebrew.global.brewfile = true;
-  homebrew.global.noLock = true;
+  homebrew.onActivation.cleanup = "zap";
 
   homebrew.taps = [
     "homebrew/cask"
@@ -23,6 +20,7 @@
   homebrew.casks = [
     "1password"
     "alfred"
+    "beekeeper-studio"
     "brave-browser"
     "cloudapp"
     "docker"
@@ -37,7 +35,7 @@
     "postgres"
     "slack"
     "spotify"
-    "wezterm"
+    "tuple"
     "zoom"
   ];
 

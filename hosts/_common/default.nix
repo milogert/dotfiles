@@ -82,7 +82,6 @@ in {
     go
     htop
     jq
-    lazydocker
     ncdu
     nix-prefetch-git
     # nixops

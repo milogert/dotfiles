@@ -1,3 +1,6 @@
+.PHONY: check help usage all update update-neovim
+.DEFAULT: all
+
 HOST=${HOSTNAME}
 
 define usage
@@ -9,7 +12,7 @@ define usage
 @echo "    Installs any missing requirements, used on nix-darwin."
 @echo "  update"
 @echo "    Updates the flake.lock file so new versions can be installed."
-@echo "  update-nvim"
+@echo "  update-neovim"
 @echo "    Updates the neovim module."
 @echo
 @echo "Anything prefixed with '_' is internal, but can be run separately if you need granular output."
@@ -62,8 +65,12 @@ rig: _nixos-build _nixos-switch
 
 hog: _nixos-build _nixos-switch
 
-update:
+update: update-neovim
 	nix flake update
 
-update-nvim:
+update-neovim:
 	nix flake update ./modules/neovim
+
+add-user:
+	./scripts/add_user.sh
+

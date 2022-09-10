@@ -14,7 +14,7 @@ local plugins = {
   "cmp",
   "colorizer",
   "dap",
-  "devcontainer",
+  -- "devcontainer",
   "fidget",
   "fzf-lua",
   "gitsigns",

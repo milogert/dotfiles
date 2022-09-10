@@ -9,11 +9,12 @@ let
     /* copilot-lua */
     fzf-lua
     heirline-nvim
-    nvim-dev-container
+    /* nvim-dev-container */
     nvim-docker
     nvim-lsp-installer
     nvim-navic
     nvim-remote-containers
+    nvim-treesitter-custom
     octo-nvim
     persistence-nvim
     vim-arpeggio
@@ -100,7 +101,7 @@ in
           nvim-dap-ui
           nvim-dap-virtual-text
           nvim-lspconfig
-          nvim-treesitter
+          /* nvim-treesitter */
           nvim-web-devicons
           package-info-nvim
           plenary-nvim
