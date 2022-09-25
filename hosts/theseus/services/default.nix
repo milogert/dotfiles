@@ -5,7 +5,6 @@
 
   virtualisation.docker.enable = true;
   services = {
-
     printing = {
       enable = true;
       drivers = with pkgs; [ cups-brother-hll2340dw ];

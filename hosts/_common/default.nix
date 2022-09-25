@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  binaryCaches = [
+  substituters = [
     "https://cache.nixos.org"
     "https://nix-community.cachix.org"
     "https://milogert.cachix.org"
@@ -12,12 +12,12 @@ in {
   ];
 
   nix = {
-    useSandbox = false;
-    trustedUsers = [ "root" "@admin" ];
+    settings.sandbox = true;
+    settings.trusted-users = [ "root" "@admin" ];
 
-    inherit binaryCaches;
-    trustedBinaryCaches = binaryCaches;
-    binaryCachePublicKeys = [
+    settings.substituters = substituters;
+    settings.trusted-substituters = substituters;
+    settings.trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "milogert.cachix.org-1:MaZAAWJXDV85HpLm2yyLX9b52wQghRxljAZJg0dEjkY="
