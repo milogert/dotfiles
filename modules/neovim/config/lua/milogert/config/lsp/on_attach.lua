@@ -13,43 +13,34 @@ local on_attach = function(client, bufnr)
   local function diag(cmd) return '<cmd>lua vim.diagnostic.' .. cmd .. '<CR>' end
   local function lsp(cmd) return '<cmd>lua vim.lsp.buf.' .. cmd .. '()<CR>' end
 
-  -- vim.cmd("command! LspDef lua vim.lsp.buf.definition()")
-  -- vim.cmd("command! LspFormatting lua vim.lsp.buf.formatting()")
-  -- vim.cmd("command! LspCodeAction lua vim.lsp.buf.code_action()")
-  -- vim.cmd("command! LspHover lua vim.lsp.buf.hover()")
-  -- vim.cmd("command! LspRename lua vim.lsp.buf.rename()")
-  -- vim.cmd("command! LspRefs lua vim.lsp.buf.references()")
-  -- vim.cmd("command! LspTypeDef lua vim.lsp.buf.type_definition()")
-  -- vim.cmd("command! LspImplementation lua vim.lsp.buf.implementation()")
-  -- vim.cmd("command! LspDiagPrev lua vim.lsp.diagnostic.goto_prev()")
-  -- vim.cmd("command! LspDiagNext lua vim.lsp.diagnostic.goto_next()")
-  -- vim.cmd("command! LspDiagLine lua vim.lsp.diagnostic.show_line_diagnostics()")
-  -- vim.cmd("command! LspSignatureHelp lua vim.lsp.buf.signature_help()")
-
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   buf_set_keymap('n', '<leader>e',
     diag("open_float("..bufnr..", { scope = 'line' })"),  opts)
-  buf_set_keymap('n', '[d',       diag('goto_prev()'),    opts)
-  buf_set_keymap('n', ']d',       diag('goto_next()'),    opts)
+  buf_set_keymap('n', '[d',        diag('goto_prev()'),    opts)
+  buf_set_keymap('n', ']d',        diag('goto_next()'),    opts)
   buf_set_keymap('n', '<leader>q', diag('setloclist()'),   opts)
   buf_set_keymap('n', '<leader>c', diag('setqflist()'),    opts)
 
-  buf_set_keymap('n', 'gD',       lsp('declaration'),     opts)
-  buf_set_keymap('n', 'gd',       lsp('definition'),      opts)
-  buf_set_keymap('n', 'K',        lsp('hover'),           opts)
-  buf_set_keymap('n', 'gi',       lsp('implementation'),  opts)
-  buf_set_keymap('n', '[ls',      lsp('signature_help'),  opts)
+  buf_set_keymap('n', 'gD',        lsp('declaration'),     opts)
+  buf_set_keymap('n', 'gd',        lsp('definition'),      opts)
+  buf_set_keymap('n', 'K',         lsp('hover'),           opts)
+  buf_set_keymap('n', 'gi',        lsp('implementation'),  opts)
+  buf_set_keymap('n', '[ls',       lsp('signature_help'),  opts)
   buf_set_keymap('n', '<leader>D', lsp('type_definition'), opts)
   buf_set_keymap('n', '<leader>rn',lsp('rename'),          opts)
-  buf_set_keymap('n', 'gr',       lsp('references'),      opts)
+  buf_set_keymap('n', 'gr',        lsp('references'),      opts)
   buf_set_keymap('n', '<leader>ca',lsp('code_action'),     opts)
 
-  -- Set some keybinds conditional on server capabilities
   -- Set some keybinds conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
     buf_set_keymap('n', '<leader>fi', lsp('formatting'),      opts)
   elseif client.resolved_capabilities.document_range_formatting then
     buf_set_keymap('n', '<leader>fi', lsp('formatting'),      opts)
+  end
+
+  -- Attach navic to the LSP if it supports the documentSymbols capability.
+  if client.server_capabilities.documentSymbolProvider then
+    require"nvim-navic".attach(client, bufnr)
   end
 end
 

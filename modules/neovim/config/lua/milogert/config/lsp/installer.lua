@@ -16,26 +16,25 @@ lsp_installer.settings {
   max_concurrent_installers = 4,
 }
 
+-- Lsp servers enabled. `true` indicates they are managed by nix.
 local servers = {
-  "cssls",
-  "elixirls",
-  "eslint",
-  "jsonls",
-  "rnix",
-  "sumneko_lua",
-  "tailwindcss",
-  "terraformls",
-  "tsserver",
-  "html",
+  elixirls = true,
+  rnix = true,
+  sumneko_lua = true,
+  terraformls = true,
+  tsserver = true,
+
+  cssls = false,
+  eslint = false,
+  html = false,
+  jsonls = false,
+  tailwindcss = false,
 }
 
 local on_attach = require("milogert.config.lsp.on_attach")
 
 local server_configs = {
-  elixirls = function(server)
-    vim.g.elixir_ls_server_path = server.root_dir .. "/elixir-ls"
-    return { cmd = { server.root_dir .. "/elixir-ls/language_server.sh" } }
-  end,
+  elixirls = { cmd = vim.g.ls_locations.elixirls },
   eslint = {
     on_attach = function (client, bufnr)
       -- Force eslint to accept formatting requests.
@@ -51,6 +50,7 @@ local server_configs = {
       },
     },
   },
+  rnix = { cmd = vim.g.ls_locations.rnix },
   sumneko_lua = {
     settings = { Lua = { diagnostics = { globals = {
       'vim',
@@ -59,6 +59,7 @@ local server_configs = {
     } } } },
   },
   tsserver = {
+    cmd = vim.g.ls_locations.tsserver,
     on_attach = function (client, bufnr)
       -- Disable tsserver formatting requsts.
       client.resolved_capabilities.document_formatting = false
@@ -99,11 +100,15 @@ end
 
 lsp_installer.on_server_ready(on_server_ready)
 
-local function install_server(server)
+local function install_server(server, nix_managed)
   local lsp_installer_servers = require'nvim-lsp-installer.servers'
   local ok, server_analyzer = lsp_installer_servers.get_server(server)
   if ok then
-    if not server_analyzer:is_installed() then
+    -- Skip rnix. It's installed already. TODO I could probably do this with
+    -- elixir ls as well.
+    if nix_managed then
+      on_server_ready(server_analyzer)
+    elseif not server_analyzer:is_installed() then
       server_analyzer:install(server)
     end
   end
@@ -113,6 +118,6 @@ end
 require "lspconfig"
 
 -- install the LS
-for _, server in ipairs(servers) do
-  install_server(server)
+for server, nix_managed in pairs(servers) do
+  install_server(server, nix_managed)
 end

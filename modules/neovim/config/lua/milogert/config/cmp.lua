@@ -81,7 +81,7 @@ cmp.setup {
     { name = "luasnip" },
     { name = "buffer", keyword_length = 1 },
     { name = "calc" },
-    { name = "copilot" },
+    -- { name = "copilot" },
     -- { name = 'dictionary', keyword_length = 2 },
   },
   experimental = {

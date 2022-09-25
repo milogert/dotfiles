@@ -245,41 +245,41 @@ local FileType = {
   Space,
 }
 
-local _FileEncoding = {
-  provider = function()
-    local enc = (vim.bo.fenc ~= '' and vim.bo.fenc) or vim.o.enc -- :h 'enc'
-    return enc ~= 'utf-8' and enc:upper()
-  end
-}
+-- local FileEncoding = {
+--   provider = function()
+--     local enc = (vim.bo.fenc ~= '' and vim.bo.fenc) or vim.o.enc -- :h 'enc'
+--     return enc ~= 'utf-8' and enc:upper()
+--   end
+-- }
 
-local _FileFormat = {
-  provider = function()
-    local fmt = vim.bo.fileformat
-    return fmt ~= 'unix' and fmt:upper()
-  end
-}
+-- local FileFormat = {
+--   provider = function()
+--     local fmt = vim.bo.fileformat
+--     return fmt ~= 'unix' and fmt:upper()
+--   end
+-- }
 
-local _FileSize = {
-  provider = function()
-    -- stackoverflow, compute human readable file size
-    local suffix = { 'b', 'k', 'M', 'G', 'T', 'P', 'E' }
-    local fsize = vim.fn.getfsize(vim.api.nvim_buf_get_name(0))
-    fsize = (fsize < 0 and 0) or fsize
-    if fsize <= 0 then
-      return "0"..suffix[1]
-    end
-    local i = math.floor((math.log(fsize) / math.log(1024)))
-    return string.format("%.2g%s", fsize / math.pow(1024, i), suffix[i])
-  end
-}
+-- local _FileSize = {
+--   provider = function()
+--     -- stackoverflow, compute human readable file size
+--     local suffix = { 'b', 'k', 'M', 'G', 'T', 'P', 'E' }
+--     local fsize = vim.fn.getfsize(vim.api.nvim_buf_get_name(0))
+--     fsize = (fsize < 0 and 0) or fsize
+--     if fsize <= 0 then
+--       return "0"..suffix[1]
+--     end
+--     local i = math.floor((math.log(fsize) / math.log(1024)))
+--     return string.format("%.2g%s", fsize / math.pow(1024, i), suffix[i])
+--   end
+-- }
 
-local _FileLastModified = {
-  -- did you know? Vim is full of functions!
-  provider = function()
-    local ftime = vim.fn.getftime(vim.api.nvim_buf_gett_name(0))
-    return (ftime > 0) and os.date("%c", ftime)
-  end
-}
+-- local FileLastModified = {
+--   -- did you know? Vim is full of functions!
+--   provider = function()
+--     local ftime = vim.fn.getftime(vim.api.nvim_buf_gett_name(0))
+--     return (ftime > 0) and os.date("%c", ftime)
+--   end
+-- }
 
 -- We're getting minimalists here!
 local Ruler = {
@@ -311,7 +311,7 @@ local LSPActive = {
   -- Or complicate things a bit and get the servers names
   provider  = function()
     local names = {}
-    for i, server in ipairs(vim.lsp.buf_get_clients(0)) do
+    for _, server in ipairs(vim.lsp.buf_get_clients(0)) do
       table.insert(names, server.name)
     end
 
@@ -377,11 +377,93 @@ local Diagnostics = {
   { provider = "]" },
 }
 
--- local Gps = {
---   condition = require("nvim-gps").is_available,
---   provider = require("nvim-gps").get_location,
---   hl = { fg = colors.gray2 },
--- }
+local Navic = {
+  condition = require("nvim-navic").is_available,
+  static = {
+    -- create a type highlight map
+    type_hl = {
+      File = "Directory",
+      Module = "Include",
+      Namespace = "TSNamespace",
+      Package = "Include",
+      Class = "Struct",
+      Method = "Method",
+      Property = "TSProperty",
+      Field = "TSField",
+      Constructor = "TSConstructor ",
+      Enum = "TSField",
+      Interface = "Type",
+      Function = "Function",
+      Variable = "TSVariable",
+      Constant = "Constant",
+      String = "String",
+      Number = "Number",
+      Boolean = "Boolean",
+      Array = "TSField",
+      Object = "Type",
+      Key = "TSKeyword",
+      Null = "Comment",
+      EnumMember = "TSField",
+      Struct = "Struct",
+      Event = "Keyword",
+      Operator = "Operator",
+      TypeParameter = "Type",
+    },
+  },
+  init = function(self)
+    local data = require("nvim-navic").get_data() or {}
+    local children = {}
+    -- create a child for each level
+    for i, d in ipairs(data) do
+      local child = {
+        {
+          provider = d.icon,
+          hl = self.type_hl[d.type],
+        },
+        {
+          provider = d.name,
+          -- highlight icon only or location name as well
+          -- hl = self.type_hl[d.type],
+        },
+      }
+      -- add a separator only if needed
+      if #data > 1 and i < #data then
+        table.insert(child, {
+          provider = " > ",
+        })
+      end
+      table.insert(children, child)
+    end
+    -- instantiate the new child
+    self[1] = self:new(children, 1)
+  end,
+  hl = { fg = "gray" },
+}
+
+local FlexNavic = utils.make_flexible_component(3, Navic, { provider = "" })
+
+local DAPMessages = {
+  -- display the dap messages only on the debugged file
+  condition = function()
+    local session = require("dap").session()
+    if session then
+      return true
+    end
+    if session then
+      local filename = vim.api.nvim_buf_get_name(0)
+      if session.config then
+        local progname = session.config.program
+        return filename == progname
+      end
+    end
+    return false
+  end,
+  provider = function()
+    return " " .. require("dap").status()
+  end,
+  hl = { fg = utils.get_highlight('Debug').fg },
+}
+
 
 local GitBranch = {
   condition = conditions.is_git_repo,
@@ -486,9 +568,9 @@ local DirvishFileName = {
 local DefaultStatusline = {
   ViMode, FileNameBlock, Git, Diagnostics, Align,
 
-  --[[Gps,]] --[[DAPMessages,]] Align,
+  FlexNavic, DAPMessages, Align,
 
-  LSPActive, --[[LSPMessages,]] FileType, Ruler, ScrollBar
+  LSPActive, FileType, Ruler, ScrollBar
 }
 
 local InactiveStatusline = {
@@ -543,35 +625,35 @@ local StatusLines = {
   SpecialStatusline, TerminalStatusline, InactiveStatusline, DefaultStatusline,
 }
 
-local WinBars = {
-  init = utils.pick_child_on_condition,
-  {   -- Hide the winbar for special buffers
-    condition = function()
-      return conditions.buffer_matches({
-        buftype = { "nofile", "prompt", "help", "quickfix" },
-        filetype = { "^git.*", "fugitive" },
-      })
-    end,
-    provider = "",
-  },
-  {   -- A special winbar for terminals
-    condition = function()
-      return conditions.buffer_matches({ buftype = { "terminal" } })
-    end,
-    utils.surround({ "", "" }, colors.dark_red, {
-      FileType,
-      Space,
-      -- TerminalName,
-    }),
-  },
-  {   -- An inactive winbar for regular files
-    condition = function()
-      return not conditions.is_active()
-    end,
-    utils.surround({ "", "" }, colors.bright_bg, { hl = { fg = "gray", force = true }, FileNameBlock }),
-  },
-  -- A winbar for regular files
-  utils.surround({ "", "" }, colors.bright_bg, FileNameBlock),
-}
+-- local WinBars = {
+--   init = utils.pick_child_on_condition,
+--   {   -- Hide the winbar for special buffers
+--     condition = function()
+--       return conditions.buffer_matches({
+--         buftype = { "nofile", "prompt", "help", "quickfix" },
+--         filetype = { "^git.*", "fugitive" },
+--       })
+--     end,
+--     provider = "",
+--   },
+--   {   -- A special winbar for terminals
+--     condition = function()
+--       return conditions.buffer_matches({ buftype = { "terminal" } })
+--     end,
+--     utils.surround({ "", "" }, colors.dark_red, {
+--       FileType,
+--       Space,
+--       -- TerminalName,
+--     }),
+--   },
+--   {   -- An inactive winbar for regular files
+--     condition = function()
+--       return not conditions.is_active()
+--     end,
+--     utils.surround({ "", "" }, colors.bright_bg, { hl = { fg = "gray", force = true }, FileNameBlock }),
+--   },
+--   -- A winbar for regular files
+--   utils.surround({ "", "" }, colors.bright_bg, FileNameBlock),
+-- }
 
 require('heirline').setup(StatusLines)--, WinBars)

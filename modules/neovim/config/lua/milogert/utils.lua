@@ -54,8 +54,10 @@ TODO: this doesn't work.
 ]]
 Utils.create_file = function(file, data)
   local f = io.open(file, "w")
-  f:write(data or "")
-  f:close()
+  if f ~= nil then
+    f:write(data or "")
+    f:close()
+  end
 end
 
 -- From http://lua-users.org/wiki/FileInputOutput
@@ -69,7 +71,7 @@ Utils.lines_from = function(file)
   if not Utils.file_exists(file) then return {} end
 
   local lines = {}
-  for line in io.lines(file) do 
+  for line in io.lines(file) do
     lines[#lines + 1] = line
   end
   return lines
@@ -105,5 +107,26 @@ Utils.join = function(tab, sep)
   return str
 end
 
+Utils.table_to_string = function (o)
+  if type(o) == 'table' then
+    local s = '{ '
+    for k,v in pairs(o) do
+      if type(k) ~= 'number' then k = '"'..k..'"' end
+      s = s .. '['..k..'] = ' .. Utils.table_to_string(v) .. ','
+    end
+    return s .. '} '
+  else
+    return tostring(o)
+  end
+end
+
+
+Utils.tern = function(pred, t, f)
+  if pred then
+    return t
+  else
+    return f
+  end
+end
 
 return Utils
