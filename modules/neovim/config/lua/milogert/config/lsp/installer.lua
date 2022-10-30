@@ -71,7 +71,7 @@ local server_configs = {
 
 local default_capabilities = vim.lsp.protocol.make_client_capabilities()
 default_capabilities.textDocument.completion.completionItem.snippetSupport = true
-default_capabilities = require("cmp_nvim_lsp").update_capabilities(default_capabilities)
+default_capabilities = require("cmp_nvim_lsp").default_capabilities(default_capabilities)
 
 local server_defaults = {
   capabilities = default_capabilities,
