@@ -1,10 +1,13 @@
 local u = require('milogert.utils')
+local log = require'milogert.logger'
 
 -- Set the leader key. This should be first.
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- Misc.
 vim.opt.viminfo = [['1000,f1]]
+vim.opt.exrc = false -- This option can be unsafe.
 
 -- vim.opt.rtp = vim.opt.rtp + '/usr/local/bin/fzf'
 
@@ -43,7 +46,7 @@ vim.opt.encoding = 'utf-8'
 -- milo-sensible (from neovim-sensible, but even more sensible)
 -- Absolute numbers for your cursor line and relative for the surrounding ones.
 vim.opt.number = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 
 -- Special characters for spacing.
 vim.opt.list = true
@@ -70,7 +73,6 @@ vim.opt.clipboard = vim.opt.clipboard + 'unnamed'
 vim.opt.mouse = ''
 
 -- Searching.
-vim.opt.exrc = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.ignorecase = true
@@ -99,7 +101,7 @@ vim.opt.backspace = { 'indent', 'eol', 'start' }
 vim.opt.undodir = os.getenv('HOME') .. '/.config/nvim/undodir'
 vim.opt.undofile = true
 
--- Abbreviations.
+-- Custom commands.
 vim.cmd [[
 " `vert help command-complete` for completion
 "fun TmuxinatorProfiles(A,L,P)
@@ -107,9 +109,8 @@ vim.cmd [[
 "endfun
 "command! -nargs=* -complete=custom,TmuxinatorProfiles mux !tmuxinator <args>
 command! -nargs=* Mux !tmuxinator <args>
-"cabbrev Mux !tmuxinator
-" cnoreabbrev G vert<space>G
-" cnoreabbrev Gstatus vert<space>Gstatus
+
+command! ThankYouNext lua require('milogert.functions').thankYouNext()<CR>
 ]]
 
 vim.opt.lazyredraw = false
@@ -140,6 +141,41 @@ vim.api.nvim_create_autocmd('FileType', {
     end
   end
 })
+
+vim.api.nvim_create_augroup('dadbod-auto-configure', { clear = true })
+vim.api.nvim_create_autocmd('VimEnter', {
+  group = 'dadbod-auto-configure',
+  desc = 'Parse docker compose and set up database variables',
+  pattern = '*',
+  callback = function()
+    local file = vim.fn.getcwd()..'/docker-compose.override.yml'
+    local has_docker_compose = u.file_exists(file)
+    if not has_docker_compose then
+      return
+    end
+
+    local paths = {
+      ".services.postgres.ports[0]",
+      ".services.db.ports[0]",
+    }
+
+    local ports = nil
+    for _, path in ipairs(paths) do
+      ports = vim.fn.system({ "yq", "-r", path, file })
+
+      if ports then
+        break
+      end
+    end
+
+    local local_port = u.split(ports, ":")[1]
+
+    vim.g.db_port = "postgres://postgres@localhost:"..local_port.."/postgres"
+    u.nmap('<Leader>dbc', ':DB g:db_port<CR>')
+    log.info("Found a docker-compose db. Use <Leader>dbc to connect")
+  end
+})
+
 -- vim.api.nvim_create_autocmd('BufNew,BufRead', {
 --   pattern = '*/pre-incidents/*',
 -- })

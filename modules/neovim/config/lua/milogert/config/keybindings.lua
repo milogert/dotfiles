@@ -2,7 +2,6 @@
 
 local u = require "milogert.utils"
 local f = require "milogert.functions"
-local log = require "milogert.logger"
 
 -- Config maps.
 u.nmap('<leader>re', ':tabnew $MYVIMRC<CR>')
@@ -154,3 +153,6 @@ for key, map in pairs(gitsignsMaps) do
   end
 end
 
+u.nmap('dd', '', { callback = f.smart_dd, expr = true })
+
+u.nmap('<Leader>gl', '', { callback = f.git_permalink })

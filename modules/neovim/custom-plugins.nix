@@ -66,6 +66,28 @@
   /*   dontBuild = true; */
   /* }; */
 
+  nvim-dev-container = pkgs.vimUtils.buildVimPlugin rec {
+    name = "nvim-dev-container";
+    src = pkgs.fetchFromGitHub {
+      owner = "esensar";
+      repo = name;
+      rev = "db519080a3f6e87a10e17f0822eb325532e3dbbc";
+      sha256 = "16gpdzyzdvpzffzpkyj4m72zkbimn44daacrbaid4ilg4vfv5k3m";
+    };
+    # Only skips tests.
+    dontBuild = true;
+  };
+
+  nvim-docker = pkgs.vimUtils.buildVimPlugin rec {
+    name = "nvim-docker";
+    src = pkgs.fetchFromGitHub {
+      owner = "dgrbrady";
+      repo = name;
+      rev = "6af0a5e2b547cf51cbf6d9ccd864c3699bbd8308";
+      sha256 = "0s0vwrcvjmx2nrxhdmq5m83wgbn5pw13lir9d06s0w2ix38i0gnf";
+    };
+  };
+
   nvim-lsp-installer = pkgs.vimUtils.buildVimPlugin rec {
     name = "nvim-lsp-installer";
     src = pkgs.fetchFromGitHub {
@@ -78,17 +100,16 @@
     dontBuild = true;
   };
 
-  nvim-dev-container = pkgs.vimUtils.buildVimPlugin rec {
-    name = "nvim-dev-container";
+  nvim-navic = pkgs.vimUtils.buildVimPlugin rec {
+    name = "nvim-navic";
     src = pkgs.fetchFromGitHub {
-      owner = "esensar";
+      owner = "SmiteshP";
       repo = name;
-      rev = "db519080a3f6e87a10e17f0822eb325532e3dbbc";
-      sha256 = "16gpdzyzdvpzffzpkyj4m72zkbimn44daacrbaid4ilg4vfv5k3m";
+      rev = "3ab0c97e4b5ad4c2f5dbe6bd96366d24a8fc75f6";
+      sha256 = "1x3lv4j7m4y53ghqdgx2jy6ysyd67y0spjakw0h4mh3jv64sbphk";
     };
-    # Only skips tests.
-    dontBuild = true;
   };
+
 
   nvim-remote-containers = pkgs.vimUtils.buildVimPlugin rec {
     name = "nvim-remote-containers";

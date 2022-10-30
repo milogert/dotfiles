@@ -8,6 +8,7 @@
     ./darwin/homebrew.nix
     ./darwin/nix-apps.nix
     ./networking.nix
+    ./services
   ];
 
   # This is nix-darwin specific.

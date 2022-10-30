@@ -6,6 +6,7 @@
     ../browserpass.nix
     /* ../kitty.nix */
     /* ../ranger.nix */
+    ../wezterm.nix
   ];
 
   home.packages = with pkgs; [

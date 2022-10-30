@@ -60,6 +60,13 @@
 
       alias ll="exa -l -g --git --color always --icons -a -s type";
       alias ls="exa --color auto --icons -a -s type";
+
+      # Functions
+      modrun() {
+        echo "Running module in ''$HOME/.dotfiles/modules/''$1#"
+        nix run "''$HOME/.dotfiles/modules/''$1#"
+      };
+
       #zprof
       ## initExtra end
     '';

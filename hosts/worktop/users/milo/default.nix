@@ -8,7 +8,7 @@ let
 in {
   imports = [
     (common_dir + /home/default.nix)
-    /* (common_dir + /home/direnv.nix) */
+    (common_dir + /home/direnv.nix)
     (common_dir + /home/types/desktop.nix)
     ./hammerspoon
   ];

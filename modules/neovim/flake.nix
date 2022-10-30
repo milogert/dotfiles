@@ -18,6 +18,20 @@
     configDir = ./config;
   in {
     overlays.default = final: prev: {
+      neovim-unwrapped = prev.neovim-unwrapped.overrideAttrs(old: {
+        buildInputs = old.buildInputs ++ (with prev.pkgs; [
+          elixir_ls
+          /* nodePackages.eslint */
+          nodePackages.typescript-language-server
+          nodePackages.typescript
+          rnix-lsp
+          sumneko-lua-language-server
+          terraform-ls
+          vscode-extensions.bradlc.vscode-tailwindcss
+          /* node-debug2 */
+        ]);
+      });
+
       neovim-custom = final.callPackage ./neovim.nix {};
     };
 

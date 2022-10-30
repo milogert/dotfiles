@@ -35,7 +35,6 @@
   };
 
   home.packages = with pkgs; [
-    blueman
     brave
     calibre
     cargo

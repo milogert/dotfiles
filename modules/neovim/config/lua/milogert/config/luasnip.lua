@@ -28,6 +28,9 @@ local functional_logger_def =
 
 local functional_logger_use = s('flu', { t("fl('"), i(1, 'tag'), t("'),") })
 
+local react_hooks = s('hook', {
+})
+
 ls.add_snippets("all", {
   functional_logger_def,
   functional_logger_use,

@@ -37,6 +37,7 @@
     "postgres"
     "slack"
     "spotify"
+    "wezterm"
     "zoom"
   ];
 
