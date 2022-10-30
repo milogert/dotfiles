@@ -30,20 +30,20 @@
     desktopManager.gnome = {
       enable = true;
 
-       extraGSettingsOverrides = ''
-        # Change default background
-        [org.gnome.desktop.default-applications]
-        terminal='exec alacritty'
+       /* extraGSettingsOverrides = '' */
+       /*  # Change default background */
+       /*  [org.gnome.desktop.default-applications] */
+       /*  terminal='exec alacritty' */
 
-        # Favorite apps in gnome-shell
-        [org.gnome.shell]
-        favorite-apps=['org.gnome.Photos.desktop', 'org.gnome.Nautilus.desktop']
-      '';
+       /*  # Favorite apps in gnome-shell */
+       /*  [org.gnome.shell] */
+       /*  favorite-apps=['org.gnome.Photos.desktop', 'org.gnome.Nautilus.desktop'] */
+      /* ''; */
 
-      extraGSettingsOverridePackages = [
-        pkgs.gsettings-desktop-schemas # for org.gnome.desktop
-        pkgs.gnome.gnome-shell # for org.gnome.shell
-      ];
+      /* extraGSettingsOverridePackages = [ */
+       /*  pkgs.gsettings-desktop-schemas # for org.gnome.desktop */
+       /*  pkgs.gnome.gnome-shell # for org.gnome.shell */
+      /* ]; */
     };
   };
 

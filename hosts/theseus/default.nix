@@ -54,6 +54,7 @@
     gnomeExtensions.vitals
     lshw
     protontricks
+    solaar
     vulkan-tools
     wineWowPackages.stable
     winetricks

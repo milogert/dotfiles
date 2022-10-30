@@ -3,13 +3,11 @@
 , ...
 }:
 
-let
-  common_dir = ../../../_common;
-in {
+{
   imports = [
-    (common_dir + /home/default.nix)
-    (common_dir + /home/direnv.nix)
-    (common_dir + /home/types/desktop.nix)
+    ../../../_common/home/default.nix
+    ../../../_common/home/direnv.nix
+    ../../../_common/home/types/desktop.nix
     ./sway.nix
     ./waybar.nix
     ./desktop.nix
@@ -37,7 +35,6 @@ in {
   };
 
   home.packages = with pkgs; [
-    beekeeper-studio
     blueman
     brave
     calibre
@@ -46,15 +43,15 @@ in {
     discord
     elixir
     insomnia
-    joplin
-    joplin-desktop
+    /* joplin */
+    /* joplin-desktop */
     nodejs
-    qtpass
+    /* qtpass */
     ranger
-    solaar
+    /* solaar */
     spotify
-    spotify-tui
-    wyvern
+    /* spotify-tui */
+    /* wyvern */
     yarn
   ];
 
