@@ -22,7 +22,8 @@ in {
   };
 
   home.packages = with pkgs; [
-    elixir
+    docker
+    #elixir
     git-lfs
     mas
     nodejs-14_x

@@ -13,7 +13,7 @@
 
   # This is nix-darwin specific.
   system.stateVersion = 4;
-  users.nix.configureBuildUsers = true;
+  nix.configureBuildUsers = true;
   services.nix-daemon.enable = true;
 
   programs.zsh = {

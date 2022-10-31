@@ -58,7 +58,7 @@
       NSNavPanelExpandedStateForSaveMode2 = true;
 
       # Decrease window resize duration
-      NSWindowResizeTime = "0.001";
+      NSWindowResizeTime = 0.001;
 
       # Auto hide menu bar
       _HIHideMenuBar = false;
@@ -91,10 +91,10 @@
       autohide = true;
 
       # Remove the auto-hiding delay
-      autohide-delay = "0";
+      autohide-delay = 0.0;
 
       # Remove the animation when hiding/showing
-      autohide-time-modifier = "0";
+      autohide-time-modifier = 0.0;
 
       # Don’t show Dashboard as a Space
       dashboard-in-overlay = true;

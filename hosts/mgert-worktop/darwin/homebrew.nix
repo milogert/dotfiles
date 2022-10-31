@@ -8,39 +8,30 @@
   ];
 
   homebrew.brews = [
-    "gnu-sed"
-    "openvpn"
     "pinentry-mac"
-    "postgres"
-
-    # REMOVE THESE ENVENTUALLY
-    "node@14"
   ];
 
   homebrew.casks = [
     "1password"
-    "alfred"
     "beekeeper-studio"
-    "brave-browser"
+    "calibre"
+    "clamxav"
     "cloudapp"
-    "docker"
-    "firefox-developer-edition"
+    #"docker" # Docker Desktop is not supported in homebrew currently.
     "google-chrome"
-    "hammerspoon"
     "insomnia"
     "krisp"
     "muzzle"
     "notion"
     "openvpn-connect"
-    "postgres"
+    "plex"
+    "postgres-unofficial"
     "slack"
     "spotify"
-    "tuple"
     "zoom"
   ];
 
   homebrew.masApps = {
-    Kindle = 405399194;
     Xcode = 497799835;
   };
 

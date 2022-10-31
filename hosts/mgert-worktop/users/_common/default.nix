@@ -24,6 +24,7 @@
 
         # This way copies and makes it available in Spotlight.
         echo "  Copying $appName"
+        echo "    from $appFile"
         $DRY_RUN_CMD cp ''${VERBOSE_ARG:+-v} -fHRL "$appFile" "$baseDir"
         $DRY_RUN_CMD chmod ''${VERBOSE_ARG:+-v} -R +w "$target"
 
