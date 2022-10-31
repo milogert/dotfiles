@@ -17,4 +17,8 @@ in {
   programs.zsh = {
     shellAliases = moduleAliases;
   };
+
+  home.packages = with pkgs; [
+    firefox
+  ];
 }
