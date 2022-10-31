@@ -8,10 +8,8 @@ define usage
 @echo "  <default>"
 @echo "  config"
 @echo "    Requires that HOSTNAME be set. Configures that machine."
-@echo "  install_requirements"
-@echo "    Installs any missing requirements, used on nix-darwin."
 @echo "  update"
-@echo "    Updates the flake.lock file so new versions can be installed."
+@echo "    Updates the flake.lock file so new versions can be installed. This includes modules."
 @echo "  update-neovim"
 @echo "    Updates the neovim module."
 @echo
@@ -52,18 +50,10 @@ _nix-darwin-build:
 _nix-darwin-switch:
 	./result/sw/bin/darwin-rebuild switch --flake ".#${HOST}"
 
-install_requirements:
+_install_requirements:
 	@echo -e "\033[0;32mInstalling required programs\033[0m"
 	./installers/homebrew
 	./installers/nix
-
-theseus: _nixos-build _nixos-switch
-
-worktop: install_requirements _nix-darwin-build _nix-darwin-switch
-
-rig: _nixos-build _nixos-switch
-
-hog: _nixos-build _nixos-switch
 
 update: update-neovim
 	nix flake update
@@ -74,3 +64,8 @@ update-neovim:
 add-user:
 	./scripts/add_user.sh
 
+# Machines
+coucher: _install_requirements _nix-darwin-build _nix-darwin-switch
+hog: _nixos-build _nixos-switch
+theseus: _nixos-build _nixos-switch
+mgert-worktop: _install_requirements _nix-darwin-build _nix-darwin-switch
