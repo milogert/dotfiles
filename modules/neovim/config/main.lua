@@ -9,12 +9,10 @@ vim.cmd [[ packadd vimplugin-vim-arpeggio ]]
 
 -- Source plugin configs.
 local plugins = {
-  -- "alpha-nvim",
-  -- "copilot",
   "cmp",
   "colorizer",
+  "comment",
   "dap",
-  -- "devcontainer",
   "fidget",
   "fzf-lua",
   "gitsigns",
@@ -23,12 +21,12 @@ local plugins = {
   "lsp.kind",
   "lsp.installer",
   "luasnip",
+  "mini",
   "null-ls",
   "package-info",
   "persistence",
-  -- "telescope",
+  "runscript",
   "treesitter",
-  -- "which-key",
 
   "heirline", -- Needs to be last since it uses info from other imports
 }
