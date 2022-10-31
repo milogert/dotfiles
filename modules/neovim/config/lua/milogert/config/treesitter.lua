@@ -1,5 +1,7 @@
+-- Defines a read-write directory for treesitters in nvim's cache dir
 require'nvim-treesitter.configs'.setup {
   auto_install = true,
+  parser_install_dir = vim.g.tsParserPath,
 
   -- Either "all" or a list of languages. List below is from
   -- https://github.com/nvim-treesitter/nvim-treesitter/tree/b4ab9daed1f144200e826a656bd25b013f0949eb
