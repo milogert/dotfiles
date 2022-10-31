@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 if [[ $(uname -s) == 'Darwin' ]]; then
   if ! type "brew" &> /dev/null; then
