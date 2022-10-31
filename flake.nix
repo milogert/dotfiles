@@ -16,7 +16,7 @@
     };
 
     neovim-custom = {
-      url = "path:modules/neovim";
+      url = "path:./modules/neovim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -41,11 +41,6 @@
           });
 
           plexPass = prev.plex.override { plexRaw = final.plexPassRaw; };
-
-          kitty = prev.kitty.overrideAttrs (old: {
-            doCheck = false;
-            installCheckPhase = "";
-          });
         };
 
       nixpkgsConfig = with inputs; {
@@ -108,12 +103,21 @@
         ];
     in {
       darwinConfigurations = {
-        worktop = darwin.lib.darwinSystem {
+        coucher = darwin.lib.darwinSystem {
           inherit inputs;
           system = "x86_64-darwin";
           modules = mkDarwinConfig {
-            host = "worktop";
-            users = ["milo" /*"cassie"*/];
+            host = "coucher";
+            users = ["milo"];
+          };
+        };
+
+        mgert-worktop = darwin.lib.darwinSystem {
+          inherit inputs;
+          system = "aarch64-darwin";
+          modules = mkDarwinConfig {
+            host = "mgert-worktop";
+            users = ["milo"];
           };
         };
       };
