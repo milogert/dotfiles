@@ -8,21 +8,18 @@
   ];
 
   homebrew.brews = [
-    "gnu-sed"
     "pinentry-mac"
-    "postgres"
   ];
 
   homebrew.casks = [
     "beekeeper-studio"
     "calibre"
     "docker"
-    "firefox-developer-edition"
     "google-chrome"
     "insomnia"
     "notion"
     "plex"
-    "postgres-unofficial"
+    "postgres"
     "spotify"
   ];
 

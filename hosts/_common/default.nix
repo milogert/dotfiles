@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  binaryCaches = [
+  substituters = [
     "https://cache.nixos.org"
     "https://nix-community.cachix.org"
     "https://milogert.cachix.org"
@@ -12,16 +12,18 @@ in {
   ];
 
   nix = {
-    useSandbox = false;
-    trustedUsers = [ "root" "@admin" ];
+    settings = {
+      sandbox = false;
+      trusted-users = [ "root" "@admin" ];
 
-    inherit binaryCaches;
-    trustedBinaryCaches = binaryCaches;
-    binaryCachePublicKeys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "milogert.cachix.org-1:MaZAAWJXDV85HpLm2yyLX9b52wQghRxljAZJg0dEjkY="
-    ];
+      inherit substituters;
+      trusted-substituters = substituters;
+      trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "milogert.cachix.org-1:MaZAAWJXDV85HpLm2yyLX9b52wQghRxljAZJg0dEjkY="
+      ];
+    };
 
     # Garbage collection.
     gc.automatic = false;
@@ -51,24 +53,13 @@ in {
 
   environment.pathsToLink = [ "/share/zsh" ];
 
-  environment.shellAliases = {
-    adj = "echo ADJACENT";
-  };
-  environment.systemPackages = with pkgs;
-  let
-    my-python-packages = python-packages: with python-packages; [
-      pip
-      #virutalenv
-    ];
-    python-with-packages = python38.withPackages my-python-packages;
-  in [
+  environment.systemPackages = with pkgs; [
     bash
     bash-completion
     bat # Need this for aliases.
     cachix
     cargo
-    # Why do I have this?
-    coreutils
+    coreutils # Why do I have this?
     ctop
     diskonaut
     exa
@@ -83,14 +74,15 @@ in {
     htop
     jq
     ncdu
+    neofetch
     nix-prefetch-git
     # nixops
     neovim-custom
-    /* procs # https://github.com/dalance/procs */
-    python-with-packages
+    openvpn
+    postgresql
+    python
     rename
     ripgrep
-    /* rnix-lsp */
     shellcheck
     silver-searcher
     speedtest-cli

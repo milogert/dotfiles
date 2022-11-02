@@ -22,7 +22,7 @@ in {
 
   home.packages = with pkgs; [
     discord
-    # elixir
+    elixir
     mas
     nodejs
   ];

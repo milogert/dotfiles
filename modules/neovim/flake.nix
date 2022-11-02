@@ -20,7 +20,7 @@
     overlays.default = final: prev: {
       neovim-unwrapped = prev.neovim-unwrapped.overrideAttrs(old: {
         buildInputs = old.buildInputs ++ (with prev.pkgs; [
-          elixir_ls
+          #elixir_ls
           /* nodePackages.eslint */
           nodePackages.typescript-language-server
           nodePackages.typescript
@@ -39,6 +39,16 @@
       x86_64-linux = let
         pkgs = import nixpkgs {
           system = "x86_64-linux";
+          overlays = [ self.overlays.default ];
+        };
+      in {
+        inherit (pkgs) neovim-custom;
+        default = pkgs.neovim-custom;
+      };
+
+      aarch64-darwin = let
+        pkgs = import nixpkgs {
+          system = "x86_64-darwin";
           overlays = [ self.overlays.default ];
         };
       in {

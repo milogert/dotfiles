@@ -377,70 +377,70 @@ local Diagnostics = {
   { provider = "]" },
 }
 
-local Navic = {
-  condition = require("nvim-navic").is_available,
-  static = {
-    -- create a type highlight map
-    type_hl = {
-      File = "Directory",
-      Module = "Include",
-      Namespace = "TSNamespace",
-      Package = "Include",
-      Class = "Struct",
-      Method = "Method",
-      Property = "TSProperty",
-      Field = "TSField",
-      Constructor = "TSConstructor ",
-      Enum = "TSField",
-      Interface = "Type",
-      Function = "Function",
-      Variable = "TSVariable",
-      Constant = "Constant",
-      String = "String",
-      Number = "Number",
-      Boolean = "Boolean",
-      Array = "TSField",
-      Object = "Type",
-      Key = "TSKeyword",
-      Null = "Comment",
-      EnumMember = "TSField",
-      Struct = "Struct",
-      Event = "Keyword",
-      Operator = "Operator",
-      TypeParameter = "Type",
-    },
-  },
-  init = function(self)
-    local data = require("nvim-navic").get_data() or {}
-    local children = {}
-    -- create a child for each level
-    for i, d in ipairs(data) do
-      local child = {
-        {
-          provider = d.icon,
-          hl = self.type_hl[d.type],
-        },
-        {
-          provider = d.name,
-          -- highlight icon only or location name as well
-          -- hl = self.type_hl[d.type],
-        },
-      }
-      -- add a separator only if needed
-      if #data > 1 and i < #data then
-        table.insert(child, {
-          provider = " > ",
-        })
-      end
-      table.insert(children, child)
-    end
-    -- instantiate the new child
-    self[1] = self:new(children, 1)
-  end,
-  hl = { fg = "gray" },
-}
+-- local Navic = {
+--   condition = require("nvim-navic").is_available,
+--   static = {
+--     -- create a type highlight map
+--     type_hl = {
+--       File = "Directory",
+--       Module = "Include",
+--       Namespace = "TSNamespace",
+--       Package = "Include",
+--       Class = "Struct",
+--       Method = "Method",
+--       Property = "TSProperty",
+--       Field = "TSField",
+--       Constructor = "TSConstructor ",
+--       Enum = "TSField",
+--       Interface = "Type",
+--       Function = "Function",
+--       Variable = "TSVariable",
+--       Constant = "Constant",
+--       String = "String",
+--       Number = "Number",
+--       Boolean = "Boolean",
+--       Array = "TSField",
+--       Object = "Type",
+--       Key = "TSKeyword",
+--       Null = "Comment",
+--       EnumMember = "TSField",
+--       Struct = "Struct",
+--       Event = "Keyword",
+--       Operator = "Operator",
+--       TypeParameter = "Type",
+--     },
+--   },
+--   init = function(self)
+--     local data = require("nvim-navic").get_data() or {}
+--     local children = {}
+--     -- create a child for each level
+--     for i, d in ipairs(data) do
+--       local child = {
+--         {
+--           provider = d.icon,
+--           hl = self.type_hl[d.type],
+--         },
+--         {
+--           provider = d.name,
+--           -- highlight icon only or location name as well
+--           -- hl = self.type_hl[d.type],
+--         },
+--       }
+--       -- add a separator only if needed
+--       if #data > 1 and i < #data then
+--         table.insert(child, {
+--           provider = " > ",
+--         })
+--       end
+--       table.insert(children, child)
+--     end
+--     -- instantiate the new child
+--     self[1] = self:new(children, 1)
+--   end,
+--   hl = { fg = "gray" },
+-- }
 
-local FlexNavic = utils.make_flexible_component(3, Navic, { provider = "" })
+-- local FlexNavic = utils.make_flexible_component(3, Navic, { provider = "" })
 
 local DAPMessages = {
   -- display the dap messages only on the debugged file
@@ -568,7 +568,7 @@ local DirvishFileName = {
 local DefaultStatusline = {
   ViMode, FileNameBlock, Git, Diagnostics, Align,
 
-  FlexNavic, DAPMessages, Align,
+  --[[FlexNavic,]] DAPMessages, Align,
 
   LSPActive, FileType, Ruler, ScrollBar
 }

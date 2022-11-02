@@ -8,19 +8,12 @@
   ];
 
   homebrew.brews = [
-    "gnu-sed"
-    "openvpn"
     "pinentry-mac"
-    "postgres"
-
-    # Remove These Eventually.
-    "node@14"
   ];
 
   homebrew.casks = [
     "1password"
     "beekeeper-studio"
-    "brave-browser"
     "calibre"
     "clamxav"
     "cloudapp"

@@ -3,19 +3,12 @@
 let
   vimPlugins = pkgs.callPackage ./custom-plugins.nix {};
   customPlugins = with vimPlugins; [
-    /* alpha-nvim */
-    /* impatient-nvim */
-    /* copilot-cmp */
-    /* copilot-lua */
+    overrides.nvim-colorizer-lua
     fzf-lua
     heirline-nvim
-    /* nvim-dev-container */
-    nvim-docker
+    hydra-nvim
     nvim-lsp-installer
-    nvim-navic
-    nvim-remote-containers
-    nvim-treesitter-custom
-    octo-nvim
+    nvim-runscript
     persistence-nvim
     vim-arpeggio
     vim-tada
@@ -48,16 +41,18 @@ in
 
         lua << EOF
         vim.g.debuggers = {
-          elixir_ls = "${pkgs.elixir_ls}",
+          --elixir_ls = "${pkgs.elixir_ls}",
+          elixir_ls = "random/path/here",
         }
         vim.g.ls_locations = {
-          elixirls = { "${pkgs.elixir_ls}/bin/elixir-ls" },
+          --elixirls = { "${pkgs.elixir_ls}/bin/elixir-ls" },
+          elixirls = { "random/path/here" },
           eslint = {
             "${pkgs.vscode-extensions.dbaeumer.vscode-eslint}/bin/eslint",
             "--stdio",
           },
           rnix = { "${pkgs.rnix-lsp}/bin/rnix-lsp" },
-          sumneko_ls = { "${pkgs.sumneko-lua-language-server}/bin/lua-language-server" },
+          sumneko_lua = { "${pkgs.sumneko-lua-language-server}/bin/lua-language-server" },
           tailwindcss = {
             "${pkgs.vscode-extensions.bradlc.vscode-tailwindcss}/bin/tailwindcss-language-server",
             "--stdio",
@@ -72,16 +67,18 @@ in
             "tsserver",
           },
         }
-        EOF
 
-        " Add the config directory to the start of the rtp
-        set runtimepath^=${configDir}
+        -- Add the config directory to the start of the rtp
+        vim.opt.runtimepath:prepend("${configDir}")
+
+        vim.g.tsParserPath = vim.fn.stdpath("data") .. "/site"
+        vim.opt.runtimepath:prepend(vim.g.tsParserPath .. "/parser")
+        EOF
 
         source ${configDir}/main.lua
       '';
       packages.${flakePackageDir} = with pkgs.vimPlugins; {
         start = [
-          /* which-key-nvim */
           cmp-buffer
           cmp-calc
           cmp-cmdline
@@ -89,24 +86,25 @@ in
           cmp-nvim-lua
           cmp-path
           cmp_luasnip
+          comment-nvim
           fidget-nvim
           gitsigns-nvim
           lspkind-nvim
           luasnip
+          mini-nvim
           nui-nvim
           null-ls-nvim
           nvim-cmp
-          nvim-colorizer-lua
           nvim-dap
           nvim-dap-ui
           nvim-dap-virtual-text
           nvim-lspconfig
-          /* nvim-treesitter */
+          nvim-treesitter
           nvim-web-devicons
           package-info-nvim
           plenary-nvim
           srcery-vim
-          vim-commentary
+          vim-abolish
           vim-dadbod
           vim-dadbod-ui
           vim-dirvish
