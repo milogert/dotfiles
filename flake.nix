@@ -16,7 +16,7 @@
     };
 
     neovim-custom = {
-      url = "path:modules/neovim";
+      url = "path:./modules/neovim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -41,11 +41,6 @@
           });
 
           plexPass = prev.plex.override { plexRaw = final.plexPassRaw; };
-
-          kitty = prev.kitty.overrideAttrs (old: {
-            doCheck = false;
-            installCheckPhase = "";
-          });
         };
 
       nixpkgsConfig = with inputs; {
@@ -65,11 +60,15 @@
       mkUserConfig = { pkgs, host, user }: let
         user_host_path = ./. + "/hosts/${host}/users";
         common_config = user_host_path + "/_common";
+        # Add common user config here, for when we want to share user config
+        # across systems.
+        /* user_common = ./. + "./_common/users/${user}"; */
         user_path = user_host_path + "/${user}";
         config_path = user_path + "/config.nix";
         config = import config_path { inherit pkgs user; };
       in {
         home-manager.users.${user} = with self.homeManagerModules; {
+          /* imports = [ user_path common_config user_common ]; */
           imports = [ user_path common_config ];
           nixpkgs = nixpkgsConfig;
         };
@@ -104,12 +103,21 @@
         ];
     in {
       darwinConfigurations = {
-        worktop = darwin.lib.darwinSystem {
+        coucher = darwin.lib.darwinSystem {
           inherit inputs;
           system = "x86_64-darwin";
           modules = mkDarwinConfig {
-            host = "worktop";
-            users = ["milo" /*"cassie"*/];
+            host = "coucher";
+            users = ["milo"];
+          };
+        };
+
+        mgert-worktop = darwin.lib.darwinSystem {
+          inherit inputs;
+          system = "aarch64-darwin";
+          modules = mkDarwinConfig {
+            host = "mgert-worktop";
+            users = ["milo"];
           };
         };
       };

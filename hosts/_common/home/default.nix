@@ -5,6 +5,7 @@
     ./bat.nix
     ./fzf.nix
     ./git
+    ./lazydocker.nix
     /* ./neovim */
     ./password-store.nix
     ./starship.nix

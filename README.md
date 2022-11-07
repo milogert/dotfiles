@@ -31,12 +31,6 @@ run. Otherwise the `HOSTNAME` environtment variable will still not be set
 make update
 ```
 
-## Just install the requirements (mostly for `nix-darwin`)
-
-```bash
-make install_requirements
-```
-
 # Why Nix?
 
 @rpearce turned me onto this. I used to be an Arch Linux guy, but configuring
@@ -46,9 +40,21 @@ magically things started working.
 Nix solves that for me so if I mess something up I can just roll back to a
 previous generation.
 
-# Your computer names?
+Also, all the configuration is stored in a git repo, so if I undo something but
+find I actually did want it everything is searchable.
 
-- `theseus` - this computer was `apollo`, but I replaced all the guts while
-  the case remained the same.
-- `rig` - formerly `pig` but now it's remote, so **R**emote P**ig**.
-- `worktop` - my work laptop. It's a Mac, so it uses `nix-darwin`.
+# Your machines?
+
+| Hostname  | Platform         | Name history |
+| ---       | ---              | ---          |
+| `theseus` | NixOS (desktop)  | Formerly `apollo` but I replaced all the guts while the case remained the same. |
+| `hog`     | NixOS (headless) | I used to have `pig`, now I have `hog`. |
+| `mgert-worktop` | MacOS (M1)       | My work laptop. |
+| `coucher` | MacOS (Intel)    | Formerly `worktop`. I use it on the couch. |
+
+
+## 🪦 Retired machines
+
+| Hostname  | Platform         | Name history |
+| ---       | ---              | ---          |
+| `rig`     | NixOS (headless) | Formerly `pig` but now it's remote, so **R**emote P**ig**. |

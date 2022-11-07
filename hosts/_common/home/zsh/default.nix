@@ -1,6 +1,19 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
-{
+let
+  modules = [
+    "neovim"
+  ];
+
+  moduleAliasFn = module: {
+    "run-${module}" =
+      "nix run \"${config.home.homeDirectory}/.dotfiles/modules/${module}#\"";
+    "github-${module}" =
+      "nix run --no-write-lock-file \"github:milogert/dotfiles#${module}\"";
+  };
+
+  moduleAliases = builtins.foldl' (l: r: l // r)  {} (builtins.map moduleAliasFn modules);
+in {
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
@@ -73,7 +86,8 @@
 
     shellAliases = {
       find_aliases = "zsh -ixc : -o sourcetrace 2>&1 | grep -w alias";
-    };
+      revim = "nvim -c 'lua require(\"persistence\").load()'";
+    } // moduleAliases;
 
     shellGlobalAliases = {
       G = "| grep";

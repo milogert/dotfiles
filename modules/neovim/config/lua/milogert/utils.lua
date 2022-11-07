@@ -129,4 +129,14 @@ Utils.tern = function(pred, t, f)
   end
 end
 
+Utils.trim = function(s, only_end)
+  local from
+  if only_end then
+    from = 0
+  else
+    from = s:match"^%s*()"
+  end
+  return from > #s and "" or s:match(".*%S", from)
+end
+
 return Utils

@@ -1,14 +1,30 @@
 { fetchFromGitHub, pkgs }:
 
 {
-  alpha-nvim = pkgs.vimUtils.buildVimPlugin rec {
-    name = "alpha-nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "goolord";
-      repo = name;
-      rev = "7a49086bf9197f573b396d4ac46262c02dfb9aec";
-      sha256 = "0qfxyf25yw5yrxrmbsi0gbd0bhzpmsw9ls4blhhb8q1jpkvbcmgw";
+  # These plugins exist in the store but I want to override them for one
+  # reason or another.
+  overrides = {
+    nvim-colorizer-lua = pkgs.vimUtils.buildVimPlugin rec {
+      name = "nvim-colorizer.lua";
+      src = pkgs.fetchFromGitHub {
+        owner = "NvChad";
+        repo = name;
+        rev = "004a2b3ef62b01d3d1db454d1efe76d31934d43b";
+        sha256 = "0ya9qnp294lldarab7cc6fddjc3wad8zsqn2bl9b4dlypgcz7g1g";
+      };
     };
+
+    # nvim-treesitter = pkgs.vimUtils.buildVimPlugin rec {
+    #   name = "nvim-treesitter";
+    #   src = pkgs.fetchFromGitHub {
+    #     owner = "nvim-treesitter";
+    #     repo = name;
+    #     rev = "09b13e9edb80d3890aa8f7dbebfdb21e34430212";
+    #     sha256 = "1c17j81crh238xykmimdnlfm45lgah4iaw7c5rhf759d0xpn1c6v";
+    #   };
+    #   # Only skips tests.
+    #   dontBuild = true;
+    # };
   };
 
   copilot-lua = pkgs.vimUtils.buildVimPlugin rec {
@@ -39,9 +55,11 @@
     src = pkgs.fetchFromGitHub {
       owner = "ibhagwan";
       repo = name;
-      rev = "30f4c0cb37460a82a42e1956eea136bbe10c4417";
-      sha256 = "1ykawxi86ax86zqv54qdiaa0g6kx2ii708gcxhvwl70h209frbil";
+      rev = "0e0bc7a6009059da25078ec1eb551dc8f87d219b";
+      sha256 = "0ap40l3dcdj8qya4cpyvgh5zdak20bbr7vv77pss8z0cvqpzv9r5";
     };
+    # Only skips tests.
+    dontBuild = true;
   };
 
   heirline-nvim = pkgs.vimUtils.buildVimPlugin rec {
@@ -54,37 +72,13 @@
     };
   };
 
-  /* impatient-nvim = pkgs.vimUtils.buildVimPlugin rec { */
-  /*   name = "impatient.nvim"; */
-  /*   src = pkgs.fetchFromGitHub { */
-  /*     owner = "lewis6991"; */
-  /*     repo = name; */
-  /*     rev = "f4a45e4be49ce417ef2e15e34861994603e3deab"; */
-  /*     sha256 = "0q034irf77rlk07fd350zbg73p4daj7bakklk0q0rf3z31npwx8l"; */
-  /*   }; */
-  /*   # Only skips tests. */
-  /*   dontBuild = true; */
-  /* }; */
-
-  nvim-dev-container = pkgs.vimUtils.buildVimPlugin rec {
-    name = "nvim-dev-container";
+  hydra-nvim = pkgs.vimUtils.buildVimPlugin rec {
+    name = "hydra.nvim";
     src = pkgs.fetchFromGitHub {
-      owner = "esensar";
+      owner = "anuvyklack";
       repo = name;
-      rev = "db519080a3f6e87a10e17f0822eb325532e3dbbc";
-      sha256 = "16gpdzyzdvpzffzpkyj4m72zkbimn44daacrbaid4ilg4vfv5k3m";
-    };
-    # Only skips tests.
-    dontBuild = true;
-  };
-
-  nvim-docker = pkgs.vimUtils.buildVimPlugin rec {
-    name = "nvim-docker";
-    src = pkgs.fetchFromGitHub {
-      owner = "dgrbrady";
-      repo = name;
-      rev = "6af0a5e2b547cf51cbf6d9ccd864c3699bbd8308";
-      sha256 = "0s0vwrcvjmx2nrxhdmq5m83wgbn5pw13lir9d06s0w2ix38i0gnf";
+      rev = "a815ce78805a5667e81cdb53d2bc7e0371042a7a";
+      sha256 = "0i5ksipnk22k1dps0hg6qn3y3bx0qx0rr86irzd8dga415da0wdi";
     };
   };
 
@@ -110,26 +104,13 @@
     };
   };
 
-
-  nvim-remote-containers = pkgs.vimUtils.buildVimPlugin rec {
-    name = "nvim-remote-containers";
+  nvim-runscript = pkgs.vimUtils.buildVimPlugin rec {
+    name = "nvim-runscript";
     src = pkgs.fetchFromGitHub {
-      owner = "jamestthompson3";
+      owner = "klesh";
       repo = name;
-      rev = "d635bea9c24be1656c7e16e4b46ecb39b4b70093";
-      sha256 = "04gsz02543q2gi2jqa5hkfmh56vxdll471bp2dm3hlmagv245zfi";
-    };
-    # Only skips tests.
-    dontBuild = true;
-  };
-
-  octo-nvim =  pkgs.vimUtils.buildVimPlugin rec {
-    name = "octo.nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "pwntester";
-      repo = name;
-      rev = "b33e00cd3066b03164d17e69d7ce9aa656caeda8";
-      sha256 = "099vv6ac0zjy0sij00fs1pppj8pa9cy6lvhgw2pq33vpg5c2x7cm";
+      rev = "fd0b3d008a32499f73d0a160612b39f33325f85f";
+      sha256 = "1mys3rzg3wxjmxrg13p6hvw7gwk8wi3mi8h7haswy0239kkpaz27";
     };
   };
 

@@ -28,6 +28,7 @@ local servers = {
   eslint = false,
   html = false,
   jsonls = false,
+  stylelint_lsp = false,
   tailwindcss = false,
 }
 
@@ -35,11 +36,12 @@ local on_attach = require("milogert.config.lsp.on_attach")
 
 local server_configs = {
   elixirls = { cmd = vim.g.ls_locations.elixirls },
+
   eslint = {
     on_attach = function (client, bufnr)
       -- Force eslint to accept formatting requests.
-      client.resolved_capabilities.document_formatting = true
-      client.resolved_capabilities.document_range_formatting = false
+      client.server_capabilities.document_formatting = true
+      client.server_capabilities.document_range_formatting = false
 
       on_attach(client, bufnr)
     end,
@@ -50,20 +52,53 @@ local server_configs = {
       },
     },
   },
+
   rnix = { cmd = vim.g.ls_locations.rnix },
+
+  stylelint_lsp = {
+    filetypes = {
+      "css",
+      "less",
+      "scss",
+      "sugarss",
+      "vue",
+      "wxss",
+      -- "javascript",
+      -- "javascriptreact",
+      -- "typescript",
+      -- "typescriptreact",
+    },
+    settings = {
+      stylelintplus = {
+        autoFixOnFormat = true,
+        autoFixOnSave = true,
+      },
+    },
+  },
+
   sumneko_lua = {
+    cmd = vim.g.ls_locations.sumneko_lua,
     settings = { Lua = { diagnostics = { globals = {
       'vim',
       'love',
       'hs',
     } } } },
   },
+
+  tailwindcss = {
+    init_options = {
+      userLanguages = {
+        heex = "html-eex",
+      },
+    },
+  },
+
   tsserver = {
     cmd = vim.g.ls_locations.tsserver,
     on_attach = function (client, bufnr)
       -- Disable tsserver formatting requsts.
-      client.resolved_capabilities.document_formatting = false
-      client.resolved_capabilities.document_range_formatting = false
+      client.server_capabilities.document_formatting = false
+      client.server_capabilities.document_range_formatting = false
 
       on_attach(client, bufnr)
     end

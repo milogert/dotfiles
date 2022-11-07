@@ -20,6 +20,6 @@
     nm = "man 5 configuration.nix";
     nmh = "man 5 home-configuration.nix";
 
-    ncpg = "nix-prefetch-git ";
+    ngit = "f() { nix-prefetch-git --quiet $1 | jq -r 'with_entries(select([.key] | inside([\"rev\", \"sha256\"])))'; }; f ";
   };
 }

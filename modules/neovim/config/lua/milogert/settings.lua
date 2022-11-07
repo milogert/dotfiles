@@ -190,6 +190,14 @@ vim.api.nvim_create_autocmd('VimEnter', {
 --   command = 'setlocal commentstring={/* %s */}'
 -- })
 
+-- From 
+vim.api.nvim_create_autocmd('BufWritePre', {
+  group = vim.api.nvim_create_augroup('auto_create_dir', { clear = true }),
+  callback = function(ctx)
+    vim.fn.mkdir(vim.fn.fnamemodify(ctx.file, ':p:h'), 'p')
+  end
+})
+
 -- Vimux.
 vim.g.VimuxHeight = "25"
 vim.g.VimuxOrientation = "h"

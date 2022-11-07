@@ -1,18 +1,12 @@
 { pkgs, ... }:
 
-let
-  nerdfonts = pkgs.nerdfonts.override {
-    fonts = [
-      "Meslo"
-    ];
-  };
-in {
+{
   programs.kitty = {
-    enable = false;
+    enable = true;
 
     font = {
-      package = nerdfonts;
-      name = "MesloLGS Nerd Font Mono";
+      package = pkgs.fira-code;
+      name = "Fira Code";
       size = 11;
     };
 
@@ -20,13 +14,9 @@ in {
 
     settings = {
       tab_bar_style = "hidden";
+      confirm_os_window_close = 0;
     };
 
     theme = "Srcery";
-  };
-
-  home.file."Applications/kitty.app" = {
-    recursive = true;
-    source = pkgs.kitty + /Applications/kitty.app;
   };
 }
