@@ -18,6 +18,7 @@ lsp_installer.settings {
 
 -- Lsp servers enabled. `true` indicates they are managed by nix.
 local servers = {
+  -- denols = true,
   elixirls = true,
   rnix = true,
   sumneko_lua = true,
@@ -35,6 +36,17 @@ local servers = {
 local on_attach = require("milogert.config.lsp.on_attach")
 
 local server_configs = {
+  -- denols = {
+  --   cmd = vim.g.ls_locations.denols,
+  --   on_attach = function (client, bufnr)
+  --     vim.g.markdown_fenced_languages = {
+  --       "ts=typescript"
+  --     }
+  --
+  --     on_attach(client, bufnr)
+  --   end
+  -- },
+
   elixirls = { cmd = vim.g.ls_locations.elixirls },
 
   eslint = {
@@ -107,7 +119,7 @@ local server_configs = {
 
 local default_capabilities = vim.lsp.protocol.make_client_capabilities()
 default_capabilities.textDocument.completion.completionItem.snippetSupport = true
-default_capabilities = require("cmp_nvim_lsp").update_capabilities(default_capabilities)
+default_capabilities = require("cmp_nvim_lsp").default_capabilities(default_capabilities)
 
 local server_defaults = {
   capabilities = default_capabilities,

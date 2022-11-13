@@ -7,8 +7,6 @@ let
   common_dir = ../../../_common;
 in {
   imports = [
-    (common_dir + /home/default.nix)
-    (common_dir + /home/direnv.nix)
     (common_dir + /home/types/desktop.nix)
     ./sway.nix
     ./waybar.nix
@@ -38,11 +36,7 @@ in {
     calibre
     cargo
     discord
-    elixir
     insomnia
-    joplin
-    joplin-desktop
-    nodejs
     qtpass
     spotify
     spotify-tui

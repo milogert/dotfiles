@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
+  common_dir = ../../../_common;
+
   modules = [
     "neovim"
   ];
@@ -14,11 +16,19 @@ let
 
   moduleAliases = builtins.foldl' (l: r: l // r)  {} (builtins.map moduleAliasFn modules);
 in {
+  imports = [
+    (common_dir + /home/default.nix)
+    (common_dir + /home/direnv.nix)
+  ];
+
   programs.zsh = {
-    shellAliases = moduleAliases;
+    shellAliases = {
+    } // moduleAliases;
   };
 
   home.packages = with pkgs; [
-    firefox
+    asdf-vm
+    nodejs
+    elixir
   ];
 }
