@@ -62,14 +62,14 @@
         common_config = user_host_path + "/_common";
         # Add common user config here, for when we want to share user config
         # across systems.
-        /* user_common = ./. + "./_common/users/${user}"; */
+        user_common = ./. + "/hosts/_common/users/${user}";
         user_path = user_host_path + "/${user}";
         config_path = user_path + "/config.nix";
         config = import config_path { inherit pkgs user; };
       in {
         home-manager.users.${user} = with self.homeManagerModules; {
-          /* imports = [ user_path common_config user_common ]; */
-          imports = [ user_path common_config ];
+          imports = [ user_path common_config user_common ];
+          # imports = [ user_path common_config ];
           nixpkgs = nixpkgsConfig;
         };
         users.users.${user} = config;

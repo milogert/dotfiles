@@ -7,8 +7,6 @@ let
   common_dir = ../../../_common;
 in {
   imports = [
-    (common_dir + /home/default.nix)
-    (common_dir + /home/direnv.nix)
     (common_dir + /home/types/desktop.nix)
     ./hammerspoon
   ];
@@ -23,10 +21,8 @@ in {
 
   home.packages = with pkgs; [
     docker
-    #elixir
     git-lfs
     mas
-    nodejs-14_x
     (yarn.override { nodejs = nodejs-14_x; })
   ];
 

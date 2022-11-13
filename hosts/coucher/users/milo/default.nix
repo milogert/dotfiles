@@ -7,8 +7,6 @@ let
   common_dir = ../../../_common;
 in {
   imports = [
-    (common_dir + /home/default.nix)
-    (common_dir + /home/direnv.nix)
     (common_dir + /home/types/desktop.nix)
   ];
 
@@ -21,9 +19,7 @@ in {
   };
 
   home.packages = with pkgs; [
-    elixir
     mas
-    nodejs
   ];
 
   # NPM config options in lieu of no easy static config file
