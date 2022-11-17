@@ -77,7 +77,7 @@
       wishlistRedirect = {
         redirectRegex = {
           regex = "^https://(rrw|wishlist)\\.milogert\\.com";
-          replacement = "https://docs.google.com/document/d/1d_6DNthHECSEpW3XY1tLePD0gOmzdiNruiwzrbQ6pYc/edit?usp=sharing";
+          replacement = "https://www.icloud.com/pages/07eSQUDeSG3CPPBAih4dGMDRw#Rolling-Release_Wishlist";
         };
       };
     };
