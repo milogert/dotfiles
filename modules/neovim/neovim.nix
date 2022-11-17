@@ -3,8 +3,6 @@
 let
   vimPlugins = pkgs.callPackage ./custom-plugins.nix {};
   customPlugins = with vimPlugins; [
-    overrides.nvim-colorizer-lua
-    fzf-lua
     heirline-nvim
     hydra-nvim
     nvim-lsp-installer
@@ -13,9 +11,6 @@ let
     vim-arpeggio
     vim-tada
   ];
-   /* myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: { */
-   /*  propagatedBuildInputs = with pkgs; [pkgs.stdenv.cc.cc.lib]; */
-  /* }); */
 
   # This is propogated down to copilot-lua since it needs help finding the
   # proper directory when nix is involved.
@@ -25,28 +20,19 @@ in
   pkgs.wrapNeovim pkgs.neovim-unwrapped {
     configure = {
       customRC = ''
-        " Only load lua ft plugins
-        "let g:do_filetype_lua = 1
-        "let g:did_load_filetypes = 0
-
         " Set flake directory, controlled by nix
         let g:flakePackages = '${flakePackageDir}'
 
         " Set config dir from nix
         let g:configPath = '${configDir}'
 
-        " Disable netrw
-        "let g:loaded_netrw = 1
-        "let g:loaded_netrwPlugin = 1
-
         lua << EOF
         vim.g.debuggers = {
-          --elixir_ls = "${pkgs.elixir_ls}",
-          elixir_ls = "random/path/here",
+          elixir_ls = "${pkgs.elixir_ls}",
         }
         vim.g.ls_locations = {
-          --elixirls = { "${pkgs.elixir_ls}/bin/elixir-ls" },
-          elixirls = { "random/path/here" },
+          -- denols = { "${pkgs.deno}/bin/deno", "lsp" },
+          elixirls = { "${pkgs.elixir_ls}/bin/elixir-ls" },
           eslint = {
             "${pkgs.vscode-extensions.dbaeumer.vscode-eslint}/bin/eslint",
             "--stdio",
@@ -88,12 +74,14 @@ in
           cmp_luasnip
           comment-nvim
           fidget-nvim
+          fzf-lua
           gitsigns-nvim
           lspkind-nvim
           luasnip
           mini-nvim
           nui-nvim
           null-ls-nvim
+          nvim-colorizer-lua
           nvim-cmp
           nvim-dap
           nvim-dap-ui
@@ -125,9 +113,6 @@ in
 
     viAlias = true;
     vimAlias = true;
-    /* vimdiffAlias = true; */
-
-    /* defaultEditor = true; */
 
     withNodeJs = true;
     withRuby = false;

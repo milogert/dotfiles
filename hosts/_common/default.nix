@@ -73,7 +73,6 @@ in {
     go
     htop
     jq
-    ncdu
     neofetch
     nix-prefetch-git
     # nixops

@@ -15,7 +15,6 @@
     "1password"
     "beekeeper-studio"
     "calibre"
-    "clamxav"
     "cloudapp"
     #"docker" # Docker Desktop is not supported in homebrew currently.
     "google-chrome"

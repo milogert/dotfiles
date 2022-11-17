@@ -29,19 +29,18 @@
   , neovim-custom
   }:
     let
-      overlays = final: prev:
-        {
-          plexPassRaw = prev.plexRaw.overrideAttrs (old: rec {
-            version = "1.28.1.6092-87136b92b";
-            name = "${old.pname}-${version}";
-            src = prev.fetchurl {
-              url = "https://downloads.plex.tv/plex-media-server-new/${version}/debian/plexmediaserver_${version}_amd64.deb";
-              sha256 = "sha256-4w8bCHjtIBuuFrVq2lc6dkjzo4tE2c6XPx/LdjbowDY=";
-            };
-          });
+      overlays = final: prev: {
+        plexPassRaw = prev.plexRaw.overrideAttrs (old: rec {
+          version = "1.28.1.6092-87136b92b";
+          name = "${old.pname}-${version}";
+          src = prev.fetchurl {
+            url = "https://downloads.plex.tv/plex-media-server-new/${version}/debian/plexmediaserver_${version}_amd64.deb";
+            sha256 = "sha256-4w8bCHjtIBuuFrVq2lc6dkjzo4tE2c6XPx/LdjbowDY=";
+          };
+        });
 
-          plexPass = prev.plex.override { plexRaw = final.plexPassRaw; };
-        };
+        plexPass = prev.plex.override { plexRaw = final.plexPassRaw; };
+      };
 
       nixpkgsConfig = with inputs; {
         config = {
@@ -59,17 +58,14 @@
 
       mkUserConfig = { pkgs, host, user }: let
         user_host_path = ./. + "/hosts/${host}/users";
-        common_config = user_host_path + "/_common";
-        # Add common user config here, for when we want to share user config
-        # across systems.
-        /* user_common = ./. + "./_common/users/${user}"; */
-        user_path = user_host_path + "/${user}";
-        config_path = user_path + "/config.nix";
+        common_config = "${user_host_path}/_common";
+        common_user_config = ./. + "/hosts/_common/users/${user}";
+        user_path = "${user_host_path }/${user}";
+        config_path = "${user_path}/config.nix";
         config = import config_path { inherit pkgs user; };
       in {
         home-manager.users.${user} = with self.homeManagerModules; {
-          /* imports = [ user_path common_config user_common ]; */
-          imports = [ user_path common_config ];
+          imports = [ user_path common_config common_user_config ];
           nixpkgs = nixpkgsConfig;
         };
         users.users.${user} = config;
@@ -127,14 +123,6 @@
           system = "x86_64-linux";
           modules = mkNixosConfig {
             host = "theseus";
-            users = ["milo"];
-          };
-        };
-
-        rig = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = mkNixosConfig {
-            host = "rig";
             users = ["milo"];
           };
         };
