@@ -56,26 +56,33 @@
         ];
       };
 
-      mkUserConfig = { pkgs, host, user }: let
+      mkUserConfig = { pkgs, host, type, user }: let
         user_host_path = ./. + "/hosts/${host}/users";
         common_config = "${user_host_path}/_common";
         common_user_config = ./. + "/hosts/_common/users/${user}";
         user_path = "${user_host_path }/${user}";
         config_path = "${user_path}/config.nix";
         config = import config_path { inherit pkgs user; };
+        home_type_path = ./. + "/hosts/_common/home/types/${type}.nix";
       in {
         home-manager.users.${user} = with self.homeManagerModules; {
-          imports = [ user_path common_config common_user_config ];
+          imports = [
+            user_path
+            common_config
+            common_user_config
+            home_type_path
+          ];
           nixpkgs = nixpkgsConfig;
         };
         users.users.${user} = config;
       };
 
-      mkCommonConfig = { host, users }: let
+      mkCommonConfig = { host, type, users }: let
         mkUserConfigWrapped = user:
-          ({ pkgs, ... }: mkUserConfig { inherit pkgs host user; });
+          ({ pkgs, ... }: mkUserConfig { inherit pkgs host type user; });
       in [
         (./. + "/hosts/${host}/default.nix")
+        (./. + "/hosts/_common/types/${type}.nix")
         ({ pkgs, ... }: {
           nix.registry.nixpkgs.flake = nixpkgs;
           environment.variables.HOSTNAME = host;
@@ -85,13 +92,13 @@
         })
       ] ++ (builtins.map mkUserConfigWrapped users);
 
-      mkDarwinConfig = { host, users }:
-        (mkCommonConfig { inherit host users; }) ++ [
+      mkDarwinConfig = { host, type, users }:
+        (mkCommonConfig { inherit host type users; }) ++ [
           home-manager.darwinModules.home-manager
         ];
 
-      mkNixosConfig = { host, users }:
-        (mkCommonConfig { inherit host users; }) ++ [
+      mkNixosConfig = { host, type, users }:
+        (mkCommonConfig { inherit host type users; }) ++ [
           home-manager.nixosModules.home-manager
           {
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
@@ -105,6 +112,7 @@
           modules = mkDarwinConfig {
             host = "coucher";
             users = ["milo"];
+            type = "desktop";
           };
         };
 
@@ -114,6 +122,7 @@
           modules = mkDarwinConfig {
             host = "mgert-worktop";
             users = ["milo"];
+            type = "desktop";
           };
         };
       };
@@ -124,6 +133,7 @@
           modules = mkNixosConfig {
             host = "theseus";
             users = ["milo"];
+            type = "desktop";
           };
         };
 
@@ -132,6 +142,7 @@
           modules = mkNixosConfig {
             host = "hog";
             users = ["milo"];
+            type = "headless";
           };
         };
       };

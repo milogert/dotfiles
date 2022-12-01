@@ -21,14 +21,31 @@ in {
     (common_dir + /home/direnv.nix)
   ];
 
-  programs.zsh = {
-    shellAliases = {
-    } // moduleAliases;
-  };
-
   home.packages = with pkgs; [
     asdf-vm
     nodejs
     elixir
   ];
+
+  programs.git.signing = {
+    key = "7291258F2B7C086E";
+    signByDefault = true;
+    gpgPath = "gpg";
+  };
+
+  programs.zsh.shellAliases = {} // moduleAliases;
+
+  # NPM config options in lieu of no easy static config file
+  home.activation.setNpmOptions =
+    let
+      npmSet = "$DRY_RUN_CMD ${pkgs.nodejs-16_x}/bin/npm set";
+    in
+      config.lib.dag.entryAfter ["writeBoundary"] ''
+        ${npmSet} \
+          init-author-name="Milo Gertjejansen" \
+          init-author-email="milo@milogert.com" \
+          init-author-url="https://milogert.com" \
+          init-license="MIT" \
+          init-version="0.0.1" \
+      '';
 }

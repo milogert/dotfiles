@@ -3,7 +3,6 @@
 {
   imports = [
     ../_common/default.nix
-    ../_common/types/desktop.nix
     ./darwin/settings.nix
     ./darwin/homebrew.nix
     ./networking.nix
