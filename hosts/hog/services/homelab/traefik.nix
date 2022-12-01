@@ -17,7 +17,7 @@
       email = "milo@milogert.com";
       storage = "/var/lib/traefik/acme-prod.json";
 
-      dnsChallenge.provider = "linode";
+      dnsChallenge.provider = "route53";
 
       # Remove for production.
       # caServer = "https://acme-staging-v02.api.letsencrypt.org/directory";
@@ -77,12 +77,12 @@
       wishlistRedirect = {
         redirectRegex = {
           regex = "^https://(rrw|wishlist)\\.milogert\\.com";
-          replacement = "https://docs.google.com/document/d/1d_6DNthHECSEpW3XY1tLePD0gOmzdiNruiwzrbQ6pYc/edit?usp=sharing";
+          replacement = "https://www.icloud.com/pages/07eSQUDeSG3CPPBAih4dGMDRw#Rolling-Release_Wishlist";
         };
       };
     };
   };
 
   systemd.services.traefik.serviceConfig.EnvironmentFile =
-    "/etc/secrets/linode-milogert.com.env";
+    "/etc/secrets/route53.env";
 }

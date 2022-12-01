@@ -31,11 +31,11 @@
     let
       overlays = final: prev: {
         plexPassRaw = prev.plexRaw.overrideAttrs (old: rec {
-          version = "1.24.4.5081-e362dc1ee";
+          version = "1.28.1.6092-87136b92b";
           name = "${old.pname}-${version}";
           src = prev.fetchurl {
             url = "https://downloads.plex.tv/plex-media-server-new/${version}/debian/plexmediaserver_${version}_amd64.deb";
-            sha256 = "sha256-NVAWuDPMj0Rilh+jaiREXQhy7SlLJNwLz1XWgynwL54=";
+            sha256 = "sha256-4w8bCHjtIBuuFrVq2lc6dkjzo4tE2c6XPx/LdjbowDY=";
           };
         });
 

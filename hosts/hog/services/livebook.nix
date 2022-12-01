@@ -1,11 +1,13 @@
 { pkgs, ... }:
 
 let
-  userGroupName = "heimdall";
-  userGroupId = 991;
-  hostPort = "81";
-  containerPort = "80";
-  image = "linuxserver/heimdall:latest";
+  userGroupName = "livebook";
+  userGroupId = 990;
+  containerPort1 = "8080";
+  containerPort2 = "8081";
+  hostPort1 = "8082";
+  hostPort2 = "8083";
+  image = "livebook/livebook:latest";
 in {
   users.users."${userGroupName}" = {
     home = "/var/lib/${userGroupName}";
@@ -22,7 +24,10 @@ in {
 
   virtualisation.oci-containers.containers."${userGroupName}" = {
     image = image;
-    ports = ["${hostPort}:${containerPort}"];
+    ports = [
+      "${hostPort1}:${containerPort1}"
+      "${hostPort2}:${containerPort2}"
+    ];
     volumes = [
       "/var/lib/${userGroupName}:/config"
     ];
@@ -33,17 +38,17 @@ in {
   };
 
   services.traefik.dynamicConfigOptions.http = {
-    routers.heimdall = {
+    routers.livebook = {
       entryPoints = [ "websecure" ];
-      rule = "Host(`milogert.dev`)";
-      service = "heimdall";
+      rule = "Host(`livebook.milogert.com`)";
+      service = "livebook";
 
       tls = {
         certResolver = "letsEncrypt";
-        domains = [ { main = "milogert.dev"; } ];
+        domains = [ { main = "livebook.milogert.com"; } ];
       };
     };
 
-    services.heimdall.loadBalancer.servers = [ { url = "http://localhost:${hostPort}"; } ];
+    services.livebook.loadBalancer.servers = [ { url = "http://localhost:${hostPort1}"; } ];
   };
 }
