@@ -19,7 +19,7 @@
     "insomnia"
     "notion"
     "plex"
-    "postgres"
+    "postgres-unofficial"
     "spotify"
   ];
 
