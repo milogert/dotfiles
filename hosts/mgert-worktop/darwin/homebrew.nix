@@ -16,7 +16,7 @@
     "beekeeper-studio"
     "calibre"
     "cloudapp"
-    #"docker" # Docker Desktop is not supported in homebrew currently.
+    # "docker" # Docker Desktop is not supported in homebrew currently.
     "google-chrome"
     "insomnia"
     "krisp"

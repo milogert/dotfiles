@@ -84,9 +84,12 @@ vim.opt.cmdheight = 2
 vim.opt.updatetime = 10
 vim.opt.shortmess = vim.opt.shortmess + 'c'
 vim.opt.scrolloff = 16
-vim.opt.swapfile = false
-
+-- vim.opt.swapfile = false
 vim.opt.signcolumn = 'yes'
+
+-- Spellcheck
+vim.opt.spelllang = {'en'}
+vim.opt.spellsuggest = {'best', 9}
 
 -- Folding.
 vim.opt.foldmethod = 'expr'
