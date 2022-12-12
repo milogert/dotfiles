@@ -529,6 +529,15 @@ local Git = {
   Space,
 }
 
+local Spell = {
+  condition = function()
+    return vim.wo.spell
+  end,
+  provider = 'SPELL ',
+  hl = { bold = true, fg = colors.orange }
+}
+
+
 local HelpFileName = {
   condition = function()
     return vim.bo.filetype == "help"
@@ -566,7 +575,7 @@ local DirvishFileName = {
 }
 
 local DefaultStatusline = {
-  ViMode, FileNameBlock, Git, Diagnostics, Align,
+  ViMode, FileNameBlock, Git, Diagnostics, Spell, Align,
 
   --[[FlexNavic,]] DAPMessages, Align,
 
@@ -620,7 +629,7 @@ local StatusLines = {
     end
   end,
 
-  init = utils.pick_child_on_condition,
+  fallthrough = false,
 
   SpecialStatusline, TerminalStatusline, InactiveStatusline, DefaultStatusline,
 }
