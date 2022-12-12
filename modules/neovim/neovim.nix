@@ -8,6 +8,7 @@ let
     nvim-lsp-installer
     nvim-runscript
     persistence-nvim
+    sibling-swap-nvim
     vim-arpeggio
     vim-tada
   ];

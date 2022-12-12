@@ -53,6 +53,16 @@
     };
   };
 
+  sibling-swap-nvim = pkgs.vimUtils.buildVimPlugin rec {
+    name = "sibling-swap.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "Wansmer";
+      repo = name;
+      rev = "71eb9daa5233cd576ce8119bc2dbfa67d4d35462";
+      sha256 = "070amb0rrl77bi5yrfgl16s96hw7w8hm2v9pm2caky8fh1kq44gk";
+    };
+  };
+
   vim-arpeggio = pkgs.vimUtils.buildVimPlugin rec {
     name = "vim-arpeggio";
     src = pkgs.fetchFromGitHub {
