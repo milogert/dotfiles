@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   programs.zsh = {
@@ -61,18 +61,25 @@
       alias ll="exa -l -g --git --color always --icons -a -s type";
       alias ls="exa --color auto --icons -a -s type";
 
-      # Functions
-      modrun() {
-        echo "Running module in ''$HOME/.dotfiles/modules/''$1#"
-        nix run "''$HOME/.dotfiles/modules/''$1#"
-      };
-
       #zprof
+
+      if [[ $(uname -s) == 'Darwin' ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+      fi
+
+      if [[ -d ~/Developer/flutter ]]; then
+        export PATH="$PATH:$HOME/Developer/flutter/bin"
+      fi
+
+      # ASDF
+      . ${pkgs.asdf-vm}/share/asdf-vm/asdf.sh
+
       ## initExtra end
     '';
 
     shellAliases = {
       find_aliases = "zsh -ixc : -o sourcetrace 2>&1 | grep -w alias";
+      revim = "nvim -c 'lua require(\"persistence\").load()'";
     };
 
     shellGlobalAliases = {

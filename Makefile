@@ -1,3 +1,6 @@
+.PHONY: check help usage all update update-neovim
+.DEFAULT: all
+
 HOST=${HOSTNAME}
 
 define usage
@@ -5,11 +8,9 @@ define usage
 @echo "  <default>"
 @echo "  config"
 @echo "    Requires that HOSTNAME be set. Configures that machine."
-@echo "  install_requirements"
-@echo "    Installs any missing requirements, used on nix-darwin."
 @echo "  update"
-@echo "    Updates the flake.lock file so new versions can be installed."
-@echo "  update-nvim"
+@echo "    Updates the flake.lock file so new versions can be installed. This includes modules."
+@echo "  update-neovim"
 @echo "    Updates the neovim module."
 @echo
 @echo "Anything prefixed with '_' is internal, but can be run separately if you need granular output."
@@ -38,7 +39,9 @@ _nixos-build:
 	nix build ".#nixosConfigurations.${HOST}.config.system.build.toplevel"
 
 _nixos-switch:
-	sudo nixos-rebuild switch --flake ".#${HOST}"
+	# Old command: sudo nixos-rebuild switch --flake ".#${HOST}"
+	# See https://github.com/NixOS/nixpkgs/issues/169193
+	nixos-rebuild --use-remote-sudo switch --flake ".#${HOST}"
 
 # nix-darwin commands.
 _nix-darwin-build:
@@ -49,21 +52,22 @@ _nix-darwin-build:
 _nix-darwin-switch:
 	./result/sw/bin/darwin-rebuild switch --flake ".#${HOST}"
 
-install_requirements:
+_install_requirements:
 	@echo -e "\033[0;32mInstalling required programs\033[0m"
 	./installers/homebrew
 	./installers/nix
 
-theseus: _nixos-build _nixos-switch
-
-worktop: install_requirements _nix-darwin-build _nix-darwin-switch
-
-rig: _nixos-build _nixos-switch
-
-hog: _nixos-build _nixos-switch
-
-update:
+update: update-neovim
 	nix flake update
 
-update-nvim:
+update-neovim:
 	nix flake update ./modules/neovim
+
+add-user:
+	./scripts/add_user.sh
+
+# Machines
+coucher: _install_requirements _nix-darwin-build _nix-darwin-switch
+hog: _nixos-build _nixos-switch
+theseus: _nixos-build _nixos-switch
+mgert-worktop: _install_requirements _nix-darwin-build _nix-darwin-switch

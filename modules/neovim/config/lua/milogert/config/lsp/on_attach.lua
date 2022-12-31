@@ -32,16 +32,16 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>ca',lsp('code_action'),     opts)
 
   -- Set some keybinds conditional on server capabilities
-  if client.resolved_capabilities.document_formatting then
+  if client.server_capabilities.document_formatting then
     buf_set_keymap('n', '<leader>fi', lsp('formatting'),      opts)
-  elseif client.resolved_capabilities.document_range_formatting then
+  elseif client.server_capabilities.document_range_formatting then
     buf_set_keymap('n', '<leader>fi', lsp('formatting'),      opts)
   end
 
   -- Attach navic to the LSP if it supports the documentSymbols capability.
-  if client.server_capabilities.documentSymbolProvider then
-    require"nvim-navic".attach(client, bufnr)
-  end
+  -- if client.server_capabilities.documentSymbolProvider then
+  --   require"nvim-navic".attach(client, bufnr)
+  -- end
 end
 
 return on_attach

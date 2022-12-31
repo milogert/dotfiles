@@ -6,7 +6,9 @@ in {
   imports = [
     ./nzbget.nix
     ./nzbhydra2.nix
+    ./overseerr.nix
     ./plex.nix
+    ./prowlarr.nix
     ./radarr.nix
     ./readarr.nix
     ./sonarr.nix
@@ -50,10 +52,11 @@ in {
           --no-modtime \
           --temp-dir=/mnt/download-stream-cache/rclone \
           --cache-dir=/mnt/download-stream-cache/rclone/cache \
-          --vfs-cache-mode full \
-          --vfs-cache-max-size 250G \
+          --vfs-cache-mode=full \
+          --vfs-cache-max-size=350G \
           --vfs-read-chunk-size=32M \
-          --vfs-read-chunk-size-limit=256M
+          --vfs-read-chunk-size-limit=256M \
+          --vfs-cache-max-age=72h0m0s
       '';
       ExecStop = "/run/wrappers/bin/fusermount -u /mnt/media";
       Type = "notify";

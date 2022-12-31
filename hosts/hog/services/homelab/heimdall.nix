@@ -3,8 +3,8 @@
 let
   userGroupName = "heimdall";
   userGroupId = 991;
-  servicePort = "81";
-  externalPort = "80";
+  hostPort = "81";
+  containerPort = "80";
   image = "linuxserver/heimdall:latest";
 in {
   users.users."${userGroupName}" = {
@@ -22,7 +22,7 @@ in {
 
   virtualisation.oci-containers.containers."${userGroupName}" = {
     image = image;
-    ports = ["${servicePort}:${externalPort}"];
+    ports = ["${hostPort}:${containerPort}"];
     volumes = [
       "/var/lib/${userGroupName}:/config"
     ];
@@ -44,6 +44,6 @@ in {
       };
     };
 
-    services.heimdall.loadBalancer.servers = [ { url = "http://localhost:${servicePort}"; } ];
+    services.heimdall.loadBalancer.servers = [ { url = "http://localhost:${hostPort}"; } ];
   };
 }

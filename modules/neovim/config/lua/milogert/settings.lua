@@ -84,9 +84,12 @@ vim.opt.cmdheight = 2
 vim.opt.updatetime = 10
 vim.opt.shortmess = vim.opt.shortmess + 'c'
 vim.opt.scrolloff = 16
-vim.opt.swapfile = false
-
+-- vim.opt.swapfile = false
 vim.opt.signcolumn = 'yes'
+
+-- Spellcheck
+vim.opt.spelllang = {'en'}
+vim.opt.spellsuggest = {'best', 9}
 
 -- Folding.
 vim.opt.foldmethod = 'expr'
@@ -189,6 +192,14 @@ vim.api.nvim_create_autocmd('VimEnter', {
 --   pattern = 'javascriptreact',
 --   command = 'setlocal commentstring={/* %s */}'
 -- })
+
+-- From 
+vim.api.nvim_create_autocmd('BufWritePre', {
+  group = vim.api.nvim_create_augroup('auto_create_dir', { clear = true }),
+  callback = function(ctx)
+    vim.fn.mkdir(vim.fn.fnamemodify(ctx.file, ':p:h'), 'p')
+  end
+})
 
 -- Vimux.
 vim.g.VimuxHeight = "25"

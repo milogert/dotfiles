@@ -156,3 +156,7 @@ end
 u.nmap('dd', '', { callback = f.smart_dd, expr = true })
 
 u.nmap('<Leader>gl', '', { callback = f.git_permalink })
+
+-- Spellcheck
+u.nmap('<F11>', ':set spell!<CR>')
+u.imap('<F11>', '<C-O>:set spell!<CR>')

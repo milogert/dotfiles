@@ -5,7 +5,6 @@
     ./configuration.nix
     ./hardware-configuration.nix
     ../_common/default.nix
-    ../_common/types/desktop.nix
     ./networking.nix
     ../_common/services
     ./services

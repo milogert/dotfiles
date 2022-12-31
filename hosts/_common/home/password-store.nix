@@ -2,7 +2,7 @@
 
 {
   programs.password-store = {
-    enable = true;
+    enable = false;
 
     settings = {
       PASSWORD_STORE_DIR = "$HOME/.password-store";
