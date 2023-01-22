@@ -14,6 +14,7 @@
   homebrew.casks = [
     "beekeeper-studio"
     "calibre"
+    "discord"
     "docker"
     "google-chrome"
     "insomnia"
