@@ -1,6 +1,6 @@
 <h1 align="center">Milo Gertjejansen's dotfiles</h1>
 
-<p align="center">✨🔥 Now with Nix Flake hotness. 🔥✨</p>
+<p align="center">❄️✨🐧🔥 Now with Nix Flake hotness. 🔥🐧✨❄️</p>
 
 ---
 
