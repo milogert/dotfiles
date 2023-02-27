@@ -6,8 +6,9 @@
     # Per-interface useDHCP will be mandatory in the future, so this generated config
     # replicates the default behaviour.
     useDHCP = false;
-    #interfaces.wlp6s0.useDHCP = true;
-    #interfaces.enp9s0.useDHCP = true;
+    # interfaces.wlp6s0.useDHCP = true;
+    interfaces.wlp6s0.wakeOnLan.enable = true;
+    # interfaces.enp9s0.useDHCP = true;
     enableIPv6 = true;
 
     # Use NetworkManager, if there is slow DNS resolution try uncommenting the

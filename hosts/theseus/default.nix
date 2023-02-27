@@ -24,6 +24,7 @@
   };
 
   programs.steam.enable = true;
+  programs.steam.remotePlay.openFirewall = true;
 
   virtualisation.lxd.enable = true;
 

@@ -24,17 +24,52 @@
   };
 
   home.packages = with pkgs; [
-    brave
     calibre
     cargo
     cockatrice
     discord
+    elixir
+    evince
+    google-chrome
     insomnia
     nodejs
     ranger
     spotify
-    /* spotify-tui */
-    /* wyvern */
-    yarn
   ];
+
+  programs.qutebrowser = {
+    enable = true;
+
+    extraConfig = ''
+    '';
+
+    keyBindings = {
+      normal = {
+        "<Ctrl-v>" = "spawn mpv {url}";
+        ",p" = "spawn --userscript qute-pass";
+        ",l" = ''config-cycle spellcheck.languages ["en-GB"] ["en-US"]'';
+      };
+      prompt = {
+        "<Ctrl-y>" = "prompt-yes";
+      };
+    };
+
+    keyMappings = {};
+
+    quickmarks = {
+      nixpkgs = "https://github.com/NixOS/nixpkgs";
+      home-manager = "https://github.com/nix-community/home-manager";
+    };
+
+    settings = {
+      colors = {
+        hints = {
+          bg = "#000000";
+          fg = "#ffffff";
+        };
+        tabs.bar.bg = "#000000";
+      };
+      qt.highdpi = true;
+    };
+  };
 }

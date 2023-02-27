@@ -12,6 +12,9 @@
   boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+  boot.kernel.sysctl = {
+    "vm.max_map_count" = 1000000;
+  };
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/2b4c2544-8ae7-4d38-953e-b8624e58658b";

@@ -9,7 +9,13 @@
 
     printing = {
       enable = true;
-      drivers = with pkgs; [ cups-brother-hll2340dw ];
+      drivers = with pkgs; [
+        gutenprint
+        gutenprintBin
+        foomatic-filters
+        brlaser
+        cups-brother-hll2340dw
+      ];
     };
 
     avahi = {
