@@ -14,12 +14,13 @@
   homebrew.casks = [
     "beekeeper-studio"
     "calibre"
+    "discord"
     "docker"
     "google-chrome"
     "insomnia"
     "notion"
     "plex"
-    "postgres"
+    "postgres-unofficial"
     "spotify"
   ];
 
