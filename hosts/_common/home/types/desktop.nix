@@ -3,7 +3,6 @@
 {
   imports = [
     ../alacritty.nix
-    ../browserpass.nix
     ../kitty.nix
   ];
 
