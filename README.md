@@ -1,6 +1,6 @@
 <h1 align="center">Milo Gertjejansen's dotfiles</h1>
 
-<p align="center">✨🔥 Now with Nix Flake hotness. 🔥✨</p>
+<p align="center">❄️✨🐧🔥 Now with Nix Flake hotness. 🔥🐧✨❄️</p>
 
 ---
 
@@ -45,12 +45,12 @@ find I actually did want it everything is searchable.
 
 # Your machines?
 
-| Hostname  | Platform         | Name history |
-| ---       | ---              | ---          |
-| `theseus` | NixOS (desktop)  | Formerly `apollo` but I replaced all the guts while the case remained the same. |
-| `hog`     | NixOS (headless) | I used to have `pig`, now I have `hog`. |
+| Hostname        | Platform         | Name history |
+| ---             | ---              | ---          |
+| `theseus`       | NixOS (desktop)  | Formerly `apollo` but I replaced all the guts while the case remained the same. |
+| `hog`           | NixOS (headless) | I used to have `pig`, now I have `hog`. |
 | `mgert-worktop` | MacOS (M1)       | My work laptop. |
-| `coucher` | MacOS (Intel)    | Formerly `worktop`. I use it on the couch. |
+| `coucher`       | MacOS (Intel)    | Formerly `worktop`. I use it on the couch. |
 
 
 ## 🪦 Retired machines

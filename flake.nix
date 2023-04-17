@@ -16,7 +16,7 @@
     };
 
     neovim-custom = {
-      url = "path:./modules/neovim";
+      url = "path:modules/neovim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

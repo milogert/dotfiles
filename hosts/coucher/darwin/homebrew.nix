@@ -15,13 +15,14 @@
   homebrew.casks = [
     "beekeeper-studio"
     "calibre"
+    "discord"
     "docker"
     "google-chrome"
     "insomnia"
     "notion"
     "plex"
     "pocket-casts"
-    "postgres"
+    "postgres-unofficial"
   ];
 
   homebrew.masApps = {

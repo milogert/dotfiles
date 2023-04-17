@@ -55,7 +55,7 @@
         "type": "path"
       },
       "original": {
-        "path": "./modules/neovim",
+        "path": "modules/neovim",
         "type": "path"
       }
     },
