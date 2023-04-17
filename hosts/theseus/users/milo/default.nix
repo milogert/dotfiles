@@ -26,6 +26,7 @@
   home.packages = with pkgs; [
     calibre
     cargo
+    cider
     discord
     insomnia
     qtpass

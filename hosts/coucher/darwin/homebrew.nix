@@ -8,6 +8,7 @@
   ];
 
   homebrew.brews = [
+    "ios-deploy"
     "pinentry-mac"
   ];
 
@@ -19,8 +20,8 @@
     "insomnia"
     "notion"
     "plex"
+    "pocket-casts"
     "postgres"
-    "spotify"
   ];
 
   homebrew.masApps = {

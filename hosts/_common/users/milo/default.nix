@@ -23,8 +23,9 @@ in {
 
   home.packages = with pkgs; [
     asdf-vm
-    nodejs
     elixir
+    nodejs
+    watchman
   ];
 
   programs.git.signing = {

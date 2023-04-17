@@ -1,7 +1,7 @@
-local lsp_installer = require("nvim-lsp-installer")
+local mason = require("mason")
 
 -- Provide settings first!
-lsp_installer.settings {
+mason.setup {
   ui = {
     icons = {
       server_installed = "✓",
@@ -16,106 +16,31 @@ lsp_installer.settings {
   max_concurrent_installers = 4,
 }
 
+require("mason-lspconfig").setup {
+  ensure_installed = {
+    "cssls",
+    "eslint",
+    "html",
+    "jsonls",
+    "stylelint_lsp",
+    "tailwindcss",
+    "cssmodules_ls",
+  },
+}
+
+
 -- Lsp servers enabled. `true` indicates they are managed by nix.
 local servers = {
   -- denols = true,
   elixirls = true,
   rnix = true,
-  sumneko_lua = true,
+  lua_ls = true,
   terraformls = true,
   tsserver = true,
-
-  cssls = false,
-  eslint = false,
-  html = false,
-  jsonls = false,
-  stylelint_lsp = false,
-  tailwindcss = false,
 }
 
-local on_attach = require("milogert.config.lsp.on_attach")
-
-local server_configs = {
-  -- denols = {
-  --   cmd = vim.g.ls_locations.denols,
-  --   on_attach = function (client, bufnr)
-  --     vim.g.markdown_fenced_languages = {
-  --       "ts=typescript"
-  --     }
-  --
-  --     on_attach(client, bufnr)
-  --   end
-  -- },
-
-  elixirls = { cmd = vim.g.ls_locations.elixirls },
-
-  eslint = {
-    on_attach = function (client, bufnr)
-      -- Force eslint to accept formatting requests.
-      client.server_capabilities.document_formatting = true
-      client.server_capabilities.document_range_formatting = false
-
-      on_attach(client, bufnr)
-    end,
-    settings = {
-      codeActionOnSave = {
-        enable = true,
-        mode = "all",
-      },
-    },
-  },
-
-  rnix = { cmd = vim.g.ls_locations.rnix },
-
-  stylelint_lsp = {
-    filetypes = {
-      "css",
-      "less",
-      "scss",
-      "sugarss",
-      "vue",
-      "wxss",
-      -- "javascript",
-      -- "javascriptreact",
-      -- "typescript",
-      -- "typescriptreact",
-    },
-    settings = {
-      stylelintplus = {
-        autoFixOnFormat = true,
-        autoFixOnSave = true,
-      },
-    },
-  },
-
-  sumneko_lua = {
-    cmd = vim.g.ls_locations.sumneko_lua,
-    settings = { Lua = { diagnostics = { globals = {
-      'vim',
-      'love',
-      'hs',
-    } } } },
-  },
-
-  tailwindcss = {
-    init_options = {
-      userLanguages = {
-        heex = "html-eex",
-      },
-    },
-  },
-
-  tsserver = {
-    cmd = vim.g.ls_locations.tsserver,
-    on_attach = function (client, bufnr)
-      -- Disable tsserver formatting requsts.
-      client.server_capabilities.document_formatting = false
-      client.server_capabilities.document_range_formatting = false
-
-      on_attach(client, bufnr)
-    end
-  },
-}
+local on_attach = require "milogert.config.lsp.on_attach"
+local lspconfig = require "lspconfig"
 
 local default_capabilities = vim.lsp.protocol.make_client_capabilities()
 default_capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -127,44 +52,97 @@ local server_defaults = {
   on_attach = on_attach,
 }
 
-local on_server_ready = function(server)
-  local opts_data = server_configs[server.name]
-  local opts_data_type = type(opts_data)
+-- These servers are easy, they don't need any special config
+lspconfig.cssls.setup(server_defaults)
+lspconfig.cssmodules_ls.setup(server_defaults)
+lspconfig.html.setup(server_defaults)
+lspconfig.jsonls.setup(server_defaults)
 
-  local opts = {}
-  if opts_data_type == 'function' then
-    opts = opts_data(server)
-  elseif opts_data_type == 'table' then
-    opts = opts_data
+--
+-- lspconfig.denols.setup(vim.tbl_extend("keep", {
+--   cmd = vim.g.ls_locations.denols,
+--   on_attach = function (client, bufnr)
+--     vim.g.markdown_fenced_languages = {
+--       "ts=typescript"
+--     }
+--
+--     on_attach(client, bufnr)
+--   end
+-- }, server_defaults))
+
+lspconfig.terraformls.setup(vim.tbl_extend("keep", {
+  cmd = vim.g.ls_locations.terraformls,
+}, server_defaults))
+
+lspconfig.elixirls.setup(vim.tbl_extend("keep", {
+  cmd = vim.g.ls_locations.elixirls,
+}, server_defaults))
+
+lspconfig.eslint.setup(vim.tbl_extend("keep", {
+  on_attach = function (client, bufnr)
+    -- Force eslint to accept formatting requests.
+    client.server_capabilities.document_formatting = true
+    client.server_capabilities.document_range_formatting = false
+
+    on_attach(client, bufnr)
+  end,
+  settings = {
+    codeActionOnSave = {
+      enable = true,
+      mode = "all",
+    },
+  },
+}, server_defaults))
+
+lspconfig.rnix.setup(vim.tbl_extend("keep", {
+  cmd = vim.g.ls_locations.rnix,
+}, server_defaults))
+
+lspconfig.stylelint_lsp.setup(vim.tbl_extend("keep", {
+  filetypes = {
+    "css",
+    "less",
+    "scss",
+    "sugarss",
+    "vue",
+    "wxss",
+    -- "javascript",
+    -- "javascriptreact",
+    -- "typescript",
+    -- "typescriptreact",
+  },
+  settings = {
+    stylelintplus = {
+      autoFixOnFormat = true,
+      autoFixOnSave = true,
+    },
+  },
+}, server_defaults))
+
+lspconfig.lua_ls.setup(vim.tbl_extend("keep", {
+  cmd = vim.g.ls_locations.lua_ls,
+  settings = { Lua = { diagnostics = { globals = {
+    'vim',
+    'love',
+    'hs',
+  } } } },
+}, server_defaults))
+
+lspconfig.tailwindcss.setup(vim.tbl_extend("keep", {
+  init_options = {
+    userLanguages = {
+      heex = "html-eex",
+    },
+  },
+}, server_defaults))
+
+lspconfig.tsserver.setup(vim.tbl_extend("keep", {
+  cmd = vim.g.ls_locations.tsserver,
+  on_attach = function (client, bufnr)
+    -- Disable tsserver formatting requsts.
+    client.server_capabilities.document_formatting = false
+    client.server_capabilities.document_range_formatting = false
+
+    on_attach(client, bufnr)
   end
-
-  opts = vim.tbl_extend("keep", opts, server_defaults)
-
-  -- This setup() function is exactly the same as lspconfig's setup function
-  -- (:help lspconfig-quickstart)
-  server:setup(opts)
-end
-
-lsp_installer.on_server_ready(on_server_ready)
-
-local function install_server(server, nix_managed)
-  local lsp_installer_servers = require'nvim-lsp-installer.servers'
-  local ok, server_analyzer = lsp_installer_servers.get_server(server)
-  if ok then
-    -- Skip rnix. It's installed already. TODO I could probably do this with
-    -- elixir ls as well.
-    if nix_managed then
-      on_server_ready(server_analyzer)
-    elseif not server_analyzer:is_installed() then
-      server_analyzer:install(server)
-    end
-  end
-end
-
--- setup the LS
-require "lspconfig"
-
--- install the LS
-for server, nix_managed in pairs(servers) do
-  install_server(server, nix_managed)
-end
+}, server_defaults))

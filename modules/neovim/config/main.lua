@@ -34,7 +34,7 @@ local plugins = {
 for _, plugin in ipairs(plugins) do
   local ok, err = pcall(require, 'milogert.config.' .. plugin)
   if not ok then
-    log.error('Failed to load plugin config: ' .. plugin)
+    -- log.error('Failed to load plugin config: ' .. plugin)
     log.error(err)
   end
 end

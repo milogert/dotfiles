@@ -155,8 +155,11 @@ end
 
 u.nmap('dd', '', { callback = f.smart_dd, expr = true })
 
-u.nmap('<Leader>gl', '', { callback = f.git_permalink })
+u.nmap('<Leader>gl', '', { callback = function () f.git_permalink('.') end })
+u.vmap('<Leader>gl', '', { callback = function () f.git_permalink('v') end })
 
 -- Spellcheck
 u.nmap('<F11>', ':set spell!<CR>')
 u.imap('<F11>', '<C-O>:set spell!<CR>')
+
+u.nmap('<Leader>gt', ':G add % | G commit -m "" | G push<left><left><left><left><left><left><left><left><left><left>')

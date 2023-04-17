@@ -76,11 +76,14 @@ cmp.setup {
   },
   sources = {
     { name = "nvim_lsp", priority = 99 },
+    { name = 'nvim_lsp_signature_help' },
     { name = "nvim_lua" },
     { name = "path" },
     { name = "luasnip" },
     { name = "buffer", keyword_length = 1 },
     { name = "calc" },
+    { name = 'conventionalcommits' },
+
     -- { name = "copilot" },
     -- { name = 'dictionary', keyword_length = 2 },
   },

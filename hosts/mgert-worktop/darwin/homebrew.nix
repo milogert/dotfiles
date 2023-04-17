@@ -8,6 +8,7 @@
   ];
 
   homebrew.brews = [
+    "ios-deploy"
     "pinentry-mac"
   ];
 
@@ -16,6 +17,7 @@
     "beekeeper-studio"
     "calibre"
     "cloudapp"
+    "cyberduck"
     # "docker" # Docker Desktop is not supported in homebrew currently.
     "google-chrome"
     "insomnia"
@@ -24,9 +26,10 @@
     "notion"
     "openvpn-connect"
     "plex"
+    "pocket-casts"
     "postgres-unofficial"
     "slack"
-    "spotify"
+    "vyprvpn"
     "zoom"
   ];
 

@@ -21,6 +21,30 @@
     };
   };
 
+  mason-nvim = pkgs.vimUtils.buildVimPlugin rec {
+    name = "mason.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "williamboman";
+      repo = name;
+      rev = "beb79ced9e49ea1ce2bd170b79e0cf819a8377c7";
+      sha256 = "0qcfl8qvj0y1qw6pqpasrxy5ji7rxnns2bmbr8hgjnpqgnp8rryz";
+    };
+    # Only skips tests.
+    dontBuild = true;
+  };
+
+  mason-lspconfig-nvim = pkgs.vimUtils.buildVimPlugin rec {
+    name = "mason-lspconfig.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "williamboman";
+      repo = name;
+        rev = "d7ff61a828d59bc593ea3e2020508c114048d790";
+        sha256 = "03rmdhp30kzvc98gaagxbm3cm0q1mqy28wjih6r7l14kp3qv8bv1";
+      };
+    # Only skips tests.
+    dontBuild = true;
+  };
+
   nvim-lsp-installer = pkgs.vimUtils.buildVimPlugin rec {
     name = "nvim-lsp-installer";
     src = pkgs.fetchFromGitHub {
@@ -53,6 +77,16 @@
     };
   };
 
+  srcery-vim = pkgs.vimUtils.buildVimPlugin rec {
+    name = "srcery-vim";
+    src = pkgs.fetchFromGitHub {
+      owner = "srcery-colors";
+      repo = name;
+      rev = "7af46a5b032e3275dc6d3c993d72fb290d51f74d";
+      sha256 = "1v5xld3v3i7i2xkp3r1nqcghriikpb2ak7d0a021hjbasm74fbgc";
+    };
+  };
+
   sibling-swap-nvim = pkgs.vimUtils.buildVimPlugin rec {
     name = "sibling-swap.nvim";
     src = pkgs.fetchFromGitHub {
@@ -80,6 +114,19 @@
       repo = name;
       rev = "625ad428a818041cbbc63e055049108ef5b436a1";
       sha256 = "1rdfw25lljv53h2f2nc1gmx9awggk7k3nrfj46ssl11jn6lyvbj8";
+    };
+  };
+
+  # art-nvim = pkgs.vimUtils.buildVimPlugin {
+  #   name = "art-nvim";
+  #   src = /Users/milo/projects/art-nvim;
+  # };
+
+  art-nvim = pkgs.vimUtils.buildVimPlugin rec {
+    name = "art-nvim";
+    src = builtins.fetchGit {
+      url = "git@github.com:articulate/art-nvim.git";
+      rev = "33b19e043cefb7a7db9bc9378efda2a6eaa9fd83";
     };
   };
 }

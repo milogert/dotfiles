@@ -5,12 +5,16 @@ let
   customPlugins = with vimPlugins; [
     heirline-nvim
     hydra-nvim
+    mason-nvim
+    mason-lspconfig-nvim
     nvim-lsp-installer
     nvim-runscript
     persistence-nvim
-    sibling-swap-nvim
+    # sibling-swap-nvim
+    srcery-vim
     vim-arpeggio
     vim-tada
+    art-nvim
   ];
 
   # This is propogated down to copilot-lua since it needs help finding the
@@ -21,11 +25,17 @@ in
   pkgs.wrapNeovim pkgs.neovim-unwrapped {
     configure = {
       customRC = ''
-        " Set flake directory, controlled by nix
+        " Set flake directory, controlled by nix.
         let g:flakePackages = '${flakePackageDir}'
 
-        " Set config dir from nix
+        " Set config dir from nix.
         let g:configPath = '${configDir}'
+
+        " Dirvish - override netrw when using Explore, Sexplore, and Vexplore.
+        let g:loaded_netrwPlugin = 1
+        command! -nargs=? -complete=dir Explore Dirvish <args>
+        command! -nargs=? -complete=dir Sexplore belowright split | silent Dirvish <args>
+        command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args>
 
         lua << EOF
         vim.g.debuggers = {
@@ -39,7 +49,7 @@ in
             "--stdio",
           },
           rnix = { "${pkgs.rnix-lsp}/bin/rnix-lsp" },
-          sumneko_lua = { "${pkgs.sumneko-lua-language-server}/bin/lua-language-server" },
+          lua_ls = { "${pkgs.sumneko-lua-language-server}/bin/lua-language-server" },
           tailwindcss = {
             "${pkgs.vscode-extensions.bradlc.vscode-tailwindcss}/bin/tailwindcss-language-server",
             "--stdio",
@@ -55,7 +65,7 @@ in
           },
         }
 
-        -- Add the config directory to the start of the rtp
+        -- Add the config directory to the start of the rtp.
         vim.opt.runtimepath:prepend("${configDir}")
 
         vim.g.tsParserPath = vim.fn.stdpath("data") .. "/site"
@@ -69,7 +79,9 @@ in
           cmp-buffer
           cmp-calc
           cmp-cmdline
+          cmp-conventionalcommits
           cmp-nvim-lsp
+          cmp-nvim-lsp-signature-help
           cmp-nvim-lua
           cmp-path
           cmp_luasnip
@@ -92,7 +104,6 @@ in
           nvim-web-devicons
           package-info-nvim
           plenary-nvim
-          srcery-vim
           vim-abolish
           vim-dadbod
           vim-dadbod-ui
