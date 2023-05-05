@@ -24,9 +24,15 @@ Contains my neovim configuration.
 
 It's a text editor. Mostly just black-ish screens.
 
-![1](./screenshots/1.png)
-![2](./screenshots/2.png)
-![3](./screenshots/3.png)
+<p float="left">
+  <img src="./screenshots/1.png" width="49%" />
+  <img src="./screenshots/2.png" width="49%" />
+</p>
+
+<p float="left">
+  <img src="./screenshots/3.png" width="49%">
+  <img src="./screenshots/4.png" width="49%">
+</p>
 
 ## Plugins
 
