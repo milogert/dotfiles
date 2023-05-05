@@ -17,6 +17,7 @@
     "calibre"
     "discord"
     "docker"
+    "flipper"
     "google-chrome"
     "insomnia"
     "notion"

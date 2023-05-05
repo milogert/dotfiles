@@ -25,6 +25,7 @@ in {
     asdf-vm
     elixir
     nodejs
+    stack
     watchman
   ];
 

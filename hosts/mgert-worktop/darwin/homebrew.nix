@@ -19,6 +19,7 @@
     "cloudapp"
     "cyberduck"
     # "docker" # Docker Desktop is not supported in homebrew currently.
+    "flipper"
     "google-chrome"
     "insomnia"
     "krisp"

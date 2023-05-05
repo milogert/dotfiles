@@ -13,6 +13,7 @@ local plugins = {
   "colorizer",
   "comment",
   "dap",
+  "devcontainer",
   "fidget",
   "fzf-lua",
   "gitsigns",

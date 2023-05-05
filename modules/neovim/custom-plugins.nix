@@ -1,4 +1,4 @@
-{ fetchFromGitHub, pkgs }:
+{ fetchgit, fetchFromGitHub, pkgs }:
 
 {
   heirline-nvim = pkgs.vimUtils.buildVimPlugin rec {
@@ -45,16 +45,13 @@
     dontBuild = true;
   };
 
-  nvim-lsp-installer = pkgs.vimUtils.buildVimPlugin rec {
-    name = "nvim-lsp-installer";
-    src = pkgs.fetchFromGitHub {
-      owner = "williamboman";
-      repo = name;
-      rev = "8603cdc1692f2c3078e328a2ed9554cf9047594d";
-      sha256 = "0rwnm9bvd8gf5ipg7mbysbs13dzi0ijjarv3x4a9czmgc4b48h7q";
+  nvim-dev-container = pkgs.vimUtils.buildVimPlugin rec {
+    name = "nvim-dev-container";
+    src = pkgs.fetchgit {
+      url = "https://codeberg.org/esensar/${name}";
+      rev = "4b61c02417debde53dc6445941c5a3be7d05e990";
+      sha256 = "1l269qy4v3qiaxwkjd3s5bfa4zwld67aaxb9qa9ay8mgmz5hdh27";
     };
-    # Only skips tests.
-    dontBuild = true;
   };
 
   nvim-runscript = pkgs.vimUtils.buildVimPlugin rec {
@@ -94,6 +91,16 @@
       repo = name;
       rev = "71eb9daa5233cd576ce8119bc2dbfa67d4d35462";
       sha256 = "070amb0rrl77bi5yrfgl16s96hw7w8hm2v9pm2caky8fh1kq44gk";
+    };
+  };
+
+  vim-ai = pkgs.vimUtils.buildVimPlugin rec {
+    name = "vim-ai";
+    src = pkgs.fetchFromGitHub {
+      owner = "madox2";
+      repo = name;
+      rev = "6ae66e51f29c60537b7e931f85cc6f452b6cc651";
+      sha256 = "1q9xvl99r1ar6j7bwq9hwdm5rsp239dgha8ljl15dwqfldr3p4w8";
     };
   };
 
