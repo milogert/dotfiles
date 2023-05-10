@@ -65,6 +65,7 @@
       fetch.prune = true;
       grep.lineNumber = true;
       help.autocorrect = 1;
+      init.defaultBranch = "main";
       interactive.diffFilter = "delta --dark --color-only";
       pull.rebase = false;
       push.default = "upstream";
