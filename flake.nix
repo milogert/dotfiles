@@ -145,6 +145,15 @@
             type = "headless";
           };
         };
+
+        veem = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = mkNixosConfig {
+            host = "veem";
+            users = ["milo"];
+            type = "desktop";
+          };
+        };
       };
 
       packages = {
