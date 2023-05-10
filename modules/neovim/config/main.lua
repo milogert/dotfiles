@@ -4,6 +4,7 @@ local log = require("milogert.logger")
 
 -- Set the leader key. This should be first.
 require("milogert.settings")
+require("milogert.autocmds")
 
 vim.cmd [[ packadd vimplugin-vim-arpeggio ]]
 
