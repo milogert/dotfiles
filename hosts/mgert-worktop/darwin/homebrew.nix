@@ -35,6 +35,8 @@
   ];
 
   homebrew.masApps = {
+    "1Blocker" = 1365531024;
+    ColorSlurp = 1287239339;
     Xcode = 497799835;
   };
 
