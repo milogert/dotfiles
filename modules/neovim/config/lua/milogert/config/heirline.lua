@@ -26,10 +26,18 @@ local colors = {
 local verbose_modes = true
 
 -- Utility components
-local Align = { provider = "%=" }
-local Space = { provider = " " }
+local align = { provider = "%=" }
+local space = { provider = " " }
 
-local ViMode = {
+local mode_indicator = {
+  update = {
+      "ModeChanged",
+      pattern = "*:*",
+      callback = vim.schedule_wrap(function()
+          vim.cmd("redrawstatus")
+      end),
+  },
+
   -- get vim current mode, this information will be required by the provider
   -- and the highlight functions, so we compute it only once per component
   -- evaluation and store it as a component attribute
@@ -156,18 +164,16 @@ local ViMode = {
     return { fg = self.mode_colors[mode], bold = true }
   end,
 
-  Space,
+  space,
 }
 
-local FileNameBlock = {
-  -- let's first set up some attributes needed by this component and it's children
+local file_name_block = {
   init = function(self)
     self.filename = vim.api.nvim_buf_get_name(0)
   end,
 }
--- We can now define some children separately and add them later
 
-local FileIcon = {
+local file_icon = {
   init = function(self)
     local filename = self.filename
     local extension = vim.fn.fnamemodify(filename, ":e")
@@ -181,27 +187,22 @@ local FileIcon = {
   end
 }
 
-local FileName = {
+local file_name = {
   provider = function(self)
-    -- first, trim the pattern relative to the current directory. For other
-    -- options, see :h filename-modifers
     local filename = vim.fn.fnamemodify(self.filename, ":.")
     if filename == "" then
       return "[No Name]"
     end
 
-    -- now, if the filename would occupy more than 1/4th of the available
-    -- space, we trim the file path to its initials
     if not conditions.width_percent_below(#filename, 0.25) then
       filename = vim.fn.pathshorten(filename)
     end
 
     return filename
   end,
-  -- hl = { fg = utils.get_highlight("Directory").fg },
 }
 
-local FileFlags = {
+local file_flags = {
   {
     provider = function() if vim.bo.modified then return "[+]" end end,
     hl = { fg = colors.green }
@@ -212,12 +213,7 @@ local FileFlags = {
   }
 }
 
--- Now, let's say that we want the filename color to change if the buffer is
--- modified. Of course, we could do that directly using the FileName.hl field,
--- but we'll see how easy it is to alter existing components using a "modifier"
--- component
-
-local FileNameModifer = {
+local file_name_modifier = {
   hl = function()
     if vim.bo.modified then
       -- use `force` because we need to override the child's hl foreground
@@ -226,75 +222,37 @@ local FileNameModifer = {
   end,
 }
 
--- let's add the children to our FileNameBlock component
-FileNameBlock = utils.insert(
-  FileNameBlock,
-  FileIcon,
-  utils.insert(FileNameModifer, FileName), -- a new table where FileName is a child of FileNameModifier
-  unpack(FileFlags), -- A small optimisation, since their parent does nothing
+file_name_block = utils.insert(
+  file_name_block,
+  file_icon,
+  utils.insert(file_name_modifier, file_name), -- a new table where FileName is a child of FileNameModifier
+  unpack(file_flags), -- A small optimisation, since their parent does nothing
   { provider = '%<'}, -- this means that the statusline is cut here when there's not enough space
-  Space
+  space
 )
 
-local FileType = {
+local file_type = {
   provider = function()
     -- return string.upper(vim.bo.filetype)
     return vim.bo.filetype
   end,
   hl = { fg = utils.get_highlight("Type").fg, bold = true },
-  Space,
+  space,
 }
 
--- local FileEncoding = {
---   provider = function()
---     local enc = (vim.bo.fenc ~= '' and vim.bo.fenc) or vim.o.enc -- :h 'enc'
---     return enc ~= 'utf-8' and enc:upper()
---   end
--- }
-
--- local FileFormat = {
---   provider = function()
---     local fmt = vim.bo.fileformat
---     return fmt ~= 'unix' and fmt:upper()
---   end
--- }
-
--- local _FileSize = {
---   provider = function()
---     -- stackoverflow, compute human readable file size
---     local suffix = { 'b', 'k', 'M', 'G', 'T', 'P', 'E' }
---     local fsize = vim.fn.getfsize(vim.api.nvim_buf_get_name(0))
---     fsize = (fsize < 0 and 0) or fsize
---     if fsize <= 0 then
---       return "0"..suffix[1]
---     end
---     local i = math.floor((math.log(fsize) / math.log(1024)))
---     return string.format("%.2g%s", fsize / math.pow(1024, i), suffix[i])
---   end
--- }
-
--- local FileLastModified = {
---   -- did you know? Vim is full of functions!
---   provider = function()
---     local ftime = vim.fn.getftime(vim.api.nvim_buf_gett_name(0))
---     return (ftime > 0) and os.date("%c", ftime)
---   end
--- }
-
--- We're getting minimalists here!
-local Ruler = {
+local ruler = {
   -- %l = current line number
   -- %L = number of lines in the buffer
   -- %c = column number
   -- %P = percentage through file of displayed window
   provider = "%7(%l/%3L%):%2c %P",
-  Space,
+  space,
 }
 
--- I take no credits for this! :lion:
-local ScrollBar = {
+local scrollbar = {
   static = {
-    sbar = { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' }
+    -- sbar = { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' }
+    sbar = { '🭶', '🭷', '🭸', '🭹', '🭺', '🭻' }
   },
   provider = function(self)
     local curr_line = vim.api.nvim_win_get_cursor(0)[1]
@@ -302,11 +260,12 @@ local ScrollBar = {
     local i = math.floor(curr_line / lines * (#self.sbar - 1)) + 1
     return string.rep(self.sbar[i], 2)
   end,
-  Space,
+  space,
 }
 
-local LSPActive = {
+local lsp_indicator = {
   condition = conditions.lsp_attached,
+  update = {'LspAttach', 'LspDetach'},
 
   -- Or complicate things a bit and get the servers names
   provider  = function()
@@ -326,11 +285,12 @@ local LSPActive = {
 
   hl = { fg = colors.green, bold = true },
 
-  Space,
+  space,
 }
 
-local Diagnostics = {
+local diagnostic_icons = {
   condition = conditions.has_diagnostics,
+  update = { "DiagnosticChanged", "BufEnter" },
 
   static = {
     error_icon = vim.fn.sign_getdefined("DiagnosticSignError")[1].text,
@@ -377,72 +337,7 @@ local Diagnostics = {
   { provider = "]" },
 }
 
--- local Navic = {
---   condition = require("nvim-navic").is_available,
---   static = {
---     -- create a type highlight map
---     type_hl = {
---       File = "Directory",
---       Module = "Include",
---       Namespace = "TSNamespace",
---       Package = "Include",
---       Class = "Struct",
---       Method = "Method",
---       Property = "TSProperty",
---       Field = "TSField",
---       Constructor = "TSConstructor ",
---       Enum = "TSField",
---       Interface = "Type",
---       Function = "Function",
---       Variable = "TSVariable",
---       Constant = "Constant",
---       String = "String",
---       Number = "Number",
---       Boolean = "Boolean",
---       Array = "TSField",
---       Object = "Type",
---       Key = "TSKeyword",
---       Null = "Comment",
---       EnumMember = "TSField",
---       Struct = "Struct",
---       Event = "Keyword",
---       Operator = "Operator",
---       TypeParameter = "Type",
---     },
---   },
---   init = function(self)
---     local data = require("nvim-navic").get_data() or {}
---     local children = {}
---     -- create a child for each level
---     for i, d in ipairs(data) do
---       local child = {
---         {
---           provider = d.icon,
---           hl = self.type_hl[d.type],
---         },
---         {
---           provider = d.name,
---           -- highlight icon only or location name as well
---           -- hl = self.type_hl[d.type],
---         },
---       }
---       -- add a separator only if needed
---       if #data > 1 and i < #data then
---         table.insert(child, {
---           provider = " > ",
---         })
---       end
---       table.insert(children, child)
---     end
---     -- instantiate the new child
---     self[1] = self:new(children, 1)
---   end,
---   hl = { fg = "gray" },
--- }
-
--- local FlexNavic = utils.make_flexible_component(3, Navic, { provider = "" })
-
-local DAPMessages = {
+local dap_messages = {
   -- display the dap messages only on the debugged file
   condition = function()
     local session = require("dap").session()
@@ -464,8 +359,7 @@ local DAPMessages = {
   hl = { fg = utils.get_highlight('Debug').fg },
 }
 
-
-local GitBranch = {
+local git_branch = {
   condition = conditions.is_git_repo,
 
   init = function(self)
@@ -480,7 +374,7 @@ local GitBranch = {
   }
 }
 
-local Git = {
+local git = {
   condition = conditions.is_git_repo,
 
   init = function(self)
@@ -490,7 +384,7 @@ local Git = {
 
   hl = { fg = colors.orange },
 
-  GitBranch,
+  git_branch,
 
   -- You could handle delimiters, icons and counts similar to Diagnostics
   -- {
@@ -526,10 +420,10 @@ local Git = {
   --   end,
   --   provider = ")",
   -- },
-  Space,
+  space,
 }
 
-local Spell = {
+local spell = {
   condition = function()
     return vim.wo.spell
   end,
@@ -537,8 +431,7 @@ local Spell = {
   hl = { bold = true, fg = colors.orange }
 }
 
-
-local HelpFileName = {
+local special_help_file = {
   condition = function()
     return vim.bo.filetype == "help"
   end,
@@ -549,7 +442,7 @@ local HelpFileName = {
   hl = { fg = colors.blue },
 }
 
-local FugitiveStatus = {
+local special_fugitive = {
   condition = function()
     return vim.bo.filetype == "fugitive"
   end,
@@ -562,7 +455,7 @@ local FugitiveStatus = {
   },
 }
 
-local DirvishFileName = {
+local special_dirvish = {
   condition = function()
     return vim.bo.filetype == "dirvish"
   end,
@@ -574,23 +467,23 @@ local DirvishFileName = {
 
 }
 
-local DefaultStatusline = {
-  ViMode, FileNameBlock, Git, Diagnostics, Spell, Align,
+local statusline_default = {
+  mode_indicator, file_name_block, git, diagnostic_icons, spell, align,
 
-  --[[FlexNavic,]] DAPMessages, Align,
+  dap_messages, align,
 
-  LSPActive, FileType, Ruler, ScrollBar
+  lsp_indicator, file_type, ruler, scrollbar
 }
 
-local InactiveStatusline = {
+local statusline_inactive = {
   condition = function()
     return not conditions.is_active()
   end,
 
-  FileNameBlock, Align, FileType,
+  file_name_block, align, file_type,
 }
 
-local SpecialStatusline = {
+local statusline_special = {
   condition = function()
     return conditions.buffer_matches({
       buftype = {"nofile", "help", "quickfix"},
@@ -598,11 +491,11 @@ local SpecialStatusline = {
     })
   end,
 
-  FileType, HelpFileName, FugitiveStatus, DirvishFileName, Align,
-  Ruler, ScrollBar
+  file_type, special_help_file, special_fugitive, special_dirvish, align,
+  ruler, scrollbar
 }
 
-local TerminalStatusline = {
+local statusline_terminal = {
   condition = function()
     return conditions.buffer_matches({ buftype = { "terminal" } })
   end,
@@ -610,11 +503,11 @@ local TerminalStatusline = {
   hl = { bg = colors.dark_red },
 
   -- Quickly add a condition to the ViMode to only show it when buffer is active!
-  { condition = conditions.is_active, ViMode, Space },
-  FileType, --[[TerminalName,]] Align,
+  { condition = conditions.is_active, mode_indicator, space },
+  file_type, --[[TerminalName,]] align,
 }
 
-local StatusLines = {
+local statuslines = {
   hl = function()
     if conditions.is_active() then
       return {
@@ -631,38 +524,9 @@ local StatusLines = {
 
   fallthrough = false,
 
-  SpecialStatusline, TerminalStatusline, InactiveStatusline, DefaultStatusline,
+  statusline_special, statusline_terminal, statusline_inactive, statusline_default,
 }
 
--- local WinBars = {
---   init = utils.pick_child_on_condition,
---   {   -- Hide the winbar for special buffers
---     condition = function()
---       return conditions.buffer_matches({
---         buftype = { "nofile", "prompt", "help", "quickfix" },
---         filetype = { "^git.*", "fugitive" },
---       })
---     end,
---     provider = "",
---   },
---   {   -- A special winbar for terminals
---     condition = function()
---       return conditions.buffer_matches({ buftype = { "terminal" } })
---     end,
---     utils.surround({ "", "" }, colors.dark_red, {
---       FileType,
---       Space,
---       -- TerminalName,
---     }),
---   },
---   {   -- An inactive winbar for regular files
---     condition = function()
---       return not conditions.is_active()
---     end,
---     utils.surround({ "", "" }, colors.bright_bg, { hl = { fg = "gray", force = true }, FileNameBlock }),
---   },
---   -- A winbar for regular files
---   utils.surround({ "", "" }, colors.bright_bg, FileNameBlock),
--- }
-
-require('heirline').setup(StatusLines)--, WinBars)
+require('heirline').setup({
+  statusline = statuslines,
+})
