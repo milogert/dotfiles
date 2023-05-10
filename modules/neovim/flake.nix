@@ -24,6 +24,16 @@
     };
 
     packages = {
+      aarch64-linux = let
+        pkgs = import nixpkgs {
+          system = "aarch64-linux";
+          overlays = [ self.overlays.default ];
+        };
+      in {
+        inherit (pkgs) neovim-custom;
+        default = pkgs.neovim-custom;
+      };
+
       x86_64-linux = let
         pkgs = import nixpkgs {
           system = "x86_64-linux";

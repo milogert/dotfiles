@@ -36,7 +36,7 @@ config: check ${HOST}
 
 # NixOS commands.
 _nixos-build:
-	nix build ".#nixosConfigurations.${HOST}.config.system.build.toplevel"
+	nix build ".#nixosConfigurations.${HOST}.config.system.build.toplevel" --experimental-features "nix-command flakes"
 
 _nixos-switch:
 	# Old command: sudo nixos-rebuild switch --flake ".#${HOST}"
