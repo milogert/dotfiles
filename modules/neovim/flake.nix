@@ -12,7 +12,7 @@
           # deno
           nodePackages.typescript-language-server
           nodePackages.typescript
-          rnix-lsp
+          nil
           sumneko-lua-language-server
           terraform-ls
           vscode-extensions.bradlc.vscode-tailwindcss

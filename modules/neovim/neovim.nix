@@ -3,18 +3,20 @@
 let
   vimPlugins = pkgs.callPackage ./custom-plugins.nix {};
   customPlugins = with vimPlugins; [
+    # sibling-swap-nvim
+    git-permalink-nvim
+    art-nvim
     heirline-nvim
     hydra-nvim
-    mason-nvim
     mason-lspconfig-nvim
-    nvim-lsp-installer
+    mason-nvim
+    nvim-dev-container
     nvim-runscript
     persistence-nvim
-    # sibling-swap-nvim
     srcery-vim
+    vim-ai
     vim-arpeggio
     vim-tada
-    art-nvim
   ];
 
   # This is propogated down to copilot-lua since it needs help finding the
@@ -48,7 +50,11 @@ in
             "${pkgs.vscode-extensions.dbaeumer.vscode-eslint}/bin/eslint",
             "--stdio",
           },
+          hls = {
+            "${pkgs.haskell-language-server}/bin/haskell-language-server-wrapper",
+          },
           rnix = { "${pkgs.rnix-lsp}/bin/rnix-lsp" },
+          nil_ls = { "${pkgs.nil}/bin/nil" },
           lua_ls = { "${pkgs.sumneko-lua-language-server}/bin/lua-language-server" },
           tailwindcss = {
             "${pkgs.vscode-extensions.bradlc.vscode-tailwindcss}/bin/tailwindcss-language-server",
@@ -79,7 +85,6 @@ in
           cmp-buffer
           cmp-calc
           cmp-cmdline
-          cmp-conventionalcommits
           cmp-nvim-lsp
           cmp-nvim-lsp-signature-help
           cmp-nvim-lua
@@ -89,6 +94,7 @@ in
           fidget-nvim
           fzf-lua
           gitsigns-nvim
+          haskell-tools-nvim
           lspkind-nvim
           luasnip
           mini-nvim
@@ -101,6 +107,7 @@ in
           nvim-dap-virtual-text
           nvim-lspconfig
           nvim-treesitter
+          nvim-treesitter-textobjects
           nvim-web-devicons
           package-info-nvim
           plenary-nvim

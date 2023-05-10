@@ -1,3 +1,7 @@
+vim.diagnostic.config({
+  source = true,
+})
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attachs to the current buffer
 local on_attach = function(client, bufnr)
@@ -14,8 +18,7 @@ local on_attach = function(client, bufnr)
   local function lsp(cmd) return '<cmd>lua vim.lsp.buf.' .. cmd .. '<CR>' end
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', '<leader>e',
-    diag("open_float("..bufnr..", { scope = 'line' })"),  opts)
+  buf_set_keymap('n', '<leader>e', diag("open_float()"),   opts)
   buf_set_keymap('n', '[d',        diag('goto_prev()'),    opts)
   buf_set_keymap('n', ']d',        diag('goto_next()'),    opts)
   buf_set_keymap('n', '<leader>q', diag('setloclist()'),   opts)

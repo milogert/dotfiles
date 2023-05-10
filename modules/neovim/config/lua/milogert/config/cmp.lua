@@ -88,7 +88,7 @@ cmp.setup {
     -- { name = 'dictionary', keyword_length = 2 },
   },
   experimental = {
-    ghost_text = true,
+    ghost_text = { enabled = true },
   },
 }
 

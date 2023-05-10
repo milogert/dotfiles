@@ -18,6 +18,7 @@ local plugins = {
   "fidget",
   "fzf-lua",
   "gitsigns",
+  "haskell-tools",
   "keybindings",
   "lsp.settings",
   "lsp.kind",

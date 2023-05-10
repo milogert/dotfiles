@@ -155,8 +155,9 @@ end
 
 u.nmap('dd', '', { callback = f.smart_dd, expr = true })
 
-u.nmap('<Leader>gl', '', { callback = function () f.git_permalink('.') end })
-u.vmap('<Leader>gl', '', { callback = function () f.git_permalink('v') end })
+local git_permalink = require('git-permalink')
+u.nmap('<Leader>gl', '', { callback = function () git_permalink.create_copy('.') end })
+u.vmap('<Leader>gl', '', { callback = function () git_permalink.create_copy('v') end })
 
 -- Spellcheck
 u.nmap('<F11>', ':set spell!<CR>')

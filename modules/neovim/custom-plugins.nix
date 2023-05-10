@@ -1,13 +1,42 @@
 { fetchgit, fetchFromGitHub, pkgs }:
 
 {
+  # git-permalink-nvim = pkgs.vimUtils.buildVimPlugin {
+  #   name = "git-permalink-nvim";
+  #   src = /Users/milo/git/git-permalink-nvim;
+  # };
+
+  git-permalink-nvim = pkgs.vimUtils.buildVimPlugin rec {
+    name = "git-permalink-nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "milogert";
+      repo = name;
+      rev = "2d41bacd16370bd4f0e5327e947c70708d6c94df";
+      sha256 = "0d9r4p4a8dms9k01ayvdgppy96ds8pnbq38r1kvjw7m9a7qg1rr4";
+    };
+  };
+
+
+  # art-nvim = pkgs.vimUtils.buildVimPlugin {
+  #   name = "art-nvim";
+  #   src = /Users/milo/projects/art-nvim;
+  # };
+
+  art-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "art-nvim";
+    src = builtins.fetchGit {
+      url = "git@github.com:articulate/art-nvim.git";
+      rev = "33b19e043cefb7a7db9bc9378efda2a6eaa9fd83";
+    };
+  };
+
   heirline-nvim = pkgs.vimUtils.buildVimPlugin rec {
     name = "heirline.nvim";
     src = pkgs.fetchFromGitHub {
       owner = "rebelot";
       repo = name;
-      rev = "a94390e0e8509944bfbd8265a5b4bb231d2d2954";
-      sha256 = "00c0835l9vhbwndyfmk43jig08y425w3hl4lb2bssdqc0fca4ddc";
+      rev = "2aed06a3a04c877dc64834e9b9dabf6ad3491bc8";
+      sha256 = "1sqhnhc749hm1bpy6s49w8jb3zpzj2azpj2hszn13ml1g1ps5iv7";
     };
   };
 
@@ -121,19 +150,6 @@
       repo = name;
       rev = "625ad428a818041cbbc63e055049108ef5b436a1";
       sha256 = "1rdfw25lljv53h2f2nc1gmx9awggk7k3nrfj46ssl11jn6lyvbj8";
-    };
-  };
-
-  # art-nvim = pkgs.vimUtils.buildVimPlugin {
-  #   name = "art-nvim";
-  #   src = /Users/milo/projects/art-nvim;
-  # };
-
-  art-nvim = pkgs.vimUtils.buildVimPlugin rec {
-    name = "art-nvim";
-    src = builtins.fetchGit {
-      url = "git@github.com:articulate/art-nvim.git";
-      rev = "33b19e043cefb7a7db9bc9378efda2a6eaa9fd83";
     };
   };
 }

@@ -29,16 +29,6 @@ require("mason-lspconfig").setup {
 }
 
 
--- Lsp servers enabled. `true` indicates they are managed by nix.
-local servers = {
-  -- denols = true,
-  elixirls = true,
-  rnix = true,
-  lua_ls = true,
-  terraformls = true,
-  tsserver = true,
-}
-
 local on_attach = require "milogert.config.lsp.on_attach"
 local lspconfig = require "lspconfig"
 
@@ -94,8 +84,22 @@ lspconfig.eslint.setup(vim.tbl_extend("keep", {
   },
 }, server_defaults))
 
-lspconfig.rnix.setup(vim.tbl_extend("keep", {
-  cmd = vim.g.ls_locations.rnix,
+-- lspconfig.hls.setup(vim.tbl_extend("keep", {
+--   -- cmd = vim.g.ls_locations.hls,
+--   filetypes = {
+--     'haskell',
+--     'lhaskell',
+--     'cabal',
+--     'hamlet',
+--     'julius',
+--     'cassius',
+--     'lucius',
+--   },
+-- }, server_defaults))
+
+
+lspconfig.nil_ls.setup(vim.tbl_extend("keep", {
+  cmd = vim.g.ls_locations.nil_ls,
 }, server_defaults))
 
 lspconfig.stylelint_lsp.setup(vim.tbl_extend("keep", {
