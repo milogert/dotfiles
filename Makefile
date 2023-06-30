@@ -36,31 +36,37 @@ config: check ${HOST}
 
 # NixOS commands.
 _nixos-build:
-	nix build ".#nixosConfigurations.${HOST}.config.system.build.toplevel" --experimental-features "nix-command flakes"
+	@echo -e "\033[0;33m-- Building ----------------------------\033[0m"
+	nix build ".#nixosConfigurations.${HOST}.config.system.build.toplevel" --extra-experimental-features "nix-command flakes" --impure
 
 _nixos-switch:
+	@echo -e "\033[0;33m-- Switching ---------------------------\033[0m"
 	# Old command: sudo nixos-rebuild switch --flake ".#${HOST}"
 	# See https://github.com/NixOS/nixpkgs/issues/169193
-	nixos-rebuild --use-remote-sudo switch --flake ".#${HOST}"
+	nixos-rebuild --use-remote-sudo switch --flake ".#${HOST}" --impure
 
 # nix-darwin commands.
 _nix-darwin-build:
 	# Remove the flags here eventually. This is to bootstrap flakes on your
 	# system. After these same flags should be inside the configuration files.
-	nix build ".#darwinConfigurations.${HOST}.system" --experimental-features "nix-command flakes"
+	@echo -e "\033[0;33m-- Building ----------------------------\033[0m"
+	nix build ".#darwinConfigurations.${HOST}.system" --experimental-features "nix-command flakes" --impure
 
 _nix-darwin-switch:
-	./result/sw/bin/darwin-rebuild switch --flake ".#${HOST}"
+	@echo -e "\033[0;33m-- Switching ---------------------------\033[0m"
+	./result/sw/bin/darwin-rebuild switch --flake ".#${HOST}" --impure
 
 _install_requirements:
-	@echo -e "\033[0;32mInstalling required programs\033[0m"
+	@echo -e "\033[0;33m-- Installing required programs --------\033[0m"
 	./installers/homebrew
 	./installers/nix
 
 update: update-neovim
+	@echo -e "\033[0;33m-- Updating ----------------------------\033[0m"
 	nix flake update
 
 update-neovim:
+	@echo -e "\033[0;33m-- Updating (neovim) -------------------\033[0m"
 	nix flake update ./modules/neovim
 
 add-user:
