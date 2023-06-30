@@ -15,6 +15,7 @@
     settings = {
       tab_bar_style = "hidden";
       confirm_os_window_close = 0;
+      background_opacity = ".92";
     };
 
     theme = "Srcery";
