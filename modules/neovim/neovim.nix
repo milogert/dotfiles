@@ -1,23 +1,7 @@
 { pkgs }:
 
 let
-  vimPlugins = pkgs.callPackage ./custom-plugins.nix {};
-  customPlugins = with vimPlugins; [
-    # sibling-swap-nvim
-    git-permalink-nvim
-    art-nvim
-    heirline-nvim
-    hydra-nvim
-    mason-lspconfig-nvim
-    mason-nvim
-    nvim-dev-container
-    nvim-runscript
-    persistence-nvim
-    srcery-vim
-    vim-ai
-    vim-arpeggio
-    vim-tada
-  ];
+  customPlugins = pkgs.callPackage ./custom-plugins.nix {};
 
   # This is propogated down to copilot-lua since it needs help finding the
   # proper directory when nix is involved.
@@ -50,12 +34,10 @@ in
             "${pkgs.vscode-extensions.dbaeumer.vscode-eslint}/bin/eslint",
             "--stdio",
           },
-          hls = {
-            "${pkgs.haskell-language-server}/bin/haskell-language-server-wrapper",
-          },
           rnix = { "${pkgs.rnix-lsp}/bin/rnix-lsp" },
           nil_ls = { "${pkgs.nil}/bin/nil" },
           lua_ls = { "${pkgs.sumneko-lua-language-server}/bin/lua-language-server" },
+          stylua = { "${pkgs.stylua}/bin/stylua" },
           tailwindcss = {
             "${pkgs.vscode-extensions.bradlc.vscode-tailwindcss}/bin/tailwindcss-language-server",
             "--stdio",
@@ -85,6 +67,7 @@ in
           cmp-buffer
           cmp-calc
           cmp-cmdline
+          cmp-git
           cmp-nvim-lsp
           cmp-nvim-lsp-signature-help
           cmp-nvim-lua
@@ -94,14 +77,17 @@ in
           fidget-nvim
           fzf-lua
           gitsigns-nvim
-          haskell-tools-nvim
+          heirline-nvim
+          hydra-nvim
           lspkind-nvim
           luasnip
+          mason-lspconfig-nvim
+          mason-nvim
           mini-nvim
           nui-nvim
           null-ls-nvim
-          nvim-colorizer-lua
           nvim-cmp
+          nvim-colorizer-lua
           nvim-dap
           nvim-dap-ui
           nvim-dap-virtual-text
@@ -109,8 +95,11 @@ in
           nvim-treesitter
           nvim-treesitter-textobjects
           nvim-web-devicons
+          octo-nvim
           package-info-nvim
+          persistence-nvim
           plenary-nvim
+          srcery-vim
           vim-abolish
           vim-dadbod
           vim-dadbod-ui

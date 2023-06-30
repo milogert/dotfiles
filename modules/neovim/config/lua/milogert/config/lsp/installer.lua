@@ -84,20 +84,6 @@ lspconfig.eslint.setup(vim.tbl_extend("keep", {
   },
 }, server_defaults))
 
--- lspconfig.hls.setup(vim.tbl_extend("keep", {
---   -- cmd = vim.g.ls_locations.hls,
---   filetypes = {
---     'haskell',
---     'lhaskell',
---     'cabal',
---     'hamlet',
---     'julius',
---     'cassius',
---     'lucius',
---   },
--- }, server_defaults))
-
-
 lspconfig.nil_ls.setup(vim.tbl_extend("keep", {
   cmd = vim.g.ls_locations.nil_ls,
 }, server_defaults))

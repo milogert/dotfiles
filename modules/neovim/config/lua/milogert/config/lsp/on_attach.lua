@@ -35,10 +35,15 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>ca',lsp('code_action()'),     opts)
 
   -- Set some keybinds conditional on server capabilities
-  if client.server_capabilities.document_formatting then
-    buf_set_keymap('n', '<leader>fi', lsp('format({ async = true })'),      opts)
-  elseif client.server_capabilities.document_range_formatting then
-    buf_set_keymap('n', '<leader>fi', lsp('format({ async = true })'),      opts)
+  -- TODO which capability is correct? I think the "Provider" version is but I
+  -- am unsure.
+  if (client.server_capabilities.document_formatting or
+    client.server_capabilities.documentFormattingProvider) then
+    buf_set_keymap('n', '<leader>fi', lsp('format({ async = true })'), opts)
+  end
+  if (client.server_capabilities.document_range_formatting or
+    client.server_capabilities.documentRangeFormattingProvider) then
+    buf_set_keymap('v', '<leader>fi', lsp('format({ async = true })'), opts)
   end
 
   -- if client.supports_method("textDocument/formatting") then
