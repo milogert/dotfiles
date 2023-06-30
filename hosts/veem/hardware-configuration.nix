@@ -9,8 +9,6 @@
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ "amdgpu" ];
-  boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
@@ -24,36 +22,4 @@
     };
 
   swapDevices = [ ];
-
-  hardware = {
-    # high-resolution display
-    video.hidpi.enable = lib.mkDefault true;
-
-    opengl = {
-      driSupport = true;
-      driSupport32Bit = true;
-      extraPackages = with pkgs; [
-        #amdvlk
-        rocm-opencl-icd
-        rocm-opencl-runtime
-      ];
-      # This is for steam support. Needs pipewire at the moment
-      extraPackages32 = with pkgs.pkgsi686Linux; [
-        #amdvlk
-        # libva
-      ] ++ lib.optionals config.services.pipewire.enable [ pipewire ];
-    };
-
-    pulseaudio = {
-      enable = false;
-      package = pkgs.pulseaudioFull;
-      support32Bit = true;
-      extraModules = [ pkgs.pulseaudio-modules-bt ];
-    };
-
-    bluetooth = {
-      enable = true;
-      settings.General.Enable = "Source,Sink,Media,Socket";
-    };
-  };
 }

@@ -4,7 +4,7 @@
 }:
 
 {
-  home.stateVersion = "21.05";
+  home.stateVersion = "22.11";
 
   home.packages = with pkgs; [
     calibre

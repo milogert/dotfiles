@@ -1,15 +1,7 @@
 { pkgs, ... }:
 
 {
-  systemd.services.mount-pstore.enable = false;
-
-  virtualisation.docker.enable = true;
   services = {
-    printing = {
-      enable = true;
-      drivers = with pkgs; [ cups-brother-hll2340dw ];
-    };
-
     avahi = {
       enable = true;
       openFirewall = true;
@@ -47,34 +39,10 @@
 
     gnome.core-utilities.enable = false;
 
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      # If you want to use JACK applications, uncomment this
-      #jack.enable = true;
-
-      # use the example session manager (no others are packaged yet so this is enabled by default,
-      # no need to redefine it in your config for now)
-      #media-session.enable = true;
-    };
-
     # Enable the OpenSSH daemon.
     openssh.enable = true;
     openssh.openFirewall = true;
 
     flatpak.enable = true;
-
-    nfs = {
-      server = {
-        enable = true;
-
-        exports = ''
-        /opt/k8s-data-nfs       192.168.50.208(rw,sync,no_subtree_check)
-        '';
-        # /opt/k8s-data-nfs       theseus(rw,sync,no_subtree_check) k8s-rpi-1(rw,sync,no_subtree_check) k8s-rpi-2(rw,sync,no_subtree_check)
-      };
-    };
   };
 }

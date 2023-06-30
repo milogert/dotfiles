@@ -14,8 +14,6 @@
   # Set your time zone.
   time.timeZone = "America/New_York";
 
-  systemd.services.mount-pstore.enable = false;
-
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
@@ -48,26 +46,8 @@
   };
   services.gnome.core-utilities.enable = false;
 
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  sound.enable = false;
-
   # rtkit is optional but recommended
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -79,7 +59,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "21.05"; # Did you read the comment?
+  system.stateVersion = "22.11"; # Did you read the comment?
 
   nix = {
     extraOptions = ''
