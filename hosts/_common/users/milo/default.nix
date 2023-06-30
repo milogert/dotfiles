@@ -7,10 +7,11 @@ let
     "neovim"
   ];
 
+  # Edge is the bleeding edge. Head is head of master on git.
   moduleAliasFn = module: {
-    "run-${module}" =
+    "${module}-edge" =
       "nix run \"${config.home.homeDirectory}/.dotfiles/modules/${module}#\"";
-    "github-${module}" =
+    "${module}-head" =
       "nix run --no-write-lock-file \"github:milogert/dotfiles#${module}\"";
   };
 
@@ -35,12 +36,14 @@ in {
     gpgPath = "gpg";
   };
 
-  programs.zsh.shellAliases = {} // moduleAliases;
+  programs.zsh.shellAliases = {
+    borax-docker = "dkCpr && dkIpr && dkNpr && dkVpr && dkYpr";
+  } // moduleAliases;
 
   # NPM config options in lieu of no easy static config file
   home.activation.setNpmOptions =
     let
-      npmSet = "$DRY_RUN_CMD ${pkgs.nodejs-16_x}/bin/npm set";
+      npmSet = "$DRY_RUN_CMD ${pkgs.nodejs}/bin/npm set";
     in
       config.lib.dag.entryAfter ["writeBoundary"] ''
         ${npmSet} \
