@@ -77,27 +77,4 @@ Functions.smart_dd = function ()
   end
 end
 
-Functions.git_permalink = function ()
-  local origin = vim.api.nvim_exec("G remote get-url --push origin", true)
-  local origin_url, _ = string.gsub(origin, "git@(.+):(.+)/(.+).git", "https://%1/%2/%3")
-
-  local sha = vim.api.nvim_exec("G rev-parse HEAD", true)
-
-  local full_path = vim.api.nvim_buf_get_name(0)
-  local pwd = vim.fn.getcwd()
-  local repo_path = string.gsub(full_path, pwd, "")
-
-  local line_number = vim.fn.line('.')
-
-  local permalink = origin_url.."/blob/"..sha..repo_path.."#L"..line_number
-
-  log.info("\nPERMALINK\n")
-
-  -- send to clipboard/registry?
-  vim.cmd"redir @+>"
-  log.info(permalink)
-  vim.cmd"redir END"
-
-end
-
 return Functions

@@ -16,7 +16,7 @@
     };
 
     neovim-custom = {
-      url = "path:modules/neovim";
+      url = "path:./modules/neovim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -145,11 +145,28 @@
             type = "headless";
           };
         };
+
+        veem = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = mkNixosConfig {
+            host = "veem";
+            users = ["milo"];
+            type = "desktop";
+          };
+        };
       };
 
       packages = {
+        aarch64-linux = {
+          neovim = neovim-custom.packages.aarch64-linux.default;
+        };
+
         x86_64-linux = {
           neovim = neovim-custom.packages.x86_64-linux.default;
+        };
+
+        aarch64-darwin = {
+          neovim = neovim-custom.packages.aarch64-darwin.default;
         };
 
         x86_64-darwin = {

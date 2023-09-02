@@ -1,36 +1,31 @@
-{ fetchFromGitHub, pkgs }:
+{ fetchgit, fetchFromGitHub, pkgs }:
 
-{
-  heirline-nvim = pkgs.vimUtils.buildVimPlugin rec {
-    name = "heirline.nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "rebelot";
-      repo = name;
-      rev = "a94390e0e8509944bfbd8265a5b4bb231d2d2954";
-      sha256 = "00c0835l9vhbwndyfmk43jig08y425w3hl4lb2bssdqc0fca4ddc";
+let
+  art-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "art-nvim";
+    src = builtins.fetchGit {
+      url = "git@github.com:articulate/art-nvim.git";
+      rev = "33b19e043cefb7a7db9bc9378efda2a6eaa9fd83";
     };
   };
 
-  hydra-nvim = pkgs.vimUtils.buildVimPlugin rec {
-    name = "hydra.nvim";
+  git-permalink-nvim = pkgs.vimUtils.buildVimPlugin rec {
+    name = "git-permalink-nvim";
     src = pkgs.fetchFromGitHub {
-      owner = "anuvyklack";
+      owner = "milogert";
       repo = name;
-      rev = "a815ce78805a5667e81cdb53d2bc7e0371042a7a";
-      sha256 = "0i5ksipnk22k1dps0hg6qn3y3bx0qx0rr86irzd8dga415da0wdi";
+      rev = "2d41bacd16370bd4f0e5327e947c70708d6c94df";
+      sha256 = "0d9r4p4a8dms9k01ayvdgppy96ds8pnbq38r1kvjw7m9a7qg1rr4";
     };
   };
 
-  nvim-lsp-installer = pkgs.vimUtils.buildVimPlugin rec {
-    name = "nvim-lsp-installer";
-    src = pkgs.fetchFromGitHub {
-      owner = "williamboman";
-      repo = name;
-      rev = "8603cdc1692f2c3078e328a2ed9554cf9047594d";
-      sha256 = "0rwnm9bvd8gf5ipg7mbysbs13dzi0ijjarv3x4a9czmgc4b48h7q";
+  nvim-dev-container = pkgs.vimUtils.buildVimPlugin rec {
+    name = "nvim-dev-container";
+    src = pkgs.fetchgit {
+      url = "https://codeberg.org/esensar/${name}";
+      rev = "5cbc8c961779c12e366692780d387a2c7c8dff57";
+      sha256 = "sha256-K8xnWvK+ZVCHNA8GtNbefous39HeAScTm5FWow2B4E8=";
     };
-    # Only skips tests.
-    dontBuild = true;
   };
 
   nvim-runscript = pkgs.vimUtils.buildVimPlugin rec {
@@ -43,13 +38,13 @@
     };
   };
 
-  persistence-nvim = pkgs.vimUtils.buildVimPlugin rec {
-    name = "persistence.nvim";
+  vim-ai = pkgs.vimUtils.buildVimPlugin rec {
+    name = "vim-ai";
     src = pkgs.fetchFromGitHub {
-      owner = "folke";
+      owner = "madox2";
       repo = name;
-      rev = "251e89523dabc94242d4a1f2226fc44a95c29d9e";
-      sha256 = "1xbly3hfbll5r05sznhn8dd1g653yz7hy3xl36yix82sdhx26v84";
+      rev = "6ae66e51f29c60537b7e931f85cc6f452b6cc651";
+      sha256 = "1q9xvl99r1ar6j7bwq9hwdm5rsp239dgha8ljl15dwqfldr3p4w8";
     };
   };
 
@@ -72,4 +67,12 @@
       sha256 = "1rdfw25lljv53h2f2nc1gmx9awggk7k3nrfj46ssl11jn6lyvbj8";
     };
   };
-}
+in [
+  art-nvim
+  git-permalink-nvim
+  nvim-dev-container
+  nvim-runscript
+  vim-ai
+  vim-arpeggio
+  vim-tada
+]

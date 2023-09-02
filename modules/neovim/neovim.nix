@@ -1,16 +1,7 @@
 { pkgs }:
 
 let
-  vimPlugins = pkgs.callPackage ./custom-plugins.nix {};
-  customPlugins = with vimPlugins; [
-    heirline-nvim
-    hydra-nvim
-    nvim-lsp-installer
-    nvim-runscript
-    persistence-nvim
-    vim-arpeggio
-    vim-tada
-  ];
+  customPlugins = pkgs.callPackage ./custom-plugins.nix {};
 
   # This is propogated down to copilot-lua since it needs help finding the
   # proper directory when nix is involved.
@@ -20,11 +11,17 @@ in
   pkgs.wrapNeovim pkgs.neovim-unwrapped {
     configure = {
       customRC = ''
-        " Set flake directory, controlled by nix
+        " Set flake directory, controlled by nix.
         let g:flakePackages = '${flakePackageDir}'
 
-        " Set config dir from nix
+        " Set config dir from nix.
         let g:configPath = '${configDir}'
+
+        " Dirvish - override netrw when using Explore, Sexplore, and Vexplore.
+        let g:loaded_netrwPlugin = 1
+        command! -nargs=? -complete=dir Explore Dirvish <args>
+        command! -nargs=? -complete=dir Sexplore belowright split | silent Dirvish <args>
+        command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args>
 
         lua << EOF
         vim.g.debuggers = {
@@ -38,7 +35,9 @@ in
             "--stdio",
           },
           rnix = { "${pkgs.rnix-lsp}/bin/rnix-lsp" },
-          sumneko_lua = { "${pkgs.sumneko-lua-language-server}/bin/lua-language-server" },
+          nil_ls = { "${pkgs.nil}/bin/nil" },
+          lua_ls = { "${pkgs.sumneko-lua-language-server}/bin/lua-language-server" },
+          stylua = { "${pkgs.stylua}/bin/stylua" },
           tailwindcss = {
             "${pkgs.vscode-extensions.bradlc.vscode-tailwindcss}/bin/tailwindcss-language-server",
             "--stdio",
@@ -54,7 +53,7 @@ in
           },
         }
 
-        -- Add the config directory to the start of the rtp
+        -- Add the config directory to the start of the rtp.
         vim.opt.runtimepath:prepend("${configDir}")
 
         vim.g.tsParserPath = vim.fn.stdpath("data") .. "/site"
@@ -68,7 +67,9 @@ in
           cmp-buffer
           cmp-calc
           cmp-cmdline
+          cmp-git
           cmp-nvim-lsp
+          cmp-nvim-lsp-signature-help
           cmp-nvim-lua
           cmp-path
           cmp_luasnip
@@ -76,20 +77,27 @@ in
           fidget-nvim
           fzf-lua
           gitsigns-nvim
+          heirline-nvim
+          hydra-nvim
           lspkind-nvim
           luasnip
+          mason-lspconfig-nvim
+          mason-nvim
           mini-nvim
           nui-nvim
           null-ls-nvim
-          nvim-colorizer-lua
           nvim-cmp
+          nvim-colorizer-lua
           nvim-dap
           nvim-dap-ui
           nvim-dap-virtual-text
           nvim-lspconfig
           nvim-treesitter
+          nvim-treesitter-textobjects
           nvim-web-devicons
+          octo-nvim
           package-info-nvim
+          persistence-nvim
           plenary-nvim
           srcery-vim
           vim-abolish

@@ -27,6 +27,7 @@
     calibre
     cargo
     cockatrice
+    cider
     discord
     elixir
     evince

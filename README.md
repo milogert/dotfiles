@@ -43,6 +43,15 @@ previous generation.
 Also, all the configuration is stored in a git repo, so if I undo something but
 find I actually did want it everything is searchable.
 
+# Features
+
+- Nix - obviously. I can add a program by running `make`.
+- [Modules](./modules/README.md) - Modules exist for parts of my system that
+  can be broken off and run elsewhere.
+  - At the moment I have a single module, Neovim.
+- Different machine configurations - I can keep each machine configured
+  separately as well as different users.
+
 # Your machines?
 
 | Hostname        | Platform         | Name history |

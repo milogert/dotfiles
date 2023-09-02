@@ -8,6 +8,7 @@
   ];
 
   homebrew.brews = [
+    "ios-deploy"
     "pinentry-mac"
   ];
 
@@ -16,15 +17,18 @@
     "calibre"
     "discord"
     "docker"
+    "flipper"
     "google-chrome"
     "insomnia"
     "notion"
     "plex"
+    "pocket-casts"
     "postgres-unofficial"
-    "spotify"
   ];
 
   homebrew.masApps = {
+    "1Blocker" = 1365531024;
+    ColorSlurp = 1287239339;
     Xcode = 497799835;
   };
 

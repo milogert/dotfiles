@@ -8,6 +8,7 @@
   ];
 
   homebrew.brews = [
+    "ios-deploy"
     "pinentry-mac"
   ];
 
@@ -16,7 +17,9 @@
     "beekeeper-studio"
     "calibre"
     "cloudapp"
+    "cyberduck"
     # "docker" # Docker Desktop is not supported in homebrew currently.
+    "flipper"
     "google-chrome"
     "insomnia"
     "krisp"
@@ -24,13 +27,16 @@
     "notion"
     "openvpn-connect"
     "plex"
+    "pocket-casts"
     "postgres-unofficial"
     "slack"
-    "spotify"
+    "vyprvpn"
     "zoom"
   ];
 
   homebrew.masApps = {
+    "1Blocker" = 1365531024;
+    ColorSlurp = 1287239339;
     Xcode = 497799835;
   };
 

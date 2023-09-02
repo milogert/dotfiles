@@ -1,5 +1,4 @@
-{ config
-, pkgs
+{ pkgs
 , ...
 }:
 
@@ -14,6 +13,6 @@
     # docker
     git-lfs
     mas
-    (yarn.override { nodejs = nodejs-14_x; })
+    yarn
   ];
 }

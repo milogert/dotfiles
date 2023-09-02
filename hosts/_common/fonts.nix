@@ -12,6 +12,7 @@ in {
     fonts = [
       pkgs.fira-code
       nerdfonts
+      pkgs.iosevka
     ];
   };
 }

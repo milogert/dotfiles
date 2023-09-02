@@ -119,7 +119,7 @@ in {
       set -g status-keys vi
 
       ## Set the status bar position
-      set -g status-position bottom # [top, bottom]
+      set -g status-position top # [top, bottom]
 
       ## Set status bar background and foreground color.
       #set -g status-style fg=colour136,bg="#002b36"

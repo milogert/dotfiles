@@ -76,16 +76,28 @@ cmp.setup {
   },
   sources = {
     { name = "nvim_lsp", priority = 99 },
+    { name = 'nvim_lsp_signature_help' },
     { name = "nvim_lua" },
     { name = "path" },
     { name = "luasnip" },
     { name = "buffer", keyword_length = 1 },
     { name = "calc" },
+    { name = "git" },
     -- { name = "copilot" },
     -- { name = 'dictionary', keyword_length = 2 },
   },
+  sorting = {
+    comparators = {
+      cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.score,
+      cmp.config.compare.recently_used,
+      -- require("cmp-under-comparator").under,
+      cmp.config.compare.kind,
+    },
+  },
   experimental = {
-    ghost_text = true,
+    ghost_text = { enabled = true },
   },
 }
 
@@ -107,3 +119,7 @@ cmp.setup.cmdline(":", {
     }
   )
 })
+
+-- Setup after including as a source?
+require('cmp_git').setup()
+

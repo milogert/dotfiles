@@ -139,4 +139,11 @@ Utils.trim = function(s, only_end)
   return from > #s and "" or s:match(".*%S", from)
 end
 
+-- From https://stackoverflow.com/questions/29072601/lua-string-gsub-with-a-hyphen
+Utils.replace = function(str, what, with)
+  what = string.gsub(what, "[%(%)%.%+%-%*%?%[%]%^%$%%]", "%%%1")
+  with = string.gsub(with, "[%%]", "%%%%")
+  return string.gsub(str, what, with)
+end
+
 return Utils
