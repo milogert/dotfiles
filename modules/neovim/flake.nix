@@ -22,8 +22,6 @@
         ]);
       });
 
-      neovim-custom = final.callPackage ./neovim.nix {};
-
       vimPlugins = prev.vimPlugins // {
         # Remove when https://github.com/j-hui/fidget.nvim/issues/131 resolves.
         fidget-nvim = prev.vimPlugins.fidget-nvim.overrideAttrs (old: {
@@ -40,8 +38,17 @@
           src = prev.pkgs.fetchFromGitHub {
             owner = "ibhagwan";
             repo = "fzf-lua";
-            rev = "c3c71df6ffba3cc90335c538fad81aa7a0182e57";
-            sha256 = "07n1sg582wxpvnw5n0r504dfc9jzrj01j5an0vzgg801hjk5ari8";
+            rev = "1ff0278882db9786fef6f77cbcea7d8fa4b9ccee";
+            sha256 = "0gsdsmjf1jdsbsrvpzssfr496b0jk2j78lqffdanbykpcim9s7bs";
+          };
+        });
+
+        gitsigns-nvim = prev.vimPlugins.gitsigns-nvim.overrideAttrs (old: {
+          src = prev.pkgs.fetchFromGitHub {
+            owner = "lewis6991";
+            repo = "gitsigns.nvim";
+            rev = "5a9a6ac29a7805c4783cda21b80a1e361964b3f2";
+            sha256 = "1vgs97iik9ziwbqv1xbs920qizcnshcpibj17mbsdr8lax8iycpl";
           };
         });
 
@@ -62,6 +69,8 @@
           src = /Users/milo/git/octo.nvim;
         };
       };
+
+      neovim-custom = final.callPackage ./neovim.nix {};
     };
 
     packages = {

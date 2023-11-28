@@ -46,7 +46,7 @@ Arpeggio maps.
   @param `rhs` The result to be produced
 ]]
 Utils.arpeggio = function(type, lhs, rhs)
-  vim.cmd('Arpeggio ' .. type .. ' <silent> ' .. lhs .. ' ' .. rhs)
+  vim.cmd.Arpeggio(type .. ' <silent> ' .. lhs .. ' ' .. rhs)
 end
 
 --[[

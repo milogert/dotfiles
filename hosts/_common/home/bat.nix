@@ -8,12 +8,15 @@
       style = "full,changes";
     };
     themes = {
-      srcery = builtins.readFile (pkgs.fetchFromGitHub {
-        owner = "srcery-colors";
-        repo = "srcery-textmate"; # Bat uses sublime syntax for its themes
-        rev = "fd1992b0ac576ffee0ba9ddbc0b02b92c69ce8b2";
-        sha256 = "0pjkmsg953f5dhp2xcyqxflpn2c85dipn9qrb2iqkgnzjgj8djyr";
-      } + "/srcery.tmTheme");
+      srcery = {
+        src = pkgs.fetchFromGitHub {
+          owner = "srcery-colors";
+          repo = "srcery-textmate"; # Bat uses sublime syntax for its themes
+          rev = "fd1992b0ac576ffee0ba9ddbc0b02b92c69ce8b2";
+          sha256 = "0pjkmsg953f5dhp2xcyqxflpn2c85dipn9qrb2iqkgnzjgj8djyr";
+        };
+        file = "srcery.tmTheme";
+      };
     };
   };
 

@@ -29,7 +29,7 @@ null_ls.setup {
       prefer_local = "node_modules/.bin",
     }),
     null_ls.builtins.formatting.stylua.with({
-      command = vim.g.ls_locations.stylua[1],
+      command = vim.g.ls_cmds.stylua[1],
     })
   }
 }

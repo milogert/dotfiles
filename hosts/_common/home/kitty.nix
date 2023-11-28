@@ -18,6 +18,6 @@
       background_opacity = ".92";
     };
 
-    theme = "Srcery";
+    theme = "srcery";
   };
 }

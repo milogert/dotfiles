@@ -80,7 +80,8 @@
     };
 
     # Disable 'Are you sure you want to open this application?' dialog
-    LaunchServices.LSQuarantine = false;
+    # TODO renable this, something in MacOS is causing this to fail
+    # LaunchServices.LSQuarantine = false;
 
     # Trackpad - Enable trackpad tap to click
     trackpad.Clicking = true;

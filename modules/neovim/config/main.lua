@@ -1,26 +1,39 @@
+if vim.g.configPath == nil then
+  print('vim.g.configPath is missing')
+  return
+end
+
+-- Add the config directory to the start of the rtp.
+vim.opt.runtimepath:prepend(vim.g.configPath)
+
 local log = require("milogert.logger")
+
+-- https://github.com/neovim/neovim/issues/21749#issuecomment-1378720864
+-- Fix loading of json5
+table.insert(vim._so_trails, "/?.dylib")
 
 -- require("impatient")
 
 -- Set the leader key. This should be first.
 require("milogert.settings")
 require("milogert.autocmds")
+require("milogert.variables")
 
-vim.cmd [[ packadd vimplugin-vim-arpeggio ]]
+vim.cmd.packadd('vimplugin-vim-arpeggio')
 
 -- Source plugin configs.
 local plugins = {
   "cmp",
   "colorizer",
   "comment",
+  "copilot",
   "dap",
   "devcontainer",
   "fidget",
   "fzf-lua",
   "gitsigns",
   "keybindings",
-  "lsp.settings",
-  "lsp.kind",
+  -- "hardtime",
   "lsp.installer",
   "luasnip",
   "mini",
@@ -37,7 +50,7 @@ local plugins = {
 for _, plugin in ipairs(plugins) do
   local ok, err = pcall(require, 'milogert.config.' .. plugin)
   if not ok then
-    -- log.error('Failed to load plugin config: ' .. plugin)
+    log.error('Failed to load plugin config: ' .. plugin)
     log.error(err)
   end
 end
@@ -54,6 +67,21 @@ for _, mod in ipairs(optionals) do
     log.info('Failed to load file: ' .. mod .. '.lua')
     log.error(err)
   end
+end
+
+-- Perform language setup.
+require('milogert.config.lang.main')
+
+-- Dirvish - override netrw when using Explore, Sexplore, and Vexplore.
+vim.g.loaded_netrwPlugin = 'loaded due to dirvish'
+for _, value in ipairs({ { 'Explore', '' }, { 'Sexplore', 'split | silent ' }, { 'Vexplore', 'vsplit | silent ' } }) do
+  vim.api.nvim_create_user_command(
+    value[1],
+    function(opts)
+      vim.cmd(value[2] .. 'Dirvish ' .. opts.fargs[1])
+    end,
+    { nargs = '?', complete = 'dir' }
+  )
 end
 
 vim.cmd [[
@@ -78,4 +106,14 @@ vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 
 " Source other files.
 call SourceIfExists("~/.config/nvim/profile.vim")
+
+function! Scratch()
+  vsplit
+  noswapfile hide enew
+  setlocal buftype=nofile
+  setlocal bufhidden=hide
+  "setlocal nobuflisted
+  "lcd ~
+  file scratch
+endfunction
 ]]

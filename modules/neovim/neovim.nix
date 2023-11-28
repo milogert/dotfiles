@@ -11,50 +11,33 @@ in
   pkgs.wrapNeovim pkgs.neovim-unwrapped {
     configure = {
       customRC = ''
-        " Set flake directory, controlled by nix.
-        let g:flakePackages = '${flakePackageDir}'
-
         " Set config dir from nix.
         let g:configPath = '${configDir}'
-
-        " Dirvish - override netrw when using Explore, Sexplore, and Vexplore.
-        let g:loaded_netrwPlugin = 1
-        command! -nargs=? -complete=dir Explore Dirvish <args>
-        command! -nargs=? -complete=dir Sexplore belowright split | silent Dirvish <args>
-        command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args>
 
         lua << EOF
         vim.g.debuggers = {
           elixir_ls = "${pkgs.elixir_ls}",
-        }
-        vim.g.ls_locations = {
-          -- denols = { "${pkgs.deno}/bin/deno", "lsp" },
-          elixirls = { "${pkgs.elixir_ls}/bin/elixir-ls" },
-          eslint = {
-            "${pkgs.vscode-extensions.dbaeumer.vscode-eslint}/bin/eslint",
-            "--stdio",
-          },
-          rnix = { "${pkgs.rnix-lsp}/bin/rnix-lsp" },
-          nil_ls = { "${pkgs.nil}/bin/nil" },
-          lua_ls = { "${pkgs.sumneko-lua-language-server}/bin/lua-language-server" },
-          stylua = { "${pkgs.stylua}/bin/stylua" },
-          tailwindcss = {
-            "${pkgs.vscode-extensions.bradlc.vscode-tailwindcss}/bin/tailwindcss-language-server",
-            "--stdio",
-          },
-          terraformls = {
-            "${pkgs.terraform-ls}/bin/terraform-ls", "serve"
-          },
-          tsserver = {
-            "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server" ,
-            "--stdio",
-            "--tsserver-path",
-            "tsserver",
+          vscode_js = {
+            adapter = "${customPlugins.nvim-dap-vscode-js}",
+            debugger = "${customPlugins.vscode-js-debug}",
           },
         }
 
-        -- Add the config directory to the start of the rtp.
-        vim.opt.runtimepath:prepend("${configDir}")
+        vim.g.ls_installs = {
+          cssls = "${pkgs.nodePackages.vscode-langservers-extracted}/bin/",
+          denols = "${pkgs.deno}/bin/",
+          elixirls = "${pkgs.elixir_ls}/bin/",
+          eslint = "${pkgs.nodePackages.vscode-langservers-extracted}/bin/",
+          html = "${pkgs.nodePackages.vscode-langservers-extracted}/bin/",
+          jsonls = "${pkgs.nodePackages.vscode-langservers-extracted}/bin/",
+          lua_ls = "${pkgs.sumneko-lua-language-server}/bin/",
+          nil_ls = "${pkgs.nil}/bin/",
+          rnix = "${pkgs.rnix-lsp}/bin/",
+          stylua = "${pkgs.stylua}/bin/",
+          tailwindcss = "${pkgs.vscode-extensions.bradlc.vscode-tailwindcss}/bin/",
+          terraformls = "${pkgs.terraform-ls}/bin/",
+          tsserver = "${pkgs.nodePackages.typescript-language-server}/bin/",
+        }
 
         vim.g.tsParserPath = vim.fn.stdpath("data") .. "/site"
         vim.opt.runtimepath:prepend(vim.g.tsParserPath .. "/parser")
@@ -74,6 +57,9 @@ in
           cmp-path
           cmp_luasnip
           comment-nvim
+          copilot-cmp
+          copilot-lua
+          elixir-tools-nvim
           fidget-nvim
           fzf-lua
           gitsigns-nvim
@@ -115,7 +101,7 @@ in
           vim-tmux-navigator
           vim-unimpaired
           vimux
-        ] ++ customPlugins;
+        ] ++ customPlugins.list;
       };
     };
 

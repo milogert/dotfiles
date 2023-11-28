@@ -35,67 +35,70 @@ in {
     extraOptions = "experimental-features = nix-command flakes";
   };
 
-  environment.variables = {
-    BAT_THEME = "srcery";
-    EDITOR = "nvim";
-    MANPAGER = "nvim +Man!";
-    NPM_TOKEN = "`cat $HOME/.npmrc 2>/dev/null | grep npmjs | grep authToken | tr \"=\" \"\\n\" | tail -n 1`";
-    PATH = builtins.concatStringsSep ":" [
-      "/usr/local/sbin"
-      "$HOME/.local/bin"
-      "$HOME/.yarn/bin"
-      "$PATH"
+  environment = {
+    variables = {
+      BAT_THEME = "srcery";
+      EDITOR = "nvim";
+      MANPAGER = "nvim +Man!";
+      NPM_TOKEN = "`cat $HOME/.npmrc 2>/dev/null | grep npmjs | grep authToken | tr \"=\" \"\\n\" | tail -n 1`";
+      PATH = builtins.concatStringsSep ":" [
+        "/usr/local/sbin"
+        "$HOME/.local/bin"
+        "$HOME/.yarn/bin"
+        "$PATH"
+      ];
+      # RIPGREP_CONFIG_PATH = "$HOME/.ripgreprc";
+      SHELL = "${pkgs.zsh}/bin/zsh";
+      TERM = "xterm-256color";
+    };
+
+    pathsToLink = [ "/share/zsh" ];
+
+    systemPackages = with pkgs; [
+      # bash
+      # bash-completion
+      bat # Need this for aliases.
+      cachix
+      cargo
+      coreutils # Why do I have this?
+      ctop
+      diskonaut
+      eza
+      fd
+      findutils
+      fswatch
+      fzf # Need this for aliases.
+      gcc
+      gnumake
+      gnupg
+      go
+      htop
+      jq
+      neofetch
+      nix-prefetch-git
+      # nixops
+      neovim-custom
+      openvpn
+      parallel
+      postgresql
+      python39
+      rename
+      ripgrep
+      shellcheck
+      silver-searcher
+      speedtest-cli
+      starship # Need this for aliases.
+      statix
+      terraform
+      tree
+      unzip
+      viddy
+      wget
+      yq
+      zsh-autosuggestions
+      zsh-completions
     ];
-    # RIPGREP_CONFIG_PATH = "$HOME/.ripgreprc";
-    SHELL = "${pkgs.zsh}/bin/zsh";
-    TERM = "xterm-256color";
   };
-
-  environment.pathsToLink = [ "/share/zsh" ];
-
-  environment.systemPackages = with pkgs; [
-    bash
-    bash-completion
-    bat # Need this for aliases.
-    cachix
-    cargo
-    coreutils # Why do I have this?
-    ctop
-    diskonaut
-    exa
-    fd
-    findutils
-    fswatch
-    fzf # Need this for aliases.
-    gcc
-    gnumake
-    gnupg
-    go
-    htop
-    jq
-    neofetch
-    nix-prefetch-git
-    # nixops
-    neovim-custom
-    openvpn
-    postgresql
-    python39
-    rename
-    ripgrep
-    shellcheck
-    silver-searcher
-    speedtest-cli
-    starship # Need this for aliases.
-    statix
-    terraform
-    tree
-    unzip
-    viddy
-    wget
-    yq
-    zsh-autosuggestions
-    zsh-completions
-  ];
 
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.enableSSHSupport = true;

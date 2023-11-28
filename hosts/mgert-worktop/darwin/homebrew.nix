@@ -16,13 +16,12 @@
     "1password"
     "beekeeper-studio"
     "calibre"
-    "cloudapp"
     "cyberduck"
+    "discord"
     # "docker" # Docker Desktop is not supported in homebrew currently.
     "flipper"
     "google-chrome"
     "insomnia"
-    "krisp"
     "muzzle"
     "notion"
     "openvpn-connect"
@@ -31,11 +30,13 @@
     "postgres-unofficial"
     "slack"
     "vyprvpn"
+    "zight"
     "zoom"
   ];
 
   homebrew.masApps = {
     "1Blocker" = 1365531024;
+    "Amazon Kindle" = 302584613;
     ColorSlurp = 1287239339;
     Xcode = 497799835;
   };
