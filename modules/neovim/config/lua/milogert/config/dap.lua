@@ -82,6 +82,15 @@ if vim.g.debuggers.vscode_js then
       }
     }
   end
+
+  require('dap.ext.vscode').load_launchjs(nil,
+    {
+      ['pwa-node'] = js_languages,
+      ['node'] = js_languages,
+      ['chrome'] = js_languages,
+      ['pwa-chrome'] = js_languages,
+    }
+  )
 else
   print('vim.g.debuggers.vscode_js is not configured')
 end
@@ -128,12 +137,3 @@ dap.listeners.before.event_exited["dapui_config"] = function()
 end
 
 u.nmap("<F9>", "", { callback = dapui.toggle })
-
-require('dap.ext.vscode').load_launchjs(nil,
-  {
-    ['pwa-node'] = js_languages,
-    ['node'] = js_languages,
-    ['chrome'] = js_languages,
-    ['pwa-chrome'] = js_languages,
-  }
-)

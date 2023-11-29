@@ -81,12 +81,12 @@ let
 
   vscode-js-debug = stdenv.mkDerivation rec {
     pname = "vscode-js-debug";
-    version = "1.83.1";
+    version = "v1.85.0";
     src = fetchFromGitHub {
       owner = "microsoft";
       repo = pname;
       rev = version;
-      hash = "sha256-JOTzjFB6V+AdHt4G0ajkZLANaW8lnf5s5wp5h87Xm2I=";
+      hash = "sha256-mBXH3tqoiu3HIo1oZdQCD7Mq8Tvkt2DXfcoXb7KEgXE=";
     };
 
     nativeBuildInputs = [
