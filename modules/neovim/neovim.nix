@@ -16,7 +16,7 @@ in
 
         lua << EOF
         vim.g.debuggers = {
-          elixir_ls = "${pkgs.elixir_ls}",
+          elixir_ls = "${pkgs.elixir_ls}/bin/.elixir-debugger-wrapped",
           vscode_js = {
             adapter = "${customPlugins.nvim-dap-vscode-js}",
             debugger = "${customPlugins.vscode-js-debug}",
@@ -52,7 +52,7 @@ in
           cmp-cmdline
           cmp-git
           cmp-nvim-lsp
-          cmp-nvim-lsp-signature-help
+          # cmp-nvim-lsp-signature-help
           cmp-nvim-lua
           cmp-path
           cmp_luasnip

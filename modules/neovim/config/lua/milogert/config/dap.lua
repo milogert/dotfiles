@@ -3,34 +3,6 @@ local u = require "milogert.utils"
 local dap = require('dap')
 local dapui = require('dapui')
 
--- Elixir
-if vim.g.debuggers.elixir_ls then
-  dap.adapters.mix_task = {
-    type = 'executable',
-    -- debugger.bat for windows
-    command = vim.g.debuggers.elixir_ls .. '/lib/debugger.sh',
-    args = {}
-  }
-
-  dap.configurations.elixir = {
-    {
-      type = "mix_task",
-      name = "mix test",
-      task = 'test',
-      taskArgs = {"--trace"},
-      request = "launch",
-      startApps = true, -- for Phoenix projects
-      projectDir = "${workspaceFolder}",
-      requireFiles = {
-        "test/**/test_helper.exs",
-        "test/**/*_test.exs"
-      }
-    },
-  }
-else
-  print('vim.g.debuggers.elixir_ls is not configured')
-end
-
 if vim.g.debuggers.vscode_js then
   require("dap-vscode-js").setup({
     -- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
@@ -43,8 +15,6 @@ if vim.g.debuggers.vscode_js then
       'pwa-msedge',
       'node-terminal',
       'pwa-extensionHost',
-      'node',
-      'chrome'
     }, -- which adapters to register in nvim-dap
     -- log_file_path = "/Users/milo/.cache/nvim/dap_vscode_js.log", -- Path for file logging
     log_file_level = false, -- Logging level for output to file. Set to false to disable file logging.
@@ -104,10 +74,14 @@ u.nmap("<Leader>dB", "", {
 -- u.nmap("<Leader>ds", "", { callback = dap.run })
 u.nmap("<Leader>dr", "", { callback = dap.repl.toggle })
 u.nmap("<Leader>dl", "", { callback = dap.run_last })
+u.nmap("<Leader>dl", "", { callback = dapui.toggle })
 u.nmap("<F5>", "", { callback = dap.continue })
 u.nmap("<F10>", "", { callback = dap.step_over })
 u.nmap("<F11>", "", { callback = dap.step_into })
 u.nmap("<F12>", "", { callback = dap.step_out })
+
+vim.fn.sign_define('DapBreakpoint',{ text ='🟥', texthl ='', linehl ='', numhl =''})
+vim.fn.sign_define('DapStopped',{ text ='▶️', texthl ='', linehl ='', numhl =''})
 
 local repl = require 'dap.repl'
 repl.commands = vim.tbl_extend('force', repl.commands, {

@@ -42,7 +42,7 @@
         plexPass = prev.plex.override { plexRaw = final.plexPassRaw; };
       };
 
-      nixpkgsConfig = with inputs; {
+      nixpkgsConfig = {
         config = {
           allowUnfree = true;
           firefox.drmSupport = true;
@@ -65,7 +65,7 @@
         config = import config_path { inherit pkgs user; };
         home_type_path = ./. + "/hosts/_common/home/types/${type}.nix";
       in {
-        home-manager.users.${user} = with self.homeManagerModules; {
+        home-manager.users.${user} = {
           imports = [
             user_path
             common_config

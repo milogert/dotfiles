@@ -5,7 +5,7 @@ local installs = vim.g.ls_installs
 vim.g.ls_cmds = {
   cssls = { installs.html .. "vscode-css-language-server", "--stdio" },
   -- denols = { installs.denols .. "deno", "lsp" },
-  elixirls = { installs.elixirls .. "elixir-ls" },
+  elixirls = { installs.elixirls .. ".elixir-ls-wrapped" },
   eslint = { installs.eslint .. "vscode-eslint-language-server", "--stdio" },
   html = { installs.html .. "vscode-html-language-server", "--stdio" },
   jsonls = { installs.jsonls .. "vscode-json-language-server", "--stdio" },
@@ -21,7 +21,5 @@ vim.g.ls_cmds = {
   tsserver = {
     installs.tsserver .. "typescript-language-server",
     "--stdio",
-    "--tsserver-path",
-    "tsserver",
   },
 }
