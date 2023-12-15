@@ -1,39 +1,41 @@
 {
-  homebrew.enable = true;
-  homebrew.onActivation.cleanup = "zap";
+  homebrew = {
+    enable = true;
+    onActivation.cleanup = "zap";
 
-  homebrew.taps = [
-    "homebrew/cask"
-    "homebrew/cask-versions"
-  ];
+    taps = [
+      "homebrew/cask"
+      "homebrew/cask-versions"
+    ];
 
-  homebrew.brews = [
-    "ios-deploy"
-    "pinentry-mac"
-  ];
+    brews = [
+      "ios-deploy"
+      "pinentry-mac"
+    ];
 
-  homebrew.casks = [
-    "beekeeper-studio"
-    "calibre"
-    "discord"
-    "docker"
-    "flipper"
-    "google-chrome"
-    "insomnia"
-    "notion"
-    "plex"
-    "pocket-casts"
-    "postgres-unofficial"
-  ];
+    casks = [
+      "beekeeper-studio"
+      "calibre"
+      "discord"
+      "docker"
+      "flipper"
+      "google-chrome"
+      "insomnia"
+      "notion"
+      "plex"
+      "pocket-casts"
+      "postgres-unofficial"
+    ];
 
-  homebrew.masApps = {
-    "1Blocker" = 1365531024;
-    "Amazon Kindle" = 302584613;
-    ColorSlurp = 1287239339;
-    Xcode = 497799835;
+    masApps = {
+      "1Blocker" = 1365531024;
+      "Amazon Kindle" = 302584613;
+      ColorSlurp = 1287239339;
+      Xcode = 497799835;
+    };
+
+    extraConfig = ''
+      cask_args appdir: "~/Applications"
+    '';
   };
-
-  homebrew.extraConfig = ''
-    cask_args appdir: "~/Applications"
-  '';
 }

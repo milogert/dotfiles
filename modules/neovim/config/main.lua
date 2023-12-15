@@ -21,6 +21,8 @@ require("milogert.variables")
 
 vim.cmd.packadd('vimplugin-vim-arpeggio')
 
+require("output_panel").setup()
+
 -- Source plugin configs.
 local plugins = {
   "cmp",

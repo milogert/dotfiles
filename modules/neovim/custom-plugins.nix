@@ -169,6 +169,16 @@ let
       sha256 = "1rdfw25lljv53h2f2nc1gmx9awggk7k3nrfj46ssl11jn6lyvbj8";
     };
   };
+
+  output-panel-nvim = vimUtils.buildVimPlugin rec {
+    name = "output-panel.nvim";
+    src = fetchFromGitHub {
+      owner = "mhanberg";
+      repo = name;
+      rev = "65bb44a5d5dbd40f3793a8c591b65a0c5f260bd9";
+      sha256 = "0wpjf25mqlafs0psi5kn3nxn4xnadfpfh9frf0zz8x72qfxkfv8s";
+    };
+  };
 in {
   inherit
     nvim-dap-vscode-js
@@ -185,5 +195,6 @@ in {
     vim-ai
     vim-arpeggio
     vim-tada
+    output-panel-nvim
   ];
 }

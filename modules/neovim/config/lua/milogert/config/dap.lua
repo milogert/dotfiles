@@ -53,10 +53,26 @@ if vim.g.debuggers.vscode_js then
       {
         type = "pwa-node",
         request = "attach",
-        name = "attach nextjs",
+        name = "Attach Next.js",
         url = "ws://localhost:9232",
         webRoot = "${workspaceFolder}",
         userDataDir = "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir"
+      },
+      -- Jest
+      {
+        type = "pwa-node",
+        request = "launch",
+        name = "Debug Jest Tests",
+        -- trace = true, -- include debugger info
+        runtimeExecutable = "node",
+        runtimeArgs = {
+          "./node_modules/jest/bin/jest.js",
+          "--runInBand",
+        },
+        rootPath = "${workspaceFolder}",
+        cwd = "${workspaceFolder}",
+        console = "integratedTerminal",
+        internalConsoleOptions = "neverOpen",
       },
     }
   end
@@ -84,12 +100,19 @@ u.nmap("<Leader>dr", "", { callback = dap.repl.toggle })
 u.nmap("<Leader>dl", "", { callback = dap.run_last })
 u.nmap("<Leader>dl", "", { callback = dapui.toggle })
 u.nmap("<F5>", "", { callback = dap.continue })
+u.nmap("<F9>", "", { callback = dapui.toggle })
 u.nmap("<F10>", "", { callback = dap.step_over })
 u.nmap("<F11>", "", { callback = dap.step_into })
 u.nmap("<F12>", "", { callback = dap.step_out })
 
-vim.fn.sign_define('DapBreakpoint',{ text ='🟥', texthl ='', linehl ='', numhl =''})
-vim.fn.sign_define('DapStopped',{ text ='▶️', texthl ='', linehl ='', numhl =''})
+vim.fn.sign_define('DapBreakpoint',{ text ='🛑', texthl ='', linehl ='', numhl =''})
+vim.fn.sign_define('DapLogpoint',{ text ='🪵', texthl ='', linehl ='', numhl =''})
+vim.fn.sign_define('DapStopped',{ text ='👉', texthl ='', linehl ='', numhl =''})
+vim.fn.sign_define('DiagnosticSignError', { text = '❌', texthl = '', linehl = '', nulhl = '' })
+vim.fn.sign_define('DiagnosticSignWarn', { text = '🚨', texthl = '', linehl = '', nulhl = '' })
+-- vim.fn.sign_define('DiagnosticSignInfo', { text = '', texthl = '', linehl = '', nulhl = '' })
+vim.fn.sign_define('DiagnosticSignHint', { text = '💡', texthl = '', linehl = '', nulhl = '' })
+
 
 local repl = require 'dap.repl'
 repl.commands = vim.tbl_extend('force', repl.commands, {
@@ -118,4 +141,3 @@ dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close({})
 end
 
-u.nmap("<F9>", "", { callback = dapui.toggle })
