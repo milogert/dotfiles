@@ -49,7 +49,15 @@ if vim.g.debuggers.vscode_js then
         url = "http://localhost:3000",
         webRoot = "${workspaceFolder}",
         userDataDir = "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir"
-      }
+      },
+      {
+        type = "pwa-node",
+        request = "attach",
+        name = "attach nextjs",
+        url = "ws://localhost:9232",
+        webRoot = "${workspaceFolder}",
+        userDataDir = "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir"
+      },
     }
   end
 
