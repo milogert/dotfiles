@@ -1,11 +1,12 @@
+local variables = require('milogert.variables')
 local lspconfig = require "lspconfig"
 local lsp_utils = require "milogert.config.lsp.utils"
 local on_attach = require "milogert.config.lsp.on_attach"
 
-lspconfig.jsonls.setup(lsp_utils.default_with_cmd(vim.g.ls_cmds.jsonls))
+lspconfig.jsonls.setup(lsp_utils.default_with_cmd(variables.get().ls_cmds.jsonls))
 
 lspconfig.eslint.setup(vim.tbl_extend("keep", {
-  cmd = vim.g.ls_cmds.eslint,
+  cmd = variables.get().ls_cmds.eslint,
   on_attach = function (client, bufnr)
     -- Force eslint to accept formatting requests.
     client.server_capabilities.document_formatting = true
@@ -22,7 +23,7 @@ lspconfig.eslint.setup(vim.tbl_extend("keep", {
 }, lsp_utils.server_defaults))
 
 lspconfig.tsserver.setup(vim.tbl_extend("keep", {
-  cmd = vim.g.ls_cmds.tsserver,
+  cmd = variables.get().ls_cmds.tsserver,
   on_attach = function (client, bufnr)
     -- Disable tsserver formatting requsts.
     client.server_capabilities.document_formatting = false

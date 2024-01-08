@@ -64,7 +64,7 @@
       #zprof
 
       if [[ $(uname -s) == 'Darwin' ]]; then
-        eval "$(/opt/homebrew/bin/brew shellenv)"
+        eval "$(/usr/local/bin/brew shellenv)"
       fi
 
       if [[ -d ~/Developer/flutter ]]; then

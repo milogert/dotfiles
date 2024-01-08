@@ -1,4 +1,5 @@
 local null_ls = require("null-ls")
+local variables = require('milogert.variables')
 
 null_ls.setup {
   on_attach = require("milogert.config.lsp.on_attach"),
@@ -29,7 +30,7 @@ null_ls.setup {
       prefer_local = "node_modules/.bin",
     }),
     null_ls.builtins.formatting.stylua.with({
-      command = vim.g.ls_cmds.stylua[1],
+      command = variables.get().ls_cmds.stylua[1],
     })
   }
 }
