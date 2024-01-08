@@ -38,9 +38,6 @@ in
           terraformls = "${pkgs.terraform-ls}/bin/",
           tsserver = "${pkgs.nodePackages.typescript-language-server}/bin/",
         }
-
-        vim.g.tsParserPath = vim.fn.stdpath("data") .. "/site"
-        vim.opt.runtimepath:prepend(vim.g.tsParserPath .. "/parser")
         EOF
 
         source ${configDir}/main.lua
@@ -71,7 +68,7 @@ in
           mason-nvim
           mini-nvim
           nui-nvim
-          null-ls-nvim
+          none-ls-nvim
           nvim-cmp
           nvim-colorizer-lua
           nvim-dap

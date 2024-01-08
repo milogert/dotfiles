@@ -1,6 +1,6 @@
 local null_ls = require("null-ls")
 
-null_ls.setup {
+null_ls.setup({
   on_attach = require("milogert.config.lsp.on_attach"),
 
   sources = {
@@ -10,10 +10,6 @@ null_ls.setup {
     null_ls.builtins.code_actions.gitsigns,
     null_ls.builtins.code_actions.statix,
 
-    -- null_ls.builtins.diagnostics.commitlint.with({
-    --   prefer_local = "node_modules/.bin",
-    --   args = { "--format", "./commitlint.format.js" },
-    -- }),
     null_ls.builtins.diagnostics.credo,
     null_ls.builtins.diagnostics.eslint.with({
       prefer_local = "node_modules/.bin",
@@ -30,6 +26,6 @@ null_ls.setup {
     }),
     null_ls.builtins.formatting.stylua.with({
       command = vim.g.ls_cmds.stylua[1],
-    })
-  }
-}
+    }),
+  },
+})
