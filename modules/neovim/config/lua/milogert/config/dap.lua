@@ -1,13 +1,14 @@
+local variables = require('milogert.variables')
 local u = require "milogert.utils"
 
 local dap = require('dap')
 local dapui = require('dapui')
 
-if vim.g.debuggers.vscode_js then
+if variables.get().debuggers.vscode_js then
   require("dap-vscode-js").setup({
     -- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
     -- debugger_path = "(runtimedir)/site/pack/packer/opt/vscode-js-debug", -- Path to vscode-js-debug installation.
-    debugger_path = vim.g.debuggers.vscode_js.debugger,
+    debugger_path = variables.get().debuggers.vscode_js.debugger,
     -- debugger_cmd = { "js-debug-adapter" }, -- Command to use to launch the debug server. Takes precedence over `node_path` and `debugger_path`.
     adapters = {
       'pwa-node',
@@ -50,6 +51,14 @@ if vim.g.debuggers.vscode_js then
         webRoot = "${workspaceFolder}",
         userDataDir = "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir"
       },
+      {
+        type = "pwa-node",
+        request = "attach",
+        name = "Attach Next.js",
+        url = "ws://localhost:9232",
+        webRoot = "${workspaceFolder}",
+        userDataDir = "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir"
+      },
       -- Jest
       {
         type = "pwa-node",
@@ -78,7 +87,7 @@ if vim.g.debuggers.vscode_js then
     }
   )
 else
-  print('vim.g.debuggers.vscode_js is not configured')
+  print('variables.get().debuggers.vscode_js is not configured')
 end
 
 u.nmap("<Leader>db", "", { callback = dap.toggle_breakpoint })

@@ -19,10 +19,4 @@
       };
     };
   };
-
-  home.activation.rebuildBatCache =
-    config.lib.dag.entryAfter ["writeBoundary"] ''
-      $DRY_RUN_CMD bat cache --build
-  '';
-
 }

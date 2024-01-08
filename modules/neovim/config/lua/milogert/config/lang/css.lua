@@ -1,3 +1,4 @@
+local variables = require('milogert.variables')
 local lsp_utils = require('milogert.config.lsp.utils')
 
 require("mason-lspconfig").setup {
@@ -10,7 +11,7 @@ require("mason-lspconfig").setup {
 
 local lspconfig = require "lspconfig"
 
-lspconfig.cssls.setup(lsp_utils.default_with_cmd(vim.g.ls_cmds.cssls))
+lspconfig.cssls.setup(lsp_utils.default_with_cmd(variables.get().ls_cmds.cssls))
 lspconfig.cssmodules_ls.setup(lsp_utils.server_defaults)
 
 lspconfig.stylelint_lsp.setup(vim.tbl_extend("keep", {

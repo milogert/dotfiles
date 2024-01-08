@@ -1,3 +1,4 @@
+local variables = require('milogert.variables')
 local lspconfig = require "lspconfig"
 local lsp_utils = require "milogert.config.lsp.utils"
 -- local elixir = require("elixir")
@@ -5,7 +6,7 @@ local lsp_utils = require "milogert.config.lsp.utils"
 -- local on_attach = require("milogert.config.lsp.on_attach")
 
 lspconfig.elixirls.setup(vim.tbl_extend("keep", {
-  cmd = vim.g.ls_cmds.elixirls,
+  cmd = variables.get().ls_cmds.elixirls,
 }, lsp_utils.server_defaults))
 
 -- elixir.setup {
@@ -17,7 +18,7 @@ lspconfig.elixirls.setup(vim.tbl_extend("keep", {
 --     --   dialyzerEnabled = false,
 --     --   enableTestLenses = false,
 --     -- },
---     cmd = vim.g.ls_cmds.elixirls,
+--     cmd = variables.get().ls_cmds.elixirls,
 --     on_attach = function(client, bufnr)
 --       vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", { buffer = true, noremap = true })
 --       vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", { buffer = true, noremap = true })
@@ -34,11 +35,11 @@ local dap = require('dap')
 local dapui = require('dapui')
 
 -- Elixir
-if vim.g.debuggers.elixir_ls then
+if variables.get().debuggers.elixir_ls then
   dap.adapters.mix_task = {
     type = 'executable',
     -- debugger.bat for windows
-    command = vim.g.debuggers.elixir_ls,
+    command = variables.get().debuggers.elixir_ls,
     args = {}
   }
 
@@ -68,6 +69,6 @@ if vim.g.debuggers.elixir_ls then
     },
   }
 else
-  print('vim.g.debuggers.elixir_ls is not configured')
+  print('variables.get().debuggers.elixir_ls is not configured')
 end
 

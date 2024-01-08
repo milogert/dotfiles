@@ -1,25 +1,34 @@
--- vim.g.ls_installs needs to be defined (this comes from my Nix config at the
--- moment).
-local installs = vim.g.ls_installs
+local logger = require('milogert.logger')
 
-vim.g.ls_cmds = {
-  cssls = { installs.html .. "vscode-css-language-server", "--stdio" },
-  -- denols = { installs.denols .. "deno", "lsp" },
-  elixirls = { installs.elixirls .. ".elixir-ls-wrapped" },
-  eslint = { installs.eslint .. "vscode-eslint-language-server", "--stdio" },
-  html = { installs.html .. "vscode-html-language-server", "--stdio" },
-  jsonls = { installs.jsonls .. "vscode-json-language-server", "--stdio" },
-  lua_ls = { installs.lua_ls .. "lua-language-server" },
-  nil_ls = { installs.nil_ls .. "nil" },
-  rnix = { installs.rnix .. "rnix-lsp" },
-  stylua = { installs.stylua .. "stylua" },
-  tailwindcss = {
-    installs.tailwindcss .. "tailwindcss-language-server",
-    "--stdio",
-  },
-  terraformls = { installs.terraformls .. "terraform-ls", "serve" },
-  tsserver = {
-    installs.tsserver .. "typescript-language-server",
-    "--stdio",
-  },
-}
+local gen_default_opts = function (opts)
+  return {}
+end
+
+local variables = nil
+
+local M = {}
+
+--[[
+Setup variables
+  @param `opts` Table of options. Keys are:
+    `config_path` The config path where all the configuration lives. Managed
+      by nix but on ordinary systems it's ~/.config/nvim/
+    `debuggers` The debugger install locations.
+    `ls_installs` The language server install locations.
+]]
+M.setup = function (opts)
+  if variables ~= nil then
+    logger.info('variables have already been set up')
+    return variables
+  end
+
+  local default_opts = gen_default_opts(opts or {})
+  variables = vim.tbl_extend("force", default_opts, opts or {})
+  return variables
+end
+
+M.get = function()
+  return variables
+end
+
+return M

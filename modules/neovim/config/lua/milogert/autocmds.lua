@@ -1,5 +1,6 @@
 local u = require('milogert.utils')
 local log = require('milogert.logger')
+local variables = require('milogert.variables')
 
 -- augroups and autocmd
 vim.api.nvim_create_augroup('formatting', { clear = true })
@@ -29,7 +30,7 @@ vim.api.nvim_create_augroup('skeletons', { clear = true })
 --     local is_merge = string.sub(first_line, 1, 5) == 'Merge'
 --     local is_template = string.match(first_line, "Feel free") ~= nil
 --     if not (is_merge or is_template) then
---       vim.api.nvim_command('0r '..vim.g.configPath..'/skeletons/gitcommit.skeleton')
+--       vim.api.nvim_command('0r '..variables.get().config_path..'/skeletons/gitcommit.skeleton')
 --     end
 --   end
 -- })
