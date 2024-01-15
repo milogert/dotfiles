@@ -53,6 +53,7 @@ in
         copilot-lua
         elixir-tools-nvim
         fidget-nvim
+        friendly-snippets
         fzf-lua
         gitsigns-nvim
         heirline-nvim
@@ -80,12 +81,12 @@ in
           p.elm # (NOT maintained, 2022-04-28)
           p.erlang # (maintained)
           p.fennel # (maintained)
+          p.gitcommit # (maintained)
           p.go # (maintained)
           p.graphql # (maintained)
           p.haskell # (NOT maintained, 2022-04-28)
           p.hcl # (maintained)
           p.heex # (maintained)
-          # p.help # (experimental, maintained)
           p.hjson # (maintained)
           p.html # (maintained)
           p.http # (maintained)
@@ -115,6 +116,7 @@ in
           p.tsx # (maintained)
           p.typescript # (maintained)
           p.vim # (maintained)
+          p.vimdoc # (maintained)
           p.vue # (maintained)
           p.yaml # (maintained)
         ]))

@@ -11,10 +11,6 @@ null_ls.setup {
     null_ls.builtins.code_actions.gitsigns,
     null_ls.builtins.code_actions.statix,
 
-    -- null_ls.builtins.diagnostics.commitlint.with({
-    --   prefer_local = "node_modules/.bin",
-    --   args = { "--format", "./commitlint.format.js" },
-    -- }),
     null_ls.builtins.diagnostics.credo,
     null_ls.builtins.diagnostics.eslint.with({
       prefer_local = "node_modules/.bin",

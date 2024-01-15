@@ -4,7 +4,6 @@
     onActivation.cleanup = "zap";
 
     taps = [
-      "homebrew/cask"
       "homebrew/cask-versions"
     ];
 
