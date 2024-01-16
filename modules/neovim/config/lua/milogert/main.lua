@@ -34,7 +34,7 @@ M.setup = function (variable_opts)
     "lsp.installer",
     "luasnip",
     "mini",
-    "null-ls",
+    "none-ls",
     "octo",
     "package-info",
     "persistence",

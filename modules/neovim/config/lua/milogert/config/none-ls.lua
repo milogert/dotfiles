@@ -28,5 +28,5 @@ null_ls.setup({
     null_ls.builtins.formatting.stylua.with({
       command = variables.get().ls_cmds.stylua[1],
     })
-  }
-}
+  },
+})

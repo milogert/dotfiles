@@ -8,7 +8,7 @@ default_capabilities.textDocument.completion.completionItem.snippetSupport = tru
 M.default_capabilities = require("cmp_nvim_lsp").default_capabilities(default_capabilities)
 
 M.server_defaults = {
-  capabilities = default_capabilities,
+  capabilities = M.default_capabilities,
   flags = { debounce_text_changes = 150 },
   on_attach = on_attach,
 }
