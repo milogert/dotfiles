@@ -32,6 +32,7 @@ M.setup = function (variable_opts)
     "keybindings",
     -- "hardtime",
     "lsp.installer",
+    "lspsaga",
     "luasnip",
     "mini",
     "null-ls",

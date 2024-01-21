@@ -1,4 +1,4 @@
-local on_attach = require "milogert.config.lsp.on_attach"
+local on_attach = require("milogert.config.lsp.on_attach")
 
 local M = {}
 
@@ -7,7 +7,31 @@ default_capabilities.textDocument.completion.completionItem.snippetSupport = tru
 
 M.default_capabilities = require("cmp_nvim_lsp").default_capabilities(default_capabilities)
 
+-- local border = {
+--   {"╭", "FloatBorder"},
+--   {"─", "FloatBorder"},
+--   {"╮", "FloatBorder"},
+--   {"│", "FloatBorder"},
+--   {"╯", "FloatBorder"},
+--   {"─", "FloatBorder"},
+--   {"╰", "FloatBorder"},
+--   {"│", "FloatBorder"},
+-- }
+
+-- LSP settings (for overriding per client)
+local handlers = {
+  ["textDocument/hover"] = vim.lsp.with(
+    vim.lsp.handlers.hover,
+    { border = "rounded", width = 81 }
+  ),
+  ["textDocument/signatureHelp"] = vim.lsp.with(
+    vim.lsp.handlers.signature_help,
+    { border = "rounded", width = 81 }
+  ),
+}
+
 M.server_defaults = {
+  handlers = handlers,
   capabilities = default_capabilities,
   flags = { debounce_text_changes = 150 },
   on_attach = on_attach,
