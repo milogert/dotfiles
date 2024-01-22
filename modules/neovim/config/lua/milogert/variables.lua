@@ -4,7 +4,7 @@ local gen_default_opts = function (opts)
   return {}
 end
 
-local variables = nil
+_G.milogert_variables = nil
 
 local M = {}
 
@@ -17,18 +17,18 @@ Setup variables
     `ls_installs` The language server install locations.
 ]]
 M.setup = function (opts)
-  if variables ~= nil then
-    logger.info('variables have already been set up')
-    return variables
+  if _G.milogert_variables ~= nil then
+    logger.info('_G.milogert_variables have already been set up')
+    return _G.milogert_variables
   end
 
   local default_opts = gen_default_opts(opts or {})
-  variables = vim.tbl_extend("force", default_opts, opts or {})
-  return variables
+  _G.milogert_variables = vim.tbl_extend("force", default_opts, opts or {})
+  return _G.milogert_variables
 end
 
 M.get = function()
-  return variables
+  return _G.milogert_variables
 end
 
 return M

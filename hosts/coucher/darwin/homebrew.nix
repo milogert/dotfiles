@@ -24,6 +24,7 @@
       "plex"
       "pocket-casts"
       "postgres-unofficial"
+      "vial"
     ];
 
     masApps = {

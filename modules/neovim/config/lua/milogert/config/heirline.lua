@@ -245,7 +245,8 @@ local ruler = {
   -- %L = number of lines in the buffer
   -- %c = column number
   -- %P = percentage through file of displayed window
-  provider = "%7(%l/%3L%):%2c %P",
+  -- provider = "%7(%l/%3L%):%2c %P",
+  provider = "%7(%l/%3L%):%2c",
   space,
 }
 
@@ -279,10 +280,10 @@ local lsp_indicator = {
       table.insert(names, server.name)
     end
 
-    local text = " [" .. table.concat(names, " ") .. "]"
+    local text = " " .. table.concat(names, " ")
 
     if not conditions.width_percent_below(#text, 0.25) then
-      text = " [" .. #names .. "]"
+      text = " " .. #names
     end
 
     return text

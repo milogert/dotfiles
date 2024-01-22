@@ -63,28 +63,6 @@ for _, map in ipairs(vimuxMaps) do
   u.arpeggio('nnoremap', map.key,               command)
 end
 
--- Fzf helper importer.
-local fzf = function()
-  return require('fzf-lua')
-end
-
-u.nmap('<C-p>', '', {
-  -- Command for calling files or git_files based on the current repo status.
-  callback = require('milogert.functions').fzfFiles
-})
-u.nmap('<leader>b', '', {
-  callback = fzf().buffers
-})
-u.nmap('<leader>/', '', {
-  callback = function() fzf().live_grep_native({ search = "" }) end
-})
-u.nmap('<leader>fg', '', {
-  callback = fzf().git_branches
-})
-u.nmap('<leader>fb', '', {
-  callback = fzf().builtin
-})
-
 -- Function keybindings.
 u.nmap('<leader>fl', '', {
   callback = f.addNonConditionalLogger
@@ -104,54 +82,6 @@ u.xmap('<leader>ppj', '', {
 
 -- Sort while highlighting something.
 u.xmap('u', [[:'<,'>sort<cr>]])
-
--- Jump between hunks
-local gitsignsMaps = {
-  [']g'] = {
-    cmd = [[&diff ? ']g' : '<cmd>Gitsigns next_hunk<CR>']],
-    opts = { expr = true },
-  },
-  ['[g'] = {
-    cmd = [[&diff ? '[g' : '<cmd>Gitsigns prev_hunk<CR>']],
-    opts = { expr = true },
-  },
-
-  -- Popup what's changed in a hunk under cursor
-  ['<Leader>gp'] = ':Gitsigns preview_hunk<CR>',
-
-  -- Stage/reset individual hunks under cursor in a file
-  ['<Leader>gs'] = ':Gitsigns stage_hunk<CR>',
-  ['<Leader>gr'] = ':Gitsigns reset_hunk<CR>',
-  ['<Leader>gu'] = ':Gitsigns undo_stage_hunk<CR>',
-
-  -- Stage/reset all hunks in a file
-  ['<Leader>gS'] = ':Gitsigns stage_buffer<CR>',
-  ['<Leader>gU'] = ':Gitsigns reset_buffer_index<CR>',
-  ['<Leader>gR'] = ':Gitsigns reset_buffer<CR>',
-
-  -- Open git status in interative window (similar to lazygit)
-  ['<Leader>gg'] = ':Git<CR>',
-
-  -- Show `git status output`
-  -- ['<Leader>gs'] = ':Git status<CR>',
-
-  -- Open commit window (creates commit after writing and saving commit msg)
-  ['<Leader>gc'] = ':Git commit | startinsert<CR>',
-
-  -- Other tools from fugitive
-  ['<Leader>gd'] = ':Git difftool<CR>',
-  ['<Leader>gm'] = ':Git mergetool<CR>',
-  ['<Leader>g|'] = ':Gvdiffsplit<CR>',
-  ['<Leader>g_'] = ':Gdiffsplit<CR>',
-}
-
-for key, map in pairs(gitsignsMaps) do
-  if type(map) == 'string' then
-    u.nmap(key, map)
-  else
-    u.nmap(key, map.cmd, map.opts)
-  end
-end
 
 u.nmap('dd', '', { callback = f.smart_dd, expr = true })
 

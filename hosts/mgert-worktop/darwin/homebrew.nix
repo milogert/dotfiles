@@ -29,6 +29,7 @@
       "pocket-casts"
       "postgres-unofficial"
       "slack"
+      "vial"
       "vyprvpn"
       "zight"
       "zoom"

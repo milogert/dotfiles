@@ -2,7 +2,7 @@ local M = {}
 local variables = require("milogert.variables")
 
 M.setup = function (variable_opts)
-  local vars = variables.setup(variable_opts)
+  variables.setup(variable_opts)
 
   local log = require("milogert.logger")
 
@@ -14,12 +14,11 @@ M.setup = function (variable_opts)
   require("milogert.settings")
   require("milogert.autocmds")
 
-  vim.cmd.packadd('vimplugin-vim-arpeggio')
-
   require("output_panel").setup()
 
   -- Source plugin configs.
   local plugins = {
+    "arpeggio",
     "cmp",
     "colorizer",
     "comment",
@@ -30,7 +29,6 @@ M.setup = function (variable_opts)
     "fzf-lua",
     "gitsigns",
     "keybindings",
-    -- "hardtime",
     "lsp.installer",
     "luasnip",
     "mini",
@@ -39,6 +37,7 @@ M.setup = function (variable_opts)
     "package-info",
     "persistence",
     "runscript",
+    "tada",
     "treesitter",
 
     "heirline", -- Needs to be last since it uses info from other imports

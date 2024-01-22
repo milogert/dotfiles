@@ -5,6 +5,9 @@
 
   outputs = inputs @ { self, nixpkgs }: {
     overlays.default = final: prev: {
+      wrapNeovim = prev.wrapNeovim.overrideAttrs(old: {
+      });
+
       neovim-unwrapped = prev.neovim-unwrapped.overrideAttrs(old: {
         buildInputs = old.buildInputs ++ (with prev.pkgs; [
           elixir_ls

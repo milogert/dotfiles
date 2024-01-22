@@ -100,6 +100,7 @@ u.nmap("<Leader>dB", "", {
 u.nmap("<Leader>dr", "", { callback = dap.repl.toggle })
 u.nmap("<Leader>dl", "", { callback = dap.run_last })
 u.nmap("<Leader>dl", "", { callback = dapui.toggle })
+u.nmap("<F4>", "", { callback = dap.terminate })
 u.nmap("<F5>", "", { callback = dap.continue })
 u.nmap("<F9>", "", { callback = dapui.toggle })
 u.nmap("<F10>", "", { callback = dap.step_over })
@@ -130,7 +131,21 @@ repl.commands = vim.tbl_extend('force', repl.commands, {
   },
 })
 
-dapui.setup()
+dapui.setup({
+  controls = {
+    icons = {
+      pause = " (F5)",
+      play = " (F5)",
+      step_into = " (F11)",
+      step_over = " (F10)",
+      step_out = " (F12)",
+      step_back = "",
+      run_last = "",
+      terminate = " (F4)",
+      disconnect = "",
+    },
+  },
+})
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
   dapui.open({})
