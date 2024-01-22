@@ -1,5 +1,15 @@
 local u = require "milogert.utils"
-require('gitsigns').setup()
+
+require('gitsigns').setup({
+  preview_config = {
+    -- Options passed to nvim_open_win
+    border = 'rounded',
+    style = 'minimal',
+    relative = 'cursor',
+    row = 1,
+    col = 0
+  },
+})
 
 local gitsignsMaps = {
   [']g'] = {
@@ -47,4 +57,3 @@ for key, map in pairs(gitsignsMaps) do
     u.nmap(key, map.cmd, map.opts)
   end
 end
-

@@ -39,14 +39,6 @@ end
 Functions.prettyPrintJsonFile = function () Functions.prettyPrintJson(true) end
 Functions.prettyPrintJsonVisual = function () Functions.prettyPrintJson(false) end
 
-Functions.fzfFiles = function()
-  local gitStatus = vim.g.gitsigns_head
-
-  local cmd = u.tern(gitStatus == nil, 'files', 'git_files')
-
-  return require('fzf-lua')[cmd]()
-end
-
 Functions.twiddleCase = function (str)
   local is_upper = str == string.upper(str)
   local is_lower = str == string.lower(str)
