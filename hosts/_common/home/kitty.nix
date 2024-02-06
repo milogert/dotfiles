@@ -5,8 +5,8 @@
     enable = true;
 
     font = {
-      package = pkgs.fira-code;
-      name = "Fira Code";
+      package = pkgs.hack-font;
+      name = "Hack";
       size = 11;
     };
 

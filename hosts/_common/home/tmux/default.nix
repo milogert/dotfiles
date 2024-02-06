@@ -18,8 +18,8 @@ in {
     tmuxinator.enable = true;
 
     baseIndex = 1;
-    #enableFzf = true;
-    #enableMouse = true;
+    # enableFzf = true;
+    # enableMouse = true;
     keyMode = "vi";
     escapeTime = 1;
     historyLimit = 10000;
@@ -41,6 +41,7 @@ in {
 
       # Set the default shell.
       set-option -g default-shell ${pkgs.zsh}/bin/zsh
+      set -g default-terminal "tmux"
       set-option -ga terminal-overrides ",xterm-256color:Tc"
 
       # Swap layout switch and previous buffer keys.

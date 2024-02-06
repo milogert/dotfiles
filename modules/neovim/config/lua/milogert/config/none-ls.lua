@@ -12,15 +12,15 @@ null_ls.setup({
     null_ls.builtins.code_actions.statix,
 
     null_ls.builtins.diagnostics.credo,
-    null_ls.builtins.diagnostics.eslint.with({
-      prefer_local = "node_modules/.bin",
-    }),
+    -- null_ls.builtins.diagnostics.eslint.with({
+    --   prefer_local = "node_modules/.bin",
+    -- }),
     null_ls.builtins.diagnostics.statix,
 
     null_ls.builtins.formatting.eslint.with({
       prefer_local = "node_modules/.bin",
     }),
-    null_ls.builtins.formatting.json_tool,
+    -- null_ls.builtins.formatting.json_tool,
     null_ls.builtins.formatting.mix,
     null_ls.builtins.formatting.prettier.with({
       prefer_local = "node_modules/.bin",
