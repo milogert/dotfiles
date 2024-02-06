@@ -32,6 +32,7 @@ in
           stylua = { "${pkgs.stylua}/bin/stylua" },
           tailwindcss = { "${pkgs.vscode-extensions.bradlc.vscode-tailwindcss}/bin/tailwindcss-language-server", "--stdio", },
           terraformls = { "${pkgs.terraform-ls}/bin/terraform-ls", "serve" },
+          texlab = { "${pkgs.texlab}/bin/texlab" },
           tsserver = { "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server", "--stdio", },
         },
       })

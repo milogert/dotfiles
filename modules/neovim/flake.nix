@@ -10,18 +10,19 @@
 
       neovim-unwrapped = prev.neovim-unwrapped.overrideAttrs(old: {
         buildInputs = old.buildInputs ++ (with prev.pkgs; [
-          elixir_ls
-          /* nodePackages.eslint */
           # deno
-          nodePackages.typescript-language-server
-          nodePackages.typescript
+          /* node-debug2 */
+          /* nodePackages.eslint */
+          elixir_ls
           nil
-          sumneko-lua-language-server
-          terraform-ls
-          vscode-extensions.bradlc.vscode-tailwindcss
+          nodePackages.typescript
+          nodePackages.typescript-language-server
           statix
           stylua
-          /* node-debug2 */
+          sumneko-lua-language-server
+          terraform-ls
+          texlab
+          vscode-extensions.bradlc.vscode-tailwindcss
         ]);
       });
 

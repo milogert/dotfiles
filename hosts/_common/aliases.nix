@@ -11,11 +11,11 @@
     srv = "python -m SimpleHTTPServer \${1:-8000}";
 
     # Nix stuff.
-    ns = "nix-shell ";
-    nsp = "nix-shell -p ";
+    ns = "nix-shell";
+    nsp = "nix-shell -p";
 
-    nq = "nix search ";
-    nqn = "nix search nixpkgs ";
+    nq = "nix search";
+    nqn = "nix search nixpkgs";
 
     nm = "man 5 configuration.nix";
     nmh = "man 5 home-configuration.nix";
