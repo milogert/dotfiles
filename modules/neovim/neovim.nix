@@ -56,6 +56,7 @@ in
         fidget-nvim
         friendly-snippets
         fzf-lua
+        fzf-lsp-nvim
         gitsigns-nvim
         heirline-nvim
         hydra-nvim
