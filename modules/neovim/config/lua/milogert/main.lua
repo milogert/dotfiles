@@ -30,7 +30,6 @@ M.setup = function (variable_opts)
     "gitsigns",
     "keybindings",
     "lsp.installer",
-    "lspsaga",
     "luasnip",
     "mini",
     "none-ls",

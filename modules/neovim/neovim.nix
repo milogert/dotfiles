@@ -60,7 +60,6 @@ in
         heirline-nvim
         hydra-nvim
         lspkind-nvim
-        lspsaga-nvim
         luasnip
         mason-lspconfig-nvim
         mason-nvim
