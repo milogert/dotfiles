@@ -140,6 +140,16 @@ let
     };
   };
 
+  reactive-nvim = vimUtils.buildVimPlugin rec {
+    name = "reactive.nvim";
+    src = fetchFromGitHub {
+      owner = "rasulomaroff";
+      repo = name;
+      rev = "0ad3aba5f16f001c3c44238e78359a21bba1cce4";
+      sha256 = "10ipv906p89v5yxwq350bd50b8msxcgx6w3pjv55dxx5z4zbrghd";
+    };
+  };
+
   vim-ai = vimUtils.buildVimPlugin rec {
     name = "vim-ai";
     src = fetchFromGitHub {
@@ -192,9 +202,10 @@ in {
     nvim-dap-vscode-js
     nvim-dev-container
     nvim-runscript
+    output-panel-nvim
+    reactive-nvim
     vim-ai
     vim-arpeggio
     vim-tada
-    output-panel-nvim
   ];
 }
