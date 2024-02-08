@@ -110,10 +110,6 @@ u.nmap("<F12>", "", { callback = dap.step_out })
 vim.fn.sign_define('DapBreakpoint',{ text ='🛑', texthl ='', linehl ='', numhl =''})
 vim.fn.sign_define('DapLogpoint',{ text ='🪵', texthl ='', linehl ='', numhl =''})
 vim.fn.sign_define('DapStopped',{ text ='👉', texthl ='', linehl ='', numhl =''})
-vim.fn.sign_define('DiagnosticSignError', { text = '❌', texthl = '', linehl = '', nulhl = '' })
-vim.fn.sign_define('DiagnosticSignWarn', { text = '🚨', texthl = '', linehl = '', nulhl = '' })
--- vim.fn.sign_define('DiagnosticSignInfo', { text = '', texthl = '', linehl = '', nulhl = '' })
-vim.fn.sign_define('DiagnosticSignHint', { text = '💡', texthl = '', linehl = '', nulhl = '' })
 
 
 local repl = require 'dap.repl'

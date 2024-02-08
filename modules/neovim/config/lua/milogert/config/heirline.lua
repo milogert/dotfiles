@@ -332,8 +332,7 @@ local diagnostic_icons = {
     self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
   end,
 
-  { provider = "![" },
-
+  
   {
     provider = function(self)
       -- 0 is just another output, we can decide to print it or not!
@@ -359,8 +358,6 @@ local diagnostic_icons = {
     end,
     hl = { fg = colors.diag.hint },
   },
-
-  { provider = "]" },
 }
 
 local dap_messages = {

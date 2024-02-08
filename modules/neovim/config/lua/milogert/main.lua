@@ -36,6 +36,7 @@ M.setup = function (variable_opts)
     "octo",
     "package-info",
     "persistence",
+    "reactive",
     "runscript",
     "tada",
     "treesitter",

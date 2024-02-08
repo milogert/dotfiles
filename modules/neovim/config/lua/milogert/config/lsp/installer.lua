@@ -23,6 +23,10 @@ vim.fn.sign_define(
 vim.fn.sign_define(
   "DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" }
 )
+-- vim.fn.sign_define('DiagnosticSignError', { text = '❌', texthl = '', linehl = '', nulhl = '' })
+-- vim.fn.sign_define('DiagnosticSignWarn', { text = '🚨', texthl = '', linehl = '', nulhl = '' })
+-- vim.fn.sign_define('DiagnosticSignInfo', { text = '👀', texthl = '', linehl = '', nulhl = '' })
+-- vim.fn.sign_define('DiagnosticSignHint', { text = '💡', texthl = '', linehl = '', nulhl = '' })
 
 require('lspkind').init({
   mode = 'symbol_text',
