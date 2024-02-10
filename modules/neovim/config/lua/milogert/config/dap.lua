@@ -90,6 +90,8 @@ else
   print('variables.get().debuggers.vscode_js is not configured')
 end
 
+u.nmap("<M-k>", "", { callback = dapui.eval })
+u.vmap("<M-k>", "", { callback = dapui.eval })
 u.nmap("<Leader>db", "", { callback = dap.toggle_breakpoint })
 u.nmap("<Leader>dB", "", {
   callback = function ()
