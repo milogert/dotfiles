@@ -1,5 +1,6 @@
 local M = {}
 local variables = require("milogert.variables")
+local u = require('milogert.utils')
 
 M.setup = function (variable_opts)
   variables.setup(variable_opts)
@@ -15,6 +16,22 @@ M.setup = function (variable_opts)
   require("milogert.autocmds")
 
   require("output_panel").setup()
+
+  require("oil").setup({
+    win_options = {
+      -- wrap = false,
+      signcolumn = "yes",
+      -- cursorcolumn = false,
+      -- foldcolumn = "0",
+      -- spell = false,
+      -- list = false,
+      -- conceallevel = 3,
+      -- concealcursor = "nvic",
+    },
+    view_options = {
+      show_hidden = true,
+    },
+  })
 
   -- Source plugin configs.
   local plugins = {
@@ -69,6 +86,8 @@ M.setup = function (variable_opts)
   -- Perform language setup.
   require('milogert.config.lang.main')
 
+  -- Oil.nvim
+  u.nmap('-', ':Oil<CR>')
   -- Dirvish - override netrw when using Explore, Sexplore, and Vexplore.
   vim.g.loaded_netrwPlugin = 'loaded due to dirvish'
   for _, value in ipairs({ { 'Explore', '' }, { 'Sexplore', 'split | silent ' }, { 'Vexplore', 'vsplit | silent ' } }) do

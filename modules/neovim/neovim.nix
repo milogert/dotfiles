@@ -124,6 +124,7 @@ in
         nvim-treesitter-textobjects
         nvim-web-devicons
         octo-nvim
+        oil-nvim
         package-info-nvim
         persistence-nvim
         plenary-nvim
@@ -131,8 +132,8 @@ in
         vim-abolish
         vim-dadbod
         vim-dadbod-ui
-        vim-dirvish
-        vim-dirvish-git
+        # vim-dirvish
+        # vim-dirvish-git
         vim-dispatch
         vim-dispatch-neovim
         vim-elixir
