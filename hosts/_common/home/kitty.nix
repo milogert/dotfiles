@@ -15,6 +15,7 @@
     settings = {
       tab_bar_style = "hidden";
       confirm_os_window_close = 0;
+      macos_option_as_alt = "both";
     };
 
     theme = "srcery";
