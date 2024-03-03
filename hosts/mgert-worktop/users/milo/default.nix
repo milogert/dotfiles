@@ -13,6 +13,5 @@
     # docker
     git-lfs
     mas
-    yarn
   ];
 }

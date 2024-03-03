@@ -12,7 +12,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Set your time zone.
-  time.timeZone = "America/New_York";
+  time.timeZone = "America/Menominee";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

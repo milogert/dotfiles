@@ -47,7 +47,6 @@
          /*  pkgs.gnome.gnome-shell # for org.gnome.shell */
         /* ]; */
       };
-      desktopManager.plasma5.enable = true;
     };
 
     gnome.core-utilities.enable = false;

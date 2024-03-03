@@ -33,7 +33,7 @@
     discord
     elixir
     evince
-    google-chrome
+    firefox
     insomnia
     nodejs
     phoronix-test-suite

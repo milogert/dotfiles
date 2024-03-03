@@ -12,39 +12,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Set your time zone.
-  time.timeZone = "America/New_York";
-
-  # Enable the X11 windowing system.
-  services.xserver = {
-    enable = true;
-
-    videoDrivers = [ "amdgpu" ];
-
-    # Enable the GNOME 3 Desktop Environment.
-    displayManager.gdm = {
-      enable = true;
-      wayland = true;
-    };
-    desktopManager.gnome = {
-      enable = true;
-
-       extraGSettingsOverrides = ''
-        # Change default background
-        [org.gnome.desktop.default-applications]
-        terminal='exec alacritty'
-
-        # Favorite apps in gnome-shell
-        [org.gnome.shell]
-        favorite-apps=['org.gnome.Photos.desktop', 'org.gnome.Nautilus.desktop']
-      '';
-
-      extraGSettingsOverridePackages = [
-        pkgs.gsettings-desktop-schemas # for org.gnome.desktop
-        pkgs.gnome.gnome-shell # for org.gnome.shell
-      ];
-    };
-  };
-  services.gnome.core-utilities.enable = false;
+  time.timeZone = "America/Menominee";
 
   # rtkit is optional but recommended
   security.rtkit.enable = true;

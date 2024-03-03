@@ -10,11 +10,7 @@ local getKeyCode = function(key, modifiers)
 end
 
 local appWatcher = hs.application.watcher.new(function(name, type, appObj)
-  if name == 'Alacritty' and type == hs.application.watcher.activated then
-    print('deactivate keybindings here')
-  else
-    print('activate keybindings here')
-  end
+  print('activate keybindings here')
 end)
 
 appWatcher:start()

@@ -17,14 +17,11 @@
         enable = true;
         wayland = true;
       };
+
       desktopManager.gnome = {
         enable = true;
 
          extraGSettingsOverrides = ''
-          # Change default background
-          [org.gnome.desktop.default-applications]
-          terminal='exec alacritty'
-
           # Favorite apps in gnome-shell
           [org.gnome.shell]
           favorite-apps=['org.gnome.Photos.desktop', 'org.gnome.Nautilus.desktop']
