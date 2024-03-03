@@ -9,7 +9,7 @@ let
 in {
   fonts = {
     fontDir.enable = true;
-    fonts = [
+    packages = [
       pkgs.fira-code
       nerdfonts
       pkgs.iosevka

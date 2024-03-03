@@ -29,22 +29,21 @@
   swapDevices = [ ];
 
   hardware = {
-    # high-resolution display
-    video.hidpi.enable = lib.mkDefault true;
-
     opengl = {
       driSupport = true;
       driSupport32Bit = true;
       extraPackages = with pkgs; [
-        #amdvlk
+        amdvlk
+        # radv
         rocm-opencl-icd
         rocm-opencl-runtime
       ];
       # This is for steam support. Needs pipewire at the moment
-      extraPackages32 = with pkgs.pkgsi686Linux; [
-        #amdvlk
+      extraPackages32 = with pkgs.driversi686Linux; [
+        amdvlk
+        # radv
         # libva
-      ] ++ lib.optionals config.services.pipewire.enable [ pipewire ];
+      ] ++ lib.optionals config.services.pipewire.enable [ pkgs.pkgsi686Linux.pipewire ];
     };
 
     pulseaudio = {

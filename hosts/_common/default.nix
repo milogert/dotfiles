@@ -78,7 +78,7 @@ in {
     neovim-custom
     openvpn
     postgresql
-    python39
+    # python39
     rename
     ripgrep
     shellcheck

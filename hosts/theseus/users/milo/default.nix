@@ -26,16 +26,21 @@
   home.packages = with pkgs; [
     calibre
     cargo
-    cockatrice
     cider
+    cinnamon.warpinator
+    cockatrice
+    cryptsetup
     discord
     elixir
     evince
     google-chrome
     insomnia
     nodejs
+    phoronix-test-suite
+    pinentry-curses
     ranger
-    spotify
+    vulkan-tools
+    libsForQt5.kdeconnect-kde
   ];
 
   programs.qutebrowser = {

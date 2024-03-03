@@ -1,7 +1,7 @@
 { lib, pkgs, ... }:
 
 let
-  modifier = "Mod1";
+  modifier = "Mod4";
   volsink = "0";
   volchange = "5";
 
@@ -108,14 +108,14 @@ in {
     wrapperFeatures.gtk = true;
 
     config = {
-      modifier = modifier;
+      inherit modifier;
 
       assigns = {
         "${workspace1}" = [
           { class = "^Firefox"; }
         ];
         "${workspace3}" = [
-          { app_id = "Alacritty"; }
+          { app_id = "Kitty"; }
         ];
         "${workspace4}" = [
           { class = "Spotify"; }
@@ -224,12 +224,12 @@ in {
       };
 
       startup = [
-        { command = "alacritty"; }
+        { command = "kitty"; }
         { command = "firefox"; }
         { command = "discord"; }
       ];
 
-      terminal = "alacritty";
+      terminal = "kitty";
 
       window = {
         border = 2;

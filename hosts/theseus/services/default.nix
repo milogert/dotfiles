@@ -26,7 +26,7 @@
     xserver = {
       enable = true;
 
-      videoDrivers = [ "amdgpu" ];
+      # videoDrivers = [ "modesetting" ];
 
       # Enable the GNOME 3 Desktop Environment.
       displayManager.gdm = {
@@ -37,10 +37,6 @@
         enable = true;
 
          /* extraGSettingsOverrides = '' */
-         /*  # Change default background */
-         /*  [org.gnome.desktop.default-applications] */
-         /*  terminal='exec alacritty' */
-
          /*  # Favorite apps in gnome-shell */
          /*  [org.gnome.shell] */
          /*  favorite-apps=['org.gnome.Photos.desktop', 'org.gnome.Nautilus.desktop'] */
@@ -51,6 +47,7 @@
          /*  pkgs.gnome.gnome-shell # for org.gnome.shell */
         /* ]; */
       };
+      desktopManager.plasma5.enable = true;
     };
 
     gnome.core-utilities.enable = false;

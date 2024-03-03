@@ -39,6 +39,8 @@
   #  '';
   #};
 
+  security.polkit.enable = true;
+
   environment.systemPackages = with pkgs; [
     clinfo
     gjs

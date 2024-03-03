@@ -24,5 +24,22 @@
 
       # dns = "none";
     };
+
+    # firewall.allowedUDPPorts = [
+    #   42000 # Warpinator
+    #   42001 # Warpinator
+    # ];
+    firewall.allowedTCPPorts = [
+      42000 # Warpinator
+      42001 # Warpinator
+    ];
+
+    firewall.allowedTCPPortRanges = [
+      { from = 1714; to = 1764; } # KDE Connect
+    ];
+
+    firewall.allowedUDPPortRanges = [
+      { from = 1714; to = 1764; } # KDE Connect
+    ];
   };
 }
