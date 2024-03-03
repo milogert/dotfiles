@@ -31,11 +31,11 @@ local space = { provider = " " }
 
 local mode_indicator = {
   update = {
-      "ModeChanged",
-      pattern = "*:*",
-      callback = vim.schedule_wrap(function()
-          vim.cmd("redrawstatus")
-      end),
+    "ModeChanged",
+    pattern = "*:*",
+    callback = vim.schedule_wrap(function()
+      vim.cmd("redrawstatus")
+    end),
   },
 
   -- get vim current mode, this information will be required by the provider
@@ -120,23 +120,23 @@ local mode_indicator = {
         ["r?"] = "?",
         ["!"] = "!",
         t = "T",
-      }
+      },
     },
     mode_colors = {
-      n = colors.red ,
+      n = colors.red,
       i = colors.green,
       v = colors.cyan,
-      V =  colors.cyan,
-      [""] =  colors.cyan,
-      c =  colors.orange,
-      s =  colors.purple,
-      S =  colors.purple,
-      [""] =  colors.purple,
-      R =  colors.orange,
-      r =  colors.orange,
-      ["!"] =  colors.red,
-      t =  colors.red,
-    }
+      V = colors.cyan,
+      [""] = colors.cyan,
+      c = colors.orange,
+      s = colors.purple,
+      S = colors.purple,
+      [""] = colors.purple,
+      R = colors.orange,
+      r = colors.orange,
+      ["!"] = colors.red,
+      t = colors.red,
+    },
   },
   -- We can now access the value of mode() that, by now, would have been
   -- computed by `init()` and use it to index our strings dictionary.
@@ -153,9 +153,9 @@ local mode_indicator = {
       names = self.mode_names.succinct
     end
 
-    names = names or ('? ' .. self.mode .. ' ?')
+    names = names or ("? " .. self.mode .. " ?")
 
-    return " %2("..names[self.mode].."%)"
+    return " %2(" .. names[self.mode] .. "%)"
   end,
 
   -- Same goes for the highlight. Now the foreground will change according to the current mode.
@@ -165,6 +165,14 @@ local mode_indicator = {
   end,
 
   space,
+}
+
+local spell = {
+  condition = function()
+    return vim.wo.spell
+  end,
+  provider = " <spell> ",
+  hl = { bold = true, fg = colors.orange },
 }
 
 local file_name_block = {
@@ -177,14 +185,15 @@ local file_icon = {
   init = function(self)
     local filename = self.filename
     local extension = vim.fn.fnamemodify(filename, ":e")
-    self.icon, self.icon_color = require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
+    self.icon, self.icon_color =
+        require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
   end,
   provider = function(self)
     return self.icon and (self.icon .. " ")
   end,
   hl = function(self)
     return { fg = self.icon_color }
-  end
+  end,
 }
 
 local file_name = {
@@ -204,13 +213,21 @@ local file_name = {
 
 local file_flags = {
   {
-    provider = function() if vim.bo.modified then return "[+]" end end,
-    hl = { fg = colors.green }
-
-  }, {
-    provider = function() if (not vim.bo.modifiable) or vim.bo.readonly then return "" end end,
-    hl = { fg = colors.orange }
-  }
+    provider = function()
+      if vim.bo.modified then
+        return "[+]"
+      end
+    end,
+    hl = { fg = colors.green },
+  },
+  {
+    provider = function()
+      if (not vim.bo.modifiable) or vim.bo.readonly then
+        return ""
+      end
+    end,
+    hl = { fg = colors.orange },
+  },
 }
 
 local file_name_modifier = {
@@ -225,9 +242,12 @@ local file_name_modifier = {
 file_name_block = utils.insert(
   file_name_block,
   file_icon,
-  utils.insert(file_name_modifier, file_name), -- a new table where FileName is a child of FileNameModifier
-  unpack(file_flags), -- A small optimisation, since their parent does nothing
-  { provider = '%<'}, -- this means that the statusline is cut here when there's not enough space
+  -- a new table where FileName is a child of FileNameModifier
+  utils.insert(file_name_modifier, file_name),
+  -- A small optimisation, since their parent does nothing
+  unpack(file_flags),
+  -- this means that the statusline is cut here when there's not enough space
+  { provider = "%<" },
   space
 )
 
@@ -245,44 +265,45 @@ local ruler = {
   -- %L = number of lines in the buffer
   -- %c = column number
   -- %P = percentage through file of displayed window
-  provider = "%7(%l/%3L%):%2c %P",
+  -- provider = "%7(%l/%3L%):%2c %P",
+  provider = "%7(%l/%3L%):%2c",
   space,
 }
 
-local scrollbar = {
-  static = {
-    -- sbar = { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' }
-    sbar = { '🭶', '🭷', '🭸', '🭹', '🭺', '🭻' }
-  },
-  provider = function(self)
-    local curr_line = vim.api.nvim_win_get_cursor(0)[1]
-    local lines = vim.api.nvim_buf_line_count(0)
-    local i
-    if lines > 0 then 
-        i = math.floor((curr_line - 1) / lines * #self.sbar) + 1
-    else
-        i = #self.sbar
-    end
-    return string.rep(self.sbar[i], 2)
-  end,
-  space,
-}
+-- local scrollbar = {
+--   static = {
+--     -- sbar = { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' }
+--     sbar = { "🭶", "🭷", "🭸", "🭹", "🭺", "🭻" },
+--   },
+--   provider = function(self)
+--     local curr_line = vim.api.nvim_win_get_cursor(0)[1]
+--     local lines = vim.api.nvim_buf_line_count(0)
+--     local i
+--     if lines > 0 then
+--       i = math.floor((curr_line - 1) / lines * #self.sbar) + 1
+--     else
+--       i = #self.sbar
+--     end
+--     return string.rep(self.sbar[i], 2)
+--   end,
+--   space,
+-- }
 
 local lsp_indicator = {
   condition = conditions.lsp_attached,
-  update = {'LspAttach', 'LspDetach'},
+  update = { "LspAttach", "LspDetach" },
 
   -- Or complicate things a bit and get the servers names
-  provider  = function()
+  provider = function()
     local names = {}
     for _, server in ipairs(vim.lsp.buf_get_clients(0)) do
       table.insert(names, server.name)
     end
 
-    local text = " [" .. table.concat(names, " ") .. "]"
+    local text = " " .. table.concat(names, " ")
 
     if not conditions.width_percent_below(#text, 0.25) then
-      text = " [" .. #names .. "]"
+      text = " " .. #names
     end
 
     return text
@@ -311,8 +332,7 @@ local diagnostic_icons = {
     self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
   end,
 
-  { provider = "![" },
-
+  
   {
     provider = function(self)
       -- 0 is just another output, we can decide to print it or not!
@@ -338,8 +358,6 @@ local diagnostic_icons = {
     end,
     hl = { fg = colors.diag.hint },
   },
-
-  { provider = "]" },
 }
 
 local dap_messages = {
@@ -361,7 +379,7 @@ local dap_messages = {
   provider = function()
     return " " .. require("dap").status()
   end,
-  hl = { fg = utils.get_highlight('Debug').fg },
+  hl = { fg = utils.get_highlight("Debug").fg },
 }
 
 local git_branch = {
@@ -374,9 +392,11 @@ local git_branch = {
   hl = { fg = colors.orange },
 
   {
-    provider = function(self) return " " .. self.status_dict.head end,
-    hl = { bold = true }
-  }
+    provider = function(self)
+      return " " .. self.status_dict.head
+    end,
+    hl = { bold = true },
+  },
 }
 
 local git = {
@@ -428,14 +448,6 @@ local git = {
   space,
 }
 
-local spell = {
-  condition = function()
-    return vim.wo.spell
-  end,
-  provider = 'SPELL ',
-  hl = { bold = true, fg = colors.orange }
-}
-
 local special_help_file = {
   condition = function()
     return vim.bo.filetype == "help"
@@ -455,8 +467,10 @@ local special_fugitive = {
   hl = { fg = colors.orange },
 
   {
-    provider = function() return " " .. vim.g.gitsigns_head end,
-    hl = { bold = true }
+    provider = function()
+      return " " .. vim.g.gitsigns_head
+    end,
+    hl = { bold = true },
   },
 }
 
@@ -469,15 +483,23 @@ local special_dirvish = {
     return vim.fn.fnamemodify(filename, ":.")
   end,
   hl = { fg = colors.blue },
-
 }
 
 local statusline_default = {
-  mode_indicator, file_name_block, git, diagnostic_icons, spell, align,
+  mode_indicator,
+  spell,
+  file_name_block,
+  git,
+  diagnostic_icons,
+  align,
 
-  dap_messages, align,
+  dap_messages,
+  align,
 
-  lsp_indicator, file_type, ruler, scrollbar
+  lsp_indicator,
+  file_type,
+  ruler,
+  --scrollbar,
 }
 
 local statusline_inactive = {
@@ -485,19 +507,26 @@ local statusline_inactive = {
     return not conditions.is_active()
   end,
 
-  file_name_block, align, file_type,
+  file_name_block,
+  align,
+  file_type,
 }
 
 local statusline_special = {
   condition = function()
     return conditions.buffer_matches({
-      buftype = {"nofile", "help", "quickfix"},
-      filetype = {"^git.*", "fugitive", "dirvish"}
+      buftype = { "nofile", "help", "quickfix" },
+      filetype = { "^git.*", "fugitive", "dirvish" },
     })
   end,
 
-  file_type, special_help_file, special_fugitive, special_dirvish, align,
-  ruler, scrollbar
+  file_type,
+  special_help_file,
+  special_fugitive,
+  special_dirvish,
+  align,
+  ruler,
+  --scrollbar,
 }
 
 local statusline_terminal = {
@@ -509,7 +538,8 @@ local statusline_terminal = {
 
   -- Quickly add a condition to the ViMode to only show it when buffer is active!
   { condition = conditions.is_active, mode_indicator, space },
-  file_type, --[[TerminalName,]] align,
+  file_type, --[[TerminalName,]]
+  align,
 }
 
 local statuslines = {
@@ -517,21 +547,24 @@ local statuslines = {
     if conditions.is_active() then
       return {
         fg = utils.get_highlight("StatusLine").fg,
-        bg = utils.get_highlight("StatusLine").bg
+        bg = utils.get_highlight("StatusLine").bg,
       }
     else
       return {
         fg = utils.get_highlight("StatusLineNC").fg,
-        bg = utils.get_highlight("StatusLineNC").bg
+        bg = utils.get_highlight("StatusLineNC").bg,
       }
     end
   end,
 
   fallthrough = false,
 
-  statusline_special, statusline_terminal, statusline_inactive, statusline_default,
+  statusline_special,
+  statusline_terminal,
+  statusline_inactive,
+  statusline_default,
 }
 
-require('heirline').setup({
+require("heirline").setup({
   statusline = statuslines,
 })

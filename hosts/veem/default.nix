@@ -14,7 +14,7 @@
     enable = true;
 
     shellAliases = {
-      ll = "exa -l -g --git --color always --icons -a -s type";
+      ll = "eza -l -g --git --color always --icons -a -s type";
       ls = "exa --color auto --icons -a -s type";
     };
 

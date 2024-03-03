@@ -1,6 +1,3 @@
-local u = require('milogert.utils')
-local log = require'milogert.logger'
-
 -- Set the leader key. This should be first.
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -23,11 +20,9 @@ vim.opt.splitright = true
 
 -- Enable modelines.
 vim.opt.compatible = false
-vim.cmd [[
-filetype on
-filetype plugin on
-filetype indent on
-]]
+vim.cmd.filetype('on')
+vim.cmd.filetype({ 'plugin', 'on' })
+vim.cmd.filetype({ 'indent', 'on' })
 vim.opt.modeline = true
 
 -- Enable syntax highlighting.
@@ -37,7 +32,7 @@ vim.opt.termguicolors = true
 vim.cmd('set t_Co=256')
 vim.g.srcery_italic = true
 -- let g:srcery_inverse_match_paren = 1
-vim.cmd 'colorscheme srcery'
+vim.cmd.colorscheme('srcery')
 -- highlight StatusLine ctermfg=15 ctermbg=236 guifg=#FCE8C3 guibg=#FBB829
 
 -- Encoding.
@@ -81,6 +76,7 @@ vim.opt.smartcase = true
 -- Other settings.
 vim.opt.hidden = true
 vim.opt.cmdheight = 2
+vim.opt.showmode = false
 vim.opt.updatetime = 10
 vim.opt.shortmess = vim.opt.shortmess + 'c'
 vim.opt.scrolloff = 16
@@ -129,13 +125,3 @@ vim.g.VimuxUseNearest = 0
 -- Filetype.lua
 -- vim.g.do_filetype_lua = 1 -- Enables filetype.lua
 -- vim.g.did_load_filetypes = 0 -- Disables filetype.vim
-
--- Vim Tada
-local path = os.getenv("PWD") or io.popen("cd"):read()
-local splitPath = u.split(path, "/")
-local dir = string.gsub(splitPath[#splitPath], '^%.', '_')
-local file = os.getenv("HOME").."/todos/"..dir..".tada"
-vim.g.tada_todo_pane_file = file
-vim.g.tada_todo_pane_map = '<Leader>td'
-vim.g.tada_map_box = '<C-\\>'
-vim.g.tada_todo_switch_status_mapping = '\\'

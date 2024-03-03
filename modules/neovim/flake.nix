@@ -5,24 +5,26 @@
 
   outputs = inputs @ { self, nixpkgs }: {
     overlays.default = final: prev: {
-      neovim-unwrapped = prev.neovim-unwrapped.overrideAttrs(old: {
-        buildInputs = old.buildInputs ++ (with prev.pkgs; [
-          elixir_ls
-          /* nodePackages.eslint */
-          # deno
-          nodePackages.typescript-language-server
-          nodePackages.typescript
-          nil
-          sumneko-lua-language-server
-          terraform-ls
-          vscode-extensions.bradlc.vscode-tailwindcss
-          statix
-          stylua
-          /* node-debug2 */
-        ]);
+      wrapNeovim = prev.wrapNeovim.overrideAttrs(old: {
       });
 
-      neovim-custom = final.callPackage ./neovim.nix {};
+      neovim-unwrapped = prev.neovim-unwrapped.overrideAttrs(old: {
+        buildInputs = old.buildInputs ++ (with prev.pkgs; [
+          # deno
+          /* node-debug2 */
+          /* nodePackages.eslint */
+          elixir_ls
+          nil
+          nodePackages.typescript
+          nodePackages.typescript-language-server
+          statix
+          stylua
+          sumneko-lua-language-server
+          terraform-ls
+          texlab
+          vscode-extensions.bradlc.vscode-tailwindcss
+        ]);
+      });
 
       vimPlugins = prev.vimPlugins // {
         # Remove when https://github.com/j-hui/fidget.nvim/issues/131 resolves.
@@ -40,18 +42,27 @@
           src = prev.pkgs.fetchFromGitHub {
             owner = "ibhagwan";
             repo = "fzf-lua";
-            rev = "c3c71df6ffba3cc90335c538fad81aa7a0182e57";
-            sha256 = "07n1sg582wxpvnw5n0r504dfc9jzrj01j5an0vzgg801hjk5ari8";
+            rev = "1ff0278882db9786fef6f77cbcea7d8fa4b9ccee";
+            sha256 = "0gsdsmjf1jdsbsrvpzssfr496b0jk2j78lqffdanbykpcim9s7bs";
+          };
+        });
+
+        gitsigns-nvim = prev.vimPlugins.gitsigns-nvim.overrideAttrs (old: {
+          src = prev.pkgs.fetchFromGitHub {
+            owner = "lewis6991";
+            repo = "gitsigns.nvim";
+            rev = "5a9a6ac29a7805c4783cda21b80a1e361964b3f2";
+            sha256 = "1vgs97iik9ziwbqv1xbs920qizcnshcpibj17mbsdr8lax8iycpl";
           };
         });
 
         # Dev overlays.
-        # art-nvim = old.pkgs.vimUtils.buildVimPlugin {
+        # art-nvim = prev.pkgs.vimUtils.buildVimPlugin {
         #   name = "art-nvim";
         #   src = /Users/milo/projects/art-nvim;
         # };
 
-        # git-permalink-nvim = old.pkgs.vimUtils.buildVimPlugin {
+        # git-permalink-nvim = prev.pkgs.vimUtils.buildVimPlugin {
         #   name = "git-permalink-nvim";
         #   src = /Users/milo/git/git-permalink-nvim;
         # };
@@ -62,6 +73,8 @@
           src = /Users/milo/git/octo.nvim;
         };
       };
+
+      neovim-custom = final.callPackage ./neovim.nix {};
     };
 
     packages = {

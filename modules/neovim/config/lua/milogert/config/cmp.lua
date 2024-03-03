@@ -1,125 +1,121 @@
 -- Copied from https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion
 
 -- Set completeopt to have a better completion experience
-vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 -- Require function for tab to work with luasnip.
 local has_words_before = function()
+  unpack = unpack or table.unpack
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
+
 local luasnip = require("luasnip")
 
-local source_menu_names = {
-  buffer = "[Buff]",
-  -- dictionary = "[Dict]",
-  latex_symbols = "[LaTeX]",
-  luasnip = "[LuaSnip]",
-  nvim_lsp = "[LSP]",
-  nvim_lua = "[Lua]",
-}
-
 -- nvim-cmp setup
-local cmp = require 'cmp'
-cmp.setup {
+local cmp = require("cmp")
+cmp.setup({
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
     end,
   },
-  formatting = {
-    format = function(entry, vim_item)
-      -- fancy icons and a name of kind
-      vim_item.kind = require("lspkind").presets.default[vim_item.kind]
-      -- set a name for each source
-      vim_item.menu = source_menu_names[entry.source.name]
-      return vim_item
-    end,
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
   },
-  mapping = {
-    ['<C-Space>']   = cmp.mapping.complete(),
-    ['<C-e>']       = cmp.mapping.close(),
-    ['<C-u>']       = cmp.mapping.scroll_docs(-4),
-    ['<C-d>']       = cmp.mapping.scroll_docs(4),
-    ['<CR>']        = cmp.mapping.confirm({
+  formatting = {
+    format = require("lspkind").cmp_format({
+      mode = "symbol_text",
+      menu = {
+        -- dictionary = "[Dict]",
+        buffer = "[Buff]",
+        latex_symbols = "[LaTeX]",
+        luasnip = "[Snip]",
+        nvim_lsp = "[LSP]",
+        nvim_lua = "[Lua]",
+        copilot = "[Copilot]",
+      },
+    }),
+  },
+  mapping = cmp.mapping.preset.insert({
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<C-e>"] = cmp.mapping.close(),
+    ["<C-u>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-d>"] = cmp.mapping.scroll_docs(4),
+    ["<CR>"] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = false,
     }),
 
-    ["<Tab>"] = cmp.mapping(
-      function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif luasnip.expand_or_jumpable() then
-          luasnip.expand_or_jump()
-        elseif has_words_before() then
-          cmp.complete()
-        else
-          fallback()
-        end
-      end,
-      { "i", "s" }
-    ),
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
 
-    ["<S-Tab>"] = cmp.mapping(
-      function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end,
-      { "i", "s" }
-    ),
-  },
-  sources = {
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+  }),
+  sources = cmp.config.sources({
     { name = "nvim_lsp", priority = 99 },
-    { name = 'nvim_lsp_signature_help' },
     { name = "nvim_lua" },
     { name = "path" },
     { name = "luasnip" },
-    { name = "buffer", keyword_length = 1 },
     { name = "calc" },
     { name = "git" },
-    -- { name = "copilot" },
-    -- { name = 'dictionary', keyword_length = 2 },
-  },
+    -- }, {
+    { name = "buffer",   keyword_length = 1 },
+    { name = "copilot" },
+  }),
   sorting = {
+    priority_weight = 2,
     comparators = {
+      require("copilot_cmp.comparators").prioritize,
       cmp.config.compare.offset,
       cmp.config.compare.exact,
       cmp.config.compare.score,
       cmp.config.compare.recently_used,
-      -- require("cmp-under-comparator").under,
+      cmp.config.compare.locality,
       cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
     },
   },
   experimental = {
     ghost_text = { enabled = true },
   },
-}
+})
 
 cmp.setup.cmdline("/", {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
     { name = "buffer" },
-  }
+  },
 })
 
 cmp.setup.cmdline(":", {
   mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources(
-    {
-      { name = "path" },
-    },
-    {
-      { name = "cmdline" },
-    }
-  )
+  sources = cmp.config.sources({
+    { name = "path" },
+  }, {
+    { name = "cmdline" },
+  }),
 })
 
 -- Setup after including as a source?
-require('cmp_git').setup()
-
+require("cmp_git").setup()
