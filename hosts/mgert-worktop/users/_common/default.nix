@@ -1,9 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  programs.alacritty.settings.window.decorations = "buttonless";
-  programs.alacritty.settings.font.size = 11.0;
-
   home.activation = {
     copyApplications = let
       apps = pkgs.buildEnv {

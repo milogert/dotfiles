@@ -2,11 +2,9 @@
 
 {
   imports = [
-    ../alacritty.nix
     ../browserpass.nix
     ../kitty.nix
-    /* ../ranger.nix */
-    ../wezterm.nix
+    ../ranger.nix
   ];
 
   home.packages = with pkgs; [

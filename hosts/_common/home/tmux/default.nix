@@ -41,7 +41,7 @@ in {
 
       # Set the default shell.
       set-option -g default-shell ${pkgs.zsh}/bin/zsh
-      set -g default-terminal "tmux"
+      set -g default-terminal "tmux-256color"
       set-option -ga terminal-overrides ",xterm-256color:Tc"
 
       # Swap layout switch and previous buffer keys.

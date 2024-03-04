@@ -17,22 +17,6 @@ M.setup = function (variable_opts)
 
   require("output_panel").setup()
 
-  require("oil").setup({
-    win_options = {
-      -- wrap = false,
-      signcolumn = "yes",
-      -- cursorcolumn = false,
-      -- foldcolumn = "0",
-      -- spell = false,
-      -- list = false,
-      -- conceallevel = 3,
-      -- concealcursor = "nvic",
-    },
-    view_options = {
-      show_hidden = true,
-    },
-  })
-
   -- Source plugin configs.
   local plugins = {
     "arpeggio",
@@ -51,6 +35,7 @@ M.setup = function (variable_opts)
     "mini",
     "none-ls",
     "octo",
+    "oil",
     "package-info",
     "persistence",
     "reactive",

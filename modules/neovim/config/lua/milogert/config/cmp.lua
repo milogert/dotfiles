@@ -71,29 +71,30 @@ cmp.setup({
     end, { "i", "s" }),
   }),
   sources = cmp.config.sources({
-    { name = "nvim_lsp", priority = 99 },
+    { name = "nvim_lsp", priority = 100 },
+    { name = "copilot" },
     { name = "nvim_lua" },
     { name = "path" },
     { name = "luasnip" },
     { name = "calc" },
     { name = "git" },
-    -- }, {
+    }, {
     { name = "buffer",   keyword_length = 1 },
-    { name = "copilot" },
   }),
   sorting = {
     priority_weight = 2,
     comparators = {
-      require("copilot_cmp.comparators").prioritize,
-      cmp.config.compare.offset,
       cmp.config.compare.exact,
+      require("copilot_cmp.comparators").score,
+      cmp.config.compare.offset,
       cmp.config.compare.score,
       cmp.config.compare.recently_used,
+      cmp.config.compare.scopes,
       cmp.config.compare.locality,
       cmp.config.compare.kind,
       cmp.config.compare.sort_text,
-      cmp.config.compare.length,
       cmp.config.compare.order,
+      cmp.config.compare.length,
     },
   },
   experimental = {
