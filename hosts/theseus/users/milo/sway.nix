@@ -66,7 +66,7 @@ in {
         { command = "discord"; }
       ];
 
-      terminal = "alacritty";
+      terminal = "kitty";
 
       window = {
         border = 2;

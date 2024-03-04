@@ -31,7 +31,7 @@
          extraGSettingsOverrides = ''
           # Change default background
           [org.gnome.desktop.default-applications]
-          terminal='exec alacritty'
+          terminal='exec kitty'
 
           # Favorite apps in gnome-shell
           [org.gnome.shell]
