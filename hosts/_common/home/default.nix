@@ -4,9 +4,8 @@
   imports = [
     ./bat.nix
     ./fzf.nix
-    ./git
+    ./git.nix
     ./lazydocker.nix
-    /* ./neovim */
     ./password-store.nix
     ./starship.nix
     ./tmux
