@@ -38,7 +38,6 @@ M.setup = function (variable_opts)
     "oil",
     "package-info",
     "persistence",
-    "reactive",
     "runscript",
     "tada",
     "treesitter",

@@ -27,7 +27,6 @@ in
           jsonls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-json-language-server", "--stdio" },
           lua_ls = { "${pkgs.sumneko-lua-language-server}/bin/lua-language-server" },
           nil_ls = { "${pkgs.nil}/bin/nil" },
-          rnix = { "${pkgs.rnix-lsp}/bin/rnix-lsp" },
           stylua = { "${pkgs.stylua}/bin/stylua" },
           tailwindcss = { "${pkgs.vscode-extensions.bradlc.vscode-tailwindcss}/bin/tailwindcss-language-server", "--stdio", },
           terraformls = { "${pkgs.terraform-ls}/bin/terraform-ls", "serve" },
@@ -132,8 +131,6 @@ in
         vim-abolish
         vim-dadbod
         vim-dadbod-ui
-        # vim-dirvish
-        # vim-dirvish-git
         vim-dispatch
         vim-dispatch-neovim
         vim-elixir

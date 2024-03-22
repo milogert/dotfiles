@@ -49,7 +49,6 @@ require('milogert.main').setup({
     jsonls = { "bin/command", ...args },
     lua_ls = { "bin/command", ...args },
     nil_ls = { "bin/command", ...args },
-    rnix = { "bin/command", ...args },
     stylua = { "bin/command", ...args },
     tailwindcss = { "bin/command", ...args, },
     terraformls = { "bin/command", ...args },
