@@ -43,7 +43,6 @@ in
         cmp-cmdline
         cmp-git
         cmp-nvim-lsp
-        # cmp-nvim-lsp-signature-help
         cmp-nvim-lua
         cmp-path
         cmp_luasnip
@@ -53,8 +52,8 @@ in
         elixir-tools-nvim
         fidget-nvim
         friendly-snippets
-        fzf-lua
         fzf-lsp-nvim
+        fzf-lua
         gitsigns-nvim
         heirline-nvim
         hydra-nvim
@@ -63,64 +62,16 @@ in
         mason-lspconfig-nvim
         mason-nvim
         mini-nvim
-        nui-nvim
         none-ls-nvim
+        nui-nvim
         nvim-cmp
         nvim-colorizer-lua
         nvim-dap
         nvim-dap-ui
         nvim-dap-virtual-text
         nvim-lspconfig
-        (nvim-treesitter.withPlugins (p: [
-          p.bash # (maintained)
-          p.comment # (maintained)
-          p.css # (maintained)
-          p.dockerfile # (maintained)
-          p.eex # (maintained)
-          p.elixir # (maintained)
-          p.elm # (NOT maintained, 2022-04-28)
-          p.erlang # (maintained)
-          p.fennel # (maintained)
-          p.gitcommit # (maintained)
-          p.go # (maintained)
-          p.graphql # (maintained)
-          p.haskell # (NOT maintained, 2022-04-28)
-          p.hcl # (maintained)
-          p.heex # (maintained)
-          p.hjson # (maintained)
-          p.html # (maintained)
-          p.http # (maintained)
-          p.java # (maintained)
-          p.javascript # (maintained)
-          p.jsdoc # (maintained)
-          p.jsonc # (maintained)
-          p.kotlin # (maintained)
-          p.latex # (maintained)
-          p.llvm # (maintained)
-          p.lua # (maintained)
-          p.make # (maintained)
-          p.markdown # (NOT maintained, 2022-04-28)
-          p.nix # (maintained)
-          p.perl # (maintained)
-          p.php # (maintained)
-          p.pug # (maintained)
-          p.python # (maintained)
-          p.ql # (maintained)
-          p.query # Tree-sitter query language (maintained)
-          p.r # (maintained)
-          p.regex # (maintained)
-          p.rust # (maintained)
-          p.scss # (maintained)
-          p.todotxt # (experimental, maintained)
-          p.toml # (maintained)
-          p.tsx # (maintained)
-          p.typescript # (maintained)
-          p.vim # (maintained)
-          p.vimdoc # (maintained)
-          p.vue # (maintained)
-          p.yaml # (maintained)
-        ]))
         nvim-treesitter-textobjects
+        nvim-treesitter.withAllGrammars
         nvim-web-devicons
         octo-nvim
         oil-nvim

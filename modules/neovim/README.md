@@ -133,7 +133,6 @@ These plugins are not contained in nixpkgs or are, but not the version I want.
 
 | Name and Link          | Feature | How I use it |
 | ---                    | ---     | ---          |
-| `art-nvim`             | `tools` | Worky work. |
 | `heirline-nvim`        | `ui` | Status bar plugin. |
 | `hydra-nvim`           | `utils` | Unested. |
 | `mason-lspconfig-nvim` | `lsp` | Installs missing LSs not found in nixpkgs. |
