@@ -1,4 +1,5 @@
 { pkgs
+, config
 , ...
 }:
 
@@ -91,4 +92,14 @@
       };
     };
   };
+
+  home.activation.requestReadProjectForGH =
+    let
+      gh = "${pkgs.gh}/bin/gh";
+    in
+      config.lib.dag.entryAfter ["writeBoundary"] ''
+        if (! ${gh} auth status); then
+          run ${gh} auth login -s read:project
+        fi
+      '';
 }

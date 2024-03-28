@@ -63,11 +63,11 @@ _install_requirements:
 
 update: update-neovim
 	@echo -e "\033[0;33m-- Updating ----------------------------\033[0m"
-	nix flake update
+	nix flake --extra-experimental-features "nix-command flakes" update
 
 update-neovim:
 	@echo -e "\033[0;33m-- Updating (neovim) -------------------\033[0m"
-	nix flake update ./modules/neovim
+	nix flake --extra-experimental-features "nix-command flakes" update --flake ./modules/neovim
 
 add-user:
 	./scripts/add_user.sh
@@ -76,4 +76,4 @@ add-user:
 coucher: _install_requirements _nix-darwin-build _nix-darwin-switch
 hog: _nixos-build _nixos-switch
 theseus: _nixos-build _nixos-switch
-mgert-worktop: _install_requirements _nix-darwin-build _nix-darwin-switch
+minotaur: _install_requirements _nix-darwin-build _nix-darwin-switch

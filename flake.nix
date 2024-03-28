@@ -17,7 +17,7 @@
     };
 
     neovim-custom = {
-      url = "path:./modules/neovim";
+      url = "path:modules/neovim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -117,11 +117,11 @@
           };
         };
 
-        mgert-worktop = darwin.lib.darwinSystem {
+        minotaur = darwin.lib.darwinSystem {
           inherit inputs;
           system = "aarch64-darwin";
           modules = mkDarwinConfig {
-            host = "mgert-worktop";
+            host = "minotaur";
             users = ["milo"];
             type = "desktop";
           };
