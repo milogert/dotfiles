@@ -68,10 +68,10 @@
         # };
 
         # TODO remove when fzf-lua implementation is merged to NixOS.
-        octo-nvim = prev.pkgs.vimUtils.buildVimPlugin {
-          name = "octo-nvim";
-          src = /Users/milo/git/octo.nvim;
-        };
+        # octo-nvim = prev.pkgs.vimUtils.buildVimPlugin {
+        #   name = "octo-nvim";
+        #   src = /Users/milo/git/octo.nvim;
+        # };
       };
 
       neovim-custom = final.callPackage ./neovim.nix {};

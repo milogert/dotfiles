@@ -77,3 +77,4 @@ coucher: _install_requirements _nix-darwin-build _nix-darwin-switch
 hog: _nixos-build _nixos-switch
 theseus: _nixos-build _nixos-switch
 mgert-worktop: _install_requirements _nix-darwin-build _nix-darwin-switch
+nutop: _install_requirements _nix-darwin-build _nix-darwin-switch

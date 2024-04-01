@@ -13,14 +13,6 @@
 }:
 
 let
-  art-nvim = vimUtils.buildVimPlugin {
-    name = "art-nvim";
-    src = builtins.fetchGit {
-      url = "git@github.com:articulate/art-nvim.git";
-      rev = "33b19e043cefb7a7db9bc9378efda2a6eaa9fd83";
-    };
-  };
-
   git-permalink-nvim = vimUtils.buildVimPlugin rec {
     name = "git-permalink-nvim";
     src = fetchFromGitHub {
@@ -195,7 +187,6 @@ in {
     vscode-js-debug
   ;
   list = [
-    art-nvim
     git-permalink-nvim
     hardtime-nvim
     lua-json5
