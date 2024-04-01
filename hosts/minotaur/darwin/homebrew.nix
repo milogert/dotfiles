@@ -13,26 +13,19 @@
     ];
 
     casks = [
-      "1password"
       "beekeeper-studio"
       "calibre"
       "cyberduck"
-      # "docker" # Docker Desktop is not supported in homebrew currently.
+      "discord"
       "flipper"
       "google-chrome"
       "insomnia"
-      "muzzle"
       "moom"
       "notion"
-      "openvpn-connect"
       "plex"
       "pocket-casts"
       "postgres-unofficial"
-      "slack"
       "vial"
-      "vyprvpn"
-      "zight"
-      "zoom"
     ];
 
     masApps = {
@@ -40,7 +33,6 @@
       "Amazon Kindle" = 302584613;
       ColorSlurp = 1287239339;
       "Next Meeting" = 1017470484;
-      Tailscale = 1475387142;
       Xcode = 497799835;
     };
 

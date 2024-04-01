@@ -57,11 +57,6 @@
         });
 
         # Dev overlays.
-        # art-nvim = prev.pkgs.vimUtils.buildVimPlugin {
-        #   name = "art-nvim";
-        #   src = /Users/milo/projects/art-nvim;
-        # };
-
         # git-permalink-nvim = prev.pkgs.vimUtils.buildVimPlugin {
         #   name = "git-permalink-nvim";
         #   src = /Users/milo/git/git-permalink-nvim;

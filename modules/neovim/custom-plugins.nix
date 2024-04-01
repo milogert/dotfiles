@@ -23,16 +23,6 @@ let
     };
   };
 
-  hardtime-nvim = vimUtils.buildVimPlugin rec {
-    name = "hardtime.nvim";
-    src = fetchFromGitHub {
-      owner = "m4xshen";
-      repo = name;
-      rev = "8cc4dec29a177cb7c33a900ccf45b451684c30a0";
-      sha256 = "0q8hpvy61qc5pbxbzkf5zna71j7h8xbvqjs23x8bimkhwgk21j0k";
-    };
-  };
-
   lua-json5-bin = rustPlatform.buildRustPackage rec {
     pname = "lua-json5";
     version = "014fcab8093b48b3932dd0d51ae2d98bbb578d67";
@@ -132,16 +122,6 @@ let
     };
   };
 
-  reactive-nvim = vimUtils.buildVimPlugin rec {
-    name = "reactive.nvim";
-    src = fetchFromGitHub {
-      owner = "rasulomaroff";
-      repo = name;
-      rev = "0ad3aba5f16f001c3c44238e78359a21bba1cce4";
-      sha256 = "10ipv906p89v5yxwq350bd50b8msxcgx6w3pjv55dxx5z4zbrghd";
-    };
-  };
-
   vim-ai = vimUtils.buildVimPlugin rec {
     name = "vim-ai";
     src = fetchFromGitHub {
@@ -171,16 +151,6 @@ let
       sha256 = "1rdfw25lljv53h2f2nc1gmx9awggk7k3nrfj46ssl11jn6lyvbj8";
     };
   };
-
-  output-panel-nvim = vimUtils.buildVimPlugin rec {
-    name = "output-panel.nvim";
-    src = fetchFromGitHub {
-      owner = "mhanberg";
-      repo = name;
-      rev = "65bb44a5d5dbd40f3793a8c591b65a0c5f260bd9";
-      sha256 = "0wpjf25mqlafs0psi5kn3nxn4xnadfpfh9frf0zz8x72qfxkfv8s";
-    };
-  };
 in {
   inherit
     nvim-dap-vscode-js
@@ -188,14 +158,11 @@ in {
   ;
   list = [
     git-permalink-nvim
-    hardtime-nvim
     lua-json5
     nvim-dap-vscode-js
     nvim-dev-container
     nvim-runscript
-    output-panel-nvim
-    reactive-nvim
-    vim-ai
+    # vim-ai
     vim-arpeggio
     vim-tada
   ];

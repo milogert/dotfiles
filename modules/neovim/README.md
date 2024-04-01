@@ -49,7 +49,6 @@ require('milogert.main').setup({
     jsonls = { "bin/command", ...args },
     lua_ls = { "bin/command", ...args },
     nil_ls = { "bin/command", ...args },
-    rnix = { "bin/command", ...args },
     stylua = { "bin/command", ...args },
     tailwindcss = { "bin/command", ...args, },
     terraformls = { "bin/command", ...args },
@@ -134,7 +133,6 @@ These plugins are not contained in nixpkgs or are, but not the version I want.
 
 | Name and Link          | Feature | How I use it |
 | ---                    | ---     | ---          |
-| `art-nvim`             | `tools` | Worky work. |
 | `heirline-nvim`        | `ui` | Status bar plugin. |
 | `hydra-nvim`           | `utils` | Unested. |
 | `mason-lspconfig-nvim` | `lsp` | Installs missing LSs not found in nixpkgs. |

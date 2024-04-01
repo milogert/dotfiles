@@ -3,7 +3,7 @@ local parser_path = vim.fn.stdpath("data") .. "/site/parser"
 vim.opt.runtimepath:prepend(parser_path)
 
 require'nvim-treesitter.configs'.setup {
-  auto_install = true,
+  auto_install = false,
   parser_install_dir = parser_path,
 
   -- Either "all" or a list of languages. List below is from

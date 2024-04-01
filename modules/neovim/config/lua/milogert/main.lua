@@ -15,8 +15,6 @@ M.setup = function (variable_opts)
   require("milogert.settings")
   require("milogert.autocmds")
 
-  require("output_panel").setup()
-
   -- Source plugin configs.
   local plugins = {
     "arpeggio",
@@ -38,7 +36,6 @@ M.setup = function (variable_opts)
     "oil",
     "package-info",
     "persistence",
-    "reactive",
     "runscript",
     "tada",
     "treesitter",

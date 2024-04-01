@@ -117,11 +117,11 @@
           };
         };
 
-        mgert-worktop = darwin.lib.darwinSystem {
+        minotaur = darwin.lib.darwinSystem {
           inherit inputs;
           system = "aarch64-darwin";
           modules = mkDarwinConfig {
-            host = "mgert-worktop";
+            host = "minotaur";
             users = ["milo"];
             type = "desktop";
           };
