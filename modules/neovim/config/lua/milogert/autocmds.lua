@@ -1,9 +1,9 @@
-local u = require('milogert.utils')
-local log = require('milogert.logger')
-local variables = require('milogert.variables')
+local u = require("milogert.utils")
+local log = require("milogert.logger")
+local variables = require("milogert.variables")
 
 -- augroups and autocmd
-vim.api.nvim_create_augroup('formatting', { clear = true })
+vim.api.nvim_create_augroup("formatting", { clear = true })
 -- vim.api.nvim_create_autocmd('BufWritePost', {
 --   group = 'formatting',
 --   desc = 'Format Elixir files on save',
@@ -11,7 +11,7 @@ vim.api.nvim_create_augroup('formatting', { clear = true })
 --   command = 'silent !mix format %',
 -- })
 
-vim.api.nvim_create_augroup('lsp', { clear = true })
+vim.api.nvim_create_augroup("lsp", { clear = true })
 -- vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
 --   group = 'lsp',
 --   desc = 'Show diagnotics on hover.',
@@ -20,7 +20,7 @@ vim.api.nvim_create_augroup('lsp', { clear = true })
 --   end,
 -- })
 
-vim.api.nvim_create_augroup('skeletons', { clear = true })
+vim.api.nvim_create_augroup("skeletons", { clear = true })
 -- vim.api.nvim_create_autocmd('FileType', {
 --   group = 'skeletons',
 --   desc = 'Insert a common git commit format, unless it\'s a merge commit',
@@ -35,13 +35,22 @@ vim.api.nvim_create_augroup('skeletons', { clear = true })
 --   end
 -- })
 
-vim.api.nvim_create_augroup('dadbod-auto-configure', { clear = true })
-vim.api.nvim_create_autocmd('VimEnter', {
-  group = 'dadbod-auto-configure',
-  desc = 'Parse docker compose and set up database variables',
-  pattern = '*',
+local augroup_misc = vim.api.nvim_create_augroup("misc", { clear = true })
+vim.api.nvim_create_autocmd({ "TextYankPost" }, {
+  group = augroup_misc,
+  desc = "Highlight on yank",
   callback = function()
-    local file = vim.fn.getcwd()..'/docker-compose.override.yml'
+    vim.highlight.on_yank({ higroup = "Visual", timeout = 300 })
+  end,
+})
+
+local augroup_dadbod = vim.api.nvim_create_augroup("dadbod-auto-configure", { clear = true })
+vim.api.nvim_create_autocmd("VimEnter", {
+  group = augroup_dadbod,
+  desc = "Parse docker compose and set up database variables",
+  pattern = "*",
+  callback = function()
+    local file = vim.fn.getcwd() .. "/docker-compose.override.yml"
     local has_docker_compose = u.file_exists(file)
     if not has_docker_compose then
       return
@@ -63,10 +72,10 @@ vim.api.nvim_create_autocmd('VimEnter', {
 
     local local_port = u.split(ports, ":")[1]
 
-    vim.g.db_port = "postgres://postgres@localhost:"..local_port.."/postgres"
-    u.nmap('<Leader>dbc', ':DB g:db_port<CR>')
+    vim.g.db_port = "postgres://postgres@localhost:" .. local_port .. "/postgres"
+    u.nmap("<Leader>dbc", ":DB g:db_port<CR>")
     log.info("Found a docker-compose db. Use <Leader>dbc to connect")
-  end
+  end,
 })
 
 -- vim.api.nvim_create_autocmd('BufNew,BufRead', {
@@ -83,12 +92,12 @@ vim.api.nvim_create_autocmd('VimEnter', {
 --   command = 'setlocal commentstring={/* %s */}'
 -- })
 
--- From 
-vim.api.nvim_create_autocmd('BufWritePre', {
-  group = vim.api.nvim_create_augroup('auto_create_dir', { clear = true }),
+-- From
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = vim.api.nvim_create_augroup("auto_create_dir", { clear = true }),
   callback = function(ctx)
-    vim.fn.mkdir(vim.fn.fnamemodify(ctx.file, ':p:h'), 'p')
-  end
+    vim.fn.mkdir(vim.fn.fnamemodify(ctx.file, ":p:h"), "p")
+  end,
 })
 
 -- Haskell Filetypes

@@ -137,7 +137,6 @@ in {
       #set -ag status-left " #[fg=black] #[fg=green,bright]  #(sw_vers -productVersion) #[default]"
 
       ## Display the battery percentage (Mac OS)
-      set -ag status-left "#[fg=green,bg=default,bright] 🔋 #(pmset -g batt | tail -1 | awk '{print $3}' | tr -d ';') #[default]"
 
       ## Set right side status bar length and style
       set -g status-right-length 140
@@ -147,12 +146,14 @@ in {
       set -g status-right "#[fg=green,bg=default,bright]#(top -l 1 | grep -E "^CPU" | sed 's/.*://')#[default]"
       # set -g status-right "#(top -l 1 | grep -E "^CPU" | sed 's/.*:/  /') "
 
-      ## Display the date
+      # Battery.
+      set -ag status-right "| #[fg=green,bg=default,bright]🔋 #(pmset -g batt | tail -1 | awk '{print $3}' | tr -d ';') #[default]"
+
+      # Display the date
       set -ag status-right "| #[fg=white,bg=default]%a %d #[default]"
 
-      ## Display the time
-      set -ag status-right "| #[fg=colour172,bright,bg=default]%l:%M %p #[default]"
-      # set -ag status-right " ⌚︎%l:%M %p "
+      # Display the time
+      set -ag status-right "#[fg=colour172,bright,bg=default]%l:%M %p #[default]"
 
       ## Display the hostname
       #set -ag status-right "#[fg=cyan,bg=default] ☠ #H #[default]"

@@ -13,7 +13,7 @@
     ];
 
     casks = [
-      "beekeeper-studio"
+      "arc"
       "calibre"
       "cyberduck"
       "discord"

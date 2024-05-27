@@ -10,6 +10,7 @@
     ./starship.nix
     ./tmux
     ./xdg.nix
+    ./wezterm.nix
     ./zsh
   ];
 

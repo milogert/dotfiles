@@ -67,7 +67,7 @@ update: update-neovim
 
 update-neovim:
 	@echo -e "\033[0;33m-- Updating (neovim) -------------------\033[0m"
-	nix flake --extra-experimental-features "nix-command flakes" update --flake ./modules/neovim
+	nix flake --extra-experimental-features "nix-command flakes" update ./modules/neovim
 
 add-user:
 	./scripts/add_user.sh
