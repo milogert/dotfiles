@@ -23,7 +23,6 @@ in {
   ];
 
   home.packages = with pkgs; [
-    asdf-vm
     elixir
     nodejs
     stack

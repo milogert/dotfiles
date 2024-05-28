@@ -9,6 +9,7 @@
     ./password-store.nix
     ./starship.nix
     ./tmux
+    ./wezterm.nix
     ./xdg.nix
     ./zsh
   ];

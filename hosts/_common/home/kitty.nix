@@ -2,7 +2,7 @@
 
 {
   programs.kitty = {
-    enable = true;
+    enable = false;
 
     font = {
       package = pkgs.hack-font;

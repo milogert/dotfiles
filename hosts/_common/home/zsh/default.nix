@@ -58,8 +58,8 @@
         exec 2>&3 3>&-
       fi
 
-      alias ll="eza -l -g --git --color always --icons -a -s type";
-      alias ls="eza --color auto --icons -a -s type";
+      alias ll="${pkgs.eza}/bin/eza -l -g --git --color always --icons -a -s type";
+      alias ls="${pkgs.eza}/bin/eza --color auto --icons -a -s type";
 
       #zprof
 
@@ -70,9 +70,6 @@
       if [[ -d ~/Developer/flutter ]]; then
         export PATH="$PATH:$HOME/Developer/flutter/bin"
       fi
-
-      # ASDF
-      . ${pkgs.asdf-vm}/share/asdf-vm/asdf.sh
 
       ## initExtra end
     '';

@@ -13,6 +13,10 @@ in {
     };
   };
 
+  programs.zsh.shellAliases = {
+    mux = "tmuxinator";
+  };
+
   programs.tmux = {
     enable = true;
     tmuxinator.enable = true;

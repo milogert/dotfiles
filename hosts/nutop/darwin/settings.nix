@@ -1,5 +1,4 @@
 {
-
   system.defaults = {
     NSGlobalDomain = {
       ## Inputs

@@ -3,7 +3,9 @@
 let
   nerdfonts = pkgs.nerdfonts.override {
     fonts = [
-      "Meslo"
+      "Hack"
+      "FiraCode"
+      "Iosevka"
     ];
   };
 in {
