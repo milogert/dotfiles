@@ -1,8 +1,8 @@
 local M = {}
 local variables = require("milogert.variables")
-local u = require('milogert.utils')
+local u = require("milogert.utils")
 
-M.setup = function (variable_opts)
+M.setup = function(variable_opts)
   variables.setup(variable_opts)
 
   local log = require("milogert.logger")
@@ -24,16 +24,17 @@ M.setup = function (variable_opts)
     "copilot",
     "dap",
     "devcontainer",
+    "dressing",
     "fidget",
     "fzf-lua",
     "gitsigns",
     "keybindings",
     "lsp.installer",
     "luasnip",
-    "mini",
     "none-ls",
     "octo",
     "oil",
+    "output-panel",
     "package-info",
     "persistence",
     "runscript",
@@ -44,45 +45,43 @@ M.setup = function (variable_opts)
   }
 
   for _, plugin in ipairs(plugins) do
-    local ok, err = pcall(require, 'milogert.config.' .. plugin)
+    local ok, err = pcall(require, "milogert.config." .. plugin)
     if not ok then
-      log.error('Failed to load plugin config: ' .. plugin)
+      log.error("Failed to load plugin config: " .. plugin)
       log.error(err)
     end
   end
 
   -- Load optional files.
   local optionals = {
-    'playground',
-    'priv',
+    "playground",
+    "priv",
   }
 
   for _, mod in ipairs(optionals) do
     local ok, err = pcall(require, mod)
     if not ok then
-      log.info('Failed to load file: ' .. mod .. '.lua')
+      log.info("Failed to load file: " .. mod .. ".lua")
       log.error(err)
     end
   end
 
   -- Perform language setup.
-  require('milogert.config.lang.main')
+  require("milogert.config.lang.main")
 
-  -- Oil.nvim
-  u.nmap('-', ':Oil<CR>')
   -- Dirvish - override netrw when using Explore, Sexplore, and Vexplore.
-  vim.g.loaded_netrwPlugin = 'loaded due to dirvish'
-  for _, value in ipairs({ { 'Explore', '' }, { 'Sexplore', 'split | silent ' }, { 'Vexplore', 'vsplit | silent ' } }) do
-    vim.api.nvim_create_user_command(
-      value[1],
-      function(opts)
-        vim.cmd(value[2] .. 'Dirvish ' .. opts.fargs[1])
-      end,
-      { nargs = '?', complete = 'dir' }
-    )
-  end
+  -- vim.g.loaded_netrwPlugin = 'loaded due to dirvish'
+  -- for _, value in ipairs({ { 'Explore', '' }, { 'Sexplore', 'split | silent ' }, { 'Vexplore', 'vsplit | silent ' } }) do
+  --   vim.api.nvim_create_user_command(
+  --     value[1],
+  --     function(opts)
+  --       vim.cmd(value[2] .. 'Dirvish ' .. opts.fargs[1])
+  --     end,
+  --     { nargs = '?', complete = 'dir' }
+  --   )
+  -- end
 
-  vim.cmd [[
+  vim.cmd([[
   " Function to source only if file exists.
   function! SourceIfExists(file)
     if filereadable(expand(a:file))
@@ -114,7 +113,7 @@ M.setup = function (variable_opts)
     "lcd ~
     file scratch
   endfunction
-  ]]
+  ]])
 end
 
 return M

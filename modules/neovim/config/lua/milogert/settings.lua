@@ -125,3 +125,5 @@ vim.g.VimuxUseNearest = 0
 -- Filetype.lua
 -- vim.g.do_filetype_lua = 1 -- Enables filetype.lua
 -- vim.g.did_load_filetypes = 0 -- Disables filetype.vim
+
+vim.g.db_ui_use_nerd_fonts = 1

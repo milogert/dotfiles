@@ -23,6 +23,16 @@ let
     };
   };
 
+  output-panel-nvim = vimUtils.buildVimPlugin rec {
+    name = "output-panel.nvim";
+    src = fetchFromGitHub {
+      owner = "mhanberg";
+      repo = name;
+      rev = "65bb44a5d5dbd40f3793a8c591b65a0c5f260bd9";
+      sha256 = "0wpjf25mqlafs0psi5kn3nxn4xnadfpfh9frf0zz8x72qfxkfv8s";
+    };
+  };
+
   lua-json5-bin = rustPlatform.buildRustPackage rec {
     pname = "lua-json5";
     version = "014fcab8093b48b3932dd0d51ae2d98bbb578d67";
@@ -112,6 +122,16 @@ let
     };
   };
 
+  nvim-nio = vimUtils.buildVimPlugin rec {
+    name = "nvim-nio";
+    src = fetchFromGitHub {
+      owner = "nvim-neotest";
+      repo = name;
+      rev = "173f285eebb410199273fa178aa517fd2d7edd80";
+      sha256 = "0favgnfpsak44lzyzyhfavazr2i64l7ysk370xm4wbrb51kjsdkf";
+    };
+  };
+
   nvim-runscript = vimUtils.buildVimPlugin rec {
     name = "nvim-runscript";
     src = fetchFromGitHub {
@@ -158,9 +178,11 @@ in {
   ;
   list = [
     git-permalink-nvim
+    output-panel-nvim
     lua-json5
     nvim-dap-vscode-js
     nvim-dev-container
+    nvim-nio
     nvim-runscript
     # vim-ai
     vim-arpeggio

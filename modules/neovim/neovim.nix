@@ -1,6 +1,64 @@
 { pkgs }:
 
 let
+  vimPlugins = with pkgs.vimPlugins; [
+    cmp-buffer
+    cmp-calc
+    cmp-cmdline
+    cmp-git
+    cmp-nvim-lsp
+    cmp-nvim-lua
+    cmp-path
+    cmp_luasnip
+    comment-nvim
+    copilot-cmp
+    copilot-lua
+    dressing-nvim
+    elixir-tools-nvim
+    fidget-nvim
+    friendly-snippets
+    fzf-lsp-nvim
+    fzf-lua
+    gitsigns-nvim
+    heirline-nvim
+    hydra-nvim
+    lspkind-nvim
+    luasnip
+    mason-lspconfig-nvim
+    mason-nvim
+    none-ls-nvim
+    nui-nvim
+    nvim-cmp
+    nvim-colorizer-lua
+    nvim-dap
+    nvim-dap-ui
+    nvim-dap-virtual-text
+    nvim-lspconfig
+    nvim-treesitter-textobjects
+    nvim-treesitter.withAllGrammars
+    nvim-web-devicons
+    octo-nvim
+    oil-nvim
+    package-info-nvim
+    persistence-nvim
+    plenary-nvim
+    srcery-vim
+    vim-abolish
+    vim-dadbod
+    vim-dadbod-completion
+    vim-dadbod-ui
+    vim-dispatch
+    vim-dispatch-neovim
+    vim-elixir
+    vim-fugitive
+    # vim-obsession
+    vim-repeat
+    vim-startuptime
+    vim-surround
+    vim-tmux-navigator
+    vim-unimpaired
+    vimux
+  ];
   customPlugins = pkgs.callPackage ./custom-plugins.nix {};
   configDir = ./config;
 in
@@ -36,63 +94,8 @@ in
       })
     '';
 
-    packpathDirs.myNeovimPackages = with pkgs.vimPlugins; {
-      start = [
-        cmp-buffer
-        cmp-calc
-        cmp-cmdline
-        cmp-git
-        cmp-nvim-lsp
-        cmp-nvim-lua
-        cmp-path
-        cmp_luasnip
-        comment-nvim
-        copilot-cmp
-        copilot-lua
-        elixir-tools-nvim
-        fidget-nvim
-        friendly-snippets
-        fzf-lsp-nvim
-        fzf-lua
-        gitsigns-nvim
-        heirline-nvim
-        hydra-nvim
-        lspkind-nvim
-        luasnip
-        mason-lspconfig-nvim
-        mason-nvim
-        mini-nvim
-        none-ls-nvim
-        nui-nvim
-        nvim-cmp
-        nvim-colorizer-lua
-        nvim-dap
-        nvim-dap-ui
-        nvim-dap-virtual-text
-        nvim-lspconfig
-        nvim-treesitter-textobjects
-        nvim-treesitter.withAllGrammars
-        nvim-web-devicons
-        octo-nvim
-        oil-nvim
-        package-info-nvim
-        persistence-nvim
-        plenary-nvim
-        srcery-vim
-        vim-abolish
-        vim-dadbod
-        vim-dadbod-ui
-        vim-dispatch
-        vim-dispatch-neovim
-        vim-elixir
-        vim-fugitive
-        vim-obsession
-        vim-startuptime
-        vim-surround
-        vim-tmux-navigator
-        vim-unimpaired
-        vimux
-      ] ++ customPlugins.list;
+    packpathDirs.myNeovimPackages = {
+      start = vimPlugins ++ customPlugins.list;
     };
 
     viAlias = true;

@@ -78,8 +78,8 @@ cmp.setup({
     { name = "luasnip" },
     { name = "calc" },
     { name = "git" },
-    }, {
-    { name = "buffer",   keyword_length = 1 },
+  }, {
+    { name = "buffer", keyword_length = 1 },
   }),
   sorting = {
     priority_weight = 2,
@@ -120,3 +120,14 @@ cmp.setup.cmdline(":", {
 
 -- Setup after including as a source?
 require("cmp_git").setup()
+
+vim.api.nvim_create_augroup("cmp-custom", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  group = "cmp-custom",
+  pattern = { "sql", "mysql", "plsql" },
+  callback = function()
+    require("cmp").setup.buffer({
+      sources = { { name = "vim-dadbod-completion" } }
+    })
+  end,
+})
