@@ -42,7 +42,20 @@ lspconfig.tsserver.setup(vim.tbl_extend("keep", {
 
     on_attach(client, bufnr)
   end,
-  settings = {},
+  root_dir = lspconfig.util.root_pattern("package.json"),
+  single_file_support = false,
+  init_options = {
+    preferences = {
+      includeInlayParameterNameHints = 'all',
+      includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+      includeInlayFunctionParameterTypeHints = true,
+      includeInlayVariableTypeHints = true,
+      includeInlayPropertyDeclarationTypeHints = true,
+      includeInlayFunctionLikeReturnTypeHints = true,
+      includeInlayEnumMemberValueHints = true,
+      importModuleSpecifierPreference = 'non-relative',
+    },
+  },
 }, lsp_utils.server_defaults))
 
 if variables.get().debuggers.vscode_js then

@@ -10,9 +10,9 @@
 
       neovim-unwrapped = prev.neovim-unwrapped.overrideAttrs(old: {
         buildInputs = old.buildInputs ++ (with prev.pkgs; [
-          # deno
           /* node-debug2 */
           /* nodePackages.eslint */
+          deno
           elixir_ls
           nil
           nodePackages.typescript
@@ -27,6 +27,15 @@
       });
 
       vimPlugins = prev.vimPlugins // {
+        dressing-nvim = prev.vimPlugins.dressing-nvim.overrideAttrs (old: {
+          src = prev.pkgs.fetchFromGitHub {
+            owner = "stevearc";
+            repo = "dressing.nvim";
+            rev = "18e5beb3845f085b6a33c24112b37988f3f93c06";
+            sha256 = "0pvkm9s0lg0vlk7qbn1sjf6sis3i3xba1824xml631bg6hahw37l";
+          };
+        });
+
         # Remove when https://github.com/j-hui/fidget.nvim/issues/131 resolves.
         fidget-nvim = prev.vimPlugins.fidget-nvim.overrideAttrs (old: {
           src = prev.pkgs.fetchFromGitHub {
@@ -42,8 +51,8 @@
           src = prev.pkgs.fetchFromGitHub {
             owner = "ibhagwan";
             repo = "fzf-lua";
-            rev = "e53867b9c3a5de3d30ebe0b4a5107eb59b1a8a0c";
-            sha256 = "0siv6wmamvgr5nv0l5rbfjlvws4xjm2wiii7djrijc4r4mnzgy9i";
+            rev = "b442569ab827f72e344236c598b02cb9dc754e9f";
+            sha256 = "02jmfgn9ja34l1kqpvdxki1s70q34linpvnffav56cz5kry6i33l";
           };
         });
 
@@ -53,6 +62,15 @@
             repo = "gitsigns.nvim";
             rev = "5a9a6ac29a7805c4783cda21b80a1e361964b3f2";
             sha256 = "1vgs97iik9ziwbqv1xbs920qizcnshcpibj17mbsdr8lax8iycpl";
+          };
+        });
+
+        srcery-vim = prev.vimPlugins.srcery-vim.overrideAttrs (old: {
+          src = prev.pkgs.fetchFromGitHub {
+            owner = "srcery-colors";
+            repo = "srcery-vim";
+            rev = "6140c675a89d19be5f791dbd066980b956e68e0d";
+            sha256 = "08ria5wrg0my9pz3laahr8vilfcbrxncf000pmgvlazp4297vgy5";
           };
         });
 

@@ -1,7 +1,9 @@
 require("dressing").setup({
+  input = {
+    backend = { "fzf_lua" },
+  },
+
   select = {
-    enable = false,
-    -- backend = { "fzf_lua", "telescope", "fzf", "builtin", "nui" },
+    enabled = false,
   },
 })
-

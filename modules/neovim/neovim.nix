@@ -10,7 +10,7 @@ let
     cmp-nvim-lua
     cmp-path
     cmp_luasnip
-    comment-nvim
+    comment-nvim # :help commenting, consider removing this later.
     copilot-cmp
     copilot-lua
     dressing-nvim
@@ -51,7 +51,6 @@ let
     vim-dispatch-neovim
     vim-elixir
     vim-fugitive
-    # vim-obsession
     vim-repeat
     vim-startuptime
     vim-surround
@@ -79,6 +78,7 @@ in
 
         ls_cmds = {
           cssls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-css-language-server", "--stdio" },
+          denols = { "${pkgs.deno}/bin/deno", "lsp" },
           elixirls = { "${pkgs.elixir_ls}/bin/.elixir-ls-wrapped" },
           eslint = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-eslint-language-server", "--stdio" },
           html = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-html-language-server", "--stdio" },

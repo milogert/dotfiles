@@ -22,6 +22,7 @@ M.setup = function(variable_opts)
     "colorizer",
     "comment",
     "copilot",
+    "dressing",
     "dap",
     "devcontainer",
     "dressing",

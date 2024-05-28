@@ -13,6 +13,16 @@
 }:
 
 let
+  fzf-lua-overlay = vimUtils.buildVimPlugin rec {
+    name = "fzf-lua-overlay";
+    src = fetchFromGitHub {
+      owner = "phanen";
+      repo = name;
+      rev = "ead1f53e3945f1413db0719447ead93e8e089182";
+      sha256 = "1pahzr9wj2v5ws2sp91xm6vmjfqsikq2wwnv6fx56s6c0lhf89ij";
+    };
+  };
+
   git-permalink-nvim = vimUtils.buildVimPlugin rec {
     name = "git-permalink-nvim";
     src = fetchFromGitHub {
@@ -177,6 +187,7 @@ in {
     vscode-js-debug
   ;
   list = [
+    fzf-lua-overlay
     git-permalink-nvim
     output-panel-nvim
     lua-json5

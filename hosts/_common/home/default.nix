@@ -11,6 +11,7 @@
     ./tmux
     ./wezterm.nix
     ./xdg.nix
+    ./wezterm.nix
     ./zsh
   ];
 

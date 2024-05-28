@@ -40,4 +40,27 @@ fzf.setup({
     },
   },
 })
-fzf.register_ui_select()
+
+fzf.register_ui_select({
+  winopts = {
+    height = 15,
+    width = 70,
+  },
+})
+
+local fzf_overlay = require("fzf-lua-overlay")
+fzf_overlay.setup({
+})
+-- require("fzf-lua-overlay.providers.recentfiles").init()
+
+local fl = setmetatable({}, {
+  __index = function(_, k)
+    return ([[<cmd>lua require('fzf-lua-overlay').%s()<cr>]]):format(k)
+  end,
+})
+
+u.nmap("<c-b>", "", { callback = fzf_overlay.buffers })
+u.xmap("<c-b>", "", { callback = fzf_overlay.buffers })
+
+u.nmap("+fs", "", { callback = fl.scriptnames })
+u.xmap("+fs", "", { callback = fl.scriptnames })
