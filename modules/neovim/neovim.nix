@@ -21,14 +21,13 @@ in
 
         ls_cmds = {
           cssls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-css-language-server", "--stdio" },
-          -- denols = { "${pkgs.deno}/bin/deno", "lsp" },
+          denols = { "${pkgs.deno}/bin/deno", "lsp" },
           elixirls = { "${pkgs.elixir_ls}/bin/.elixir-ls-wrapped" },
           eslint = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-eslint-language-server", "--stdio" },
           html = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-html-language-server", "--stdio" },
           jsonls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-json-language-server", "--stdio" },
           lua_ls = { "${pkgs.sumneko-lua-language-server}/bin/lua-language-server" },
           nil_ls = { "${pkgs.nil}/bin/nil" },
-          rnix = { "${pkgs.rnix-lsp}/bin/rnix-lsp" },
           stylua = { "${pkgs.stylua}/bin/stylua" },
           tailwindcss = { "${pkgs.vscode-extensions.bradlc.vscode-tailwindcss}/bin/tailwindcss-language-server", "--stdio", },
           terraformls = { "${pkgs.terraform-ls}/bin/terraform-ls", "serve" },
@@ -45,16 +44,17 @@ in
         cmp-cmdline
         cmp-git
         cmp-nvim-lsp
-        # cmp-nvim-lsp-signature-help
         cmp-nvim-lua
         cmp-path
         cmp_luasnip
-        comment-nvim
+        comment-nvim # :help commenting, consider removing this later.
         copilot-cmp
         copilot-lua
+        dressing-nvim
         elixir-tools-nvim
         fidget-nvim
         friendly-snippets
+        fzf-lsp-nvim
         fzf-lua
         gitsigns-nvim
         heirline-nvim
@@ -64,64 +64,16 @@ in
         mason-lspconfig-nvim
         mason-nvim
         mini-nvim
-        nui-nvim
         none-ls-nvim
+        nui-nvim
         nvim-cmp
         nvim-colorizer-lua
         nvim-dap
         nvim-dap-ui
         nvim-dap-virtual-text
         nvim-lspconfig
-        (nvim-treesitter.withPlugins (p: [
-          p.bash # (maintained)
-          p.comment # (maintained)
-          p.css # (maintained)
-          p.dockerfile # (maintained)
-          p.eex # (maintained)
-          p.elixir # (maintained)
-          p.elm # (NOT maintained, 2022-04-28)
-          p.erlang # (maintained)
-          p.fennel # (maintained)
-          p.gitcommit # (maintained)
-          p.go # (maintained)
-          p.graphql # (maintained)
-          p.haskell # (NOT maintained, 2022-04-28)
-          p.hcl # (maintained)
-          p.heex # (maintained)
-          p.hjson # (maintained)
-          p.html # (maintained)
-          p.http # (maintained)
-          p.java # (maintained)
-          p.javascript # (maintained)
-          p.jsdoc # (maintained)
-          p.jsonc # (maintained)
-          p.kotlin # (maintained)
-          p.latex # (maintained)
-          p.llvm # (maintained)
-          p.lua # (maintained)
-          p.make # (maintained)
-          p.markdown # (NOT maintained, 2022-04-28)
-          p.nix # (maintained)
-          p.perl # (maintained)
-          p.php # (maintained)
-          p.pug # (maintained)
-          p.python # (maintained)
-          p.ql # (maintained)
-          p.query # Tree-sitter query language (maintained)
-          p.r # (maintained)
-          p.regex # (maintained)
-          p.rust # (maintained)
-          p.scss # (maintained)
-          p.todotxt # (experimental, maintained)
-          p.toml # (maintained)
-          p.tsx # (maintained)
-          p.typescript # (maintained)
-          p.vim # (maintained)
-          p.vimdoc # (maintained)
-          p.vue # (maintained)
-          p.yaml # (maintained)
-        ]))
         nvim-treesitter-textobjects
+        nvim-treesitter.withAllGrammars
         nvim-web-devicons
         octo-nvim
         oil-nvim
@@ -132,8 +84,6 @@ in
         vim-abolish
         vim-dadbod
         vim-dadbod-ui
-        # vim-dirvish
-        # vim-dirvish-git
         vim-dispatch
         vim-dispatch-neovim
         vim-elixir

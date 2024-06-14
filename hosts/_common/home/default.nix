@@ -4,12 +4,13 @@
   imports = [
     ./bat.nix
     ./fzf.nix
-    ./git
+    ./git.nix
     ./lazydocker.nix
     ./password-store.nix
     ./starship.nix
     ./tmux
     ./xdg.nix
+    ./wezterm.nix
     ./zsh
   ];
 

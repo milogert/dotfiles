@@ -3,6 +3,7 @@
 {
   imports = [
     ../kitty.nix
+    ../ranger.nix
   ];
 
   home.packages = with pkgs; [

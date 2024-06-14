@@ -3,7 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    /* nixpkgs.url = "path:///Users/milo/git/nixpkgs"; */
+    # nixpkgs.url = "github:NixOS/nixpkgs/master";
+    # nixpkgs.url = "path:///Users/milo/git/nixpkgs";
 
     darwin = {
       url = "github:LnL7/nix-darwin/master";
@@ -116,11 +117,11 @@
           };
         };
 
-        mgert-worktop = darwin.lib.darwinSystem {
+        minotaur = darwin.lib.darwinSystem {
           inherit inputs;
           system = "aarch64-darwin";
           modules = mkDarwinConfig {
-            host = "mgert-worktop";
+            host = "minotaur";
             users = ["milo"];
             type = "desktop";
           };

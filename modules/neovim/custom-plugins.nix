@@ -13,11 +13,13 @@
 }:
 
 let
-  art-nvim = vimUtils.buildVimPlugin {
-    name = "art-nvim";
-    src = builtins.fetchGit {
-      url = "git@github.com:articulate/art-nvim.git";
-      rev = "33b19e043cefb7a7db9bc9378efda2a6eaa9fd83";
+  fzf-lua-overlay = vimUtils.buildVimPlugin rec {
+    name = "fzf-lua-overlay";
+    src = fetchFromGitHub {
+      owner = "phanen";
+      repo = name;
+      rev = "ead1f53e3945f1413db0719447ead93e8e089182";
+      sha256 = "1pahzr9wj2v5ws2sp91xm6vmjfqsikq2wwnv6fx56s6c0lhf89ij";
     };
   };
 
@@ -28,16 +30,6 @@ let
       repo = name;
       rev = "2d41bacd16370bd4f0e5327e947c70708d6c94df";
       sha256 = "0d9r4p4a8dms9k01ayvdgppy96ds8pnbq38r1kvjw7m9a7qg1rr4";
-    };
-  };
-
-  hardtime-nvim = vimUtils.buildVimPlugin rec {
-    name = "hardtime.nvim";
-    src = fetchFromGitHub {
-      owner = "m4xshen";
-      repo = name;
-      rev = "8cc4dec29a177cb7c33a900ccf45b451684c30a0";
-      sha256 = "0q8hpvy61qc5pbxbzkf5zna71j7h8xbvqjs23x8bimkhwgk21j0k";
     };
   };
 
@@ -140,16 +132,6 @@ let
     };
   };
 
-  reactive-nvim = vimUtils.buildVimPlugin rec {
-    name = "reactive.nvim";
-    src = fetchFromGitHub {
-      owner = "rasulomaroff";
-      repo = name;
-      rev = "0ad3aba5f16f001c3c44238e78359a21bba1cce4";
-      sha256 = "10ipv906p89v5yxwq350bd50b8msxcgx6w3pjv55dxx5z4zbrghd";
-    };
-  };
-
   vim-ai = vimUtils.buildVimPlugin rec {
     name = "vim-ai";
     src = fetchFromGitHub {
@@ -179,32 +161,19 @@ let
       sha256 = "1rdfw25lljv53h2f2nc1gmx9awggk7k3nrfj46ssl11jn6lyvbj8";
     };
   };
-
-  output-panel-nvim = vimUtils.buildVimPlugin rec {
-    name = "output-panel.nvim";
-    src = fetchFromGitHub {
-      owner = "mhanberg";
-      repo = name;
-      rev = "65bb44a5d5dbd40f3793a8c591b65a0c5f260bd9";
-      sha256 = "0wpjf25mqlafs0psi5kn3nxn4xnadfpfh9frf0zz8x72qfxkfv8s";
-    };
-  };
 in {
   inherit
     nvim-dap-vscode-js
     vscode-js-debug
   ;
   list = [
-    art-nvim
+    fzf-lua-overlay
     git-permalink-nvim
-    hardtime-nvim
     lua-json5
     nvim-dap-vscode-js
     nvim-dev-container
     nvim-runscript
-    output-panel-nvim
-    reactive-nvim
-    vim-ai
+    # vim-ai
     vim-arpeggio
     vim-tada
   ];

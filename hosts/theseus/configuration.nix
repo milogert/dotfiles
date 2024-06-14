@@ -16,8 +16,6 @@
 
   systemd.services.mount-pstore.enable = false;
 
-  services.gnome.core-utilities.enable = false;
-
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 

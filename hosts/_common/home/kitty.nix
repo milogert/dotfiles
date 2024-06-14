@@ -7,7 +7,7 @@
     font = {
       package = pkgs.hack-font;
       name = "Hack";
-      size = 10;
+      size = 11;
     };
 
     keybindings = {};

@@ -332,7 +332,6 @@ local diagnostic_icons = {
     self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
   end,
 
-  
   {
     provider = function(self)
       -- 0 is just another output, we can decide to print it or not!

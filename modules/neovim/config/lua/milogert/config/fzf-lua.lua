@@ -41,4 +41,33 @@ fzf.setup({
   },
 })
 
-fzf.register_ui_select()
+fzf.register_ui_select({
+  winopts = {
+    height = 15,
+    width = 70,
+  },
+})
+
+-- TODO delete this on April 30th (when 0.10.0 becomes stable)
+-- vim.fs.joinpath = function (init, other)
+--   return table.concat({ init, other }, '/')
+-- end
+--
+-- local fzf_overlay = require("fzf-lua-overlay")
+-- fzf_overlay.setup({
+--   -- TODO delete this on April 30th (when 0.10.0 becomes stable)
+--   -- cache_dir = (vim.fn.stdpath 'cache')..'/fzf-lua-overlay'
+-- })
+-- -- require("fzf-lua-overlay.providers.recentfiles").init()
+--
+-- local fl = setmetatable({}, {
+--   __index = function(_, k)
+--     return ([[<cmd>lua require('fzf-lua-overlay').%s()<cr>]]):format(k)
+--   end,
+-- })
+--
+-- u.nmap("<c-b>", "", { callback = fzf_overlay.buffers })
+-- u.xmap("<c-b>", "", { callback = fzf_overlay.buffers })
+--
+-- u.nmap("+fs", "", { callback = fl.scriptnames })
+-- u.xmap("+fs", "", { callback = fl.scriptnames })

@@ -21,12 +21,6 @@
       desktopManager.gnome = {
         enable = true;
 
-         extraGSettingsOverrides = ''
-          # Favorite apps in gnome-shell
-          [org.gnome.shell]
-          favorite-apps=['org.gnome.Photos.desktop', 'org.gnome.Nautilus.desktop']
-        '';
-
         extraGSettingsOverridePackages = [
           pkgs.gsettings-desktop-schemas # for org.gnome.desktop
           pkgs.gnome.gnome-shell # for org.gnome.shell

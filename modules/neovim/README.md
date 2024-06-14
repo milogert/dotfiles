@@ -20,6 +20,51 @@ Contains my neovim configuration.
   than fast enough for me. I pretty much start it once per tmux instance and
   leave it open.
 
+# No Nix? No Problem!
+
+You can copy the entire config directory into `~/.config/nvim/` and just use it
+as a standard neovim config.
+
+Then call
+
+```lua
+require('milogert.main').setup({
+  -- This is unused currently.
+  nix = false,
+
+  debuggers = {
+    elixir_ls = "path/to/elixir_ls",
+    vscode_js = {
+      adapter = "path/to/vscode_js_debug_adapter",
+      debugger = "path/to/vscode_js_debugger",
+    },
+  },
+
+  -- Not including any of these will just disable that language server.
+  ls_cmds = {
+    cssls = { "bin/command", ...args },
+    elixirls = { "bin/command", ...args },
+    eslint = { "bin/command", ...args },
+    html = { "bin/command", ...args },
+    jsonls = { "bin/command", ...args },
+    lua_ls = { "bin/command", ...args },
+    nil_ls = { "bin/command", ...args },
+    stylua = { "bin/command", ...args },
+    tailwindcss = { "bin/command", ...args, },
+    terraformls = { "bin/command", ...args },
+    texlab = { "bin/command", ...args },
+    tsserver = { "bin/command", ...args, },
+  },
+})
+```
+
+## Caveats
+
+- My plugin manager is Nix, as a result I have no plugin manager installed. You
+  will want one.
+- You will need to install treesitter parsers by modifying the `treesitter.lua`
+  file.
+
 # Screenshots
 
 It's a text editor. Mostly just black-ish screens.
@@ -88,7 +133,6 @@ These plugins are not contained in nixpkgs or are, but not the version I want.
 
 | Name and Link          | Feature | How I use it |
 | ---                    | ---     | ---          |
-| `art-nvim`             | `tools` | Worky work. |
 | `heirline-nvim`        | `ui` | Status bar plugin. |
 | `hydra-nvim`           | `utils` | Unested. |
 | `mason-lspconfig-nvim` | `lsp` | Installs missing LSs not found in nixpkgs. |

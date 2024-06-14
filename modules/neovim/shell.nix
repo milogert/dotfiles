@@ -2,7 +2,6 @@
 
 mkShell {
   buildInputs = [
-    rnix-lsp
     terraform-ls
     tree-sitter
   ];

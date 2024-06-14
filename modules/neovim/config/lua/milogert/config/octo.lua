@@ -1,15 +1,15 @@
-local u = require('milogert.utils')
+local u = require("milogert.utils")
 
-vim.api.nvim_create_augroup('OctoCustom', { clear = true })
-vim.api.nvim_create_autocmd('FileType', {
-  group = 'OctoCustom',
-  pattern = 'octo://*',
-  callback = function ()
-    u.nmap('gq', ':q')
+vim.api.nvim_create_augroup("OctoCustom", { clear = true })
+vim.api.nvim_create_autocmd("BufEnter", {
+  group = "OctoCustom",
+  pattern = "octo://*",
+  callback = function()
+    u.nmap("gq", ":q<CR>")
   end,
 })
 
-require('octo').setup({
+require("octo").setup({
   picker = "fzf-lua",
   picker_config = {
     use_emojis = true,

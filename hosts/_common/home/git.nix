@@ -1,4 +1,5 @@
 { pkgs
+, config
 , ...
 }:
 
@@ -22,6 +23,7 @@
       c = "commit";
       ca = "commit --amend";
       ci = "commit -a";
+      cp = "commit --amend --no-edit";
       co = "checkout";
       d = "diff";
       dc = "diff --changed";
@@ -62,13 +64,18 @@
 
       color.ui = true;
       commit.verbose = true;
+      diff.algorithm = "histogram";
       fetch.prune = true;
       grep.lineNumber = true;
       help.autocorrect = 1;
       init.defaultBranch = "main";
       interactive.diffFilter = "delta --dark --color-only";
+      merge.conflictStyle = "zdiff3";
       pull.rebase = false;
+      push.autoSetupRemote = true;
       push.default = "upstream";
+
+      # url."git@github.com".insteadOf = "https://github.com";
 
       delta = {
         features = "decorations";
@@ -85,4 +92,14 @@
       };
     };
   };
+
+  home.activation.requestReadProjectForGH =
+    let
+      gh = "${pkgs.gh}/bin/gh";
+    in
+      config.lib.dag.entryAfter ["writeBoundary"] ''
+        if (! ${gh} auth status); then
+          run ${gh} auth login -s read:project
+        fi
+      '';
 }
