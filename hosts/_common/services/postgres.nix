@@ -12,6 +12,7 @@
 
   services.postgresql = {
     enable = true;
+    package = pkgs.postgresql_15;
 
     authentication = ''
       # allow postgres user to use "ident" authentication on Unix sockets

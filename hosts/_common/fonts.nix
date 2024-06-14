@@ -10,6 +10,7 @@ in {
   fonts = {
     fontDir.enable = true;
     packages = [
+      pkgs.hack-font
       pkgs.fira-code
       nerdfonts
       pkgs.iosevka
