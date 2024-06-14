@@ -29,6 +29,8 @@
   swapDevices = [ ];
 
   hardware = {
+    enableAllFirmware = true;
+
     opengl = {
       driSupport = true;
       driSupport32Bit = true;
@@ -48,14 +50,19 @@
 
     pulseaudio = {
       enable = false;
-      package = pkgs.pulseaudioFull;
-      support32Bit = true;
-      extraModules = [ pkgs.pulseaudio-modules-bt ];
+      # package = pkgs.pulseaudioFull;
+      # support32Bit = true;
+      # extraModules = [ pkgs.pulseaudio-modules-bt ];
     };
 
     bluetooth = {
       enable = true;
-      settings.General.Enable = "Source,Sink,Media,Socket";
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+          Experimental = true;
+        };
+      };
     };
 
     logitech.wireless.enable = true;

@@ -6,8 +6,7 @@
     # Per-interface useDHCP will be mandatory in the future, so this generated config
     # replicates the default behaviour.
     useDHCP = false;
-    # interfaces.wlp6s0.useDHCP = true;
-    interfaces.wlp6s0.wakeOnLan.enable = true;
+    interfaces.wlp7s0.useDHCP = true;
     # interfaces.enp9s0.useDHCP = true;
     enableIPv6 = true;
 
@@ -25,10 +24,6 @@
       # dns = "none";
     };
 
-    # firewall.allowedUDPPorts = [
-    #   42000 # Warpinator
-    #   42001 # Warpinator
-    # ];
     firewall.allowedTCPPorts = [
       42000 # Warpinator
       42001 # Warpinator

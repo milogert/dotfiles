@@ -35,12 +35,15 @@
     evince
     firefox
     insomnia
+    libsForQt5.kdeconnect-kde
+    mangohud
+    mutt
     nodejs
     phoronix-test-suite
     pinentry-curses
     ranger
+    vial
     vulkan-tools
-    libsForQt5.kdeconnect-kde
   ];
 
   programs.qutebrowser = {

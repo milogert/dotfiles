@@ -1,25 +1,26 @@
 { pkgs, ... }:
 
-{
+let
+in{
   programs.waybar = {
     enable = true;
 
     settings = [
       {
-        name = "top";
         position = "top";
         layer = "top";
-        height = 22;
+        # height = 22;
 
         modules-left = [
-            "sway/window"
+          "sway/window"
         ];
         modules-center = [
-            "clock"
         ];
         modules-right = [
-            "network"
-            "pulseaudio"
+          "network"
+          "pulseaudio"
+          "privacy"
+          "clock"
         ];
 
         modules = {
@@ -41,40 +42,39 @@
             format-muted = "🔇";
             format-icons = ["🔈" "🔉" "🔊"];
             on-click = "pavucontrol";
-
           };
           clock = {
-            format = "{:%Y-%m-%d %H:%M}";
-            format-alt = "{:%a; %d. %b  %H:%M}";
+            format = "{:%a, %b %d, %I:%M}";
           };
+          privacy = {};
         };
       }
       {
-        name = "bottom";
         position = "bottom";
         layer = "top";
-        height = 22;
+        # height = 22;
 
         modules-left = ["sway/workspaces"];
         modules-center = ["sway/mode"];
         modules-right = [
-          "custom/disk-root"
-          "custom/disk-home"
+          "disk"
+          "temperature"
           "tray"
         ];
 
         modules = {
-          "custom/disk-root" = {
-            format = "/: {}";
-            exec = "df -h --output=target,avail | grep '/ ' | awk '{print $2}'";
+          disk = {
+            format = "{path}: {free}";
           };
-          "custom/disk-home" = {
-            format = "/home: {}";
-            exec = "df -h --output=target,avail | grep '/home' | awk '{print $2}'";
+          tray = {
+            spacing = 10;
+            show_passive_items = true;
           };
-          tray = {};
+          temperature = {};
         };
       }
     ];
+
+    style = builtins.readFile ./style.css;
   };
 }
