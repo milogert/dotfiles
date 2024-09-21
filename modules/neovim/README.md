@@ -53,7 +53,7 @@ require('milogert.main').setup({
     tailwindcss = { "bin/command", ...args, },
     terraformls = { "bin/command", ...args },
     texlab = { "bin/command", ...args },
-    tsserver = { "bin/command", ...args, },
+    ts_ls = { "bin/command", ...args, },
   },
 })
 ```

@@ -23,7 +23,7 @@ in {
     keyMode = "vi";
     escapeTime = 1;
     historyLimit = 10000;
-    terminal = "screen-256color";
+    terminal = "xterm-256color"; # screen-* or tmux-*
     plugins = with tmuxPlugins; [
       vim-tmux-navigator
       srcery-tmux
@@ -41,7 +41,6 @@ in {
 
       # Set the default shell.
       set-option -g default-shell ${pkgs.zsh}/bin/zsh
-      set -g default-terminal "tmux-256color"
       set-option -ga terminal-overrides ",xterm-256color:Tc"
 
       # Swap layout switch and previous buffer keys.

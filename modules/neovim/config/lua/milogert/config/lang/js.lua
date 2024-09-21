@@ -24,10 +24,10 @@ lspconfig.eslint.setup(vim.tbl_extend("keep", {
   },
 }, lsp_utils.server_defaults))
 
-lspconfig.tsserver.setup(vim.tbl_extend("keep", {
-  cmd = variables.get().ls_cmds.tsserver,
+lspconfig.ts_ls.setup(vim.tbl_extend("keep", {
+  cmd = variables.get().ls_cmds.ts_ls,
   on_attach = function (client, bufnr)
-    -- Disable tsserver formatting requsts.
+    -- Disable ts_ls formatting requsts.
     client.server_capabilities.document_formatting = false
     client.server_capabilities.document_range_formatting = false
 
