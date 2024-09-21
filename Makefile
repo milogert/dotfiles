@@ -37,7 +37,7 @@ config: check ${HOST}
 # NixOS commands.
 _nixos-build:
 	@echo -e "\033[0;33m-- Building ----------------------------\033[0m"
-	nix build ".#nixosConfigurations.${HOST}.config.system.build.toplevel" --extra-experimental-features "nix-command flakes" --impure
+	nix build ".#nixosConfigurations.${HOST}.config.system.build.toplevel" --impure
 
 _nixos-switch:
 	@echo -e "\033[0;33m-- Switching ---------------------------\033[0m"
@@ -47,10 +47,8 @@ _nixos-switch:
 
 # nix-darwin commands.
 _nix-darwin-build:
-	# Remove the flags here eventually. This is to bootstrap flakes on your
-	# system. After these same flags should be inside the configuration files.
 	@echo -e "\033[0;33m-- Building ----------------------------\033[0m"
-	nix build ".#darwinConfigurations.${HOST}.system" --experimental-features "nix-command flakes" --impure
+	nix build ".#darwinConfigurations.${HOST}.system" --impure
 
 _nix-darwin-switch:
 	@echo -e "\033[0;33m-- Switching ---------------------------\033[0m"
@@ -63,11 +61,11 @@ _install_requirements:
 
 update: update-neovim
 	@echo -e "\033[0;33m-- Updating ----------------------------\033[0m"
-	nix flake --extra-experimental-features "nix-command flakes" update
+	nix flake update
 
 update-neovim:
 	@echo -e "\033[0;33m-- Updating (neovim) -------------------\033[0m"
-	nix flake --extra-experimental-features "nix-command flakes" update ./modules/neovim
+	nix flake update --flake ./modules/neovim
 
 add-user:
 	./scripts/add_user.sh

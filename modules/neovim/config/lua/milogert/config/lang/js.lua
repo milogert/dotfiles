@@ -37,14 +37,14 @@ lspconfig.tsserver.setup(vim.tbl_extend("keep", {
   single_file_support = false,
   init_options = {
     preferences = {
-      includeInlayParameterNameHints = 'all',
-      includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-      includeInlayFunctionParameterTypeHints = true,
-      includeInlayVariableTypeHints = true,
-      includeInlayPropertyDeclarationTypeHints = true,
-      includeInlayFunctionLikeReturnTypeHints = true,
-      includeInlayEnumMemberValueHints = true,
-      importModuleSpecifierPreference = 'non-relative',
+      -- includeInlayParameterNameHints = 'all',
+      -- includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+      -- includeInlayFunctionParameterTypeHints = true,
+      -- includeInlayVariableTypeHints = true,
+      -- includeInlayPropertyDeclarationTypeHints = true,
+      -- includeInlayFunctionLikeReturnTypeHints = true,
+      -- includeInlayEnumMemberValueHints = true,
+      -- importModuleSpecifierPreference = 'non-relative',
     },
   },
 }, lsp_utils.server_defaults))

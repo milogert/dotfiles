@@ -7,6 +7,7 @@
 
     extraConfig = ''
       return {
+        front_end = "WebGpu",
         font = wezterm.font("Hack"),
         font_size = 11.0,
         color_scheme = "Srcery (Gogh)",

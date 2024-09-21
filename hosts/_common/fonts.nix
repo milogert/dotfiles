@@ -7,13 +7,10 @@ let
     ];
   };
 in {
-  fonts = {
-    fontDir.enable = true;
-    fonts = [
-      pkgs.hack-font
-      pkgs.fira-code
-      nerdfonts
-      pkgs.iosevka
-    ];
-  };
+  fonts.packages = [
+    pkgs.hack-font
+    pkgs.fira-code
+    nerdfonts
+    pkgs.iosevka
+  ];
 }

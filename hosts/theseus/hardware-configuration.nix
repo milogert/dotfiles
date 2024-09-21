@@ -27,10 +27,10 @@
 
   hardware = {
     # high-resolution display
-    video.hidpi.enable = lib.mkDefault true;
+    # video.hidpi.enable = lib.mkDefault true;
 
     opengl = {
-      driSupport = true;
+      # driSupport = true;
       driSupport32Bit = true;
       extraPackages = with pkgs; [
         #amdvlk

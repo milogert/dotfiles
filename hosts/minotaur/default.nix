@@ -21,4 +21,6 @@
     # Disable any sort of prompt that is not Starship.
     promptInit = "";
   };
+
+  ids.uids.nixbld = 400;
 }
