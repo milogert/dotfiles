@@ -3,7 +3,6 @@
 {
   imports = [
     ../browserpass.nix
-    ../kitty.nix
     ../ranger.nix
   ];
 

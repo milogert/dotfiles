@@ -51,9 +51,6 @@
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  # Enable sound.
-  sound.enable = false;
-
   # rtkit is optional but recommended
   security.rtkit.enable = true;
   services.pipewire = {

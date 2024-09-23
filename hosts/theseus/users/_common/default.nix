@@ -1,5 +1,5 @@
 { pkgs, ... }:
 
 {
-  programs.kitty.font.size = 9.0;
+  # programs.kitty.font.size = 9.0;
 }

@@ -14,6 +14,7 @@ require("octo").setup({
   picker_config = {
     use_emojis = true,
   },
+  users = "assignable",
   default_to_projects_v2 = true,
   colors = {
     white = "#FCE8C3",
