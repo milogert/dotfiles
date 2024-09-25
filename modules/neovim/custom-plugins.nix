@@ -25,12 +25,13 @@ let
 
   git-permalink-nvim = vimUtils.buildVimPlugin rec {
     name = "git-permalink-nvim";
-    src = fetchFromGitHub {
-      owner = "milogert";
-      repo = name;
-      rev = "2d41bacd16370bd4f0e5327e947c70708d6c94df";
-      sha256 = "0d9r4p4a8dms9k01ayvdgppy96ds8pnbq38r1kvjw7m9a7qg1rr4";
-    };
+    src = /Users/milo/git/git-permalink-nvim;
+    # src = fetchFromGitHub {
+    #   owner = "milogert";
+    #   repo = name;
+    #   rev = "2d41bacd16370bd4f0e5327e947c70708d6c94df";
+    #   sha256 = "0d9r4p4a8dms9k01ayvdgppy96ds8pnbq38r1kvjw7m9a7qg1rr4";
+    # };
   };
 
   output-panel-nvim = vimUtils.buildVimPlugin rec {
@@ -69,6 +70,16 @@ let
     postInstall = ''
       cp ${lua-json5-bin}/lib/liblua_json5.dylib $out/lua/json5.dylib
     '';
+  };
+
+  supermaven-nvim = vimUtils.buildVimPlugin rec {
+    name = "supermaven-nvim";
+    src = fetchFromGitHub {
+      owner = "supermaven-inc";
+      repo = name;
+      rev = "d71257f431e190d9236d7f30da4c2d659389e91f";
+      sha256 = "00wmbl3882j2nydy38mgcar73x7im8qyiw7svi0dcdb108yqi4xz";
+    };
   };
 
   nvim-dap-vscode-js = vimUtils.buildVimPlugin rec {
@@ -152,6 +163,16 @@ let
     };
   };
 
+  playtime-nvim = vimUtils.buildVimPlugin rec {
+    name = "playtime.nvim";
+    src = fetchFromGitHub {
+      owner = "rktjmp";
+      repo = name;
+      rev = "ab7d232c02341bff8479f532feec5730f8c33770";
+      sha256 = "0m22lb3nbsr3fs3nx7rxd9acnh9hjr21ayg7b58x5hyhndkfs1w3";
+    };
+  };
+
   vim-ai = vimUtils.buildVimPlugin rec {
     name = "vim-ai";
     src = fetchFromGitHub {
@@ -195,6 +216,8 @@ in {
     nvim-dev-container
     nvim-nio
     nvim-runscript
+    supermaven-nvim
+    playtime-nvim
     # vim-ai
     vim-arpeggio
     vim-tada

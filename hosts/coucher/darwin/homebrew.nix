@@ -19,7 +19,7 @@
       "docker"
       "flipper"
       "google-chrome"
-      "insomnia"
+      "moom"
       "notion"
       "plex"
       "pocket-casts"

@@ -62,7 +62,7 @@ vim.opt.softtabstop = -1
 vim.opt.colorcolumn = '80'
 
 -- Use the system clipboard (in addition to other things?), y/p uses it.
-vim.opt.clipboard = vim.opt.clipboard + 'unnamed'
+vim.opt.clipboard = vim.opt.clipboard + 'unnamedplus'
 
 -- Mouse doesn't belong in terminal.
 vim.opt.mouse = ''
@@ -76,6 +76,7 @@ vim.opt.smartcase = true
 -- Other settings.
 vim.opt.hidden = true
 vim.opt.cmdheight = 2
+vim.opt.previewheight = 32
 vim.opt.showmode = false
 vim.opt.updatetime = 10
 vim.opt.shortmess = vim.opt.shortmess + 'c'
@@ -118,7 +119,7 @@ vim.opt.lazyredraw = false
 vim.g.fzf_buffers_jump = true
 
 -- Vimux.
-vim.g.VimuxHeight = "25"
+-- vim.g.VimuxHeight = "25"
 vim.g.VimuxOrientation = "h"
 vim.g.VimuxUseNearest = 0
 

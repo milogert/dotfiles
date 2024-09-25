@@ -14,15 +14,14 @@
 
     casks = [
       "1password"
-      "beekeeper-studio"
+      "MonitorControl"
       "calibre"
       "cyberduck"
       "docker"
       "google-chrome"
-      "insomnia"
       "logi-options-plus"
-      "muzzle"
       "moom"
+      "muzzle"
       "plex"
       "pocket-casts"
       "postgres-unofficial"

@@ -51,6 +51,7 @@ require("lspkind").init({
     Constant = "",
     Struct = "",
     Copilot = "",
+    Supermaven = "",
   },
 })
 

@@ -12,10 +12,8 @@
     };
 
     darwin = {
-      url = "github:emilazy/nix-darwin/push-zovpmlzlzvvm";
+      url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
-      # url = "github:LnL7/nix-darwin/master";
-      # inputs.nixpkgs.follows = "nixpkgs";
     };
 
     home-manager = {

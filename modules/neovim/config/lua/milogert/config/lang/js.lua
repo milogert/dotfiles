@@ -9,6 +9,20 @@ lspconfig.jsonls.setup(lsp_utils.default_with_cmd(variables.get().ls_cmds.jsonls
 
 lspconfig.eslint.setup(vim.tbl_extend("keep", {
   cmd = variables.get().ls_cmds.eslint,
+  filetypes = {
+    "javascript",
+    "javascriptreact",
+    "javascript.jsx",
+    "typescript",
+    "typescriptreact",
+    "typescript.tsx",
+    "vue",
+    "svelte",
+    "astro",
+    "json",
+    "jsonc",
+    "json5",
+  },
   on_attach = function(client, bufnr)
     -- Force eslint to accept formatting requests.
     client.server_capabilities.document_formatting = true
@@ -45,16 +59,16 @@ lspconfig.ts_ls.setup(vim.tbl_extend("keep", {
   root_dir = lspconfig.util.root_pattern("package.json"),
   single_file_support = false,
   init_options = {
-    preferences = {
-      -- includeInlayParameterNameHints = 'all',
-      -- includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-      -- includeInlayFunctionParameterTypeHints = true,
-      -- includeInlayVariableTypeHints = true,
-      -- includeInlayPropertyDeclarationTypeHints = true,
-      -- includeInlayFunctionLikeReturnTypeHints = true,
-      -- includeInlayEnumMemberValueHints = true,
-      -- importModuleSpecifierPreference = 'non-relative',
-    },
+    -- preferences = {
+    --   includeInlayParameterNameHints = 'all',
+    --   includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+    --   includeInlayFunctionParameterTypeHints = true,
+    --   includeInlayVariableTypeHints = true,
+    --   includeInlayPropertyDeclarationTypeHints = true,
+    --   includeInlayFunctionLikeReturnTypeHints = true,
+    --   includeInlayEnumMemberValueHints = true,
+    --   importModuleSpecifierPreference = 'non-relative',
+    -- },
   },
 }, lsp_utils.server_defaults))
 

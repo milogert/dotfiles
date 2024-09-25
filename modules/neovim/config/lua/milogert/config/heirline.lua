@@ -507,6 +507,7 @@ local statusline_inactive = {
   end,
 
   file_name_block,
+  diagnostic_icons,
   align,
   file_type,
 }

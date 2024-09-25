@@ -55,6 +55,7 @@ local vimuxMaps = {
   { key = 'vl', command = 'RunLastCommand' },
   { key = 'vz', command = 'ZoomRunner' },
   { key = 'vs', command = 'InterruptRunner' },
+  { key = 'vx', command = 'CloseRunner' },
 }
 
 for _, map in ipairs(vimuxMaps) do

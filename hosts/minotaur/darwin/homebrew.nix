@@ -13,13 +13,11 @@
     ];
 
     casks = [
-      "arc"
       "calibre"
       "cyberduck"
       "discord"
       "flipper"
       "google-chrome"
-      "insomnia"
       "moom"
       "notion"
       "plex"

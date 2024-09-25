@@ -43,8 +43,8 @@ fzf.setup({
 
 fzf.register_ui_select({
   winopts = {
-    height = 15,
-    width = 70,
+    height = 30,
+    width = 140,
   },
 })
 

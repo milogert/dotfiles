@@ -21,7 +21,7 @@ M.setup = function(variable_opts)
     "cmp",
     "colorizer",
     "comment",
-    "copilot",
+    -- "copilot",
     "dressing",
     "dap",
     "devcontainer",
@@ -39,6 +39,7 @@ M.setup = function(variable_opts)
     "package-info",
     "persistence",
     "runscript",
+    "supermaven",
     "tada",
     "treesitter",
 
