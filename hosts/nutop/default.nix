@@ -11,7 +11,7 @@
   ];
 
   # This is nix-darwin specific.
-  system.stateVersion = 4;
+  system.stateVersion = 5;
   nix.configureBuildUsers = true;
   services.nix-daemon.enable = true;
 

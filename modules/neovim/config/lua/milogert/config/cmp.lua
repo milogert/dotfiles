@@ -34,7 +34,6 @@ cmp.setup({
         luasnip = "[Snip]",
         nvim_lsp = "[LSP]",
         nvim_lua = "[Lua]",
-        copilot = "[Copilot]",
       },
     }),
   },
@@ -73,7 +72,6 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = "nvim_lsp", priority = 100 },
     { name = "supermaven" },
-    -- { name = "copilot" },
     { name = "nvim_lua" },
     { name = "path" },
     { name = "luasnip" },
@@ -86,7 +84,6 @@ cmp.setup({
     priority_weight = 2,
     comparators = {
       cmp.config.compare.exact,
-      -- require("copilot_cmp.comparators").score,
       cmp.config.compare.offset,
       cmp.config.compare.score,
       cmp.config.compare.recently_used,

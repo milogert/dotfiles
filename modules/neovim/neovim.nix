@@ -11,8 +11,6 @@ let
     cmp-path
     cmp_luasnip
     comment-nvim # :help commenting, consider removing this later.
-    copilot-cmp
-    copilot-lua
     dressing-nvim
     elixir-tools-nvim
     fidget-nvim
@@ -43,6 +41,7 @@ let
     persistence-nvim
     plenary-nvim
     srcery-vim
+    supermaven-nvim
     vim-abolish
     vim-dadbod
     vim-dadbod-completion
@@ -94,9 +93,7 @@ in
       })
     '';
 
-    packpathDirs.myNeovimPackages = {
-      start = vimPlugins ++ customPlugins.list;
-    };
+    plugins = vimPlugins ++ customPlugins.list;
 
     viAlias = true;
     vimAlias = true;

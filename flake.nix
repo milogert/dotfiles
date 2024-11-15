@@ -22,7 +22,7 @@
     };
 
     neovim-custom = {
-      url = "path:./modules/neovim";
+      url = "path:modules/neovim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -88,11 +88,14 @@
         mkUserConfigWrapped = user:
           ({ pkgs, ... }: mkUserConfig { inherit pkgs host type user; });
       in [
-        lix-module.nixosModules.default
+        # lix-module.nixosModules.default
         (./. + "/hosts/${host}/default.nix")
         (./. + "/hosts/_common/types/${type}.nix")
         ({ pkgs, ... }: {
           nix.registry.nixpkgs.flake = nixpkgs;
+          # Temp fix
+          # nix.settings.sandbox = false;
+          # nix.nixPath = "nixpkgs=flake:nixpkgs";
           environment.variables.HOSTNAME = host;
           nixpkgs = nixpkgsConfig;
           home-manager.verbose = false;

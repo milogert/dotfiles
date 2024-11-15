@@ -50,12 +50,9 @@ require("lspkind").init({
     EnumMember = "",
     Constant = "",
     Struct = "",
-    Copilot = "",
     Supermaven = "",
   },
 })
-
-vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
 
 local mason = require("mason")
 

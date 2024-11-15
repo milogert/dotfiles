@@ -88,41 +88,52 @@ Oh boy. Probably too many.
 | `cmp-buffer`                  | `ui` `completion` | Completion for the current buffer. I use this as a test to see "did it detect what I'm really looking for". |
 | `cmp-calc`                    | `ui` `completion` | Does math for you in the completion menu. |
 | `cmp-cmdline`                 | `ui` `completion` | Command line completion. |
-| `cmp-nvim-lsp-signature-help` | `ui` `completion` | Completion for function signatures. |
+| `cmp-git`                     | `ui` `completion` | Completion for git branches and tags. |
 | `cmp-nvim-lsp`                | `lsp` `ui` `completion` | Completion for LS messages. |
 | `cmp-nvim-lua`                | `ui` `completion` | Lua completion. Useful for configuring neovim. |
 | `cmp-path`                    | `ui` `completion` | Completion for directories. |
-| `comment-nvim`                | `utils` `ui` | Easily comment lines and blocks. |
+| `cmp_luasnip`                 | `ui` `completion` | Completion for luasnip snippets. |
+| `comment-nvim`                | `utils` `ui` | Easily comment lines and blocks. On the chopping block. Nascent impelemntion is included in Neovim. |
+| `dressing-nvim`               | `lsp` `ui` | Used for nice rename code actions. |
+| `elixir-tools-nvim`           | `language` `tools` | Elixir plugin. |
 | `fidget-nvim`                 | `lsp` `ui` | Show LS status when things are doing work. |
+| `friendly-snippets`           | `ui` `completion` | Snippets for luasnip. I don't think this is properly configured. |
+| `fzf-lsp-nvim`                | `completion` `lsp` `ui` | LS querying in fzf. This is basically a helper plugin that does a bunch of work for me. |
 | `fzf-lua`                     | `ui` | Searcher in nvim. |
 | `gitsigns-nvim`               | `git` `tools` `ui` | Git signs in gutter. |
-| `haskell-tools-nvim`          | `language` `tools` | Haskell plugin. Untested. |
-| `haskell-vim`                 | `language` `tools` | Haskell plugin. Untested. |
+| `heirline-nvim`               | `ui` | Status bar plugin. |
+| `hydra-nvim`                  | `utils` | Unested. |
 | `lspkind-nvim`                | `completion` `lsp` `ui` | Set symbols for LSP in completion menus. |
-| `mini-nvim`                   | `ui` `utils` | Small modules. This one is slated for removal since I don't think I use it that much. |
+| `luasnip`                     | `ui` `completion` | Snippets. |
+| `mason-lspconfig-nvim`        | `lsp` | Glues mason and lspconfig together. |
+| `mason-nvim`                  | `lsp` | Manages LS, DAP servers, linters, and formatters. This is _very_ lightly used, only for things not in nixpkgs. |
+| `none-ls-nvim`                | `ui` `completion` `lsp` | LS that add hooks for tools on your machine like Prettier. |
 | `nui-nvim`                    | `ui` `utils` | UI library. |
-| `null-ls-nvim`                | `ui` `completion` `lsp` | LS that add hooks for tools on your machine like Prettier. |
 | `nvim-cmp`                    | `ui` `completion` `lsp` | Completion menu plugin. Does loads of work for LSP and a bunch of random plugins (direcotry completion, signature hints, buffer completion, command line, math, etc). |
 | `nvim-colorizer-lua`          | `ui` | Shows CSS colors in vim. |
+| `nvim-dap`                    | `debugger` | Debugger. Not much chance to use this yet. |
 | `nvim-dap-ui`                 | `ui` `debugger` | Debugger support. |
 | `nvim-dap-virtual-text`       | `ui` `debugger` | Debugger support. |
-| `nvim-dap`                    | `debugger` | Debugger. Not much chance to use this yet. |
 | `nvim-lspconfig`              | `lsp` | Configure LSs. |
 | `nvim-treesitter-textobjects` | `ui` | Treesitter support. |
 | `nvim-treesitter`             | `ui` | Highlight and indentation. |
 | `nvim-web-devicons`           | `ui` `lsp` | Support for various plugins. |
+| `octo-nvim`                   | `tools` | GitHub plugin. |
+| `oil-nvim`                    | `tools` | File browser. Treat folders as buffers. |
 | `package-info-nvim`           | `tools` | Upgrade packages in `package.json` files. |
+| `persistence-nvim`            | `utils` | Saves session state when exiting neovim. `<leader>sr` to **s**ession **r**estore. |
 | `plenary-nvim`                | `utils` | Dependecy of various plugins. |
+| `srcery-vim`                  | `ui` | My theme 🤤. |
+| `supermaven-nvim`             | `tools` | AI completion. |
 | `vim-abolish`                 | `utils` | Remove all instances of words. Untested. |
+| `vim-dadbod`                  | `tools` | Database browser. |
+| `vim-dadbod-completion`       | `tools` | Database browser completion. |
 | `vim-dadbod-ui`               | `tools` `ui` | Dadbod UI. |
-| `vim-dadbod`                  | `tools` | Database browser. Nearly untested. |
-| `vim-dirvish-git`             | `ui` | Git plugin for `dirvish` |
-| `vim-dirvish`                 | `ui` | Directories are buffers. Go up a directory with `-` anywhere. |
-| `vim-dispatch-neovim`         | `tools` | Support for neovim. |
 | `vim-dispatch`                | `tools` | Run builds in the background. |
+| `vim-dispatch-neovim`         | `tools` | Support for neovim. |
 | `vim-elixir`                  | `tools` `language` | Elixir plugin. |
 | `vim-fugitive`                | `tools` | Git plugin. |
-| `vim-obsession`               | `tools` | Untested. |
+| `vim-repeat`                  | `tools` | Repeat _more_ commands. Often used with `vim-surround`. |
 | `vim-startuptime`             | `tools` | Run startup time inside Neovim. |
 | `vim-surround`                | `tools` | Manipulate surrounds of all sorts. |
 | `vim-tmux-navigator`          | `ui` `tools` `tmux` | Navigate from tmux to nvim and back. Makes using tmux panes and nvim seamless. |
@@ -133,14 +144,14 @@ These plugins are not contained in nixpkgs or are, but not the version I want.
 
 | Name and Link          | Feature | How I use it |
 | ---                    | ---     | ---          |
-| `heirline-nvim`        | `ui` | Status bar plugin. |
-| `hydra-nvim`           | `utils` | Unested. |
-| `mason-lspconfig-nvim` | `lsp` | Installs missing LSs not found in nixpkgs. |
-| `mason-nvim`           | `lsp` | LSP glue. |
+| `fzf-lua-overlay`      | `ui` | Overlay for fzf-lua. This is probably not configured. |
+| `git-permalink-nvim`   | `tools` | Copy git permalink of the line or lines to the clipboard. |
+| `lua-json5`            | `tools` | JSON5 support for lua. |
+| `nvim-dap-vscode-js`   | `tools` | VS Code launch.json support in nvim-dap. |
 | `nvim-dev-container`   | `tools` `docker` | Untested. |
+| `nvim-nio`             | `tools` | Async IO. |
 | `nvim-runscript`       | `utils` | Run scripts in neovim and open the output. |
-| `persistence-nvim`     | `utils` | Saves session state when exiting neovim. `<leader>sr` to **r**estore **s**ession. |
-| `srcery-vim`           | `ui` | My theme 🤤. |
-| `vim-ai`               | `?` | Nearly untested. Trying it out. |
+| `output-panel-nvim`    | `tools` | Output panel for LS logging. |
+| `playtime-nvim`        | `utils` | Games. |
 | `vim-arpeggio`         | `productivitiy` | Chording in vim. |
 | `vim-tada`             | `productivitiy` `ui` | Note taking plugin. Generates one note per directory and configured to keep the notes out of the directory I'm in (they all get placed in `~/todos`). |
