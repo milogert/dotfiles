@@ -1,37 +1,41 @@
-{ buildNpmPackage
-, darwin
-, fetchFromGitHub
-, lib
-, nodejs
-, python3
-, stdenv
+{ fetchFromGitHub
 , vimUtils
-, fetchgit
-, cargo
 , rustPlatform
-, cacert
 }:
 
 let
-  fzf-lua-overlay = vimUtils.buildVimPlugin rec {
-    name = "fzf-lua-overlay";
+  blink-cmp-supermaven = vimUtils.buildVimPlugin rec {
+    name = "blink-cmp-supermaven";
     src = fetchFromGitHub {
-      owner = "phanen";
+      owner = "Huijiro";
       repo = name;
-      rev = "ead1f53e3945f1413db0719447ead93e8e089182";
-      sha256 = "1pahzr9wj2v5ws2sp91xm6vmjfqsikq2wwnv6fx56s6c0lhf89ij";
+      rev = "635ce12e9e2d2a5a483728ac764d0bc5b57af23b";
+      sha256 = "0f0nvriv6hh986j0br8xvfpm7l5267pfsj6gmx01g4fsxkrbjnx5";
     };
+    doCheck = false;
+  };
+
+  conform-nvim = vimUtils.buildVimPlugin rec {
+    name = "conform.nvim";
+    src = fetchFromGitHub {
+      owner = "stevearc";
+      repo = name;
+      rev = "f8929b32acb8712381621b42ef3b0219c3c41efd";
+      sha256 = "0m29mrgz1289hjzh3s8068hv5d0ks7rd6mjl715iv1d048d1sp78";
+    };
+    doCheck = false;
   };
 
   git-permalink-nvim = vimUtils.buildVimPlugin rec {
     name = "git-permalink-nvim";
-    src = /Users/milo/git/git-permalink-nvim;
-    # src = fetchFromGitHub {
-    #   owner = "milogert";
-    #   repo = name;
-    #   rev = "2d41bacd16370bd4f0e5327e947c70708d6c94df";
-    #   sha256 = "0d9r4p4a8dms9k01ayvdgppy96ds8pnbq38r1kvjw7m9a7qg1rr4";
-    # };
+
+    # src = /Users/milo/git/git-permalink-nvim;
+    src = fetchFromGitHub {
+      owner = "milogert";
+      repo = name;
+      rev = "2d41bacd16370bd4f0e5327e947c70708d6c94df";
+      sha256 = "0d9r4p4a8dms9k01ayvdgppy96ds8pnbq38r1kvjw7m9a7qg1rr4";
+    };
   };
 
   output-panel-nvim = vimUtils.buildVimPlugin rec {
@@ -42,6 +46,7 @@ let
       rev = "65bb44a5d5dbd40f3793a8c591b65a0c5f260bd9";
       sha256 = "0wpjf25mqlafs0psi5kn3nxn4xnadfpfh9frf0zz8x72qfxkfv8s";
     };
+    doCheck = false;
   };
 
   js-i18n-nvim = vimUtils.buildVimPlugin rec {
@@ -49,12 +54,14 @@ let
     src = fetchFromGitHub {
       owner = "nabekou29";
       repo = name;
-      rev =  "b44847d39f6000fed6465c06e6e5e47aee43114a";
+      rev =  "c1ffe818b08d1f5b1f53c26e7bd9fd9efaafef9e";
       sha256 = "06zjl29p2984rf0lkizzzpv65j92acrny6bganf8cwri5gpch06r";
     };
+    doCheck = false;
   };
 
   lua-json5-bin = rustPlatform.buildRustPackage rec {
+    useFetchCargoVendor = true;
     pname = "lua-json5";
     version = "014fcab8093b48b3932dd0d51ae2d98bbb578d67";
     src = fetchFromGitHub {
@@ -64,8 +71,8 @@ let
       sha256 = "0dhzqrp0jv7nk3m29qibz581bhin738pkg3gn8ahk5dz7dkwzlkj";
     };
 
-    cargoHash = "sha256-+zXYDYVbXaapu1cdVGmRDgi6r2Ns09PzOFPdTgRHxOI=";
-    RUSTFLAGS = "-C link-arg=-undefined -C link-arg=dynamic_lookup";
+    cargoHash = "sha256-lMBA8OidN1GGHmIGvJhkLudeEe+RODk1+xdDT2ElEhw=";
+    # RUSTFLAGS = "-C link-arg=-undefined -C link-arg=dynamic_lookup";
   };
 
   lua-json5 = vimUtils.buildVimPlugin rec {
@@ -74,12 +81,27 @@ let
       owner = "Joakker";
       repo = name;
       rev = "014fcab8093b48b3932dd0d51ae2d98bbb578d67";
-      sha256 = "0dhzqrp0jv7nk3m29qibz581bhin738pkg3gn8ahk5dz7dkwzlkj";
+      sha256 = "sha256-ctLPZzu/lQkVsm+8edE4NsIVUPkr4iTqmPZsCW7GHzY=";
     };
 
+    # postInstall = ''
+    #   cp ${lua-json5-bin}/lib/liblua_json5.dylib $out/lua/json5.dylib
+    # '';
     postInstall = ''
-      cp ${lua-json5-bin}/lib/liblua_json5.dylib $out/lua/json5.dylib
+      strip ${lua-json5-bin}/lib/liblua_json5.so -o $out/lua/json5.so
     '';
+    doCheck = false;
+  };
+
+  none-ls-extras-nvim = vimUtils.buildVimPlugin rec {
+    name = "none-ls-extras.nvim";
+    src = fetchFromGitHub {
+      owner = "nvimtools";
+      repo = name;
+      rev = "6557f20e631d2e9b2a9fd27a5c045d701a3a292c";
+      sha256 = "sha256-cd7HJLfLbVs7v+eE+8JrDc0nj/DOGVTbwNEMdZsf2qk=";
+    };
+    doCheck = false;
   };
 
   nvim-dap-vscode-js = vimUtils.buildVimPlugin rec {
@@ -90,77 +112,7 @@ let
       rev = "03bd29672d7fab5e515fc8469b7d07cc5994bbf6";
       sha256 = "1nj299by3qs0dbsv1lxb19ia9pbpspw22kdlrilwl8vqixl77ngi";
     };
-  };
-
-  vscode-js-debug = stdenv.mkDerivation rec {
-    pname = "vscode-js-debug";
-    version = "v1.85.0";
-    src = fetchFromGitHub {
-      owner = "microsoft";
-      repo = pname;
-      rev = version;
-      hash = "sha256-mBXH3tqoiu3HIo1oZdQCD7Mq8Tvkt2DXfcoXb7KEgXE=";
-    };
-
-    nativeBuildInputs = [
-      python3
-      nodejs
-      cacert
-    ] ++ lib.optionals stdenv.isDarwin [
-      darwin.cctools
-    ];
-    makeCacheWritable = true;
-    dontNpmBuild = true;
-
-    configurePhase = ''
-      runHook preConfigure
-
-      export HOME=$(pwd)
-      npm install --legacy-peer-deps
-
-      runHook postConfigure
-    '';
-
-    buildPhase = ''
-      runHook preBuild
-
-      export HOME=$(pwd)
-      npx gulp vsDebugServerBundle
-      mkdir -p $out/out
-      cp -r dist/* $out/out
-
-      runHook postBuild
-    '';
-
-  };
-
-  nvim-dev-container = vimUtils.buildVimPlugin rec {
-    name = "nvim-dev-container";
-    src = fetchgit {
-      url = "https://codeberg.org/esensar/${name}";
-      rev = "bc3f5c02fe04078a3388a9087ef6c996a2928947";
-      sha256 = "1zn6pis90p8qp9sa8bqihrspzy807xm5wr2c700kpz4czl74wsy2";
-    };
-  };
-
-  nvim-nio = vimUtils.buildVimPlugin rec {
-    name = "nvim-nio";
-    src = fetchFromGitHub {
-      owner = "nvim-neotest";
-      repo = name;
-      rev = "173f285eebb410199273fa178aa517fd2d7edd80";
-      sha256 = "0favgnfpsak44lzyzyhfavazr2i64l7ysk370xm4wbrb51kjsdkf";
-    };
-  };
-
-  nvim-runscript = vimUtils.buildVimPlugin rec {
-    name = "nvim-runscript";
-    src = fetchFromGitHub {
-      owner = "klesh";
-      repo = name;
-      rev = "fd0b3d008a32499f73d0a160612b39f33325f85f";
-      sha256 = "1mys3rzg3wxjmxrg13p6hvw7gwk8wi3mi8h7haswy0239kkpaz27";
-    };
+    doCheck = false;
   };
 
   playtime-nvim = vimUtils.buildVimPlugin rec {
@@ -170,6 +122,16 @@ let
       repo = name;
       rev = "ab7d232c02341bff8479f532feec5730f8c33770";
       sha256 = "0m22lb3nbsr3fs3nx7rxd9acnh9hjr21ayg7b58x5hyhndkfs1w3";
+    };
+  };
+
+  bloat-nvim = vimUtils.buildVimPlugin rec {
+    name = "bloat.nvim";
+    src = fetchFromGitHub {
+      owner = "dundalek";
+      repo = name;
+      rev = "f90bef655ac40fecbaae53e10db1cf7894d090b1";
+      sha256 = "0ah5c84172wkc75zx5ll2dp9y3r867lik29aw5mm7i3lj530p0ri";
     };
   };
 
@@ -195,17 +157,16 @@ let
 in {
   inherit
     nvim-dap-vscode-js
-    vscode-js-debug
   ;
   list = [
-    fzf-lua-overlay
+    blink-cmp-supermaven
+    bloat-nvim
+    conform-nvim
     git-permalink-nvim
     js-i18n-nvim
     lua-json5
     nvim-dap-vscode-js
-    nvim-dev-container
-    nvim-nio
-    nvim-runscript
+    none-ls-extras-nvim
     output-panel-nvim
     playtime-nvim
     vim-arpeggio

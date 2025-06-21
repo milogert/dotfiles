@@ -9,7 +9,6 @@ local optionals = {
   "js",
   "latex",
   "lua",
-  "nil",
   "nix",
   "terraform",
 }

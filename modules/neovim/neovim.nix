@@ -2,6 +2,9 @@
 
 let
   vimPlugins = with pkgs.vimPlugins; [
+    blink-cmp
+    blink-cmp-git
+    blink-compat
     cmp-buffer
     cmp-calc
     cmp-cmdline
@@ -9,7 +12,6 @@ let
     cmp-nvim-lsp
     cmp-nvim-lua
     cmp-path
-    cmp_luasnip
     comment-nvim # :help commenting, consider removing this later.
     dressing-nvim
     elixir-tools-nvim
@@ -20,8 +22,8 @@ let
     gitsigns-nvim
     heirline-nvim
     hydra-nvim
+    lazy-nvim
     lspkind-nvim
-    luasnip
     mason-lspconfig-nvim
     mason-nvim
     none-ls-nvim
@@ -31,17 +33,20 @@ let
     nvim-dap
     nvim-dap-ui
     nvim-dap-virtual-text
-    nvim-lspconfig
+    nvim-lint
+    nvim-nio
     nvim-treesitter-textobjects
     nvim-treesitter.withAllGrammars
     nvim-web-devicons
     octo-nvim
     oil-nvim
+    other-nvim
     package-info-nvim
     persistence-nvim
     plenary-nvim
     srcery-vim
     supermaven-nvim
+    typescript-tools-nvim
     vim-abolish
     vim-dadbod
     vim-dadbod-completion
@@ -71,7 +76,7 @@ in
           elixir_ls = "${pkgs.elixir_ls}/bin/.elixir-debugger-wrapped",
           vscode_js = {
             adapter = "${customPlugins.nvim-dap-vscode-js}",
-            debugger = "${customPlugins.vscode-js-debug}",
+            debugger = "${pkgs.vscode-js-debug}",
           },
         },
 

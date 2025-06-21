@@ -62,7 +62,6 @@ in {
       cargo
       coreutils # Why do I have this?
       ctop
-      diskonaut
       eza
       fd
       findutils
@@ -81,11 +80,9 @@ in {
       openvpn
       parallel
       postgresql
-      python39
       rename
       ripgrep
       shellcheck
-      silver-searcher
       speedtest-cli
       starship # Need this for aliases.
       statix

@@ -1,18 +1,12 @@
 { pkgs, ... }:
 
-let
-  nerdfonts = pkgs.nerdfonts.override {
-    fonts = [
-      "Hack"
-      "FiraCode"
-      "Iosevka"
-    ];
-  };
-in {
-  fonts.packages = [
-    pkgs.hack-font
-    pkgs.fira-code
-    nerdfonts
-    pkgs.iosevka
+{
+  fonts.packages = with pkgs; [
+    fira-code
+    hack-font
+    iosevka
+    nerd-fonts.fira-code
+    nerd-fonts.hack
+    nerd-fonts.iosevka
   ];
 }

@@ -101,7 +101,7 @@
         dashboard-in-overlay = true;
 
         # Don't group windows by application in Mission Control's Exposé
-        expose-group-by-app = false;
+        expose-group-apps = false;
 
         # Don’t animate opening applications
         launchanim = false;

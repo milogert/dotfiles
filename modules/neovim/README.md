@@ -92,19 +92,16 @@ Oh boy. Probably too many.
 | `cmp-nvim-lsp`                | `lsp` `ui` `completion` | Completion for LS messages. |
 | `cmp-nvim-lua`                | `ui` `completion` | Lua completion. Useful for configuring neovim. |
 | `cmp-path`                    | `ui` `completion` | Completion for directories. |
-| `cmp_luasnip`                 | `ui` `completion` | Completion for luasnip snippets. |
 | `comment-nvim`                | `utils` `ui` | Easily comment lines and blocks. On the chopping block. Nascent impelemntion is included in Neovim. |
 | `dressing-nvim`               | `lsp` `ui` | Used for nice rename code actions. |
 | `elixir-tools-nvim`           | `language` `tools` | Elixir plugin. |
 | `fidget-nvim`                 | `lsp` `ui` | Show LS status when things are doing work. |
-| `friendly-snippets`           | `ui` `completion` | Snippets for luasnip. I don't think this is properly configured. |
 | `fzf-lsp-nvim`                | `completion` `lsp` `ui` | LS querying in fzf. This is basically a helper plugin that does a bunch of work for me. |
 | `fzf-lua`                     | `ui` | Searcher in nvim. |
 | `gitsigns-nvim`               | `git` `tools` `ui` | Git signs in gutter. |
 | `heirline-nvim`               | `ui` | Status bar plugin. |
 | `hydra-nvim`                  | `utils` | Unested. |
 | `lspkind-nvim`                | `completion` `lsp` `ui` | Set symbols for LSP in completion menus. |
-| `luasnip`                     | `ui` `completion` | Snippets. |
 | `mason-lspconfig-nvim`        | `lsp` | Glues mason and lspconfig together. |
 | `mason-nvim`                  | `lsp` | Manages LS, DAP servers, linters, and formatters. This is _very_ lightly used, only for things not in nixpkgs. |
 | `none-ls-nvim`                | `ui` `completion` `lsp` | LS that add hooks for tools on your machine like Prettier. |

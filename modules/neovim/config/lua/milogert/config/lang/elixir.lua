@@ -1,13 +1,13 @@
 local variables = require("milogert.variables")
-local lspconfig = require("lspconfig")
-local lsp_utils = require("milogert.config.lsp.utils")
 -- local elixir = require("elixir")
 -- local elixirls = require("elixir.elixirls")
 -- local on_attach = require("milogert.config.lsp.on_attach")
 
-lspconfig.elixirls.setup(vim.tbl_extend("keep", {
+vim.lsp.config("elixirls", {
   cmd = variables.get().ls_cmds.elixirls,
-}, lsp_utils.server_defaults))
+})
+
+vim.lsp.enable({ "elixirls" })
 
 -- elixir.setup {
 --   nextls = {enable = true},

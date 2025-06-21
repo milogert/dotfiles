@@ -117,16 +117,6 @@
         ];
     in {
       darwinConfigurations = {
-        coucher = darwin.lib.darwinSystem {
-          inherit inputs;
-          system = "x86_64-darwin";
-          modules = mkDarwinConfig {
-            host = "coucher";
-            users = ["milo"];
-            type = "desktop";
-          };
-        };
-
         minotaur = darwin.lib.darwinSystem {
           inherit inputs;
           system = "aarch64-darwin";

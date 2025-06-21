@@ -14,6 +14,7 @@
           /* nodePackages.eslint */
           deno
           elixir_ls
+          eslint_d
           nil
           nodePackages.typescript
           nodePackages.typescript-language-server
@@ -27,6 +28,15 @@
       });
 
       vimPlugins = prev.vimPlugins // {
+        nvim-colorizer-lua = prev.vimPlugins.nvim-colorizer-lua.overrideAttrs (old: {
+          src = prev.pkgs.fetchFromGitHub {
+            owner = "catgoose";
+            repo = "nvim-colorizer.lua";
+            rev = "943be69156b94fbc96064f4913d653f0c7fb299f";
+            sha256 = "sha256-oQJno6j5Z7PwE6ulfgc0nJi5U90xsZO/ALgBCOI4aTk=";
+          };
+        });
+
         # Remove when https://github.com/j-hui/fidget.nvim/issues/131 resolves.
         fidget-nvim = prev.vimPlugins.fidget-nvim.overrideAttrs (old: {
           src = prev.pkgs.fetchFromGitHub {

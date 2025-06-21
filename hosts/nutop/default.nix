@@ -12,8 +12,6 @@
 
   # This is nix-darwin specific.
   system.stateVersion = 5;
-  nix.configureBuildUsers = true;
-  services.nix-daemon.enable = true;
 
   programs.zsh = {
     enable = true;
