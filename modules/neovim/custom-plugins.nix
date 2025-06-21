@@ -55,7 +55,7 @@ let
       owner = "nabekou29";
       repo = name;
       rev =  "c1ffe818b08d1f5b1f53c26e7bd9fd9efaafef9e";
-      sha256 = "06zjl29p2984rf0lkizzzpv65j92acrny6bganf8cwri5gpch06r";
+      sha256 = "sha256-2QDI7isxc4acVW8ZbzNTIsli9v3/x0mBywQlcZOg8hs=";
     };
     doCheck = false;
   };
