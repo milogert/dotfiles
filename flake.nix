@@ -157,6 +157,15 @@
           };
         };
 
+        "remote-hog" = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = mkNixosConfig {
+            host = "remote-hog";
+            users = [ "milo" ];
+            type = "headless";
+          };
+        };
+
         veem = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           modules = mkNixosConfig {

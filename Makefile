@@ -48,11 +48,11 @@ _nixos-switch:
 # nix-darwin commands.
 _nix-darwin-build:
 	@echo -e "\033[0;33m-- Building ----------------------------\033[0m"
-	nix build ".#darwinConfigurations.${HOST}.system" --impure
+	nix build ".#darwinConfigurations.${HOST}.system" --extra-experimental-features 'nix-command flakes'
 
 _nix-darwin-switch:
 	@echo -e "\033[0;33m-- Switching ---------------------------\033[0m"
-	./result/sw/bin/darwin-rebuild switch --flake ".#${HOST}" --impure
+	sudo ./result/sw/bin/darwin-rebuild switch --flake ".#${HOST}"
 
 _install_requirements:
 	@echo -e "\033[0;33m-- Installing required programs --------\033[0m"
@@ -61,18 +61,18 @@ _install_requirements:
 
 update: update-neovim
 	@echo -e "\033[0;33m-- Updating ----------------------------\033[0m"
-	nix flake update
+	nix flake update --extra-experimental-features 'nix-command flakes'
 
 update-neovim:
 	@echo -e "\033[0;33m-- Updating (neovim) -------------------\033[0m"
-	nix flake update --flake ./modules/neovim
+	nix flake update --flake ./modules/neovim --extra-experimental-features 'nix-command flakes'
 
 add-user:
 	./scripts/add_user.sh
 
 # Machines
-coucher: _install_requirements _nix-darwin-build _nix-darwin-switch
 hog: _nixos-build _nixos-switch
+remote-hog: _nixos-build _nixos-switch
 theseus: _nixos-build _nixos-switch
 nutop: _install_requirements _nix-darwin-build _nix-darwin-switch
 minotaur: _install_requirements _nix-darwin-build _nix-darwin-switch
