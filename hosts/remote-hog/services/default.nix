@@ -3,9 +3,9 @@
 {
   imports = [
     # ./avahi.nix
-    # ./homelab
+    ./homelab
     # ./livebook.nix
-    # ./nginx.nix
+    ./nginx.nix
     ./openssh.nix
     /* ./openvpn.nix */
     # ./printing.nix
