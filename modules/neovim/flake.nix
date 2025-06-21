@@ -12,7 +12,6 @@
         buildInputs = old.buildInputs ++ (with prev.pkgs; [
           /* node-debug2 */
           /* nodePackages.eslint */
-          deno
           elixir_ls
           eslint_d
           nil

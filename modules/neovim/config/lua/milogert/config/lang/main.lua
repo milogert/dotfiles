@@ -3,7 +3,6 @@ local log = require("milogert.logger")
 -- Load language configurations.
 local optionals = {
   "css",
-  "deno",
   "elixir",
   "html",
   "js",
