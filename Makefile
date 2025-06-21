@@ -37,13 +37,13 @@ config: check ${HOST}
 # NixOS commands.
 _nixos-build:
 	@echo -e "\033[0;33m-- Building ----------------------------\033[0m"
-	nix build ".#nixosConfigurations.${HOST}.config.system.build.toplevel" --impure
+	nix build ".#nixosConfigurations.${HOST}.config.system.build.toplevel" --extra-experimental-features 'nix-command flakes'
 
 _nixos-switch:
 	@echo -e "\033[0;33m-- Switching ---------------------------\033[0m"
 	# Old command: sudo nixos-rebuild switch --flake ".#${HOST}"
 	# See https://github.com/NixOS/nixpkgs/issues/169193
-	nixos-rebuild --use-remote-sudo switch --flake ".#${HOST}" --impure
+	nixos-rebuild --use-remote-sudo switch --flake ".#${HOST}"
 
 # nix-darwin commands.
 _nix-darwin-build:
