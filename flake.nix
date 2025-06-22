@@ -47,6 +47,16 @@
         });
 
         plexPass = prev.plex.override { plexRaw = final.plexPassRaw; };
+
+        tt-rss-plugin-feediron = prev.tt-rss-plugin-feediron.overrideAttrs (old: {
+          inherit (old) name;
+          src = prev.fetchFromGitHub {
+            owner = "feediron";
+            repo = old.name;
+            rev = "5573ffde9c2c782eae1616e86127fb27e150130a";
+            sha256 = "1c737i390fc1wwdw1jh2bab92pmzlmyh75wnmnxldvaajd01fki9";
+          };
+        });
       };
 
       nixpkgsConfig = {
