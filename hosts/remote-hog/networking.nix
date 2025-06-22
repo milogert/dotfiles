@@ -7,8 +7,10 @@
     hostName = "remote-hog";
 
     nameservers = [
-      "2a01:4ff:ff00::add:2"
-     "2a01:4ff:ff00::add:1"
+      "2606:4700:4700::1111"
+      "2606:4700:4700::1001"
+      # "2a01:4ff:ff00::add:2"
+      # "2a01:4ff:ff00::add:1"
    ];
 
     defaultGateway = "";
