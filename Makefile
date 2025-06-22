@@ -43,7 +43,7 @@ _nixos-switch:
 	@echo -e "\033[0;33m-- Switching ---------------------------\033[0m"
 	# Old command: sudo nixos-rebuild switch --flake ".#${HOST}"
 	# See https://github.com/NixOS/nixpkgs/issues/169193
-	nixos-rebuild --use-remote-sudo switch --flake ".#${HOST}"
+	nixos-rebuild --sudo switch --flake ".#${HOST}"
 
 # nix-darwin commands.
 _nix-darwin-build:
