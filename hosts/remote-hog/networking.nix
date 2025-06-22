@@ -7,13 +7,15 @@
     hostName = "remote-hog";
 
     nameservers = [
+      "1.1.1.1"
+      "1.0.0.1"
       "2606:4700:4700::1111"
       "2606:4700:4700::1001"
       # "2a01:4ff:ff00::add:2"
       # "2a01:4ff:ff00::add:1"
    ];
 
-    defaultGateway = "";
+    # defaultGateway = "";
     defaultGateway6 = {
       address = "fe80::1";
       interface = "eth0";
@@ -26,6 +28,7 @@
     interfaces = {
       eth0 = {
         ipv4.addresses = [
+          { address="91.99.106.170"; prefixLength=32; }
           { address="100.64.149.42"; prefixLength=32; }
         ];
         ipv6.addresses = [
