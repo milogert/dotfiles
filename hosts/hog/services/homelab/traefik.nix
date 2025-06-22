@@ -20,7 +20,7 @@
 
         dnsChallenge = {
           provider = "route53";
-          resolvers = [ "2606:4700:4700::1111" "2606:4700:4700::1001" ];
+          resolvers = [ "2606:4700:4700::1111:53" "2606:4700:4700::1001:53" ];
         };
 
         # Remove for production.
