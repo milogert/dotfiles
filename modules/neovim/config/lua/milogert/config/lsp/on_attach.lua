@@ -15,6 +15,10 @@ local function fzf(cmd)
   return "<cmd>lua require('fzf-lua').lsp_" .. cmd .. "<CR>"
 end
 
+local function conform(cmd)
+  return "<cmd>lua require('conform')." .. cmd .. "<CR>"
+end
+
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 -- Use an on_attach function to only map the following keys
@@ -35,18 +39,18 @@ local on_attach = function(client, bufnr)
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   buf_set_keymap("n", "<leader>e", diag("open_float()"), opts)
-  buf_set_keymap("n", "[d", diag("goto_prev()"), opts)
-  buf_set_keymap("n", "]d", diag("goto_next()"), opts)
+  -- buf_set_keymap("n", "[d", diag("goto_prev()"), opts)
+  -- buf_set_keymap("n", "]d", diag("goto_next()"), opts)
   buf_set_keymap("n", "<leader>q", diag("setloclist()"), opts)
   buf_set_keymap("n", "<leader>c", diag("setqflist()"), opts)
 
   buf_set_keymap("n", "gD", fzf("declarations()"), opts)
   -- buf_set_keymap("n", "gd", lsp("definition()"), opts)
   buf_set_keymap("n", "gd", fzf("definitions()"), opts)
-  buf_set_keymap("n", "K", lsp("hover()"), opts)
+  buf_set_keymap("n", "K", lsp("hover({ border = { {'╭', 'FloatBorder'}, {'─', 'FloatBorder'}, {'╮', 'FloatBorder'}, {'│', 'FloatBorder'}, {'╯', 'FloatBorder'}, {'─', 'FloatBorder'}, {'╰', 'FloatBorder'}, {'│', 'FloatBorder'}, } })"), opts)
   buf_set_keymap("n", "gi", fzf("implementations()"), opts)
   buf_set_keymap("n", "[ls", lsp("signature_help()"), opts)
-  buf_set_keymap("i", "<C-s>", lsp("signature_help()"), opts)
+  -- buf_set_keymap("i", "<C-s>", lsp("signature_help()"), opts)
   buf_set_keymap("n", "<leader>D", fzf("type_definition()"), opts)
   buf_set_keymap("n", "<leader>rn", lsp("rename()"), opts)
   buf_set_keymap("n", "gr", fzf("references()"), opts)
@@ -56,13 +60,15 @@ local on_attach = function(client, bufnr)
   -- TODO which capability is correct? I think the "Provider" version is but I
   -- am unsure.
   if client.server_capabilities.document_formatting or client.server_capabilities.documentFormattingProvider then
-    buf_set_keymap("n", "<leader>fi", lsp("format({ async = true })"), opts)
+    -- buf_set_keymap("n", "<leader>fi", lsp("format({ async = true })"), opts)
+    buf_set_keymap("n", "<leader>fi", conform("format({ bufnr = "..bufnr.." })"), opts)
   end
   if
       client.server_capabilities.document_range_formatting
       or client.server_capabilities.documentRangeFormattingProvider
   then
-    buf_set_keymap("v", "<leader>fi", lsp("format({ async = true })"), opts)
+    -- buf_set_keymap("v", "<leader>fi", lsp("format({ async = true })"), opts)
+    -- buf_set_keymap("v", "<leader>fi", lsp("format({ async = true })"), opts)
   end
 
   -- if client.supports_method("textDocument/formatting") then

@@ -1,8 +1,6 @@
 local variables = require("milogert.variables")
-local lspconfig = require("lspconfig")
-local lsp_utils = require("milogert.config.lsp.utils")
 
-lspconfig.lua_ls.setup(vim.tbl_extend("keep", {
+vim.lsp.config("lua_ls", {
   cmd = variables.get().ls_cmds.lua_ls,
   settings = {
     Lua = {
@@ -18,4 +16,6 @@ lspconfig.lua_ls.setup(vim.tbl_extend("keep", {
       },
     },
   },
-}, lsp_utils.server_defaults))
+})
+
+vim.lsp.enable({ 'lua_ls' })

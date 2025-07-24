@@ -8,7 +8,6 @@
     ll = "${pkgs.eza}/bin/eza -l -g --git --color always --icons -a -s type";
     ls = "${pkgs.eza}/bin/eza --color auto --icons -a -s type";
     reset-yubikey = "gpg-connect-agent \"scd serialno\" \"learn --force\" /bye";
-    srv = "python -m SimpleHTTPServer \${1:-8000}";
 
     # Nix stuff.
     ns = "${pkgs.nix}/bin/nix-shell";

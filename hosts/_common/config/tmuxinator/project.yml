@@ -19,3 +19,4 @@ windows:
         # tmux attach-session -t . -c ~/project/<%= @args[0] %>
         nvim
       fi
+  - tui: tui

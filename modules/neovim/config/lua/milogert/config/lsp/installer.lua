@@ -1,4 +1,5 @@
 vim.diagnostic.config({
+  -- virtual_lines = true,
   virtual_text = false,
   signs = true,
   update_in_insert = true,
@@ -51,6 +52,7 @@ require("lspkind").init({
     Constant = "",
     Struct = "",
     Supermaven = "",
+    supermaven = "",
   },
 })
 
