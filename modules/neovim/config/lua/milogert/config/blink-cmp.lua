@@ -72,6 +72,8 @@ blink.setup({
       },
     },
     menu = {
+      max_height = 18,
+
       border = {
         { "╭", "FloatBorder" },
         { "─", "FloatBorder" },
@@ -127,6 +129,9 @@ blink.setup({
     },
     documentation = {
       auto_show = true,
+      auto_show_delay_ms = 1,
+      -- Uncomment this if cpu is high when opening the completion menu.
+      -- treesitter_highlighting = false,
       window = {
         border = {
           { "╭", "FloatBorder" },

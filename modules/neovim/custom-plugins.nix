@@ -1,9 +1,17 @@
-{ fetchFromGitHub
+{ pkgs
+, lib
+, fetchFromGitHub
 , vimUtils
 , rustPlatform
 }:
 
 let
+  mkIfElse = p: yes: no: lib.mkMerge [
+    (lib.mkIf p yes)
+    (lib.mkIf (!p) no)
+  ];
+  inherit (pkgs.stdenv) isDarwin;
+
   blink-cmp-supermaven = vimUtils.buildVimPlugin rec {
     name = "blink-cmp-supermaven";
     src = fetchFromGitHub {
@@ -72,7 +80,8 @@ let
     };
 
     cargoHash = "sha256-lMBA8OidN1GGHmIGvJhkLudeEe+RODk1+xdDT2ElEhw=";
-    # RUSTFLAGS = "-C link-arg=-undefined -C link-arg=dynamic_lookup";
+    RUSTFLAGS = 
+      if isDarwin then "-C link-arg=-undefined -C link-arg=dynamic_lookup" else "";
   };
 
   lua-json5 = vimUtils.buildVimPlugin rec {
@@ -84,12 +93,10 @@ let
       sha256 = "sha256-ctLPZzu/lQkVsm+8edE4NsIVUPkr4iTqmPZsCW7GHzY=";
     };
 
-    # postInstall = ''
-    #   cp ${lua-json5-bin}/lib/liblua_json5.dylib $out/lua/json5.dylib
-    # '';
-    postInstall = ''
-      strip ${lua-json5-bin}/lib/liblua_json5.so -o $out/lua/json5.so
-    '';
+    postInstall =
+      if isDarwin
+        then "cp ${lua-json5-bin}/lib/liblua_json5.dylib $out/lua/json5.dylib"
+        else "strip ${lua-json5-bin}/lib/liblua_json5.so -o $out/lua/json5.so";
     doCheck = false;
   };
 
