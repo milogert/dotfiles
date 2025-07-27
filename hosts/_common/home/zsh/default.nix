@@ -71,9 +71,6 @@
         export PATH="$PATH:$HOME/Developer/flutter/bin"
       fi
 
-      # ASDF
-      . ${pkgs.asdf-vm}/share/asdf-vm/asdf.sh
-
       ## initExtra end
     '';
 

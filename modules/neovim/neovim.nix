@@ -22,7 +22,7 @@ in
         ls_cmds = {
           cssls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-css-language-server", "--stdio" },
           denols = { "${pkgs.deno}/bin/deno", "lsp" },
-          elixirls = { "${pkgs.elixir_ls}/bin/.elixir-ls-wrapped" },
+          elixirls = { "${pkgs.elixir-ls}/bin/.elixir-ls-wrapped" },
           eslint = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-eslint-language-server", "--stdio" },
           html = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-html-language-server", "--stdio" },
           jsonls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-json-language-server", "--stdio" },

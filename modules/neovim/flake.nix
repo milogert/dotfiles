@@ -13,7 +13,7 @@
           /* node-debug2 */
           /* nodePackages.eslint */
           deno
-          elixir_ls
+          elixir-ls
           nil
           nodePackages.typescript
           nodePackages.typescript-language-server
