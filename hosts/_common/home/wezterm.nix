@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{pkgs, config, ...}:
 
 {
   programs.wezterm = {
@@ -34,12 +34,17 @@
 --end)
 
 return {
+  -- Workaround for https://github.com/NixOS/nixpkgs/issues/336069
   front_end = "WebGpu",
+  -- I might need this on linux, but not Darwin
+  -- enable_wayland = false,
+
+  color_scheme = "Srcery (Gogh)",
   font = wezterm.font("Hack"),
   font_size = 11.0,
-  color_scheme = "Srcery (Gogh)",
   hide_tab_bar_if_only_one_tab = true,
   window_close_confirmation = 'NeverPrompt',
+
   keys = {
     {
       key = 'w',

@@ -12,8 +12,8 @@
         buildInputs = old.buildInputs ++ (with prev.pkgs; [
           /* node-debug2 */
           /* nodePackages.eslint */
-          deno
           elixir-ls
+          eslint_d
           nil
           nodePackages.typescript
           nodePackages.typescript-language-server
@@ -27,6 +27,15 @@
       });
 
       vimPlugins = prev.vimPlugins // {
+        nvim-colorizer-lua = prev.vimPlugins.nvim-colorizer-lua.overrideAttrs (old: {
+          src = prev.pkgs.fetchFromGitHub {
+            owner = "catgoose";
+            repo = "nvim-colorizer.lua";
+            rev = "943be69156b94fbc96064f4913d653f0c7fb299f";
+            sha256 = "sha256-oQJno6j5Z7PwE6ulfgc0nJi5U90xsZO/ALgBCOI4aTk=";
+          };
+        });
+
         # Remove when https://github.com/j-hui/fidget.nvim/issues/131 resolves.
         fidget-nvim = prev.vimPlugins.fidget-nvim.overrideAttrs (old: {
           src = prev.pkgs.fetchFromGitHub {
@@ -37,13 +46,12 @@
           };
         });
 
-        # Remove when fzf-lua has query_delay in nixos.
-        fzf-lua = prev.vimPlugins.fzf-lua.overrideAttrs (old: {
+        dressing-nvim = prev.vimPlugins.dressing-nvim.overrideAttrs (old: {
           src = prev.pkgs.fetchFromGitHub {
-            owner = "ibhagwan";
-            repo = "fzf-lua";
-            rev = "b442569ab827f72e344236c598b02cb9dc754e9f";
-            sha256 = "02jmfgn9ja34l1kqpvdxki1s70q34linpvnffav56cz5kry6i33l";
+            owner = "stevearc";
+            repo = "dressing.nvim";
+            rev = "18e5beb3845f085b6a33c24112b37988f3f93c06";
+            sha256 = "0pvkm9s0lg0vlk7qbn1sjf6sis3i3xba1824xml631bg6hahw37l";
           };
         });
 

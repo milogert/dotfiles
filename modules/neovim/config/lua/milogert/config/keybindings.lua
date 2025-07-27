@@ -55,6 +55,7 @@ local vimuxMaps = {
   { key = 'vl', command = 'RunLastCommand' },
   { key = 'vz', command = 'ZoomRunner' },
   { key = 'vs', command = 'InterruptRunner' },
+  { key = 'vx', command = 'CloseRunner' },
 }
 
 for _, map in ipairs(vimuxMaps) do
@@ -94,3 +95,7 @@ u.nmap('<F11>', ':set spell!<CR>')
 u.imap('<F11>', '<C-O>:set spell!<CR>')
 
 u.nmap('<Leader>gt', ':G add % | G commit -m "" | G push<left><left><left><left><left><left><left><left><left><left>')
+
+u.map('<leader>t', ':tabnew<cr>')
+
+u.map('<leader>db', ':tabnew | DBUI<cr>')

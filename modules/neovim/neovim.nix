@@ -1,6 +1,67 @@
 { pkgs }:
 
 let
+  vimPlugins = with pkgs.vimPlugins; [
+    blink-cmp
+    blink-cmp-git
+    blink-compat
+    cmp-buffer
+    cmp-calc
+    cmp-cmdline
+    cmp-git
+    cmp-nvim-lsp
+    cmp-nvim-lua
+    cmp-path
+    comment-nvim # :help commenting, consider removing this later.
+    dressing-nvim
+    elixir-tools-nvim
+    fidget-nvim
+    friendly-snippets
+    fzf-lsp-nvim
+    fzf-lua
+    gitsigns-nvim
+    heirline-nvim
+    hydra-nvim
+    lazy-nvim
+    lspkind-nvim
+    mason-lspconfig-nvim
+    mason-nvim
+    none-ls-nvim
+    nui-nvim
+    nvim-cmp
+    nvim-colorizer-lua
+    nvim-dap
+    nvim-dap-ui
+    nvim-dap-virtual-text
+    nvim-lint
+    nvim-nio
+    nvim-treesitter-textobjects
+    nvim-treesitter.withAllGrammars
+    nvim-web-devicons
+    octo-nvim
+    oil-nvim
+    other-nvim
+    package-info-nvim
+    persistence-nvim
+    plenary-nvim
+    srcery-vim
+    supermaven-nvim
+    typescript-tools-nvim
+    vim-abolish
+    vim-dadbod
+    vim-dadbod-completion
+    vim-dadbod-ui
+    vim-dispatch
+    vim-dispatch-neovim
+    vim-elixir
+    vim-fugitive
+    vim-repeat
+    vim-startuptime
+    vim-surround
+    vim-tmux-navigator
+    vim-unimpaired
+    vimux
+  ];
   customPlugins = pkgs.callPackage ./custom-plugins.nix {};
   configDir = ./config;
 in
@@ -15,13 +76,12 @@ in
           elixir_ls = "${pkgs.elixir_ls}/bin/.elixir-debugger-wrapped",
           vscode_js = {
             adapter = "${customPlugins.nvim-dap-vscode-js}",
-            debugger = "${customPlugins.vscode-js-debug}",
+            debugger = "${pkgs.vscode-js-debug}",
           },
         },
 
         ls_cmds = {
           cssls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-css-language-server", "--stdio" },
-          denols = { "${pkgs.deno}/bin/deno", "lsp" },
           elixirls = { "${pkgs.elixir-ls}/bin/.elixir-ls-wrapped" },
           eslint = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-eslint-language-server", "--stdio" },
           html = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-html-language-server", "--stdio" },
@@ -37,65 +97,7 @@ in
       })
     '';
 
-    packpathDirs.myNeovimPackages = with pkgs.vimPlugins; {
-      start = [
-        cmp-buffer
-        cmp-calc
-        cmp-cmdline
-        cmp-git
-        cmp-nvim-lsp
-        cmp-nvim-lua
-        cmp-path
-        cmp_luasnip
-        comment-nvim # :help commenting, consider removing this later.
-        copilot-cmp
-        copilot-lua
-        dressing-nvim
-        elixir-tools-nvim
-        fidget-nvim
-        friendly-snippets
-        fzf-lsp-nvim
-        fzf-lua
-        gitsigns-nvim
-        heirline-nvim
-        hydra-nvim
-        lspkind-nvim
-        luasnip
-        mason-lspconfig-nvim
-        mason-nvim
-        mini-nvim
-        none-ls-nvim
-        nui-nvim
-        nvim-cmp
-        nvim-colorizer-lua
-        nvim-dap
-        nvim-dap-ui
-        nvim-dap-virtual-text
-        nvim-lspconfig
-        nvim-treesitter-textobjects
-        nvim-treesitter.withAllGrammars
-        nvim-web-devicons
-        octo-nvim
-        oil-nvim
-        package-info-nvim
-        persistence-nvim
-        plenary-nvim
-        srcery-vim
-        vim-abolish
-        vim-dadbod
-        vim-dadbod-ui
-        vim-dispatch
-        vim-dispatch-neovim
-        vim-elixir
-        vim-fugitive
-        vim-obsession
-        vim-startuptime
-        vim-surround
-        vim-tmux-navigator
-        vim-unimpaired
-        vimux
-      ] ++ customPlugins.list;
-    };
+    plugins = vimPlugins ++ customPlugins.list;
 
     viAlias = true;
     vimAlias = true;

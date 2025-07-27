@@ -1,6 +1,48 @@
 { config, lib, pkgs, ... }:
 
-{
+let
+  /* Borrowed from https://github.com/nix-community/home-manager/issues/6944 */
+  zshConfigBeforeInit = lib.mkOrder 500 ''
+      ## initExtraFirst start
+      if (( ''${+ZSH_PROFILE} )); then
+        echo "Starting performance profile"
+        zmodload zsh/datetime
+        setopt PROMPT_SUBST
+        PS4='+$EPOCHREALTIME %N:%i> '
+
+        logfile=$(mktemp zsh_profile.XXXXXXXX)
+        echo "Logging to $logfile"
+        exec 3>&2 2>$logfile
+
+        setopt XTRACE
+      fi
+      ## initExtraFirst end
+  '';
+
+  zshConfigAfterInit = lib.mkOrder 1200 ''
+      ## initExtra start
+      if (( ''${+ZSH_PROFILE} )); then
+        echo "Done with performance profile"
+        unsetopt XTRACE
+        exec 2>&3 3>&-
+      fi
+
+      alias ll="${pkgs.eza}/bin/eza -l -g --git --color always --icons -a -s type";
+      alias ls="${pkgs.eza}/bin/eza --color auto --icons -a -s type";
+
+      #zprof
+
+      if [[ $(uname -s) == 'Darwin' ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+      fi
+
+      if [[ -d ~/Developer/flutter ]]; then
+        export PATH="$PATH:$HOME/Developer/flutter/bin"
+      fi
+
+      ## initExtra end
+    '';
+in {
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
@@ -33,46 +75,7 @@
       ## envExtra end
     '';
 
-    initExtraFirst = ''
-      ## initExtraFirst start
-      if (( ''${+ZSH_PROFILE} )); then
-        echo "Starting performance profile"
-        zmodload zsh/datetime
-        setopt PROMPT_SUBST
-        PS4='+$EPOCHREALTIME %N:%i> '
-
-        logfile=$(mktemp zsh_profile.XXXXXXXX)
-        echo "Logging to $logfile"
-        exec 3>&2 2>$logfile
-
-        setopt XTRACE
-      fi
-      ## initExtraFirst end
-    '';
-
-    initExtra = ''
-      ## initExtra start
-      if (( ''${+ZSH_PROFILE} )); then
-        echo "Done with performance profile"
-        unsetopt XTRACE
-        exec 2>&3 3>&-
-      fi
-
-      alias ll="eza -l -g --git --color always --icons -a -s type";
-      alias ls="eza --color auto --icons -a -s type";
-
-      #zprof
-
-      if [[ $(uname -s) == 'Darwin' ]]; then
-        eval "$(/opt/homebrew/bin/brew shellenv)"
-      fi
-
-      if [[ -d ~/Developer/flutter ]]; then
-        export PATH="$PATH:$HOME/Developer/flutter/bin"
-      fi
-
-      ## initExtra end
-    '';
+    initContent = lib.mkMerge [ zshConfigBeforeInit zshConfigAfterInit ];
 
     shellAliases = {
       find_aliases = "zsh -ixc : -o sourcetrace 2>&1 | grep -w alias";

@@ -13,6 +13,10 @@ in {
     };
   };
 
+  programs.zsh.shellAliases = {
+    mux = "tmuxinator";
+  };
+
   programs.tmux = {
     enable = true;
     tmuxinator.enable = true;
@@ -40,7 +44,8 @@ in {
       bind-key C-Space send-prefix
 
       # Set the default shell.
-      set-option -g default-shell ${pkgs.zsh}/bin/zsh
+      set-option -gu default-command
+      set-option -g default-shell "${pkgs.zsh}/bin/zsh"
       set-option -ga terminal-overrides ",xterm-256color:Tc"
 
       # Swap layout switch and previous buffer keys.
@@ -79,7 +84,7 @@ in {
       bind-key -T copy-mode-vi y send-keys -X copy-selection
 
       # Focus last session when exiting a session totally.
-      set-hook session-closed 'switch-client -l'
+      set-hook -g session-closed 'switch-client -l'
 
       ## Enable clipboard interactivity
       #set -g set-clipboard on

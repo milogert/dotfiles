@@ -32,7 +32,7 @@ in {
   programs.git.signing = {
     key = "7291258F2B7C086E";
     signByDefault = true;
-    gpgPath = "gpg";
+    signer = "gpg";
   };
 
   programs.zsh.shellAliases = {

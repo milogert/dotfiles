@@ -3,13 +3,14 @@
 {
   tt-rss-plugin-feediron = stdenv.mkDerivation rec {
     pname = "ttrss_plugin-feediron";
-    version = "v1.32";
+    # version = "v1.33";
+    version = "5573ffde9c2c782eae1616e86127fb27e150130a";
 
     src = fetchFromGitHub {
       owner = "feediron";
       repo = pname;
       rev = version;
-      sha256 = "0a4nq0k0zmgmx7dzz70smhp0yxp7jynk9djz0nnbaa138h8888pr";
+      sha256 = "1c737i390fc1wwdw1jh2bab92pmzlmyh75wnmnxldvaajd01fki9";
     };
 
     installPhase = ''

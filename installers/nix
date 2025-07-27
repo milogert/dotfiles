@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 
 if ! type "nix" &> /dev/null; then
-  curl -L https://nixos.org/nix/install | sh
+  curl -sSf -L https://install.lix.systems/lix | sh -s -- install
 fi

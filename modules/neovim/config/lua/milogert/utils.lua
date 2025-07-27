@@ -10,33 +10,33 @@ Generic mapping function.
   @param `command` The command to produce.
   @param `options` Any options to pass along. Defaults to `{}`.
 ]]
-Utils._map = function(mode, shortcut, command, options)
+Utils._map = function(mode, lhs, rhs, options)
   local defaults = { noremap = true, silent = true }
   local opts = vim.tbl_extend("force", defaults, options or {})
-  vim.api.nvim_set_keymap(mode, shortcut, command, opts)
+  vim.keymap.set(mode, lhs, rhs, opts)
 end
 
-Utils.map = function(shortcut, command, options)
-  Utils._map('', shortcut, command, options)
+Utils.map = function(lhs, rhs, options)
+  Utils._map("", lhs, rhs, options)
 end
 
 -- Normal mode maps.
-Utils.nmap = function(shortcut, command, options)
-  Utils._map('n', shortcut, command, options)
+Utils.nmap = function(lhs, rhs, options)
+  Utils._map("n", lhs, rhs, options)
 end
 
 -- Insert mode maps.
-Utils.imap = function(shortcut, command, options)
-  Utils._map('i', shortcut, command, options)
+Utils.imap = function(lhs, rhs, options)
+  Utils._map("i", lhs, rhs, options)
 end
 
 -- Visual mode maps.
-Utils.xmap = function(shortcut, command, options)
-  Utils._map('x', shortcut, command, options)
+Utils.xmap = function(lhs, rhs, options)
+  Utils._map("x", lhs, rhs, options)
 end
 
-Utils.vmap = function(shortcut, command, options)
-  Utils._map('v', shortcut, command, options)
+Utils.vmap = function(lhs, rhs, options)
+  Utils._map("v", lhs, rhs, options)
 end
 
 --[[
@@ -46,7 +46,7 @@ Arpeggio maps.
   @param `rhs` The result to be produced
 ]]
 Utils.arpeggio = function(type, lhs, rhs)
-  vim.cmd.Arpeggio(type .. ' <silent> ' .. lhs .. ' ' .. rhs)
+  vim.cmd.Arpeggio(type .. " <silent> " .. lhs .. " " .. rhs)
 end
 
 --[[
@@ -63,12 +63,16 @@ end
 -- From http://lua-users.org/wiki/FileInputOutput
 Utils.file_exists = function(file)
   local f = io.open(file, "rb")
-  if f then f:close() end
+  if f then
+    f:close()
+  end
   return f ~= nil
 end
 
 Utils.lines_from = function(file)
-  if not Utils.file_exists(file) then return {} end
+  if not Utils.file_exists(file) then
+    return {}
+  end
 
   local lines = {}
   for line in io.lines(file) do
@@ -82,8 +86,8 @@ Utils.split = function(inputstr, sep)
   if sep == nil then
     sep = "%s"
   end
-  local t={}
-  for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+  local t = {}
+  for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
     table.insert(t, str)
   end
   return t
@@ -92,34 +96,35 @@ end
 Utils.join = function(tab, sep)
   local table_length = #tab
   if table_length == 0 then
-    return ''
+    return ""
   end
   if table_length == 1 then
     return tab[1]
   end
   if sep == nil then
-    sep = ''
+    sep = ""
   end
   local str = tab[1]
   for i = 2, table_length do
-    str = str..sep..tab[i]
+    str = str .. sep .. tab[i]
   end
   return str
 end
 
-Utils.table_to_string = function (o)
-  if type(o) == 'table' then
-    local s = '{ '
-    for k,v in pairs(o) do
-      if type(k) ~= 'number' then k = '"'..k..'"' end
-      s = s .. '['..k..'] = ' .. Utils.table_to_string(v) .. ','
+Utils.table_to_string = function(o)
+  if type(o) == "table" then
+    local s = "{ "
+    for k, v in pairs(o) do
+      if type(k) ~= "number" then
+        k = '"' .. k .. '"'
+      end
+      s = s .. "[" .. k .. "] = " .. Utils.table_to_string(v) .. ","
     end
-    return s .. '} '
+    return s .. "} "
   else
     return tostring(o)
   end
 end
-
 
 Utils.tern = function(pred, t, f)
   if pred then
@@ -134,7 +139,7 @@ Utils.trim = function(s, only_end)
   if only_end then
     from = 0
   else
-    from = s:match"^%s*()"
+    from = s:match("^%s*()")
   end
   return from > #s and "" or s:match(".*%S", from)
 end
@@ -144,6 +149,23 @@ Utils.replace = function(str, what, with)
   what = string.gsub(what, "[%(%)%.%+%-%*%?%[%]%^%$%%]", "%%%1")
   with = string.gsub(with, "[%%]", "%%%%")
   return string.gsub(str, what, with)
+end
+
+-- From https://gist.github.com/Zbizu/43df621b3cd0dc460a76f7fe5aa87f30
+Utils.getOS = function()
+  -- ask LuaJIT first
+  if jit then
+    return jit.os
+  end
+
+  -- Unix, Linux variants
+  local fh, err = assert(io.popen("uname -o 2>/dev/null", "r"))
+  local osname
+  if fh then
+    osname = fh:read()
+  end
+
+  return osname or "Windows"
 end
 
 return Utils

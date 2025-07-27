@@ -7,15 +7,16 @@ windows:
         nvim
       else
         pushd ~/projects
-        read "user?User (default is 'articulate'): "
-        read -q "ssh?SSH: "
+        read "user?\nUser (default is 'swoogo'): "
+        read -q "ssh?\nSSH: "
         if [[ ${ssh} -eq 'y' ]]; then
-          url=git@github.com:${user:-articulate}/<%= @args[0] %>.git
+          url=git@github.com:${user:-swoogo}/<%= @args[0] %>.git
         else
-          url=https://github.com/${user:-articulate}/<%= @args[0] %>.git
+          url=https://github.com/${user:-swoogo}/<%= @args[0] %>.git
         fi
         git clone ${url}
         pushd ~/projects/<%= @args[0] %>
         # tmux attach-session -t . -c ~/project/<%= @args[0] %>
         nvim
       fi
+  - tui: tui

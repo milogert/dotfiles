@@ -31,11 +31,6 @@ Functions.thankYouNext = function()
   end
 end
 
-Functions.prettyPrintJson = function(wholeFile)
-  local area = u.tern(wholeFile, "%", "'<,'>")
-  vim.cmd(area .. "!python -m json.tool")
-end
-
 Functions.prettyPrintJsonFile = function () Functions.prettyPrintJson(true) end
 Functions.prettyPrintJsonVisual = function () Functions.prettyPrintJson(false) end
 

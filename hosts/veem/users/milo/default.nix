@@ -11,7 +11,6 @@
     cargo
     cider
     discord
-    insomnia
     qtpass
     wyvern
     yarn
