@@ -12,7 +12,7 @@
     stateVersion = "21.05";
 
     packages = with pkgs; [
-      # docker
+      docker
       git-lfs
       mas
       yarn

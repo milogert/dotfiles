@@ -3,14 +3,6 @@ local log = require("milogert.logger")
 local variables = require("milogert.variables")
 
 -- augroups and autocmd
-vim.api.nvim_create_augroup("formatting", { clear = true })
--- vim.api.nvim_create_autocmd('BufWritePost', {
---   group = 'formatting',
---   desc = 'Format Elixir files on save',
---   pattern = { '*.exs', '*.ex' },
---   command = 'silent !mix format %',
--- })
-
 vim.api.nvim_create_augroup("lsp", { clear = true })
 -- vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
 --   group = 'lsp',
@@ -112,3 +104,25 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 --     vim.api.nvim_command('set ft='..extension)
 --   end
 -- })
+
+-- Yank ring
+-- Possible alternative: https://github.com/gbprod/yanky.nvim
+-- https://www.reddit.com/r/neovim/comments/1jv03t1/simple_yankring/?rdt=49637
+-- Shift numbered registers up (1 becomes 2, etc.)
+local function yank_shift()
+  for i = 9, 1, -1 do
+    vim.fn.setreg(tostring(i), vim.fn.getreg(tostring(i - 1)))
+  end
+end
+
+-- Create autocmd for TextYankPost event
+vim.api.nvim_create_autocmd("TextYankPost", {
+  callback = function()
+    local event = vim.v.event
+    if event.operator == "y" then
+      yank_shift()
+    end
+  end,
+})
+
+

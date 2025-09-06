@@ -2,16 +2,11 @@
 
 let
   vimPlugins = with pkgs.vimPlugins; [
+    avante-nvim
     blink-cmp
+    blink-cmp-avante
     blink-cmp-git
     blink-compat
-    cmp-buffer
-    cmp-calc
-    cmp-cmdline
-    cmp-git
-    cmp-nvim-lsp
-    cmp-nvim-lua
-    cmp-path
     comment-nvim # :help commenting, consider removing this later.
     dressing-nvim
     elixir-tools-nvim
@@ -46,6 +41,7 @@ let
     plenary-nvim
     srcery-vim
     supermaven-nvim
+    tssorter-nvim
     typescript-tools-nvim
     vim-abolish
     vim-dadbod
@@ -67,8 +63,8 @@ let
 in
   pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
     luaRcContent = ''
-      vim.opt.runtimepath:prepend('${configDir}')
 
+      vim.opt.runtimepath:prepend('${configDir}')
       require('milogert.main').setup({
         nix = true,
 
@@ -88,11 +84,15 @@ in
           jsonls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-json-language-server", "--stdio" },
           lua_ls = { "${pkgs.sumneko-lua-language-server}/bin/lua-language-server" },
           nil_ls = { "${pkgs.nil}/bin/nil" },
-          stylua = { "${pkgs.stylua}/bin/stylua" },
           tailwindcss = { "${pkgs.vscode-extensions.bradlc.vscode-tailwindcss}/bin/tailwindcss-language-server", "--stdio", },
           terraformls = { "${pkgs.terraform-ls}/bin/terraform-ls", "serve" },
           texlab = { "${pkgs.texlab}/bin/texlab" },
           ts_ls = { "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server", "--stdio", },
+        },
+
+        formatters = {
+          lua = { "${pkgs.stylua}/bin/stylua" },
+          sql = { "${pkgs.pgformatter}/bin/pg_format" },
         },
       })
     '';
