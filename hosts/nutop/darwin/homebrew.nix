@@ -16,7 +16,6 @@
       "1password"
       "MonitorControl"
       "calibre"
-      "cyberduck"
       "docker"
       "google-chrome"
       "logi-options+"

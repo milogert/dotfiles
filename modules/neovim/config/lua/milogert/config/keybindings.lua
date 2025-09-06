@@ -91,8 +91,9 @@ u.nmap('<Leader>gl', '', { callback = function () git_permalink.create_copy('.')
 u.vmap('<Leader>gl', '', { callback = function () git_permalink.create_copy('v') end })
 
 -- Spellcheck
-u.nmap('<F11>', ':set spell!<CR>')
-u.imap('<F11>', '<C-O>:set spell!<CR>')
+u.nmap('<F11>',      ':set spell!<CR>')
+u.imap('<F11>',      '<C-O>:set spell!<CR>')
+u.nmap('<leader>sp', ':set spell!<CR>')
 
 u.nmap('<Leader>gt', ':G add % | G commit -m "" | G push<left><left><left><left><left><left><left><left><left><left>')
 

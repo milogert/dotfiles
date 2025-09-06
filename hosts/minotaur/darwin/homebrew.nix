@@ -14,7 +14,6 @@
 
     casks = [
       "calibre"
-      "cyberduck"
       "discord"
       "flipper"
       "google-chrome"
