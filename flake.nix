@@ -6,11 +6,6 @@
     # nixpkgs.url = "github:NixOS/nixpkgs/master";
     # nixpkgs.url = "path:///Users/milo/git/nixpkgs";
 
-    lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     darwin = {
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,7 +17,7 @@
     };
 
     neovim-custom = {
-      url = "path:modules/neovim";
+      url = "path:./modules/neovim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -31,7 +26,6 @@
   { self
   , darwin
   , home-manager
-  , lix-module
   , neovim-custom
   , nixpkgs
   }:
@@ -98,7 +92,6 @@
         mkUserConfigWrapped = user:
           ({ pkgs, ... }: mkUserConfig { inherit pkgs host type user; });
       in [
-        # lix-module.nixosModules.default
         (./. + "/hosts/${host}/default.nix")
         (./. + "/hosts/_common/types/${type}.nix")
         ({ pkgs, ... }: {

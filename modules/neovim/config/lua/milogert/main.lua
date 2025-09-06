@@ -37,7 +37,7 @@ M.setup = function(variable_opts)
     "octo",
     "oil",
     "other",
-    "output-panel",
+    -- "output-panel",
     "package-info",
     "persistence",
     "supermaven",

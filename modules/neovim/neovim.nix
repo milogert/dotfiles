@@ -73,7 +73,7 @@ in
         nix = true,
 
         debuggers = {
-          elixir_ls = "${pkgs.elixir_ls}/bin/.elixir-debugger-wrapped",
+          elixir_ls = "${pkgs.elixir-ls}/bin/elixir-debug-adapter",
           vscode_js = {
             adapter = "${customPlugins.nvim-dap-vscode-js}",
             debugger = "${pkgs.vscode-js-debug}",
@@ -82,7 +82,7 @@ in
 
         ls_cmds = {
           cssls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-css-language-server", "--stdio" },
-          elixirls = { "${pkgs.elixir-ls}/bin/.elixir-ls-wrapped" },
+          elixirls = { "${pkgs.elixir-ls}/bin/elixir-ls" },
           eslint = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-eslint-language-server", "--stdio" },
           html = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-html-language-server", "--stdio" },
           jsonls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-json-language-server", "--stdio" },

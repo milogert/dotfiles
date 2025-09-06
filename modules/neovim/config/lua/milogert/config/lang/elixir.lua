@@ -1,3 +1,4 @@
+local on_attach = require("milogert.config.lsp.on_attach")
 local variables = require("milogert.variables")
 -- local elixir = require("elixir")
 -- local elixirls = require("elixir.elixirls")
@@ -5,6 +6,13 @@ local variables = require("milogert.variables")
 
 vim.lsp.config("elixirls", {
   cmd = variables.get().ls_cmds.elixirls,
+  on_attach = on_attach,
+  settings = {
+    elixirLS = {
+      dialyzerEnabled = true,
+      fetchDeps = true,
+    };
+  };
 })
 
 vim.lsp.enable({ "elixirls" })

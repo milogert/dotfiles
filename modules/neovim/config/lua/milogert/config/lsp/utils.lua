@@ -15,6 +15,7 @@ vim.lsp.config("*", {
         },
       },
       documentColor = true,
+      hover = true,
     },
     workspace = {
       didChangeWatchedFiles = {

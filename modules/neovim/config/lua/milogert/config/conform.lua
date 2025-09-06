@@ -11,11 +11,16 @@ local javascript_like = {
 require("conform").setup({
   formatters_by_ft = {
     lua = { "stylua" },
+
     -- Conform will run the first available formatter
     javascript = javascript_like,
     javascriptreact = javascript_like,
     typescript = javascript_like,
     typescriptreact = javascript_like,
+  },
+
+   default_format_opts = {
+    lsp_format = "fallback",
   },
   -- log_level = vim.log.levels.DEBUG,
 })
