@@ -1,7 +1,20 @@
 vim.diagnostic.config({
   -- virtual_lines = true,
   virtual_text = false,
-  signs = true,
+  -- signs = {
+  --   text = {
+  --     DiagnosticSignError = "✗",
+  --     DiagnosticSignWarn = "⚠",
+  --     DiagnosticSignInfo = "",
+  --     DiagnosticSignHint = "",
+  --   },
+  --   texthl = {
+  --     DiagnosticSignError = "DiagnosticSignError",
+  --     DiagnosticSignWarn = "DiagnosticSignWarn",
+  --     DiagnosticSignInfo = "DiagnosticSignInfo",
+  --     DiagnosticSignHint = "DiagnosticSignHint",
+  --   },
+  -- },
   update_in_insert = true,
   underline = true,
   float = {

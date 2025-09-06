@@ -34,6 +34,18 @@ let
     doCheck = false;
   };
 
+  fzf-lua-frecency-nvim = vimUtils.buildVimPlugin rec {
+    name = "fzf-lua-frecency.nvim";
+    src = fetchFromGitHub {
+      owner = "elanmed";
+      repo = name;
+      rev = "9ee3d5f023c1a07bc595daf165e6b6be66509a8e";
+      sha256 = "0rpgpsiwl4d18rcazcvb2dq5kxhb25nad6zgjhbpygmalj3y9wzq";
+    };
+    doCheck = false;
+  };
+
+
   git-permalink-nvim = vimUtils.buildVimPlugin rec {
     name = "git-permalink-nvim";
 
@@ -169,11 +181,12 @@ in {
     blink-cmp-supermaven
     bloat-nvim
     conform-nvim
+    fzf-lua-frecency-nvim
     git-permalink-nvim
     js-i18n-nvim
     lua-json5
-    nvim-dap-vscode-js
     none-ls-extras-nvim
+    nvim-dap-vscode-js
     output-panel-nvim
     playtime-nvim
     vim-arpeggio

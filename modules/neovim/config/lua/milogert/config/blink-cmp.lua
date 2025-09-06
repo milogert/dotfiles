@@ -15,6 +15,7 @@ blink.setup({
   -- See :h blink-cmp-config-keymap for defining your own keymap
   keymap = {
     -- preset = "default",
+    -- ["<C-n>"] = { "show", "fallback" },
 
     ["<C-e>"] = { "hide", "fallback" },
     ["<CR>"] = { "accept", "fallback" },
@@ -25,7 +26,7 @@ blink.setup({
     ["<Up>"] = { "snippet_backward", "fallback" },
     ["<Down>"] = { "snippet_forward", "fallback" },
     ["<C-p>"] = { "snippet_backward", "fallback_to_mappings" },
-    ["<C-n>"] = { "snippet_forward", "fallback_to_mappings" },
+    ["<C-n>"] = { "show", "snippet_forward", "fallback_to_mappings" },
 
     ["<C-b>"] = { "scroll_documentation_up", "fallback" },
     ["<C-f>"] = { "scroll_documentation_down", "fallback" },
@@ -150,13 +151,21 @@ blink.setup({
   -- Default list of enabled providers defined so that you can extend it
   -- elsewhere in your config, without redefining it, due to `opts_extend`
   sources = {
-    default = { "git", "supermaven", "lsp", "path", "snippets", "buffer" },
+    default = { "git", "avante", "snippets", "lsp", "buffer", "path" },
 
     per_filetype = {
       sql = { "snippets", "dadbod", "buffer" },
     },
 
     providers = {
+      avante = {
+        name = 'Avante',
+        module = 'blink-cmp-avante',
+        opts = {
+          -- options for blink-cmp-avante
+        }
+      },
+
       dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
 
       git = {
@@ -174,11 +183,11 @@ blink.setup({
         },
       },
 
-      supermaven = {
-        name = "supermaven",
-        module = "blink-cmp-supermaven",
-        async = true,
-      },
+      -- supermaven = {
+      --   name = "supermaven",
+      --   module = "blink-cmp-supermaven",
+      --   async = true,
+      -- },
     },
   },
 
