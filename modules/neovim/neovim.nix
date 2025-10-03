@@ -63,7 +63,6 @@ let
 in
   pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
     luaRcContent = ''
-
       vim.opt.runtimepath:prepend('${configDir}')
       require('milogert.main').setup({
         nix = true,

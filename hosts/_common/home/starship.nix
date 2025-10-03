@@ -99,7 +99,7 @@
       };
 
       git_commit = {
-        only_detached = false;
+        only_detached = true;
         commit_hash_length = 7;
       };
 
@@ -109,7 +109,7 @@
       };
 
       git_status = {
-        disabled = false;
+        disabled = true;
         # format = "([\[$all_status$ahead_behind\]]($style) )";
         conflicted = "";
         ahead = "";

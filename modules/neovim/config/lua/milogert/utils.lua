@@ -3,13 +3,15 @@ Utils functions for vim.
 ]]
 local Utils = {}
 
+---@alias mode ""|"n"|"nnoremap"|"i"|"inoremap"|"x"|"v"
+
 --[[
 Generic mapping function.
-  @param `mode` The mode of the map. Empty string means all modes.
-  @param `shortcut` The actual mapping.
-  @param `command` The command to produce.
-  @param `options` Any options to pass along. Defaults to `{}`.
 ]]
+---@param mode mode The mode of the map. Empty string means all modes.
+---@param lhs string The mapping
+---@param rhs string|function The command to run
+---@param options? table Any options to pass along. Defaults to `{}`.
 Utils._map = function(mode, lhs, rhs, options)
   local defaults = { noremap = true, silent = true }
   local opts = vim.tbl_extend("force", defaults, options or {})
@@ -20,38 +22,59 @@ Utils.map = function(lhs, rhs, options)
   Utils._map("", lhs, rhs, options)
 end
 
--- Normal mode maps.
+--[[
+Normal mode maps.
+]]
+---@param lhs string Keymap
+---@param rhs string|function String or function
+---@param options? table Table of options
 Utils.nmap = function(lhs, rhs, options)
   Utils._map("n", lhs, rhs, options)
 end
 
+--[[
+Insert mode maps.
+]]
 -- Insert mode maps.
+---@param lhs string Keymap
+---@param rhs string|function String or function
+---@param options? table Table of options
 Utils.imap = function(lhs, rhs, options)
   Utils._map("i", lhs, rhs, options)
 end
 
+--[[
+Visual mode maps.
+]]
 -- Visual mode maps.
+---@param lhs string Keymap
+---@param rhs string|function String or function
+---@param options? table Table of options
 Utils.xmap = function(lhs, rhs, options)
   Utils._map("x", lhs, rhs, options)
 end
 
+--[[
+Visual mode maps.
+]]
+---@param lhs string Keymap
+---@param rhs string|function String or function
+---@param options? table Table of options
 Utils.vmap = function(lhs, rhs, options)
   Utils._map("v", lhs, rhs, options)
 end
 
 --[[
 Arpeggio maps.
-  @param `type` Where the map is available, such as `innoremap`
-  @param `lhs` The chord to be detected
-  @param `rhs` The result to be produced
 ]]
-Utils.arpeggio = function(type, lhs, rhs)
-  vim.cmd.Arpeggio(type .. " <silent> " .. lhs .. " " .. rhs)
+---@param mode mode The mode where the mapping is available.
+---@param lhs string The mapping
+---@param rhs string|function The command to run
+Utils.arpeggio = function(mode, lhs, rhs)
+  vim.cmd.Arpeggio(mode .. " <silent> " .. lhs .. " " .. rhs)
 end
 
---[[
-TODO: this doesn't work.
-]]
+-- TODO: this doesn't work.
 Utils.create_file = function(file, data)
   local f = io.open(file, "w")
   if f ~= nil then

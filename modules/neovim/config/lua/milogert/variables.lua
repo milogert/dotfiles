@@ -4,18 +4,43 @@ local gen_default_opts = function (opts)
   return {}
 end
 
+---@class milogert.variables.Debuggers {
+---@field elixir_ls string
+---@field vscode_js { adapter: string, debugger: string }
+
+---@class milogert.variables.Ls_Cmds
+---@field cssls string[]
+---@field elixirls string[]
+---@field eslint string[]
+---@field html string[]
+---@field jsonls string[]
+---@field lua_ls string[]
+---@field nil_ls string[]
+---@field tailwindcss string[]
+---@field terraformls string[]
+---@field texlab string[]
+---@field ts_ls string[]
+
+---@class milogert.variables.Formatters
+---@field lua string[]
+---@field sql string[]
+
+---@class milogert.Variables {
+---@field nix boolean
+---@field config_path string
+---@field debuggers milogert.variables.Debuggers
+---@field ls_cmds milogert.variables.Ls_Cmds
+---@field formatters milogert.variables.Formatters
+
+---@type milogert.Variables
 _G.milogert_variables = nil
 
 local M = {}
 
 --[[
-Setup variables
-  @param `opts` Table of options. Keys are:
-    `config_path` The config path where all the configuration lives. Managed
-      by nix but on ordinary systems it's ~/.config/nvim/
-    `debuggers` The debugger install locations.
-    `ls_installs` The language server install locations.
+Setup variables. Ultimately saves them globally so I can access them wherever.
 ]]
+---@param opts milogert.Variables commonly used variables in my configuration
 M.setup = function (opts)
   if _G.milogert_variables ~= nil then
     logger.info('_G.milogert_variables have already been set up')
@@ -27,6 +52,9 @@ M.setup = function (opts)
   return _G.milogert_variables
 end
 
+--[[
+Get the variables that were saved.
+]]
 M.get = function()
   return _G.milogert_variables
 end

@@ -154,6 +154,7 @@ blink.setup({
     default = { "git", "avante", "snippets", "lsp", "buffer", "path" },
 
     per_filetype = {
+      octo = { "snippets" },
       sql = { "snippets", "dadbod", "buffer" },
     },
 
