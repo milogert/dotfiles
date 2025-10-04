@@ -58,50 +58,51 @@ let
     vim-unimpaired
     vimux
   ];
-  customPlugins = pkgs.callPackage ./custom-plugins.nix {};
+  customPlugins = pkgs.callPackage ./custom-plugins.nix { };
   configDir = ./config;
 in
-  pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
-    luaRcContent = ''
+pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
+  luaRcContent = ''
 
-      vim.opt.runtimepath:prepend('${configDir}')
-      require('milogert.main').setup({
-        nix = true,
+    vim.opt.runtimepath:prepend('${configDir}')
+    require('milogert.main').setup({
+      nix = true,
 
-        debuggers = {
-          elixir_ls = "${pkgs.elixir-ls}/bin/elixir-debug-adapter",
-          vscode_js = {
-            adapter = "${customPlugins.nvim-dap-vscode-js}",
-            debugger = "${pkgs.vscode-js-debug}",
-          },
+      debuggers = {
+        elixir_ls = "${pkgs.elixir-ls}/bin/elixir-debug-adapter",
+        vscode_js = {
+          adapter = "${customPlugins.nvim-dap-vscode-js}",
+          debugger = "${pkgs.vscode-js-debug}",
         },
+      },
 
-        ls_cmds = {
-          cssls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-css-language-server", "--stdio" },
-          elixirls = { "${pkgs.elixir-ls}/bin/elixir-ls" },
-          eslint = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-eslint-language-server", "--stdio" },
-          html = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-html-language-server", "--stdio" },
-          jsonls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-json-language-server", "--stdio" },
-          lua_ls = { "${pkgs.sumneko-lua-language-server}/bin/lua-language-server" },
-          nil_ls = { "${pkgs.nil}/bin/nil" },
-          tailwindcss = { "${pkgs.vscode-extensions.bradlc.vscode-tailwindcss}/bin/tailwindcss-language-server", "--stdio", },
-          terraformls = { "${pkgs.terraform-ls}/bin/terraform-ls", "serve" },
-          texlab = { "${pkgs.texlab}/bin/texlab" },
-          ts_ls = { "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server", "--stdio", },
-        },
+      ls_cmds = {
+        cssls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-css-language-server", "--stdio" },
+        elixirls = { "${pkgs.elixir-ls}/bin/elixir-ls" },
+        expert = { "${pkgs.expert}/bin/expert" },
+        eslint = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-eslint-language-server", "--stdio" },
+        html = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-html-language-server", "--stdio" },
+        jsonls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-json-language-server", "--stdio" },
+        lua_ls = { "${pkgs.sumneko-lua-language-server}/bin/lua-language-server" },
+        nil_ls = { "${pkgs.nil}/bin/nil" },
+        tailwindcss = { "${pkgs.vscode-extensions.bradlc.vscode-tailwindcss}/bin/tailwindcss-language-server", "--stdio", },
+        terraformls = { "${pkgs.terraform-ls}/bin/terraform-ls", "serve" },
+        texlab = { "${pkgs.texlab}/bin/texlab" },
+        ts_ls = { "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server", "--stdio", },
+      },
 
-        formatters = {
-          lua = { "${pkgs.stylua}/bin/stylua" },
-          sql = { "${pkgs.pgformatter}/bin/pg_format" },
-        },
-      })
-    '';
+      formatters = {
+        lua = { "${pkgs.stylua}/bin/stylua" },
+        sql = { "${pkgs.pgformatter}/bin/pg_format" },
+      },
+    })
+  '';
 
-    plugins = vimPlugins ++ customPlugins.list;
+  plugins = vimPlugins ++ customPlugins.list;
 
-    viAlias = true;
-    vimAlias = true;
+  viAlias = true;
+  vimAlias = true;
 
-    withNodeJs = true;
-    withRuby = false;
-  }
+  withNodeJs = true;
+  withRuby = false;
+}

@@ -1,4 +1,10 @@
-{ pkgs, lib, stdenv, fetchFromGitHub, ... }:
+{
+  pkgs,
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  ...
+}:
 
 {
   tt-rss-plugin-feediron = stdenv.mkDerivation rec {

@@ -11,11 +11,26 @@ vim.lsp.config("elixirls", {
     elixirLS = {
       dialyzerEnabled = true,
       fetchDeps = true,
-    };
-  };
+    },
+  },
 })
 
 vim.lsp.enable({ "elixirls" })
+
+-- vim.lsp.config("expert", {
+--   cmd = variables.get().ls_cmds.expert,
+--   root_markers = { 'mix.exs', '.git' },
+--   filetypes = { 'elixir', 'eelixir', 'heex' },
+--   on_attach = on_attach,
+--   -- settings = {
+--   --   elixirLS = {
+--   --     dialyzerEnabled = true,
+--   --     fetchDeps = true,
+--   --   };
+--   -- };
+-- })
+--
+-- vim.lsp.enable({ "expert" })
 
 -- elixir.setup {
 --   nextls = {enable = true},

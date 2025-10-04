@@ -89,7 +89,7 @@ vim.opt.spelllang = {'en'}
 vim.opt.spellsuggest = {'best', 9}
 
 -- Folding.
-vim.opt.foldnestmax = 1
+vim.opt.foldnestmax = 3
 vim.opt.foldenable = false
 vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'

@@ -1,4 +1,4 @@
-{ pkgs, ... }: 
+{ pkgs, ... }:
 
 {
   # For yubikey smart card use with gpg.

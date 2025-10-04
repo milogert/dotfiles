@@ -1,8 +1,9 @@
-{ config, pkgs, ... }: 
+{ config, pkgs, ... }:
 
 let
   common_dir = ../../_common;
-in {
+in
+{
   home.packages = with pkgs; [
     imlib2
     ranger

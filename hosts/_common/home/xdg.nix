@@ -1,10 +1,12 @@
-{ config
-, ...
+{
+  config,
+  ...
 }:
 
 let
   home_dir = "${config.home.homeDirectory}";
-in {
+in
+{
   xdg = {
     enable = true;
     cacheHome = "${home_dir}/.cache";

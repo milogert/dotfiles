@@ -6,7 +6,8 @@ let
     "https://nix-community.cachix.org"
     "https://milogert.cachix.org"
   ];
-in {
+in
+{
   imports = [
     ./aliases.nix
   ];
@@ -14,7 +15,10 @@ in {
   nix = {
     settings = {
       sandbox = false;
-      trusted-users = [ "root" "@admin" ];
+      trusted-users = [
+        "root"
+        "@admin"
+      ];
 
       inherit substituters;
       trusted-substituters = substituters;

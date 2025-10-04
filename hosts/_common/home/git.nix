@@ -1,6 +1,7 @@
-{ pkgs
-, config
-, ...
+{
+  pkgs,
+  config,
+  ...
 }:
 
 {
@@ -13,7 +14,7 @@
   programs.git = {
     package = pkgs.gitAndTools.gitFull;
     enable = true;
-    userName  = "Milo Gertjejansen";
+    userName = "Milo Gertjejansen";
     userEmail = "milo@milogert.com";
 
     aliases = {
@@ -97,9 +98,9 @@
     let
       gh = "${pkgs.gh}/bin/gh";
     in
-      config.lib.dag.entryAfter ["writeBoundary"] ''
-        if (! ${gh} auth status); then
-          run ${gh} auth login -s read:project
-        fi
-      '';
+    config.lib.dag.entryAfter [ "writeBoundary" ] ''
+      if (! ${gh} auth status); then
+        run ${gh} auth login -s read:project
+      fi
+    '';
 }

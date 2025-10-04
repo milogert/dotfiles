@@ -1,11 +1,13 @@
-{ pkgs
-, config
-, ...
+{
+  pkgs,
+  config,
+  ...
 }:
 
 let
-  tmuxPlugins = pkgs.tmuxPlugins // pkgs.callPackage ./custom-plugins.nix {};
-in {
+  tmuxPlugins = pkgs.tmuxPlugins // pkgs.callPackage ./custom-plugins.nix { };
+in
+{
   home.file = {
     "${config.xdg.configHome}/tmuxinator/" = {
       recursive = true;

@@ -1,3 +1,6 @@
+vim.lsp.set_log_level(vim.log.levels.INFO)
+-- vim.lsp.set_log_level("off")
+
 vim.diagnostic.config({
   -- virtual_lines = true,
   virtual_text = false,

@@ -22,13 +22,14 @@
     };
   };
 
-  outputs = inputs @
-  { self
-  , darwin
-  , home-manager
-  , neovim-custom
-  , nixpkgs
-  }:
+  outputs =
+    inputs@{
+      self,
+      darwin,
+      home-manager,
+      neovim-custom,
+      nixpkgs,
+    }:
     let
       overlays = final: prev: {
         plexPassRaw = prev.plexRaw.overrideAttrs (old: rec {
@@ -67,65 +68,108 @@
         ];
       };
 
-      mkUserConfig = { pkgs, host, type, user }: let
-        user_host_path = ./. + "/hosts/${host}/users";
-        common_config = "${user_host_path}/_common";
-        common_user_config = ./. + "/hosts/_common/users/${user}";
-        user_path = "${user_host_path }/${user}";
-        config_path = "${user_path}/config.nix";
-        config = import config_path { inherit pkgs user; };
-        home_type_path = ./. + "/hosts/_common/home/types/${type}.nix";
-      in {
-        home-manager.users.${user} = {
-          imports = [
-            user_path
-            common_config
-            common_user_config
-            home_type_path
-          ];
-          nixpkgs = nixpkgsConfig;
+      mkUserConfig =
+        {
+          pkgs,
+          host,
+          type,
+          user,
+        }:
+        let
+          user_host_path = ./. + "/hosts/${host}/users";
+          common_config = "${user_host_path}/_common";
+          common_user_config = ./. + "/hosts/_common/users/${user}";
+          user_path = "${user_host_path}/${user}";
+          config_path = "${user_path}/config.nix";
+          config = import config_path { inherit pkgs user; };
+          home_type_path = ./. + "/hosts/_common/home/types/${type}.nix";
+        in
+        {
+          home-manager.users.${user} = {
+            imports = [
+              user_path
+              common_config
+              common_user_config
+              home_type_path
+            ];
+            nixpkgs = nixpkgsConfig;
+          };
+          users.users.${user} = config;
         };
-        users.users.${user} = config;
-      };
 
-      mkCommonConfig = { host, type, users }: let
-        mkUserConfigWrapped = user:
-          ({ pkgs, ... }: mkUserConfig { inherit pkgs host type user; });
-      in [
-        (./. + "/hosts/${host}/default.nix")
-        (./. + "/hosts/_common/types/${type}.nix")
-        ({ pkgs, ... }: {
-          nix.registry.nixpkgs.flake = nixpkgs;
-          # Temp fix
-          # nix.settings.sandbox = false;
-          # nix.nixPath = "nixpkgs=flake:nixpkgs";
-          environment.variables.HOSTNAME = host;
-          nixpkgs = nixpkgsConfig;
-          home-manager.verbose = false;
-          home-manager.useUserPackages = true;
-        })
-      ] ++ (builtins.map mkUserConfigWrapped users);
+      mkCommonConfig =
+        {
+          host,
+          type,
+          users,
+        }:
+        let
+          mkUserConfigWrapped =
+            user:
+            (
+              { pkgs, ... }:
+              mkUserConfig {
+                inherit
+                  pkgs
+                  host
+                  type
+                  user
+                  ;
+              }
+            );
+        in
+        [
+          (./. + "/hosts/${host}/default.nix")
+          (./. + "/hosts/_common/types/${type}.nix")
+          (
+            { pkgs, ... }:
+            {
+              nix.registry.nixpkgs.flake = nixpkgs;
+              # Temp fix
+              # nix.settings.sandbox = false;
+              # nix.nixPath = "nixpkgs=flake:nixpkgs";
+              environment.variables.HOSTNAME = host;
+              nixpkgs = nixpkgsConfig;
+              home-manager.verbose = false;
+              home-manager.useUserPackages = true;
+            }
+          )
+        ]
+        ++ (builtins.map mkUserConfigWrapped users);
 
-      mkDarwinConfig = { host, type, users }:
-        (mkCommonConfig { inherit host type users; }) ++ [
+      mkDarwinConfig =
+        {
+          host,
+          type,
+          users,
+        }:
+        (mkCommonConfig { inherit host type users; })
+        ++ [
           home-manager.darwinModules.home-manager
         ];
 
-      mkNixosConfig = { host, type, users }:
-        (mkCommonConfig { inherit host type users; }) ++ [
+      mkNixosConfig =
+        {
+          host,
+          type,
+          users,
+        }:
+        (mkCommonConfig { inherit host type users; })
+        ++ [
           home-manager.nixosModules.home-manager
           {
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
           }
         ];
-    in {
+    in
+    {
       darwinConfigurations = {
         minotaur = darwin.lib.darwinSystem {
           inherit inputs;
           system = "aarch64-darwin";
           modules = mkDarwinConfig {
             host = "minotaur";
-            users = ["milo"];
+            users = [ "milo" ];
             type = "desktop";
           };
         };
@@ -135,7 +179,7 @@
           system = "aarch64-darwin";
           modules = mkDarwinConfig {
             host = "nutop";
-            users = ["milo"];
+            users = [ "milo" ];
             type = "desktop";
           };
         };
@@ -146,7 +190,7 @@
           system = "x86_64-linux";
           modules = mkNixosConfig {
             host = "theseus";
-            users = ["milo"];
+            users = [ "milo" ];
             type = "desktop";
           };
         };
@@ -155,7 +199,7 @@
           system = "x86_64-linux";
           modules = mkNixosConfig {
             host = "hog";
-            users = ["milo"];
+            users = [ "milo" ];
             type = "headless";
           };
         };
@@ -173,7 +217,7 @@
           system = "aarch64-linux";
           modules = mkNixosConfig {
             host = "veem";
-            users = ["milo"];
+            users = [ "milo" ];
             type = "desktop";
           };
         };

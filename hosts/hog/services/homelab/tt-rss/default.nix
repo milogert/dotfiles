@@ -1,8 +1,9 @@
 { config, pkgs, ... }:
 
 let
-  extraPlugins = pkgs.callPackage ./custom-plugins.nix {};
-in {
+  extraPlugins = pkgs.callPackage ./custom-plugins.nix { };
+in
+{
   services.tt-rss = {
     enable = true;
     selfUrlPath = "https://rss.milogert.com";
