@@ -2,44 +2,38 @@ local fzf = require("fzf-lua")
 
 local u = require("milogert.utils")
 
-
 -- require('fzf-lua-frecency').setup()
 
-local fzf_files = function()
-  local gitStatus = vim.g.gitsigns_head
+-- local fzf_files = function()
+--   local gitStatus = vim.g.gitsigns_head
+--
+--   -- local cmd = u.tern(gitStatus == nil, "files", "global")
+--   local cmd = u.tern(gitStatus == nil, "files", "git_files")
+--
+--   return require("fzf-lua")[cmd]({ git_icons = false, file_icons = true })
+-- end
 
-  local cmd = u.tern(gitStatus == nil, "files", "global")
-
-  return require("fzf-lua")[cmd]({ git_icons = false, file_icons = true })
-end
-
-u.nmap("<C-m>", "", {
-  callback = function()
-    return require('fzf-lua-frecency').frecency({ cwd_only = true, git_icons = true })
-  end,
-})
-u.nmap("<C-p>", "", {
-  callback = fzf_files,
-})
-u.nmap("<leader>b", "", {
-  callback = fzf.buffers,
-})
-u.nmap("<leader>/", "", {
-  callback = function()
-    fzf.live_grep({ search = "" })
-  end,
-})
-u.nmap("<leader>?", "", {
-  callback = function()
-    fzf.live_grep_resume()
-  end,
-})
-u.nmap("<leader>fg", "", {
-  callback = fzf.git_branches,
-})
-u.nmap("<leader>fb", "", {
-  callback = fzf.builtin,
-})
+-- u.nmap("<C-m>", "", {
+--   callback = function()
+--     return require('fzf-lua-frecency').frecency({ cwd_only = true, git_icons = false, file_icons = false })
+--   end,
+-- })
+u.nmap("<C-p>", function()
+  require("fzf-lua-frecency").frecency({
+    cwd_only = true,
+    git_icons = false,
+    file_icons = false,
+  })
+end)
+u.nmap("<leader>b", fzf.buffers)
+u.nmap("<leader>/", function()
+  fzf.live_grep({ search = "" })
+end)
+u.nmap("<leader>?", function()
+  fzf.live_grep_resume()
+end)
+u.nmap("<leader>fg", fzf.git_branches)
+u.nmap("<leader>fb", fzf.builtin)
 
 fzf.setup({
   winopts = {

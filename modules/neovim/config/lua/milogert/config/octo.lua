@@ -6,6 +6,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "octo://*",
   callback = function()
     u.nmap("gq", ":q<CR>")
+    vim.cmd [[:setlocal spell spelllang=en_us]]
   end,
 })
 
@@ -115,7 +116,7 @@ require("octo").setup({
     },
     submit_win = {
       approve_review = { lhs = "<C-a>", desc = "approve review" },
-      comment_review = { lhs = "<C-m>", desc = "comment review" },
+      comment_review = { lhs = "<C-o>", desc = "comment review" },
       request_changes = { lhs = "<C-r>", desc = "request changes review" },
       close_review_tab = { lhs = "<C-c>", desc = "close review tab" },
     },

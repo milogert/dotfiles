@@ -1,7 +1,11 @@
 local M = {}
 local variables = require("milogert.variables")
-local u = require("milogert.utils")
 
+--[[
+Set up neovim.
+]]
+---@param variable_opts milogert.variables The variables to make globally
+---available.
 M.setup = function(variable_opts)
   variables.setup(variable_opts)
 
