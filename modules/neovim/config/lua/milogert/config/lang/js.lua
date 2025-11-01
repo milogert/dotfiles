@@ -1,9 +1,6 @@
 local variables = require("milogert.variables")
 local on_attach = require("milogert.config.lsp.on_attach")
 
--- vim.lsp.set_log_level(vim.log.levels.DEBUG)
-vim.lsp.set_log_level("off")
-
 vim.lsp.config("jsonls", { cmd = variables.get().ls_cmds.jsonls })
 
 vim.lsp.config('eslint', {

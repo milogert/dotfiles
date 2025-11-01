@@ -19,6 +19,7 @@
       "google-chrome"
       "moom"
       "notion"
+      "obsidian"
       "plex"
       "pocket-casts"
       "postgres-unofficial"

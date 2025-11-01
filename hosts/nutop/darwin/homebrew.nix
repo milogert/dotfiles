@@ -22,6 +22,7 @@
       "loom"
       "moom"
       "muzzle"
+      "obsidian"
       "plex"
       "pocket-casts"
       "postgres-unofficial"
