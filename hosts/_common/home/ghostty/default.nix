@@ -41,6 +41,8 @@ in
       theme = "srcery";
       font-size = 11;
       font-family = "Hack Nerd Font Mono";
+      font-thicken = true;
+      font-thicken-strength = 0;
       inherit custom-shader;
     };
   };
