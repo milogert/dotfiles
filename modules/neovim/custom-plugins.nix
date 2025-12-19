@@ -60,6 +60,20 @@ let
     };
   };
 
+  mcbhub-nvim = vimUtils.buildVimPlugin rec {
+    name = "mcphub.nvim";
+
+    # src = /Users/milo/git/git-permalink-nvim;
+    src = fetchFromGitHub {
+      owner = "ravitemer";
+      repo = name;
+      rev = "8ff40b5edc649959bb7e89d25ae18e055554859a";
+      sha256 = "1saw3xfrbnwpjklcffp144q2y100kd51yrhvmxnhgc7niy0ip893";
+    };
+
+    doCheck = false;
+  };
+
   output-panel-nvim = vimUtils.buildVimPlugin rec {
     name = "output-panel.nvim";
     src = fetchFromGitHub {
@@ -185,6 +199,7 @@ in
     git-permalink-nvim
     js-i18n-nvim
     lua-json5
+    mcbhub-nvim
     none-ls-extras-nvim
     nvim-dap-vscode-js
     output-panel-nvim

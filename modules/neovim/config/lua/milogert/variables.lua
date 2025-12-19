@@ -9,9 +9,9 @@ end
 ---@field vscode_js { adapter: string, debugger: string }
 
 ---@class milogert.variables.Ls_Cmds
+---@field biome string[]
 ---@field cssls string[]
 ---@field elixirls string[]
----@field eslint string[]
 ---@field html string[]
 ---@field jsonls string[]
 ---@field lua_ls string[]
@@ -19,7 +19,7 @@ end
 ---@field tailwindcss string[]
 ---@field terraformls string[]
 ---@field texlab string[]
----@field ts_ls string[]
+---@field tsgo string[]
 
 ---@class milogert.variables.Formatters
 ---@field lua string[]

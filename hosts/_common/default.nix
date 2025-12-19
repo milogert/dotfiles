@@ -34,7 +34,7 @@ in
     gc.options = "--delete-older-than 30d";
 
     # Which package set to use.
-    package = pkgs.nixStable;
+    package = pkgs.nixVersions.stable;
 
     extraOptions = "experimental-features = nix-command flakes";
   };

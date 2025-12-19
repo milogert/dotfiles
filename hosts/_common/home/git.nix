@@ -12,14 +12,16 @@
   ];
 
   programs.git = {
-    package = pkgs.gitFull;
     enable = true;
+    package = pkgs.gitFull;
 
     settings = {
       user = {
         name = "Milo Gertjejansen";
         email = "milo@milogert.com";
       };
+
+      lfs.enable = true;
 
       alias = {
         a = "add";
@@ -48,6 +50,7 @@
         #wip = "rebase -i @{u}";
         wipp = "for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads";
         wip = "!git wipp | fzf --tac --bind 'enter:execute(git checkout {-1})+abort'";
+        wt = "worktree";
         zap = "fetch -p";
       };
 

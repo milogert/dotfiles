@@ -28,17 +28,17 @@ let
     nvim-dap
     nvim-dap-ui
     nvim-dap-virtual-text
-    nvim-lint
     nvim-nio
     nvim-treesitter-textobjects
     nvim-treesitter.withAllGrammars
     nvim-web-devicons
+    obsidian-nvim
     octo-nvim
     oil-nvim
     other-nvim
     package-info-nvim
     persistence-nvim
-    plenary-nvim
+    # sqlite-lua
     srcery-vim
     supermaven-nvim
     tssorter-nvim
@@ -76,18 +76,18 @@ pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
       },
 
       ls_cmds = {
+        -- biome = { "${pkgs.vscode-extensions.biomejs.biome}/bin/biome", "start" },
+        biome = { "node_modules/.bin/biome", "lsp-proxy" },
         cssls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-css-language-server", "--stdio" },
         elixirls = { "${pkgs.elixir-ls}/bin/elixir-ls" },
-        expert = { "${pkgs.expert}/bin/expert" },
-        eslint = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-eslint-language-server", "--stdio" },
         html = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-html-language-server", "--stdio" },
         jsonls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-json-language-server", "--stdio" },
-        lua_ls = { "${pkgs.sumneko-lua-language-server}/bin/lua-language-server" },
+        lua_ls = { "${pkgs.lua-language-server}/bin/lua-language-server" },
         nil_ls = { "${pkgs.nil}/bin/nil" },
         tailwindcss = { "${pkgs.vscode-extensions.bradlc.vscode-tailwindcss}/bin/tailwindcss-language-server", "--stdio", },
         terraformls = { "${pkgs.terraform-ls}/bin/terraform-ls", "serve" },
         texlab = { "${pkgs.texlab}/bin/texlab" },
-        ts_ls = { "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server", "--stdio", },
+        tsgo = { "${pkgs.typescript-go}/bin/tsgo", "--lsp", "--stdio", },
       },
 
       formatters = {

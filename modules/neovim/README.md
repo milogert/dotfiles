@@ -42,9 +42,9 @@ require('milogert.main').setup({
 
   -- Not including any of these will just disable that language server.
   ls_cmds = {
+    biome = { "bin/command", ...args },
     cssls = { "bin/command", ...args },
     elixirls = { "bin/command", ...args },
-    eslint = { "bin/command", ...args },
     html = { "bin/command", ...args },
     jsonls = { "bin/command", ...args },
     lua_ls = { "bin/command", ...args },
@@ -53,7 +53,7 @@ require('milogert.main').setup({
     tailwindcss = { "bin/command", ...args, },
     terraformls = { "bin/command", ...args },
     texlab = { "bin/command", ...args },
-    ts_ls = { "bin/command", ...args, },
+    tsgo = { "bin/command", ...args, },
   },
 })
 ```

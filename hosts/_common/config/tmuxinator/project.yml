@@ -2,8 +2,8 @@ name: <%= @args[0] %>
 root: ~/projects/<%= @args[0] %>
 
 windows:
-  - editor: |
-      if [[ -d ~/projects/<%= @args[0] %> ]]; then
+  - main: |
+      if [[ -d ~/projects/<%= @args[0] %>/main ]]; then
         nvim
       else
         pushd ~/projects
@@ -19,4 +19,3 @@ windows:
         # tmux attach-session -t . -c ~/project/<%= @args[0] %>
         nvim
       fi
-  - tui: tui
