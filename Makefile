@@ -37,7 +37,7 @@ config: check ${HOST}
 # NixOS commands.
 _nixos-build:
 	@echo -e "\033[0;33m-- Building ----------------------------\033[0m"
-	nix build ".#nixosConfigurations.${HOST}.config.system.build.toplevel" --extra-experimental-features 'nix-command flakes'
+	nix build ".#nixosConfigurations.${HOST}.config.system.build.toplevel" --extra-experimental-features 'nix-command flakes' --impure
 
 _nixos-switch:
 	@echo -e "\033[0;33m-- Switching ---------------------------\033[0m"
@@ -48,17 +48,19 @@ _nixos-switch:
 # nix-darwin commands.
 _nix-darwin-build:
 	@echo -e "\033[0;33m-- Building ----------------------------\033[0m"
-	nix build ".#darwinConfigurations.${HOST}.system" --extra-experimental-features 'nix-command flakes'
+	nix build ".#darwinConfigurations.${HOST}.system" --extra-experimental-features 'nix-command flakes' --impure
 
 _nix-darwin-switch:
 	@echo -e "\033[0;33m-- Switching ---------------------------\033[0m"
-	sudo ./result/sw/bin/darwin-rebuild switch --flake ".#${HOST}"
+	sudo ./result/sw/bin/darwin-rebuild switch --flake ".#${HOST}" --impure
 
+# Common commands.
 _install_requirements:
 	@echo -e "\033[0;33m-- Installing required programs --------\033[0m"
 	./installers/homebrew
 	./installers/nix
 
+# Exposed commands.
 update: update-neovim
 	@echo -e "\033[0;33m-- Updating ----------------------------\033[0m"
 	nix flake update --extra-experimental-features 'nix-command flakes'

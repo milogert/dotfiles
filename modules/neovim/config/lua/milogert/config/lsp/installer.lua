@@ -1,4 +1,4 @@
-vim.lsp.set_log_level(vim.log.levels.INFO)
+-- vim.lsp.set_log_level(vim.log.levels.INFO)
 -- vim.lsp.set_log_level("off")
 
 vim.diagnostic.config({

@@ -4,10 +4,7 @@ local variables = require("milogert.variables")
 local conform = require("conform")
 
 local javascript_like = {
-  -- "prettierd",
-  -- "prettier",
-  "eslint_d",
-  "eslint",
+  "biome-check",
   -- stop_after_first = true,
 }
 
@@ -15,6 +12,7 @@ conform.setup({
   default_format_opts = {
     lsp_format = "fallback",
   },
+
   formatters = {
     pg_format = {
       command = variables.get().formatters.sql[1],
@@ -61,5 +59,19 @@ vim.api.nvim_create_autocmd("BufEnter", {
     u.nmap("<leader>fi", function()
       conform.format()
     end)
+  end,
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client and client.name == "biome" then
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        buffer = args.buf,
+        callback = function()
+          require("conform").format({ bufnr = args.buf })
+        end,
+      })
+    end
   end,
 })

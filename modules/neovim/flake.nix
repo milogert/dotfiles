@@ -15,16 +15,14 @@
             old.buildInputs
             ++ (with prev.pkgs; [
               # node-debug2
-              # nodePackages.eslint
               elixir-ls
-              eslint_d
               nil
               nodePackages.typescript
               nodePackages.typescript-language-server
               statix
               sqlfluff
               stylua
-              sumneko-lua-language-server
+              lua-language-server
               terraform-ls
               texlab
               vscode-extensions.bradlc.vscode-tailwindcss
@@ -64,8 +62,17 @@
             src = prev.pkgs.fetchFromGitHub {
               owner = "ibhagwan";
               repo = "fzf-lua";
-              rev = "7d66cd81cf485fb17c22d82021cc166ce332a14c";
-              sha256 = "03mq2d3pcxr85zbfdfj8vnxcbsyf6agyxfyxhckkhvnyazzlkkbd";
+              rev = "a8458b79a957a6e3e217d84106a0fd4b9470ff4c";
+              sha256 = "0wswrbfjjyid1zgqmjcxkl7mljsmlayzkfnkpc3zy82ry8li0nis";
+            };
+          });
+
+          obsidian-nvim = prev.vimPlugins.obsidian-nvim.overrideAttrs (old: {
+            src = prev.pkgs.fetchFromGitHub {
+              owner = "obsidian-nvim";
+              repo = "obsidian.nvim";
+              rev = "1a1a475846a4cfa3cfedde1c59141d99b6212951";
+              sha256 = "1ianli3dqpgwiyfhbfxs866bxsqn4m0c09nd4s3048sj6ay6g6pj";
             };
           });
 

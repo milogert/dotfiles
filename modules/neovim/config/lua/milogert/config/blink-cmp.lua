@@ -60,8 +60,6 @@ blink.setup({
       EnumMember = "",
       Constant = "",
       Struct = "",
-      Supermaven = "",
-      supermaven = "",
     },
   },
 
@@ -75,6 +73,9 @@ blink.setup({
     },
 
     list = {
+      -- max_items = 200,
+      max_items = 20,
+
       selection = {
         preselect = false,
       },
@@ -197,12 +198,6 @@ blink.setup({
           -- options for the blink-cmp-git
         },
       },
-
-      -- supermaven = {
-      --   name = "supermaven",
-      --   module = "blink-cmp-supermaven",
-      --   async = true,
-      -- },
     },
   },
 

@@ -30,14 +30,13 @@ in
           old.buildInputs
           ++ (with prev.pkgs; [
             elixir-ls
-            eslint_d
             nil
             nodePackages.typescript
             nodePackages.typescript-language-server
             statix
             sqlfluff
             stylua
-            sumneko-lua-language-server
+            lua-language-server
             terraform-ls
             texlab
             vscode-extensions.bradlc.vscode-tailwindcss

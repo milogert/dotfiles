@@ -74,7 +74,6 @@ null_ls.setup({
   on_attach = require("milogert.config.lsp.on_attach"),
 
   sources = {
-    -- require("none-ls.code_actions.eslint_d").with(prefer_local_config),
     -- null_ls.builtins.code_actions.gitsigns,
     -- null_ls.builtins.code_actions.statix,
     -- fzf_lua_lsp.with({
@@ -86,13 +85,11 @@ null_ls.setup({
     --   },
     -- }),
 
-    null_ls.builtins.diagnostics.credo,
-    -- require("none-ls.diagnostics.eslint_d").with(prefer_local_config),
+    -- null_ls.builtins.diagnostics.credo,
     -- null_ls.builtins.diagnostics.statix,
 
-    -- require("none-ls.formatting.eslint_d").with(prefer_local_config),
-    null_ls.builtins.formatting.mix,
-    -- null_ls.builtins.formatting.prettier.with(prefer_local_config),
+    -- null_ls.builtins.formatting.biome,
+    -- null_ls.builtins.formatting.mix,
     -- null_ls.builtins.formatting.stylua.with({
     --   command = variables.get().ls_cmds.stylua[1],
     -- }),
