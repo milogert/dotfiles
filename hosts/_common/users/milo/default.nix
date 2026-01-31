@@ -27,6 +27,7 @@ in {
     nodejs
     stack
     watchman
+    gitoxide
   ];
 
   programs.git.signing = {

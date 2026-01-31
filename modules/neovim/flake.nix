@@ -18,6 +18,7 @@
           nodePackages.typescript
           nodePackages.typescript-language-server
           statix
+          sqlfluff
           stylua
           sumneko-lua-language-server
           terraform-ls
@@ -52,6 +53,15 @@
             repo = "dressing.nvim";
             rev = "18e5beb3845f085b6a33c24112b37988f3f93c06";
             sha256 = "0pvkm9s0lg0vlk7qbn1sjf6sis3i3xba1824xml631bg6hahw37l";
+          };
+        });
+
+        fzf-lua = prev.vimPlugins.fzf-lua.overrideAttrs (old: {
+          src = prev.pkgs.fetchFromGitHub {
+            owner = "ibhagwan";
+            repo = "fzf-lua";
+            rev = "7d66cd81cf485fb17c22d82021cc166ce332a14c";
+            sha256 = "03mq2d3pcxr85zbfdfj8vnxcbsyf6agyxfyxhckkhvnyazzlkkbd";
           };
         });
 

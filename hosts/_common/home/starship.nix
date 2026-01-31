@@ -4,6 +4,7 @@
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
+
     settings = {
       format = lib.concatStrings [
         "$username"
@@ -73,6 +74,8 @@
         "$cmd_duration"
         "$custom"
         "$line_break"
+
+        # New line here
         "$jobs"
         "$battery"
         "$time"
@@ -80,15 +83,57 @@
         "$shell"
         "$character"
       ];
+
       aws = {
         disabled = true;
       };
+
+      cmd_duration = {
+        min_time = 500;
+        format = "[$duration]($style) ";
+      };
+
       character = {
         error_symbol = "[✖](bold red)";
+        success_symbol = "[❯](bold green)";
       };
+
+      git_commit = {
+        only_detached = false;
+        commit_hash_length = 7;
+      };
+
+      # This is default disabled.
+      git_metrics = {
+        disabled = true;
+      };
+
+      git_status = {
+        disabled = false;
+        # format = "([\[$all_status$ahead_behind\]]($style) )";
+        conflicted = "";
+        ahead = "";
+        behind = "";
+        diverged = "";
+        untracked = "";
+        stashed = "";
+        modified = "[*](yellow)";
+        staged = "";
+        renamed = "";
+        deleted = "";
+        ignore_submodules = true;
+      };
+
+      nix_shell = {
+        format = "via [$symbol$state( \($name\))]($style) ";
+        impure_msg = "impure";
+        pure_msg = "PURE";
+      };
+
       time = {
         disabled = true;
       };
+
       command_timeout = 1000;
     };
   };

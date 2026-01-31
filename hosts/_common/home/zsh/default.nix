@@ -30,7 +30,7 @@ let
       alias ll="${pkgs.eza}/bin/eza -l -g --git --color always --icons -a -s type";
       alias ls="${pkgs.eza}/bin/eza --color auto --icons -a -s type";
 
-      #zprof
+      zprof
 
       if [[ $(uname -s) == 'Darwin' ]]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
