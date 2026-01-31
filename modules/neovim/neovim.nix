@@ -78,7 +78,6 @@ pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
       ls_cmds = {
         cssls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-css-language-server", "--stdio" },
         elixirls = { "${pkgs.elixir-ls}/bin/elixir-ls" },
-        expert = { "${pkgs.expert}/bin/expert" },
         eslint = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-eslint-language-server", "--stdio" },
         html = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-html-language-server", "--stdio" },
         jsonls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-json-language-server", "--stdio" },

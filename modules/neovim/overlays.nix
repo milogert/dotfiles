@@ -4,9 +4,11 @@
 }:
 let
   fromFlakes = {
-    expert = inputs.expert.packages.${system}.default;
+    # Left here as an example.
+    # expert = inputs.expert.packages.${system}.default;
   };
 
+  # Left here as an example.
   # overlayPkgs = (
   #   final: prev:
   #   {
