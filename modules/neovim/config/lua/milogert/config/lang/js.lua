@@ -1,13 +1,10 @@
 local variables = require("milogert.variables")
 local on_attach = require("milogert.config.lsp.on_attach")
 
--- vim.lsp.set_log_level(vim.log.levels.DEBUG)
-vim.lsp.set_log_level("off")
-
 vim.lsp.config("jsonls", { cmd = variables.get().ls_cmds.jsonls })
 
-vim.lsp.config('eslint', {
-  cmd = variables.get().ls_cmds.eslint,
+vim.lsp.config('biome', {
+  cmd = variables.get().ls_cmds.biome,
   filetypes = {
     "javascript",
     "javascriptreact",
@@ -23,58 +20,63 @@ vim.lsp.config('eslint', {
     "json5",
   },
   on_attach = function(client, bufnr)
-    -- Force eslint to accept formatting requests.
-    client.server_capabilities.document_formatting = true
-    client.server_capabilities.document_range_formatting = false
+    -- Enable formatting capabilities
+    client.server_capabilities.documentFormattingProvider = true
+    client.server_capabilities.documentRangeFormattingProvider = true
+
+    -- Ensure code action capabilities are enabled
+    client.server_capabilities.codeActionProvider = true
 
     on_attach(client, bufnr)
   end,
   settings = {
     codeAction = {
-      disableRuleComment = {
-        enable = true,
-        location = "separateLine",
-      },
-      showDocumentation = {
+      ["source.action.useSortedKeys.biome"] = {
         enable = true,
       },
+      ["source.fixAll.biome"] = {
+        enable = true,
+      },
+      -- showDocumentation = {
+      --   enable = true,
+      -- },
     },
     codeActionOnSave = {
-      enable = false,
+      enable = true,
       mode = "all",
     },
   },
 })
---
--- vim.lsp.config('ts_ls', {
---   cmd = variables.get().ls_cmds.ts_ls,
---   on_attach = function(client, bufnr)
---     -- Disable tsserver formatting requsts.
---     client.server_capabilities.document_formatting = false
---     client.server_capabilities.document_range_formatting = false
---
---     on_attach(client, bufnr)
---   end,
---   root_markers = { "package.json" },
---   single_file_support = false,
---   init_options = {
---     -- preferences = {
---     --   includeInlayParameterNameHints = 'all',
---     --   includeInlayParameterNameHintsWhenArgumentMatchesName = true,
---     --   includeInlayFunctionParameterTypeHints = true,
---     --   includeInlayVariableTypeHints = true,
---     --   includeInlayPropertyDeclarationTypeHints = true,
---     --   includeInlayFunctionLikeReturnTypeHints = true,
---     --   includeInlayEnumMemberValueHints = true,
---     --   importModuleSpecifierPreference = 'non-relative',
---     -- },
---   },
--- })
+
+vim.lsp.config('tsgo', {
+  cmd = variables.get().ls_cmds.tsgo,
+  on_attach = function(client, bufnr)
+    -- Disable tsserver formatting requsts.
+    client.server_capabilities.document_formatting = false
+    client.server_capabilities.document_range_formatting = false
+
+    on_attach(client, bufnr)
+  end,
+  root_markers = { "package.json" },
+  single_file_support = false,
+  init_options = {
+    -- preferences = {
+    --   includeInlayParameterNameHints = 'all',
+    --   includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+    --   includeInlayFunctionParameterTypeHints = true,
+    --   includeInlayVariableTypeHints = true,
+    --   includeInlayPropertyDeclarationTypeHints = true,
+    --   includeInlayFunctionLikeReturnTypeHints = true,
+    --   includeInlayEnumMemberValueHints = true,
+    --   importModuleSpecifierPreference = 'non-relative',
+    -- },
+  },
+})
 
 vim.lsp.enable({
+  "biome",
   "jsonls",
-  "eslint",
-  -- "ts_ls",
+  "tsgo",
 })
 
 if variables.get().debuggers.vscode_js then
@@ -175,9 +177,3 @@ if variables.get().debuggers.vscode_js then
 else
   print("variables.get().debuggers.vscode_js is not configured")
 end
-
-require("typescript-tools").setup({
-  on_attach = function(client, bufnr)
-    on_attach(client, bufnr)
-  end,
-})

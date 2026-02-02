@@ -5,5 +5,6 @@
     # ../kitty.nix
     ../ranger.nix
     ../alacritty.nix
+    ../ghostty
   ];
 }

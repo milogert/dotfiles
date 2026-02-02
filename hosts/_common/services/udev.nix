@@ -5,5 +5,3 @@
     gnome.gnome-settings-daemon
   ];
 }
-
-

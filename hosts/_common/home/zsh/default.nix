@@ -1,48 +1,54 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  /* Borrowed from https://github.com/nix-community/home-manager/issues/6944 */
+  # Borrowed from https://github.com/nix-community/home-manager/issues/6944
   zshConfigBeforeInit = lib.mkOrder 500 ''
-      ## initExtraFirst start
-      if (( ''${+ZSH_PROFILE} )); then
-        echo "Starting performance profile"
-        zmodload zsh/datetime
-        setopt PROMPT_SUBST
-        PS4='+$EPOCHREALTIME %N:%i> '
+    ## initExtraFirst start
+    if (( ''${+ZSH_PROFILE} )); then
+      echo "Starting performance profile"
+      zmodload zsh/datetime
+      setopt PROMPT_SUBST
+      PS4='+$EPOCHREALTIME %N:%i> '
 
-        logfile=$(mktemp zsh_profile.XXXXXXXX)
-        echo "Logging to $logfile"
-        exec 3>&2 2>$logfile
+      logfile=$(mktemp zsh_profile.XXXXXXXX)
+      echo "Logging to $logfile"
+      exec 3>&2 2>$logfile
 
-        setopt XTRACE
-      fi
-      ## initExtraFirst end
+      setopt XTRACE
+    fi
+    ## initExtraFirst end
   '';
 
   zshConfigAfterInit = lib.mkOrder 1200 ''
-      ## initExtra start
-      if (( ''${+ZSH_PROFILE} )); then
-        echo "Done with performance profile"
-        unsetopt XTRACE
-        exec 2>&3 3>&-
-      fi
+    ## initExtra start
+    if (( ''${+ZSH_PROFILE} )); then
+      echo "Done with performance profile"
+      unsetopt XTRACE
+      exec 2>&3 3>&-
+    fi
 
-      alias ll="${pkgs.eza}/bin/eza -l -g --git --color always --icons -a -s type";
-      alias ls="${pkgs.eza}/bin/eza --color auto --icons -a -s type";
+    alias ll="${pkgs.eza}/bin/eza -l -g --git --color always --icons -a -s type";
+    alias ls="${pkgs.eza}/bin/eza --color auto --icons -a -s type";
 
-      zprof
+    zprof
 
-      if [[ $(uname -s) == 'Darwin' ]]; then
-        eval "$(/opt/homebrew/bin/brew shellenv)"
-      fi
+    if [[ $(uname -s) == 'Darwin' ]]; then
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
 
-      if [[ -d ~/Developer/flutter ]]; then
-        export PATH="$PATH:$HOME/Developer/flutter/bin"
-      fi
+    if [[ -d ~/Developer/flutter ]]; then
+      export PATH="$PATH:$HOME/Developer/flutter/bin"
+    fi
 
-      ## initExtra end
-    '';
-in {
+    ## initExtra end
+  '';
+in
+{
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
@@ -75,7 +81,10 @@ in {
       ## envExtra end
     '';
 
-    initContent = lib.mkMerge [ zshConfigBeforeInit zshConfigAfterInit ];
+    initContent = lib.mkMerge [
+      zshConfigBeforeInit
+      zshConfigAfterInit
+    ];
 
     shellAliases = {
       find_aliases = "zsh -ixc : -o sourcetrace 2>&1 | grep -w alias";
@@ -89,14 +98,14 @@ in {
     prezto = {
       enable = true;
       pmodules = [
-        /* "prompt" */
+        # "prompt"
         "environment"
-        /* "terminal" */
+        # "terminal"
         "editor"
         "history"
         "directory"
         "spectrum"
-        /* "wakeonlan" */
+        # "wakeonlan"
         "docker"
         "git"
         "utility"
@@ -107,8 +116,8 @@ in {
       prompt = {
         # Use starship here.
         theme = "none";
-        /* theme = "pure"; */
-        /* showReturnVal = true; */
+        # theme = "pure";
+        # showReturnVal = true;
       };
       color = true;
     };

@@ -59,7 +59,6 @@ cmp.setup({
   }),
   sources = cmp.config.sources({
     { name = "nvim_lsp", priority = 100 },
-    { name = "supermaven" },
     { name = "nvim_lua" },
     { name = "path" },
     { name = "calc" },

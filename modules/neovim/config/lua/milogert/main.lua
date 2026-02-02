@@ -1,7 +1,11 @@
 local M = {}
 local variables = require("milogert.variables")
-local u = require("milogert.utils")
 
+--[[
+Set up neovim.
+]]
+---@param variable_opts milogert.variables The variables to make globally
+---available.
 M.setup = function(variable_opts)
   variables.setup(variable_opts)
 
@@ -25,22 +29,23 @@ M.setup = function(variable_opts)
     "conform",
     "dressing",
     "dap",
+    -- "doodle",
     "dressing",
     "fidget",
     "fzf-lua",
     "gitsigns",
     -- "js-i18n",
     "keybindings",
-    "lint",
     "lsp.installer",
+    "mcp-hub",
     -- "none-ls",
+    "obsidian",
     "octo",
     "oil",
     "other",
-    "output-panel",
+    -- "output-panel",
     "package-info",
     "persistence",
-    "supermaven",
     "tada",
     "treesitter",
 

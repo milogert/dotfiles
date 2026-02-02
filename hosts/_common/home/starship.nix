@@ -109,7 +109,7 @@
       };
 
       git_status = {
-        disabled = false;
+        disabled = true;
         # format = "([\[$all_status$ahead_behind\]]($style) )";
         conflicted = "";
         ahead = "";

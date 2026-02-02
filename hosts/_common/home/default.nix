@@ -6,12 +6,11 @@
     ./fzf.nix
     ./git.nix
     ./lazydocker.nix
+    ./neovim.nix
     ./password-store.nix
     ./starship.nix
     ./tmux
-    ./wezterm.nix
     ./xdg.nix
-    ./wezterm.nix
     ./zsh
   ];
 

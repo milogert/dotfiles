@@ -60,18 +60,27 @@ blink.setup({
       EnumMember = "",
       Constant = "",
       Struct = "",
-      Supermaven = "",
-      supermaven = "",
     },
   },
 
   -- (Default) Only show the documentation popup when manually triggered
   completion = {
+    accept = {
+      auto_brackets = {
+        -- Whether to auto-insert brackets for functions
+        enabled = false,
+      },
+    },
+
     list = {
+      -- max_items = 200,
+      max_items = 20,
+
       selection = {
         preselect = false,
       },
     },
+
     menu = {
       max_height = 18,
 
@@ -92,7 +101,8 @@ blink.setup({
             text = function(ctx)
               local icon = ctx.kind_icon
               if vim.tbl_contains({ "Path" }, ctx.source_name) then
-                local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
+                local dev_icon, _ =
+                  require("nvim-web-devicons").get_icon(ctx.label)
                 if dev_icon then
                   icon = dev_icon
                 end
@@ -111,7 +121,8 @@ blink.setup({
             highlight = function(ctx)
               local hl = ctx.kind_hl
               if vim.tbl_contains({ "Path" }, ctx.source_name) then
-                local dev_icon, dev_hl = require("nvim-web-devicons").get_icon(ctx.label)
+                local dev_icon, dev_hl =
+                  require("nvim-web-devicons").get_icon(ctx.label)
                 if dev_icon then
                   hl = dev_hl
                 end
@@ -122,12 +133,13 @@ blink.setup({
         },
 
         columns = {
-          { "label",      "label_description", gap = 1 },
-          { "kind_icon",  gap = 1,             "kind" },
+          { "label", "label_description", gap = 1 },
+          { "kind_icon", gap = 1, "kind" },
           { "source_name" },
         },
       },
     },
+
     documentation = {
       auto_show = true,
       auto_show_delay_ms = 1,
@@ -154,16 +166,17 @@ blink.setup({
     default = { "git", "avante", "snippets", "lsp", "buffer", "path" },
 
     per_filetype = {
+      octo = { "snippets" },
       sql = { "snippets", "dadbod", "buffer" },
     },
 
     providers = {
       avante = {
-        name = 'Avante',
-        module = 'blink-cmp-avante',
+        name = "Avante",
+        module = "blink-cmp-avante",
         opts = {
           -- options for blink-cmp-avante
-        }
+        },
       },
 
       dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
@@ -173,7 +186,10 @@ blink.setup({
         name = "Git",
         -- only enable this source when filetype is gitcommit, markdown, or 'octo'
         enabled = function()
-          return vim.tbl_contains({ "octo", "gitcommit", "markdown" }, vim.bo.filetype)
+          return vim.tbl_contains(
+            { "octo", "gitcommit", "markdown" },
+            vim.bo.filetype
+          )
         end,
 
         --- @module 'blink-cmp-git'
@@ -182,12 +198,6 @@ blink.setup({
           -- options for the blink-cmp-git
         },
       },
-
-      -- supermaven = {
-      --   name = "supermaven",
-      --   module = "blink-cmp-supermaven",
-      --   async = true,
-      -- },
     },
   },
 
@@ -211,6 +221,7 @@ blink.setup({
           preselect = false,
         },
       },
+
       menu = { auto_show = true },
     },
   },

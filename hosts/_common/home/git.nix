@@ -1,60 +1,59 @@
-{ pkgs
-, config
-, ...
+{
+  pkgs,
+  config,
+  ...
 }:
 
 {
   home.packages = with pkgs; [
     gh
-    gitAndTools.delta
-    gitAndTools.gh
+    delta
+    gh
   ];
 
   programs.git = {
-    package = pkgs.gitAndTools.gitFull;
     enable = true;
-    userName  = "Milo Gertjejansen";
-    userEmail = "milo@milogert.com";
+    package = pkgs.gitFull;
 
-    aliases = {
-      a = "add";
-      amend = "commit --amend";
-      branches = "for-each-ref --sort=-committerdate --format='%(color:cyan)%(authordate:relative)\t%(color:red)%(authorname)\t%(color:white)%(color:bold)%(refname:short)' refs/remotes";
-      c = "commit";
-      ca = "commit --amend";
-      ci = "commit -a";
-      cp = "commit --amend --no-edit";
-      co = "checkout";
-      d = "diff";
-      dc = "diff --changed";
-      ds = "diff --staged";
-      f = "fetch";
-      ignore = "!gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;}; gi";
-      loll = "log --abbrev-commit --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --";
-      m = "merge";
-      one = "log --pretty=oneline";
-      outstanding = "rebase -i @{u}";
-      pb = "!git add package.json yarn.lock && git commit -m \"Package bump\" && git push";
-      praise = "blame";
-      s = "status";
-      sw = "switch";
-      unpushed = "log @{u}";
-      wc = "whatchanged";
-      #wip = "rebase -i @{u}";
-      wipp = "for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads";
-      wip = "!git wipp | fzf --tac --bind 'enter:execute(git checkout {-1})+abort'";
-      zap = "fetch -p";
-    };
+    settings = {
+      user = {
+        name = "Milo Gertjejansen";
+        email = "milo@milogert.com";
+      };
 
-    ignores = [
-      "*~"
-      ".DS_Store"
-      ".idea"
-      ".vscode"
-      "node_modules"
-    ];
+      lfs.enable = true;
 
-    extraConfig = {
+      alias = {
+        a = "add";
+        amend = "commit --amend";
+        branches = "for-each-ref --sort=-committerdate --format='%(color:cyan)%(authordate:relative)\t%(color:red)%(authorname)\t%(color:white)%(color:bold)%(refname:short)' refs/remotes";
+        c = "commit";
+        ca = "commit --amend";
+        ci = "commit -a";
+        cp = "commit --amend --no-edit";
+        co = "checkout";
+        d = "diff";
+        dc = "diff --changed";
+        ds = "diff --staged";
+        f = "fetch";
+        ignore = "!gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;}; gi";
+        loll = "log --abbrev-commit --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --";
+        m = "merge";
+        one = "log --pretty=oneline";
+        outstanding = "rebase -i @{u}";
+        pb = "!git add package.json yarn.lock && git commit -m \"Package bump\" && git push";
+        praise = "blame";
+        s = "status";
+        sw = "switch";
+        unpushed = "log @{u}";
+        wc = "whatchanged";
+        #wip = "rebase -i @{u}";
+        wipp = "for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads";
+        wip = "!git wipp | fzf --tac --bind 'enter:execute(git checkout {-1})+abort'";
+        wt = "worktree";
+        zap = "fetch -p";
+      };
+
       core = {
         editor = "nvim";
         excludesfile = "$HOME/.config/git/ignore";
@@ -91,15 +90,23 @@
         hunk-header-decoration-style = "yellow box";
       };
     };
+
+    ignores = [
+      "*~"
+      ".DS_Store"
+      ".idea"
+      ".vscode"
+      "node_modules"
+    ];
   };
 
   home.activation.requestReadProjectForGH =
     let
       gh = "${pkgs.gh}/bin/gh";
     in
-      config.lib.dag.entryAfter ["writeBoundary"] ''
-        if (! ${gh} auth status); then
-          run ${gh} auth login -s read:project
-        fi
-      '';
+    config.lib.dag.entryAfter [ "writeBoundary" ] ''
+      if (! ${gh} auth status); then
+        run ${gh} auth login -s read:project
+      fi
+    '';
 }

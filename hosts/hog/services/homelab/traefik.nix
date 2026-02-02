@@ -1,16 +1,19 @@
 { pkgs, ... }:
 
 {
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
 
   services.traefik = {
     enable = true;
 
     staticConfigOptions = {
-      /* log = { */
-      /*   filePath = "/var/lib/traefik/traefik.system.log"; */
-      /*   level = "DEBUG"; */
-      /* }; */
+      # log = {
+      # filePath = "/var/lib/traefik/traefik.system.log";
+      # level = "DEBUG";
+      # };
 
       accessLog.filePath = "/var/lib/traefik/traefik.access.log";
 
@@ -20,7 +23,10 @@
 
         dnsChallenge = {
           provider = "route53";
-          resolvers = [ "2606:4700:4700::1111:53" "2606:4700:4700::1001:53" ];
+          resolvers = [
+            "2606:4700:4700::1111:53"
+            "2606:4700:4700::1001:53"
+          ];
         };
 
         # Remove for production.
@@ -44,7 +50,7 @@
       # pilot.token = builtins.readFile ("/etc/secrets/traefik-pilot.token");
     };
 
-      # This gives access to the dashboard.
+    # This gives access to the dashboard.
     dynamicConfigOptions.http = {
       routers.traefik = {
         entryPoints = [ "websecure" ];
@@ -70,10 +76,12 @@
         middlewares = [ "wishlistRedirect" ];
         tls = {
           certResolver = "letsEncrypt";
-          domains = [ {
-            main = "rrw.milogert.com";
-            sans = [ "wishlist.milogert.com" ];
-          } ];
+          domains = [
+            {
+              main = "rrw.milogert.com";
+              sans = [ "wishlist.milogert.com" ];
+            }
+          ];
         };
       };
 
@@ -88,6 +96,5 @@
     };
   };
 
-  systemd.services.traefik.serviceConfig.EnvironmentFile =
-    "/etc/secrets/route53.env";
+  systemd.services.traefik.serviceConfig.EnvironmentFile = "/etc/secrets/route53.env";
 }

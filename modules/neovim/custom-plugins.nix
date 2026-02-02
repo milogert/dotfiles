@@ -1,27 +1,19 @@
-{ pkgs
-, lib
-, fetchFromGitHub
-, vimUtils
-, rustPlatform
+{
+  pkgs,
+  lib,
+  fetchFromGitHub,
+  vimUtils,
+  rustPlatform,
 }:
 
 let
-  mkIfElse = p: yes: no: lib.mkMerge [
-    (lib.mkIf p yes)
-    (lib.mkIf (!p) no)
-  ];
+  mkIfElse =
+    p: yes: no:
+    lib.mkMerge [
+      (lib.mkIf p yes)
+      (lib.mkIf (!p) no)
+    ];
   inherit (pkgs.stdenv) isDarwin;
-
-  blink-cmp-supermaven = vimUtils.buildVimPlugin rec {
-    name = "blink-cmp-supermaven";
-    src = fetchFromGitHub {
-      owner = "Huijiro";
-      repo = name;
-      rev = "635ce12e9e2d2a5a483728ac764d0bc5b57af23b";
-      sha256 = "0f0nvriv6hh986j0br8xvfpm7l5267pfsj6gmx01g4fsxkrbjnx5";
-    };
-    doCheck = false;
-  };
 
   conform-nvim = vimUtils.buildVimPlugin rec {
     name = "conform.nvim";
@@ -45,7 +37,6 @@ let
     doCheck = false;
   };
 
-
   git-permalink-nvim = vimUtils.buildVimPlugin rec {
     name = "git-permalink-nvim";
 
@@ -56,6 +47,20 @@ let
       rev = "2d41bacd16370bd4f0e5327e947c70708d6c94df";
       sha256 = "0d9r4p4a8dms9k01ayvdgppy96ds8pnbq38r1kvjw7m9a7qg1rr4";
     };
+  };
+
+  mcbhub-nvim = vimUtils.buildVimPlugin rec {
+    name = "mcphub.nvim";
+
+    # src = /Users/milo/git/git-permalink-nvim;
+    src = fetchFromGitHub {
+      owner = "ravitemer";
+      repo = name;
+      rev = "8ff40b5edc649959bb7e89d25ae18e055554859a";
+      sha256 = "1saw3xfrbnwpjklcffp144q2y100kd51yrhvmxnhgc7niy0ip893";
+    };
+
+    doCheck = false;
   };
 
   output-panel-nvim = vimUtils.buildVimPlugin rec {
@@ -74,14 +79,13 @@ let
     src = fetchFromGitHub {
       owner = "nabekou29";
       repo = name;
-      rev =  "c1ffe818b08d1f5b1f53c26e7bd9fd9efaafef9e";
+      rev = "c1ffe818b08d1f5b1f53c26e7bd9fd9efaafef9e";
       sha256 = "sha256-qEYZbnzPrft9lVFtzAjYnVTlc1H95bTlaNLBZmFn2e0=";
     };
     doCheck = false;
   };
 
   lua-json5-bin = rustPlatform.buildRustPackage rec {
-    useFetchCargoVendor = true;
     pname = "lua-json5";
     version = "014fcab8093b48b3932dd0d51ae2d98bbb578d67";
     src = fetchFromGitHub {
@@ -92,8 +96,7 @@ let
     };
 
     cargoHash = "sha256-lMBA8OidN1GGHmIGvJhkLudeEe+RODk1+xdDT2ElEhw=";
-    RUSTFLAGS = 
-      if isDarwin then "-C link-arg=-undefined -C link-arg=dynamic_lookup" else "";
+    RUSTFLAGS = if isDarwin then "-C link-arg=-undefined -C link-arg=dynamic_lookup" else "";
   };
 
   lua-json5 = vimUtils.buildVimPlugin rec {
@@ -106,9 +109,10 @@ let
     };
 
     postInstall =
-      if isDarwin
-        then "cp ${lua-json5-bin}/lib/liblua_json5.dylib $out/lua/json5.dylib"
-        else "strip ${lua-json5-bin}/lib/liblua_json5.so -o $out/lua/json5.so";
+      if isDarwin then
+        "cp ${lua-json5-bin}/lib/liblua_json5.dylib $out/lua/json5.dylib"
+      else
+        "strip ${lua-json5-bin}/lib/liblua_json5.so -o $out/lua/json5.so";
     doCheck = false;
   };
 
@@ -173,18 +177,17 @@ let
       sha256 = "1rdfw25lljv53h2f2nc1gmx9awggk7k3nrfj46ssl11jn6lyvbj8";
     };
   };
-in {
-  inherit
-    nvim-dap-vscode-js
-  ;
+in
+{
+  inherit nvim-dap-vscode-js;
   list = [
-    blink-cmp-supermaven
     bloat-nvim
     conform-nvim
     fzf-lua-frecency-nvim
     git-permalink-nvim
     js-i18n-nvim
     lua-json5
+    mcbhub-nvim
     none-ls-extras-nvim
     nvim-dap-vscode-js
     output-panel-nvim

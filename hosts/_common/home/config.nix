@@ -1,4 +1,10 @@
-{ pkgs, user, name, otherOptions, ... }:
+{
+  pkgs,
+  user,
+  name,
+  otherOptions,
+  ...
+}:
 
 {
   shell = pkgs.zsh;
@@ -6,5 +12,9 @@
   description = name;
   createHome = true;
   isNormalUser = true;
-  extraGroups = [ "wheel" "networkmanager" ];
-} // otherOptions
+  extraGroups = [
+    "wheel"
+    "networkmanager"
+  ];
+}
+// otherOptions

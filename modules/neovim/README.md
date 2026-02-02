@@ -33,7 +33,6 @@ require('milogert.main').setup({
   nix = false,
 
   debuggers = {
-    elixir_ls = "path/to/elixir_ls",
     vscode_js = {
       adapter = "path/to/vscode_js_debug_adapter",
       debugger = "path/to/vscode_js_debugger",
@@ -42,9 +41,9 @@ require('milogert.main').setup({
 
   -- Not including any of these will just disable that language server.
   ls_cmds = {
+    biome = { "bin/command", ...args },
     cssls = { "bin/command", ...args },
     elixirls = { "bin/command", ...args },
-    eslint = { "bin/command", ...args },
     html = { "bin/command", ...args },
     jsonls = { "bin/command", ...args },
     lua_ls = { "bin/command", ...args },
@@ -53,7 +52,7 @@ require('milogert.main').setup({
     tailwindcss = { "bin/command", ...args, },
     terraformls = { "bin/command", ...args },
     texlab = { "bin/command", ...args },
-    ts_ls = { "bin/command", ...args, },
+    tsgo = { "bin/command", ...args, },
   },
 })
 ```
@@ -121,7 +120,6 @@ Oh boy. Probably too many.
 | `persistence-nvim`            | `utils` | Saves session state when exiting neovim. `<leader>sr` to **s**ession **r**estore. |
 | `plenary-nvim`                | `utils` | Dependecy of various plugins. |
 | `srcery-vim`                  | `ui` | My theme 🤤. |
-| `supermaven-nvim`             | `tools` | AI completion. |
 | `vim-abolish`                 | `utils` | Remove all instances of words. Untested. |
 | `vim-dadbod`                  | `tools` | Database browser. |
 | `vim-dadbod-completion`       | `tools` | Database browser completion. |

@@ -8,7 +8,8 @@ let
   hostPort1 = "8082";
   hostPort2 = "8083";
   image = "livebook/livebook:latest";
-in {
+in
+{
   users.users."${userGroupName}" = {
     home = "/var/lib/${userGroupName}";
     createHome = true;

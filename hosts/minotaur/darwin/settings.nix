@@ -1,5 +1,7 @@
 {
   system = {
+    primaryUser = "milo";
+
     defaults = {
       NSGlobalDomain = {
         ## Inputs

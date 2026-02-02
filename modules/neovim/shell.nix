@@ -1,4 +1,9 @@
-{ mkShell, rnix-lsp, terraform-ls, tree-sitter }:
+{
+  mkShell,
+  rnix-lsp,
+  terraform-ls,
+  tree-sitter,
+}:
 
 mkShell {
   buildInputs = [

@@ -42,6 +42,6 @@ Logger.file = function(handle, msg)
   return msg
 end
 
-Logger.plenary = require("plenary.log").new { plugin = "milogert.dotfiles" }
+Logger.plenary = require("plenary.log").new({ plugin = "milogert.dotfiles" })
 
 return Logger
