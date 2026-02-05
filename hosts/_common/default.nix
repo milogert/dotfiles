@@ -5,6 +5,7 @@ let
     "https://cache.nixos.org"
     "https://nix-community.cachix.org"
     "https://milogert.cachix.org"
+    "https://milogert-neovim.cachix.org"
   ];
 in
 {
@@ -26,6 +27,7 @@ in
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "milogert.cachix.org-1:MaZAAWJXDV85HpLm2yyLX9b52wQghRxljAZJg0dEjkY="
+        "milogert-neovim.cachix.org-1:1MQUFLyvP9rjqczFdEuiMhXa3zvsS8BfvwlPZFx26u8="
       ];
     };
 

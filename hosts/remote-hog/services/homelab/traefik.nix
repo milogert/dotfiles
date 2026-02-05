@@ -85,4 +85,20 @@
 
   systemd.services.traefik.serviceConfig.EnvironmentFile =
     "/etc/secrets/route53.env";
+
+  services.traefik.dynamicConfigOptions.http = {
+    routers.jellyfin = {
+      entryPoints = [ "websecure" ];
+      rule = "Host(`ai.milogert.com`)";
+      service = "ai";
+
+      tls = {
+        certResolver = "letsEncrypt";
+        domains = [ { main = "ai.milogert.com"; } ];
+      };
+    };
+
+    services.jellyfin.loadBalancer.servers = [ { url = "http://localhost:18790"; } ];
+  };
+
 }

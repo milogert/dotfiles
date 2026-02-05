@@ -20,6 +20,12 @@
       url = "path:./modules/neovim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    openclaw = {
+      url = "github:openclaw/nix-openclaw";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs =
@@ -29,6 +35,7 @@
       home-manager,
       neovim-custom,
       nixpkgs,
+      openclaw,
     }:
     let
       overlays = final: prev: {
@@ -44,10 +51,9 @@
         plexPass = prev.plex.override { plexRaw = final.plexPassRaw; };
 
         tt-rss-plugin-feediron = prev.tt-rss-plugin-feediron.overrideAttrs (old: {
-          inherit (old) name;
           src = prev.fetchFromGitHub {
             owner = "feediron";
-            repo = old.name;
+            repo = "ttrss_plugin-feediron";
             rev = "5573ffde9c2c782eae1616e86127fb27e150130a";
             sha256 = "1c737i390fc1wwdw1jh2bab92pmzlmyh75wnmnxldvaajd01fki9";
           };
@@ -65,6 +71,7 @@
         overlays = [
           overlays
           neovim-custom.overlays.default
+          openclaw.overlays.default
         ];
       };
 
@@ -87,6 +94,7 @@
         {
           home-manager.users.${user} = {
             imports = [
+              openclaw.homeManagerModules.openclaw
               user_path
               common_config
               common_user_config
@@ -146,6 +154,7 @@
         (mkCommonConfig { inherit host type users; })
         ++ [
           home-manager.darwinModules.home-manager
+          openclaw.darwinModules.openclaw
         ];
 
       mkNixosConfig =
@@ -226,18 +235,22 @@
       packages = {
         aarch64-linux = {
           neovim = neovim-custom.packages.aarch64-linux.default;
+          openclaw = openclaw.packages.aarch64-linux.openclaw;
         };
 
         x86_64-linux = {
           neovim = neovim-custom.packages.x86_64-linux.default;
+          openclaw = openclaw.packages.x86_64-linux.openclaw;
         };
 
         aarch64-darwin = {
           neovim = neovim-custom.packages.aarch64-darwin.default;
+          openclaw = openclaw.packages.aarch64-darwin.openclaw;
         };
 
         x86_64-darwin = {
           neovim = neovim-custom.packages.x86_64-darwin.default;
+          openclaw = openclaw.packages.x86_64-darwin.openclaw;
         };
       };
     };
