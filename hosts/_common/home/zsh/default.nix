@@ -45,6 +45,60 @@ let
       export PATH="$PATH:$HOME/Developer/flutter/bin"
     fi
 
+    # cdwt - pushd to a git worktree by branch name
+    cdwt() {
+      local dir
+      dir=$(git worktree list | grep "''${1:?branch name required}" | head -1 | cut -f1 -d' ')
+      if [[ -n "$dir" ]]; then
+        cd "$dir"
+      else
+        echo "No worktree found matching '$1'"
+        return 1
+      fi
+    }
+
+    _cdwt() {
+      local -a branches
+      local line
+
+      while IFS= read -r line; do
+        [[ "$line" == branch\ refs/heads/* ]] && branches+=("''${line#branch refs/heads/}")
+      done < <(git worktree list --porcelain)
+
+      compadd -- "''${branches[@]}"
+    }
+
+    compdef _cdwt cdwt
+
+    # This is generated from `pnpm completion zsh`
+    #compdef pnpm
+    ###-begin-pnpm-completion-###
+    if type compdef &>/dev/null; then
+      _pnpm_completion () {
+        local reply
+        local si=$IFS
+
+        IFS=$'\n' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" SHELL=zsh pnpm completion-server -- "''${words[@]}"))
+        IFS=$si
+
+        if [ "$reply" = "__tabtab_complete_files__" ]; then
+          _files
+        else
+          _describe 'values' reply
+        fi
+      }
+      # When called by the Zsh completion system, this will end with
+      # "loadautofunc" when initially autoloaded and "shfunc" later on, otherwise,
+      # the script was "eval"-ed so use "compdef" to register it with the
+      # completion system
+      if [[ $zsh_eval_context == *func ]]; then
+        _pnpm_completion "$@"
+      else
+        compdef _pnpm_completion pnpm
+      fi
+    fi
+    ###-end-pnpm-completion-###
+
     ## initExtra end
   '';
 in
@@ -54,6 +108,7 @@ in
     autosuggestion.enable = true;
     enableCompletion = true;
     autocd = true;
+    dotDir = "${config.xdg.configHome}/zsh";
 
     localVariables = {
       EDITOR = "nvim";

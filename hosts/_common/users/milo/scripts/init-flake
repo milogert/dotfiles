@@ -1,0 +1,441 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# --- Colors ---
+
+bold="\033[1m"
+dim="\033[2m"
+reset="\033[0m"
+cyan="\033[36m"
+green="\033[32m"
+yellow="\033[33m"
+red="\033[31m"
+magenta="\033[35m"
+
+# --- Helpers ---
+
+header() {
+  echo ""
+  echo -e "${bold}${cyan}$1${reset}"
+  echo -e "${dim}$(printf '%.0s─' $(seq 1 ${#1}))${reset}"
+}
+
+info() {
+  echo -e "  ${green}+${reset} $1"
+}
+
+label() {
+  printf "  ${dim}%-14s${reset} %b\n" "$1" "$2"
+}
+
+prompt() {
+  local var="$1" prompt_text="$2" default="${3:-}"
+  if [[ -n "${!var:-}" ]]; then
+    return
+  fi
+  if [[ -n "$default" ]]; then
+    read -rp "$(echo -e "  ${yellow}?${reset} ${bold}${prompt_text}${reset} ${dim}[$default]${reset}: ")" input
+    eval "$var=\"${input:-$default}\""
+  else
+    read -rp "$(echo -e "  ${yellow}?${reset} ${bold}${prompt_text}${reset}: ")" input
+    eval "$var=\"$input\""
+  fi
+}
+
+prompt_yn() {
+  local var="$1" prompt_text="$2" default="${3:-n}"
+  if [[ -n "${!var:-}" ]]; then
+    return
+  fi
+  local hint="y/N"
+  [[ "$default" == "y" ]] && hint="Y/n"
+  read -rp "$(echo -e "  ${yellow}?${reset} ${bold}${prompt_text}${reset} ${dim}[$hint]${reset}: ")" input
+  input="${input:-$default}"
+  case "$input" in
+    [yY]*) eval "$var=y" ;;
+    *) eval "$var=n" ;;
+  esac
+}
+
+prompt_list() {
+  local var="$1" prompt_text="$2"
+  if [[ -n "${!var:-}" ]]; then
+    return
+  fi
+  echo -e "  ${yellow}?${reset} ${bold}${prompt_text}${reset} ${dim}(space-separated, empty to skip)${reset}"
+  read -rp "$(echo -e "    ${yellow}>${reset} ")" input
+  eval "$var=\"$input\""
+}
+
+# --- Banner ---
+
+echo ""
+echo -e "${bold}${magenta}  init-flake${reset} ${dim}~ nix flake scaffolding${reset}"
+
+# --- Gather info ---
+
+header "Project"
+
+# Positional args: init-flake [project-name] [db-name] [db-user]
+PROJECT_NAME="${1:-}"
+DB_NAME="${2:-}"
+DB_USER="${3:-}"
+
+prompt PROJECT_NAME "Project name" "$(basename "$PWD")"
+prompt APP_PORT "App port" "3000"
+
+header "Services"
+
+prompt_yn USE_POSTGRES "Use PostgreSQL?" "y"
+
+if [[ "$USE_POSTGRES" == "y" ]]; then
+  prompt DB_NAME "Database name" "$PROJECT_NAME"
+  prompt DB_USER "Database user" "$PROJECT_NAME"
+  prompt DB_PASSWORD "Database password" "dev"
+  prompt DB_PORT "Database port" "5432"
+fi
+
+prompt_yn USE_REDIS "Use Redis?" "n"
+REDIS_PORT=""
+if [[ "$USE_REDIS" == "y" ]]; then
+  prompt REDIS_PORT "Redis port" "6379"
+fi
+
+header "Development"
+
+prompt_list EXTRA_PACKAGES "Additional nix packages (e.g. nodejs_22 pnpm elixir go)"
+prompt DEV_COMMAND "Dev command (the command that starts your app, empty to skip)" ""
+prompt_list CHECK_COMMANDS "Check/lint commands as name:command pairs (e.g. lint:\"npm run lint\" typecheck:\"npm run tsc\")"
+
+# --- Confirmation ---
+
+header "Summary"
+
+label "Project" "$PROJECT_NAME"
+label "App port" "$APP_PORT"
+
+if [[ "$USE_POSTGRES" == "y" ]]; then
+  label "PostgreSQL" "$DB_NAME ${dim}(user: $DB_USER, port: $DB_PORT)${reset}"
+else
+  label "PostgreSQL" "${dim}no${reset}"
+fi
+
+if [[ "$USE_REDIS" == "y" ]]; then
+  label "Redis" "port $REDIS_PORT"
+else
+  label "Redis" "${dim}no${reset}"
+fi
+
+if [[ -n "$DEV_COMMAND" ]]; then
+  label "Dev cmd" "$DEV_COMMAND"
+fi
+
+if [[ -n "$EXTRA_PACKAGES" ]]; then
+  label "Packages" "$EXTRA_PACKAGES"
+fi
+
+if [[ -n "$CHECK_COMMANDS" ]]; then
+  label "Checks" "$CHECK_COMMANDS"
+fi
+
+echo ""
+echo -e "  ${dim}Will generate:${reset} flake.nix, .envrc, .ports.envrc, .gitignore updates"
+echo ""
+
+CONFIRM=""
+prompt_yn CONFIRM "Proceed?" "y"
+if [[ "$CONFIRM" != "y" ]]; then
+  echo -e "\n  ${red}Aborted.${reset}"
+  exit 0
+fi
+
+# --- Generate .ports.envrc ---
+
+header "Generating files"
+
+{
+  echo "export PORT=$APP_PORT"
+  if [[ "$USE_POSTGRES" == "y" ]]; then
+    echo "export DATABASE_PORT=$DB_PORT"
+  fi
+  if [[ "$USE_REDIS" == "y" ]]; then
+    echo "export REDIS_PORT=$REDIS_PORT"
+  fi
+} > .ports.envrc
+info ".ports.envrc"
+
+# --- Generate .envrc ---
+
+cat > .envrc <<'ENVRC'
+# Sources the .envrc above us, if it's there.
+source_up_if_exists
+
+# Port configuration, if it's there.
+source_env_if_exists .ports.envrc
+
+# Use the flake if it's there.
+use flake
+ENVRC
+info ".envrc"
+
+# --- Generate flake.nix ---
+
+# Build postgres block
+PG_BLOCK=""
+if [[ "$USE_POSTGRES" == "y" ]]; then
+  PG_BLOCK=$(cat <<PGEOF
+
+            services.postgres."pg" =
+              let
+                dbName = "${DB_NAME}";
+                dbUser = "${DB_USER}";
+                dbPassword = "${DB_PASSWORD}";
+                dbPort = lib.strings.toInt (builtins.getEnv "DATABASE_PORT");
+              in
+              {
+                enable = true;
+                port = dbPort;
+                dataDir = "./.services/pg";
+                connectionURI = { dbName, ... }: "postgres://\${dbUser}:\${dbPassword}@localhost:\${builtins.toString dbPort}/\${dbName}";
+                initialDatabases = [
+                  { name = "${DB_NAME}"; }
+                ];
+
+                initialScript.after = ''
+                  CREATE USER \${dbUser} WITH PASSWORD '\${dbPassword}';
+                  ALTER DATABASE \"\${dbName}\" OWNER TO \${dbUser};
+                  GRANT ALL ON DATABASE \"\${dbName}\" TO \${dbUser};
+                '';
+              };
+PGEOF
+  )
+fi
+
+# Build redis block
+REDIS_BLOCK=""
+if [[ "$USE_REDIS" == "y" ]]; then
+  REDIS_BLOCK=$(cat <<RDEOF
+
+            services.redis."redis" = {
+              enable = true;
+              port = lib.strings.toInt (builtins.getEnv "REDIS_PORT");
+              dataDir = "./.services/redis";
+            };
+RDEOF
+  )
+fi
+
+# Build app process block
+APP_PROCESS=""
+if [[ -n "$DEV_COMMAND" ]]; then
+  DEPENDS=""
+  if [[ "$USE_POSTGRES" == "y" ]] || [[ "$USE_REDIS" == "y" ]]; then
+    DEPENDS="                  depends_on = {"
+    [[ "$USE_POSTGRES" == "y" ]] && DEPENDS="$DEPENDS
+                    pg.condition = \"process_started\";"
+    [[ "$USE_REDIS" == "y" ]] && DEPENDS="$DEPENDS
+                    redis.condition = \"process_started\";"
+    DEPENDS="$DEPENDS
+                  };"
+  fi
+
+  APP_PROCESS=$(cat <<APPEOF
+
+            settings = {
+              processes = {
+                ${PROJECT_NAME} = {
+${DEPENDS}
+                  command = "${DEV_COMMAND}";
+                };
+              };
+            };
+APPEOF
+  )
+fi
+
+# Build checks block
+CHECKS_PROCESSES=""
+if [[ -n "$CHECK_COMMANDS" ]]; then
+  CHECKS_LIST=""
+  for pair in $CHECK_COMMANDS; do
+    name="${pair%%:*}"
+    cmd="${pair#*:}"
+    # Strip surrounding quotes if present
+    cmd="${cmd%\"}"
+    cmd="${cmd#\"}"
+    CHECKS_LIST="${CHECKS_LIST}
+                    {
+                      name = \"${name}\";
+                      command = \"${cmd}\";
+                    }"
+  done
+
+  CHECKS_PROCESSES=$(cat <<CHKEOF
+
+          process-compose.checks = {
+            imports = [
+              services-flake.processComposeModules.default
+            ];
+
+            settings = {
+              processes =
+                let
+                  checks = [${CHECKS_LIST}
+                  ];
+
+                in
+                builtins.foldl' (
+                  acc: curr:
+                  acc
+                  // {
+                    "\${curr.name}" = {
+                      command = curr.command;
+                    };
+                  }
+                ) { } checks;
+            };
+          };
+CHKEOF
+  )
+fi
+
+# Build packages list
+PACKAGES_NIX=""
+for pkg in $EXTRA_PACKAGES; do
+  PACKAGES_NIX="${PACKAGES_NIX}
+              ${pkg}"
+done
+
+# Build checks command
+CHECKS_CMD=""
+if [[ -n "$CHECK_COMMANDS" ]]; then
+  CHECKS_CMD='
+              {
+                help = "Watches all linty tasks";
+                name = "checks";
+                command = "nix run --impure '"'"'.#checks'"'"'";
+              }'
+fi
+
+cat > flake.nix <<FLAKEEOF
+{
+  inputs = {
+    nixpkgs = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    };
+
+    process-compose-flake.url = "github:Platonic-Systems/process-compose-flake";
+
+    services-flake.url = "github:juspay/services-flake";
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
+    devshell.url = "github:numtide/devshell";
+  };
+
+  outputs =
+    inputs@{
+      flake-parts,
+      nixpkgs,
+      process-compose-flake,
+      services-flake,
+      devshell,
+      ...
+    }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "aarch64-darwin"
+      ];
+
+      imports = [
+        process-compose-flake.flakeModule
+        devshell.flakeModule
+      ];
+
+      perSystem =
+        {
+          pkgs,
+          system,
+          lib,
+          ...
+        }:
+        {
+          _module.args.pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
+
+          process-compose."default" = {
+            imports = [
+              services-flake.processComposeModules.default
+            ];
+${PG_BLOCK}${REDIS_BLOCK}${APP_PROCESS}
+          };
+${CHECKS_PROCESSES}
+          devshells.default = {
+            commands = [
+              {
+                help = "Brings the project up";
+                name = "tui";
+                command = "nix run --impure";
+              }
+              {
+                help = "Brings the project up without the TUI";
+                name = "up";
+                command = "PC_DISABLE_TUI=1 nix run --impure";
+              }${CHECKS_CMD}
+              {
+                help = "Prints the help menu";
+                name = "help";
+                command = "menu";
+              }
+            ];
+
+            packages = with pkgs; [
+              curl${PACKAGES_NIX}
+            ];
+          };
+        };
+    };
+}
+FLAKEEOF
+info "flake.nix"
+
+# --- Post-generation actions ---
+
+header "Post-setup"
+
+# .gitignore updates
+GITIGNORE_ENTRIES=()
+[[ "$USE_POSTGRES" == "y" ]] || [[ "$USE_REDIS" == "y" ]] && GITIGNORE_ENTRIES+=(".services/")
+GITIGNORE_ENTRIES+=(".ports.envrc")
+
+if [[ ${#GITIGNORE_ENTRIES[@]} -gt 0 ]]; then
+  if [[ -f .gitignore ]]; then
+    for entry in "${GITIGNORE_ENTRIES[@]}"; do
+      if ! grep -qxF "$entry" .gitignore; then
+        echo "$entry" >> .gitignore
+        info "added ${bold}$entry${reset} to .gitignore"
+      fi
+    done
+  else
+    printf '%s\n' "${GITIGNORE_ENTRIES[@]}" > .gitignore
+    info "created .gitignore ${dim}(${GITIGNORE_ENTRIES[*]})${reset}"
+  fi
+fi
+
+# direnv allow
+if command -v direnv &>/dev/null; then
+  if ! direnv status 2>/dev/null | grep -q "Found RC allowed true"; then
+    prompt_yn RUN_DIRENV_ALLOW "Run 'direnv allow'?" "y"
+    if [[ "$RUN_DIRENV_ALLOW" == "y" ]]; then
+      direnv allow
+      info "ran direnv allow"
+    fi
+  fi
+fi
+
+echo ""
+echo -e "  ${green}${bold}All done!${reset} Run ${cyan}up${reset} or ${cyan}tui${reset} to get started."
+echo ""

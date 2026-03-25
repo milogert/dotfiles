@@ -94,6 +94,9 @@ vim.opt.foldenable = false
 vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
+-- Indentation.
+vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+
 -- Backspace.
 vim.opt.backspace = { 'indent', 'eol', 'start' }
 

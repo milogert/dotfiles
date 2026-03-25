@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   pkgs,
   ...
 }:
@@ -24,14 +23,15 @@ in
   imports = [
     (common_dir + /home/default.nix)
     (common_dir + /home/direnv.nix)
+    ./ai/claude.nix
+    ./programs
+    ./scripts
   ];
 
   home.packages = with pkgs; [
-    elixir
-    nodejs
-    stack
-    watchman
     gitoxide
+    nodejs
+    watchman
   ];
 
   programs.git.signing = {

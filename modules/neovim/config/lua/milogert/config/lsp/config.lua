@@ -1,4 +1,7 @@
--- vim.lsp.set_log_level(vim.log.levels.INFO)
+local on_attach = require("milogert.config.lsp.on_attach")
+local lsp_utils = require("milogert.config.lsp.utils")
+
+vim.lsp.set_log_level(vim.log.levels.INFO)
 -- vim.lsp.set_log_level("off")
 
 vim.diagnostic.config({
@@ -26,6 +29,54 @@ vim.diagnostic.config({
     prefix = " ",
   },
 })
+
+-- Default settings for all server.
+vim.lsp.config("*", {
+  root_dir = lsp_utils.root_dir_fn(),
+  -- capabilities = require('blink.cmp').get_lsp_capabilities({
+  --   textDocument = {
+  --     -- semanticTokens = {
+  --     --   multilineTokenSupport = true,
+  --     -- },
+  --     completion = {
+  --       completionItem = {
+  --         snippetSupport = true,
+  --       },
+  --     },
+  --     documentColor = true,
+  --     hover = true,
+  --   },
+  --   workspace = {
+  --     didChangeWatchedFiles = {
+  --       dynamicRegistration = true,
+  --     },
+  --   },
+  -- }),
+  handlers = {
+    ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded", width = 81 }),
+    ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded", width = 81 }),
+  },
+  -- flags = { debounce_text_changes = 150 },
+  on_attach = on_attach,
+})
+
+local default_capabilities = vim.lsp.protocol.make_client_capabilities()
+default_capabilities.textDocument.completion.completionItem.snippetSupport = true
+default_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+default_capabilities.textDocument.documentColor = true
+
+-- M.default_capabilities = require("cmp_nvim_lsp").default_capabilities(default_capabilities)
+
+-- local border = {
+--   {"╭", "FloatBorder"},
+--   {"─", "FloatBorder"},
+--   {"╮", "FloatBorder"},
+--   {"│", "FloatBorder"},
+--   {"╯", "FloatBorder"},
+--   {"─", "FloatBorder"},
+--   {"╰", "FloatBorder"},
+--   {"│", "FloatBorder"},
+-- }
 
 -- see LSP diagnostic symbols/signs
 vim.fn.sign_define("DiagnosticSignError", { text = "✗", texthl = "DiagnosticSignError" })

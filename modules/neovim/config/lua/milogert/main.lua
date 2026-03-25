@@ -4,7 +4,7 @@ local variables = require("milogert.variables")
 --[[
 Set up neovim.
 ]]
----@param variable_opts milogert.variables The variables to make globally
+---@param variable_opts milogert.Variables The variables to make globally
 ---available.
 M.setup = function(variable_opts)
   variables.setup(variable_opts)
@@ -22,8 +22,8 @@ M.setup = function(variable_opts)
   -- Source plugin configs.
   local plugins = {
     "arpeggio",
-    "avante",
     "blink-cmp",
+    "bruno",
     "colorizer",
     "comment",
     "conform",
@@ -36,7 +36,7 @@ M.setup = function(variable_opts)
     "gitsigns",
     -- "js-i18n",
     "keybindings",
-    "lsp.installer",
+    "lsp.config",
     "mcp-hub",
     -- "none-ls",
     "obsidian",
@@ -46,12 +46,15 @@ M.setup = function(variable_opts)
     -- "output-panel",
     "package-info",
     "persistence",
-    "supermaven",
     "tada",
     "treesitter",
 
     "heirline", -- Needs to be last since it uses info from other imports
   }
+
+  -- This was 3, but made the status bar be only on the bottom and only reflect
+  -- the current window.
+  vim.opt.laststatus = 2
 
   for _, plugin in ipairs(plugins) do
     local ok, err = pcall(require, "milogert.config." .. plugin)
@@ -123,6 +126,11 @@ M.setup = function(variable_opts)
     file scratch
   endfunction
   ]])
+
+  -- Just for oil.nvim.
+  -- require("yank-path").setup({
+  --   use_oil = true,
+  -- })
 end
 
 return M

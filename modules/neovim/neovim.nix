@@ -2,9 +2,7 @@
 
 let
   vimPlugins = with pkgs.vimPlugins; [
-    avante-nvim
     blink-cmp
-    blink-cmp-avante
     blink-cmp-git
     blink-compat
     comment-nvim # :help commenting, consider removing this later.
@@ -16,6 +14,7 @@ let
     fzf-lua
     gitsigns-nvim
     heirline-nvim
+    hotpot-nvim
     hydra-nvim
     lazy-nvim
     lspkind-nvim

@@ -5,13 +5,11 @@ local gen_default_opts = function (opts)
 end
 
 ---@class milogert.variables.Debuggers {
----@field elixir_ls string
 ---@field vscode_js { adapter: string, debugger: string }
 
 ---@class milogert.variables.Ls_Cmds
 ---@field biome string[]
 ---@field cssls string[]
----@field elixirls string[]
 ---@field html string[]
 ---@field jsonls string[]
 ---@field lua_ls string[]
@@ -41,6 +39,7 @@ local M = {}
 Setup variables. Ultimately saves them globally so I can access them wherever.
 ]]
 ---@param opts milogert.Variables commonly used variables in my configuration
+---@return milogert.Variables vars modified slightly based on some config.
 M.setup = function (opts)
   if _G.milogert_variables ~= nil then
     logger.info('_G.milogert_variables have already been set up')

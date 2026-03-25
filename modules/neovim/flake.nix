@@ -86,6 +86,7 @@
           # octo-nvim = prev.pkgs.vimUtils.buildVimPlugin {
           #   name = "octo-nvim";
           #   src = /Users/milo/git/octo.nvim;
+          #   doCheck = false;
           # };
         };
 
