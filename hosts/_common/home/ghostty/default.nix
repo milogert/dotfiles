@@ -43,6 +43,9 @@ in
       font-family = "Hack Nerd Font Mono";
       font-thicken = true;
       font-thicken-strength = 0;
+      link-url = true;
+      link-previews = true;
+      maximize = true;
       inherit custom-shader;
     };
   };
