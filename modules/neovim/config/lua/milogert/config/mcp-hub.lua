@@ -4,8 +4,5 @@ require("mcphub").setup({
   port = 37373,
 
   extensions = {
-    avante = {
-      make_slash_commands = true, -- make /slash commands from MCP server prompts
-    },
   },
 })

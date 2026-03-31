@@ -1,8 +1,9 @@
-{ pkgs, ... }: 
+{ pkgs, ... }:
 
 let
   userGroupId = 276;
-in {
+in
+{
   imports = [
     # ./nzbget.nix
     # ./nzbhydra2.nix
@@ -12,6 +13,7 @@ in {
     # ./radarr.nix
     # ./readarr.nix
     # ./sonarr.nix
+    ./calibre-web-automated.nix
 
     # Future
     # ./overseerr.nix # https://overseerr.dev/

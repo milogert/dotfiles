@@ -5,6 +5,8 @@
 
   services.traefik.enable = true;
 
+  # services.traefik.dynamic.dir = "/var/lib/traefik/dynamic";
+
   services.traefik.staticConfigOptions = {
     /* log = { */
     /*   filePath = "/var/lib/traefik/traefik.system.log"; */
@@ -87,7 +89,7 @@
     "/etc/secrets/route53.env";
 
   services.traefik.dynamicConfigOptions.http = {
-    routers.jellyfin = {
+    routers.ai = {
       entryPoints = [ "websecure" ];
       rule = "Host(`ai.milogert.com`)";
       service = "ai";
@@ -98,7 +100,7 @@
       };
     };
 
-    services.jellyfin.loadBalancer.servers = [ { url = "http://localhost:18790"; } ];
+    services.ai.loadBalancer.servers = [ { url = "http://localhost:18789"; } ];
   };
 
 }

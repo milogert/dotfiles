@@ -4,10 +4,11 @@ let
   hostPort = "5055";
   containerPort = hostPort;
   image = "sctx/overseerr";
-in {
+in
+{
   virtualisation.oci-containers.containers.overseerr = {
     image = image;
-    ports = ["${hostPort}:${containerPort}"];
+    ports = [ "${hostPort}:${containerPort}" ];
     volumes = [
       "${config.users.users.media.home}/config/overseerr:/app/config"
     ];
@@ -32,4 +33,3 @@ in {
     services.overseerr.loadBalancer.servers = [ { url = "http://localhost:${hostPort}"; } ];
   };
 }
-

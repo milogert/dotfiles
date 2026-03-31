@@ -22,7 +22,6 @@ M.setup = function(variable_opts)
   -- Source plugin configs.
   local plugins = {
     "arpeggio",
-    "avante",
     "blink-cmp",
     "colorizer",
     "comment",

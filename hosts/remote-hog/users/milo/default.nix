@@ -9,7 +9,7 @@ let
 in {
   imports = [
     # (common_dir + /home/types/headless.nix)
-    ./openclaw.nix
+    ./openclaw
   ];
 
   home.stateVersion = "21.05";

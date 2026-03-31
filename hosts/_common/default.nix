@@ -79,7 +79,6 @@ in
       go
       htop
       jq
-      neofetch
       nix-prefetch-git
       # nixops
       neovim-custom

@@ -163,7 +163,7 @@ blink.setup({
   -- Default list of enabled providers defined so that you can extend it
   -- elsewhere in your config, without redefining it, due to `opts_extend`
   sources = {
-    default = { "git", "avante", "snippets", "lsp", "buffer", "path" },
+    default = { "git", "snippets", "lsp", "buffer", "path" },
 
     per_filetype = {
       octo = { "snippets" },
@@ -171,14 +171,6 @@ blink.setup({
     },
 
     providers = {
-      avante = {
-        name = "Avante",
-        module = "blink-cmp-avante",
-        opts = {
-          -- options for blink-cmp-avante
-        },
-      },
-
       dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
 
       git = {
