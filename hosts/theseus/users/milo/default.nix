@@ -17,7 +17,6 @@
     cargo
     cider
     discord
-    slumber
     wyvern
     yarn
   ];

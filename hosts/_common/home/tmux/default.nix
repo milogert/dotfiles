@@ -31,8 +31,10 @@ in
     historyLimit = 10000;
     terminal = "xterm-256color"; # screen-* or tmux-*
     plugins = with tmuxPlugins; [
-      vim-tmux-navigator
+      continuum
+      resurrect
       srcery-tmux
+      vim-tmux-navigator
     ];
     extraConfig = ''
       # Mostly my own config but...
@@ -71,6 +73,10 @@ in
       bind | split-window -h -c "#{pane_current_path}"
       bind - split-window -v -c "#{pane_current_path}"
       set -g renumber-windows on
+
+      # Rename panes based on the current path automatically.
+      set-option -g automatic-rename on
+      set-option -g automatic-rename-format '#{b:pane_current_path}'
 
       # Rejoin panes
       bind j choose-window 'join-pane -h -s "%%"'
@@ -168,6 +174,16 @@ in
       # Marking Panes #########################################################
 
       bind \` switch-client -t'{marked}'
+
+      # Plugins ###############################################################
+
+      ## Resurrect
+      # What to restore
+      set -g @resurrect-processes 'vim nvim ssh psql "~claude --continue" claude "~neovim-edge --impure"'
+
+      ## Continuum
+      # Automatic restore
+      set -g @continuum-restore 'on'
     '';
   };
 }

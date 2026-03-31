@@ -5,7 +5,6 @@
     ../_common/default.nix
     ./darwin/settings.nix
     ./darwin/homebrew.nix
-    ./darwin/nix-apps.nix
     ./networking.nix
     ./services
   ];

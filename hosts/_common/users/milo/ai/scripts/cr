@@ -1,0 +1,25 @@
+#!/bin/bash
+# cr (claude resume): Resume Claude Code session with fzf picker
+#
+# Usage:
+#   cr           # Select from current project sessions
+#   cr --all     # Select from all projects
+#   cr <name>    # Resume named session directly
+
+set -euo pipefail
+
+# If a session name is provided, resume it directly
+if [[ $# -gt 0 ]] && [[ "$1" != "--all" ]]; then
+    exec claude --resume "$1"
+fi
+
+# Use fzf to select session
+session_id=$(claude-fzf "$@")
+
+if [[ -z "$session_id" ]]; then
+    echo "No session selected" >&2
+    exit 1
+fi
+
+# Resume the selected session
+exec claude --resume "$session_id"

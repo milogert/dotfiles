@@ -50,6 +50,20 @@ vim.lsp.config('biome', {
 
 vim.lsp.config('tsgo', {
   cmd = variables.get().ls_cmds.tsgo,
+  filetypes = {
+    "javascript",
+    "javascriptreact",
+    "javascript.jsx",
+    "typescript",
+    "typescriptreact",
+    "typescript.tsx",
+    "vue",
+    "svelte",
+    "astro",
+    "json",
+    "jsonc",
+    "json5",
+  },
   on_attach = function(client, bufnr)
     -- Disable tsserver formatting requsts.
     client.server_capabilities.document_formatting = false
@@ -59,18 +73,18 @@ vim.lsp.config('tsgo', {
   end,
   root_markers = { "package.json" },
   single_file_support = false,
-  init_options = {
-    -- preferences = {
-    --   includeInlayParameterNameHints = 'all',
-    --   includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-    --   includeInlayFunctionParameterTypeHints = true,
-    --   includeInlayVariableTypeHints = true,
-    --   includeInlayPropertyDeclarationTypeHints = true,
-    --   includeInlayFunctionLikeReturnTypeHints = true,
-    --   includeInlayEnumMemberValueHints = true,
-    --   importModuleSpecifierPreference = 'non-relative',
-    -- },
-  },
+  -- init_options = {
+  --   -- preferences = {
+  --   --   includeInlayParameterNameHints = 'all',
+  --   --   includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+  --   --   includeInlayFunctionParameterTypeHints = true,
+  --   --   includeInlayVariableTypeHints = true,
+  --   --   includeInlayPropertyDeclarationTypeHints = true,
+  --   --   includeInlayFunctionLikeReturnTypeHints = true,
+  --   --   includeInlayEnumMemberValueHints = true,
+  --   --   importModuleSpecifierPreference = 'non-relative',
+  --   -- },
+  -- },
 })
 
 vim.lsp.enable({

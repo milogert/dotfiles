@@ -1,4 +1,4 @@
-{ pkgs, user, ... }:
+{ pkgs, config, user, ... }:
 
 {
   shell = pkgs.zsh;

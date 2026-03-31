@@ -14,6 +14,7 @@ let
     fzf-lua
     gitsigns-nvim
     heirline-nvim
+    hotpot-nvim
     hydra-nvim
     lazy-nvim
     lspkind-nvim

@@ -7,13 +7,18 @@
 }:
 
 let
-  mkIfElse =
-    p: yes: no:
-    lib.mkMerge [
-      (lib.mkIf p yes)
-      (lib.mkIf (!p) no)
-    ];
   inherit (pkgs.stdenv) isDarwin;
+
+  bruno-nvim = vimUtils.buildVimPlugin rec {
+    name = "bruno.nvim";
+    src = fetchFromGitHub {
+      owner = "romek-codes";
+      repo = name;
+      rev = "ad3b2c0039174ac1e7b7247016e95bd7e5d84755";
+      sha256 = "09ki1dkrk25icq7jz4z3b8ns6jahraydb7bydzm36637r0nzc8li";
+    };
+    doCheck = false;
+  };
 
   conform-nvim = vimUtils.buildVimPlugin rec {
     name = "conform.nvim";
@@ -56,8 +61,8 @@ let
     src = fetchFromGitHub {
       owner = "ravitemer";
       repo = name;
-      rev = "8ff40b5edc649959bb7e89d25ae18e055554859a";
-      sha256 = "1saw3xfrbnwpjklcffp144q2y100kd51yrhvmxnhgc7niy0ip893";
+      rev = "7cd5db330f41b7bae02b2d6202218a061c3ebc1f";
+      sha256 = "009w7iq31k9sx94p3izqnjbgi0gr9fwn7p5wjcaa3kz16jz4znw3";
     };
 
     doCheck = false;
@@ -177,10 +182,23 @@ let
       sha256 = "1rdfw25lljv53h2f2nc1gmx9awggk7k3nrfj46ssl11jn6lyvbj8";
     };
   };
+
+  yank-path-nvim = vimUtils.buildVimPlugin rec {
+    name = "yank-path.nvim";
+    src = fetchFromGitHub {
+      owner = "ywpkwon";
+      repo = name;
+      rev = "e660248de1e4c91a760f510fc165c172a19cc1d5";
+      sha256 = "0pbrfbrdlkgwa55d0sc4q7h5nfdz08h4zza3a0x6b2a2r97159fg";
+    };
+  };
 in
 {
-  inherit nvim-dap-vscode-js;
+  inherit
+    nvim-dap-vscode-js
+    ;
   list = [
+    bruno-nvim
     bloat-nvim
     conform-nvim
     fzf-lua-frecency-nvim
@@ -194,5 +212,6 @@ in
     playtime-nvim
     vim-arpeggio
     vim-tada
+    yank-path-nvim
   ];
 }

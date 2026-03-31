@@ -16,6 +16,5 @@
 
   home.packages = with pkgs; [
     deadnix
-    slumber
   ];
 }

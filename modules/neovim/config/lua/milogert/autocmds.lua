@@ -125,4 +125,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
-
+-- -- Always checktime on files if they are changed.
+-- vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
+--   command = "checktime",
+-- })
