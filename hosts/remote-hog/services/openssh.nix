@@ -6,6 +6,7 @@
     openFirewall = true;
     settings = {
       PasswordAuthentication = false;
+      StreamLocalBindUnlink = "yes";
     };
   };
 }
