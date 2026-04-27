@@ -34,24 +34,27 @@ config: check ${HOST}
 	@echo -e "\033[0;32mDone configuring ${HOST}\033[0m"
 	@echo -e "\033[0;32m  Run \033[1;34mmake update && make\033[0;32m if your programs are out of date\033[0m"
 
-# NixOS commands.
-_nixos-build:
+# DRY
+__building_msg:
 	@echo -e "\033[0;33m-- Building ----------------------------\033[0m"
+
+__switching_msg:
+	@echo -e "\033[0;33m-- Switching ---------------------------\033[0m"
+
+# NixOS commands.
+_nixos_build: __building_msg
 	nix build ".#nixosConfigurations.${HOST}.config.system.build.toplevel" --extra-experimental-features 'nix-command flakes' --impure
 
-_nixos-switch:
-	@echo -e "\033[0;33m-- Switching ---------------------------\033[0m"
+_nixos_switch: _nixos_build __switching_msg
 	# Old command: sudo nixos-rebuild switch --flake ".#${HOST}"
 	# See https://github.com/NixOS/nixpkgs/issues/169193
-	nixos-rebuild --sudo switch --flake ".#${HOST}"
+	nixos-rebuild --sudo switch --flake ".#${HOST}" --impure
 
 # nix-darwin commands.
-_nix-darwin-build:
-	@echo -e "\033[0;33m-- Building ----------------------------\033[0m"
+_nix_darwin_build: _install_requirements _nix_darwin_switch __building_msg
 	nix build ".#darwinConfigurations.${HOST}.system" --extra-experimental-features 'nix-command flakes' --impure
 
-_nix-darwin-switch:
-	@echo -e "\033[0;33m-- Switching ---------------------------\033[0m"
+_nix_darwin_switch: __switching_msg
 	sudo ./result/sw/bin/darwin-rebuild switch --flake ".#${HOST}" --impure
 
 # Common commands.
@@ -61,11 +64,11 @@ _install_requirements:
 	./installers/nix
 
 # Exposed commands.
-update: update-neovim
+update: update_neovim
 	@echo -e "\033[0;33m-- Updating ----------------------------\033[0m"
 	nix flake update --extra-experimental-features 'nix-command flakes'
 
-update-neovim:
+update_neovim:
 	@echo -e "\033[0;33m-- Updating (neovim) -------------------\033[0m"
 	nix flake update --flake ./modules/neovim --extra-experimental-features 'nix-command flakes'
 
@@ -73,8 +76,8 @@ add-user:
 	./scripts/add_user.sh
 
 # Machines
-hog: _nixos-build _nixos-switch
-remote-hog: _nixos-build _nixos-switch
-theseus: _nixos-build _nixos-switch
-nutop: _install_requirements _nix-darwin-build _nix-darwin-switch
-minotaur: _install_requirements _nix-darwin-build _nix-darwin-switch
+hog: _nixos_switch
+remote-hog: _nixos_switch
+theseus: _nixos_switch
+nutop: _nix_darwin_build
+minotaur: _nix_darwin_build

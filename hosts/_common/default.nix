@@ -5,6 +5,7 @@ let
     "https://cache.nixos.org"
     "https://nix-community.cachix.org"
     "https://milogert.cachix.org"
+    "https://milogert-neovim.cachix.org"
   ];
 in
 {
@@ -26,11 +27,12 @@ in
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "milogert.cachix.org-1:MaZAAWJXDV85HpLm2yyLX9b52wQghRxljAZJg0dEjkY="
+        "milogert-neovim.cachix.org-1:1MQUFLyvP9rjqczFdEuiMhXa3zvsS8BfvwlPZFx26u8="
       ];
     };
 
     # Garbage collection.
-    gc.automatic = false;
+    gc.automatic = true;
     gc.options = "--delete-older-than 30d";
 
     # Which package set to use.
@@ -44,7 +46,9 @@ in
       BAT_THEME = "srcery";
       EDITOR = "nvim";
       MANPAGER = "nvim +Man!";
-      NPM_TOKEN = "`cat $HOME/.npmrc 2>/dev/null | grep npmjs | grep authToken | tr \"=\" \"\\n\" | tail -n 1`";
+      NPM_TOKEN = ''
+        `${pkgs.coreutils}/bin/cat $HOME/.npmrc 2>/dev/null | ${pkgs.gnugrep}/bin/grep npmjs | ${pkgs.gnugrep}/bin/grep authToken | ${pkgs.coreutils}/bin/tr "=" "\n" | ${pkgs.coreutils}/bin/tail -n 1`
+      '';
       PATH = builtins.concatStringsSep ":" [
         "/usr/local/sbin"
         "$HOME/.local/bin"
@@ -83,6 +87,7 @@ in
       openvpn
       parallel
       postgresql
+      python3
       rename
       ripgrep
       shellcheck

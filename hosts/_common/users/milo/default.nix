@@ -24,13 +24,16 @@ in
     (common_dir + /home/default.nix)
     (common_dir + /home/direnv.nix)
     ./ai/claude.nix
+    ./ai/pi.nix
     ./programs
     ./scripts
   ];
 
   home.packages = with pkgs; [
+    codex
     gitoxide
     nodejs
+    pi-coding-agent
     watchman
   ];
 

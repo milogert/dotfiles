@@ -31,8 +31,8 @@ in
           ++ (with prev.pkgs; [
             elixir-ls
             nil
-            nodePackages.typescript
-            nodePackages.typescript-language-server
+            typescript
+            typescript-language-server
             statix
             sqlfluff
             stylua

@@ -9,8 +9,6 @@ let
   octoPath = "${config.xdg.configHome}/nvim/snippets/octo.json";
 in
 {
-  home.packages = with pkgs; [ lazydocker ];
-
   home.file."${config.xdg.configHome}/nvim/snippets/package.json".text = lib.generators.toJSON { } {
     name = "personal-snippets";
     contributes = {

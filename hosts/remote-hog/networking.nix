@@ -9,8 +9,8 @@
     nameservers = [
       "1.1.1.1"
       "1.0.0.1"
-      "2606:4700:4700::1111"
-      "2606:4700:4700::1001"
+      # "2606:4700:4700::1111"
+      # "2606:4700:4700::1001"
       # "2a01:4ff:ff00::add:2"
       # "2a01:4ff:ff00::add:1"
    ];
@@ -41,14 +41,14 @@
     #
     # };
 
-    hosts = {
-      "2a01:4f8:c010:d56::2" = ["github.com"];
-      "2a01:4f8:c010:d56::3" = ["api.github.com"];
-      "2a01:4f8:c010:d56::4" = ["codeload.github.com"];
-      "2a01:4f8:c010:d56::5" = ["objects.githubusercontent.com"];
-      "2a01:4f8:c010:d56::6" = ["ghcr.io"];
-      "2a01:4f8:c010:d56::7" = ["pkg.github.com" "npm.pkg.github.com" "maven.pkg.github.com" "nuget.pkg.github.com" "rubygems.pkg.github.com"];
-    };
+    # hosts = {
+    #   "2a01:4f8:c010:d56::2" = ["github.com"];
+    #   "2a01:4f8:c010:d56::3" = ["api.github.com"];
+    #   "2a01:4f8:c010:d56::4" = ["codeload.github.com"];
+    #   "2a01:4f8:c010:d56::5" = ["objects.githubusercontent.com"];
+    #   "2a01:4f8:c010:d56::6" = ["ghcr.io"];
+    #   "2a01:4f8:c010:d56::7" = ["pkg.github.com" "npm.pkg.github.com" "maven.pkg.github.com" "nuget.pkg.github.com" "rubygems.pkg.github.com"];
+    # };
   };
 
   services.udev.extraRules = ''

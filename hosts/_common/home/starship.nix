@@ -99,7 +99,7 @@
       };
 
       git_commit = {
-        only_detached = true;
+        only_detached = false;
         commit_hash_length = 7;
       };
 

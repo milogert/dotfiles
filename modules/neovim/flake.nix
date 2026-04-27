@@ -17,8 +17,8 @@
               # node-debug2
               elixir-ls
               nil
-              nodePackages.typescript
-              nodePackages.typescript-language-server
+              typescript
+              typescript-language-server
               statix
               sqlfluff
               stylua
