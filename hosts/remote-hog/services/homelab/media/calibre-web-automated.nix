@@ -41,17 +41,17 @@ in
   };
 
   services.traefik.dynamicConfigOptions.http = {
-    routers.calibre-web-automated = {
+    routers.books = {
       entryPoints = [ "websecure" ];
-      rule = "Host(`calibre-web-automated.milogert.com`)";
-      service = "calibre-web-automated";
+      rule = "Host(`books.milogert.com`)";
+      service = "books";
 
       tls = {
         certResolver = "letsEncrypt";
-        domains = [ { main = "calibre-web-automated.milogert.com"; } ];
+        domains = [ { main = "books.milogert.com"; } ];
       };
     };
 
-    services.calibre-web-automated.loadBalancer.servers = [ { url = "http://localhost:${hostPort}"; } ];
+    services.books.loadBalancer.servers = [ { url = "http://localhost:${hostPort}"; } ];
   };
 }

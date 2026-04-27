@@ -9,183 +9,251 @@
   programs.openclaw = {
     enable = true;
 
-    documents = ./documents;
+    package = pkgs.openclaw;
 
     instances.default = {
       enable = true;
       package = pkgs.openclaw;
-      # configPath = "${config.home.homeDirectory}/.config/openclaw/openclaw.json";
-      # stateDir = "${config.xdg.dataHome}/openclaw";
-      # workspaceDir = "${config.xdg.dataHome}/openclaw/workspace";
       stateDir = "${config.home.homeDirectory}/.openclaw";
       workspaceDir = "${config.home.homeDirectory}/.openclaw/workspace";
       gatewayPort = 18789;
 
-      config = {
-        gateway = {
-          mode = "local";
-          auth = {
-            mode = "token";
-            # Change me
-            token = "some funky token";
-          };
-
-          trustedProxies = [
-            "127.0.0.1"
-            "::1"
-            "localhost"
-          ];
-          # Optional. Default false.
-          # Only enable if your proxy cannot provide X-Forwarded-For.
-          allowRealIpFallback = false;
-
-          controlUi = {
-            allowedOrigins = [
-              "https://ai.milogert.com"
-            ];
-          };
-        };
-
-        auth = {
-          profiles = {
-            "anthropic:default" = {
-              provider = "anthropic";
-              mode = "api_key";
-            };
-            "openai:default" = {
-              provider = "openai";
+      config =
+        let
+          discordUserId = "165074227752337408";
+        in
+        {
+          gateway = {
+            mode = "local";
+            auth = {
               mode = "token";
+              token = "\${OPENCLAW_GATEWAY_TOKEN}";
             };
-          };
-        };
 
-        agents = {
-          defaults = {
-            model = {
-              primary = "anthropic/claude-sonnet-4-5";
-              fallbacks = [
-                "anthropic/claude-opus-4-5"
-                "openai/gpt-4o"
+            trustedProxies = [
+              "127.0.0.1"
+              "::1"
+              "localhost"
+            ];
+            # Optional. Default false.
+            # Only enable if your proxy cannot provide X-Forwarded-For.
+            allowRealIpFallback = false;
+
+            controlUi = {
+              allowedOrigins = [
+                "https://ai.milogert.com"
               ];
             };
-            models = {
-              "anthropic/claude-sonnet-4-5" = { };
-            };
-            workspace = "~/.openclaw/workspace";
-            maxConcurrent = 4;
           };
-          list = [
-            {
-              id = "main";
-              default = true;
-            }
-          ];
-        };
 
-        # bindings = [
-        #   {
-        #     agentId = "main";
-        #     match = {
-        #       channel = "discord";
-        #     };
-        #   }
-        # ];
-
-        # commands = {
-        #   native = "auto";
-        #   nativeSkills = "auto";
-        # };
-
-        # hooks = {
-        #   internal = {
-        #     enabled = true;
-        #     entries = {
-        #       session-memory = {
-        #         enabled = true;
-        #       };
-        #       boot-md = {
-        #         enabled = true;
-        #       };
-        #     };
-        #   };
-        # };
-
-        logging = {
-          level = "info";
-          # file = "/tmp/openclaw/openclaw-YYYY-MM-DD.log";
-          consoleLevel = "debug";
-          # consoleStyle = "pretty";
-          # redactSensitive = "tools";
-          # redactPatterns = [ "sk-.*" ];
-        };
-
-        channels = {
-          telegram = {
-            enabled = true;
-            dmPolicy = "pairing";
-            groups = {
-              "*" = {
-                requireMention = true;
+          auth = {
+            profiles = {
+              "openai-codex:default" = {
+                provider = "openai-codex";
+                mode = "oauth";
               };
             };
-            groupPolicy = "allowlist";
-            streamMode = "partial";
           };
 
-          discord = {
-            enabled = true;
-            token = {
-              # source = "file";
-              # provider = "files";
-              # id = "discord";
-              source = "env";
-              provider = "default";
-              id = "DISCORD_BOT_TOKEN";
+          agents = {
+            defaults = {
+              model = {
+                primary = "openai-codex/gpt-5.4";
+                fallbacks = [ ];
+              };
+              workspace = "~/.openclaw/workspace";
+              maxConcurrent = 4;
+              blockStreamingDefault = "off";
             };
-            groupPolicy = "allowlist";
-            guilds = {
-              "1472133243368116264" = {
-                requireMention = false;
-                channels = {
-                  "1472133243997524012" = {
-                    allow = true;
+            list = [
+              {
+                id = "main";
+                default = true;
+              }
+            ];
+          };
+
+          hooks = {
+            enabled = true;
+            token = "\${OPENCLAW_HOOKS_TOKEN}";
+            path = "/hooks";
+
+            mappings = [
+              {
+                id = "mail";
+                match.path = "mail";
+                action = "agent";
+                agentId = "main";
+                wakeMode = "now";
+                name = "Generic Hook";
+                deliver = true;
+                channel = "last";
+                transform = {
+                  module = "./generic-message.js";
+                };
+              }
+            ];
+          };
+
+          logging = {
+            level = "info";
+            # file = "/tmp/openclaw/openclaw-YYYY-MM-DD.log";
+            consoleLevel = "debug";
+            # consoleStyle = "pretty";
+            # redactSensitive = "tools";
+            # redactPatterns = [ "sk-.*" ];
+          };
+
+          channels = {
+            discord =
+              let
+                guildId = "1472133243368116264";
+              in
+              {
+                enabled = true;
+                token = {
+                  # source = "file";
+                  # provider = "files";
+                  # id = "discord";
+                  source = "env";
+                  provider = "default";
+                  id = "DISCORD_BOT_TOKEN";
+                };
+                groupPolicy = "allowlist";
+                guilds = {
+                  "${guildId}" = {
+                    requireMention = false;
+                  };
+                };
+                maxLinesPerMessage = 30;
+                allowFrom = [
+                  discordUserId
+                ];
+                streaming = {
+                  mode = "partial";
+                  chunkMode = "newline";
+                  preview.chunk = {
+                    minChars = 300;
+                    maxChars = 1200;
+                    breakPreference = "paragraph";
+                  };
+                };
+                voice = {
+                  enabled = true;
+                  # allowFrom = [
+                  #   discordUserId
+                  # ];
+                  autoJoin = [
+                    {
+                      inherit guildId;
+                      channelId = "1472133243997524013";
+                    }
+                  ];
+                  daveEncryption = true;
+                  decryptionFailureTolerance = 24;
+                  tts = {
+                    provider = "elevenlabs";
+                    providers.elevenlabs = { };
+                  };
+                };
+                autoPresence = {
+                  enabled = true;
+                  intervalMs = 30000;
+                  minUpdateIntervalMs = 15000;
+                  healthyText = "";
+                  degradedText = "Flagging";
+                  exhaustedText = "Exhausted ({reason})";
+                };
+                execApprovals = {
+                  enabled = true;
+                };
+                ackReaction = "🌀";
+              };
+          };
+
+          talk = {
+            provider = "elevenlabs";
+            providers.elevenlabs = { };
+          };
+
+          messages.tts = {
+            enabled = true;
+            provider = "elevenlabs";
+            providers.elevenlabs = { };
+          };
+
+          tools = {
+            web = {
+              search = {
+                enabled = true;
+                openaiCodex = {
+                  enabled = true;
+                  mode = "cached";
+                  # allowedDomains = [ "example.com" ];
+                  contextSize = "high";
+                  userLocation = {
+                    country = "US";
+                    city = "New York";
+                    timezone = "America/New_York";
+                  };
+                };
+
+                # Empty means autodetect and autofallback.
+                # provider = "brave";
+                maxResults = 5;
+                timeoutSeconds = 30;
+              };
+            };
+          };
+
+          commands = {
+            native = "auto";
+            nativeSkills = "auto";
+            text = true;
+            bash = false;
+            bashForegroundMs = 2000;
+            config = false;
+            mcp = false;
+            plugins = false;
+            debug = false;
+            restart = true;
+            ownerAllowFrom = [ "discord:${discordUserId}" ];
+            ownerDisplay = "raw";
+            # ownerDisplaySecret = "\${OWNER_ID_HASH_SECRET}";
+            # allowFrom = {
+            #   discord = [ "user:${discordUserId}" ];
+            # };
+            # useAccessGroups = true;
+          };
+
+          skills = {
+            entries = {
+              agentmail = {
+                enabled = true;
+              };
+            };
+          };
+
+          plugins = {
+            entries = {
+              openai = {
+                enabled = true;
+              };
+              voice-call = {
+                enabled = true;
+                config = { };
+              };
+              memory-core = {
+                config = {
+                  dreaming = {
+                    enabled = true;
+                    timezone = "America/New_York";
                   };
                 };
               };
             };
           };
         };
-
-        tools = {
-          web = {
-            search = {
-              provider = "brave";
-              maxResults = 5;
-              timeoutSeconds = 30;
-            };
-          };
-        };
-
-        skills = {
-          entries = {
-            agentmail = {
-              enabled = true;
-            };
-          };
-        };
-
-        # plugins = {
-        #   entries = {
-        #     discord = {
-        #       enabled = true;
-        #     };
-        #
-        #     telegram = {
-        #       enabled = true;
-        #     };
-        #   };
-        # };
-      };
     };
   };
 

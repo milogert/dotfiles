@@ -58,6 +58,8 @@
             sha256 = "1c737i390fc1wwdw1jh2bab92pmzlmyh75wnmnxldvaajd01fki9";
           };
         });
+
+        pi-coding-agent = prev.callPackage ./packages/pi-coding-agent/package.nix { };
       };
 
       nixpkgsConfig = {
@@ -82,6 +84,9 @@
                 ''
                   cp -r ${prev.openclaw-gateway} $out
                   chmod -R u+w $out
+
+                  # Keep plugin manifests next to the built extension bundles so
+                  # the gateway can discover packaged extensions correctly.
                   for ext_dir in $out/lib/openclaw/extensions/*/; do
                     ext_name=$(basename "$ext_dir")
                     manifest="$ext_dir/openclaw.plugin.json"
@@ -90,6 +95,7 @@
                       cp "$manifest" "$dist_dir/"
                     fi
                   done
+
                   for wrapper in $out/bin/*; do
                     if [ -f "$wrapper" ]; then
                       sed -i "s|${prev.openclaw-gateway}|$out|g" "$wrapper"
@@ -101,8 +107,6 @@
             openclaw = final.symlinkJoin {
               name = "openclaw";
               paths = [ final.openclaw-gateway ];
-              # then add back only the tools you actually want from openclaw:
-              # ++ [ final.openai-whisper final.ffmpeg ]
             };
           })
         ];
@@ -265,26 +269,55 @@
         };
       };
 
-      packages = {
-        aarch64-linux = {
-          neovim = neovim-custom.packages.aarch64-linux.default;
-          openclaw = openclaw.packages.aarch64-linux.openclaw;
-        };
+      packages =
+        let
+          mkPkgs =
+            system:
+            import nixpkgs {
+              inherit system;
+              inherit (nixpkgsConfig) config overlays;
+            };
+        in
+        {
+          aarch64-linux =
+            let
+              pkgs = mkPkgs "aarch64-linux";
+            in
+            {
+              neovim = neovim-custom.packages.aarch64-linux.default;
+              openclaw = pkgs.openclaw;
+              pi-coding-agent = pkgs.pi-coding-agent;
+            };
 
-        x86_64-linux = {
-          neovim = neovim-custom.packages.x86_64-linux.default;
-          openclaw = openclaw.packages.x86_64-linux.openclaw;
-        };
+          x86_64-linux =
+            let
+              pkgs = mkPkgs "x86_64-linux";
+            in
+            {
+              neovim = neovim-custom.packages.x86_64-linux.default;
+              openclaw = pkgs.openclaw;
+              pi-coding-agent = pkgs.pi-coding-agent;
+            };
 
-        aarch64-darwin = {
-          neovim = neovim-custom.packages.aarch64-darwin.default;
-          openclaw = openclaw.packages.aarch64-darwin.openclaw;
-        };
+          aarch64-darwin =
+            let
+              pkgs = mkPkgs "aarch64-darwin";
+            in
+            {
+              neovim = neovim-custom.packages.aarch64-darwin.default;
+              openclaw = pkgs.openclaw;
+              pi-coding-agent = pkgs.pi-coding-agent;
+            };
 
-        x86_64-darwin = {
-          neovim = neovim-custom.packages.x86_64-darwin.default;
-          openclaw = openclaw.packages.x86_64-darwin.openclaw;
+          x86_64-darwin =
+            let
+              pkgs = mkPkgs "x86_64-darwin";
+            in
+            {
+              neovim = neovim-custom.packages.x86_64-darwin.default;
+              openclaw = pkgs.openclaw;
+              pi-coding-agent = pkgs.pi-coding-agent;
+            };
         };
-      };
     };
 }

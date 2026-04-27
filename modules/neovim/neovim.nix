@@ -159,10 +159,10 @@ pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
       ls_cmds = {
         -- biome = { "${pkgs.vscode-extensions.biomejs.biome}/bin/biome", "start" },
         biome = { "node_modules/.bin/biome", "lsp-proxy" },
-        cssls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-css-language-server", "--stdio" },
+        cssls = { "${pkgs.vscode-langservers-extracted}/bin/vscode-css-language-server", "--stdio" },
         elixirls = { "${pkgs.elixir-ls}/bin/elixir-ls" },
-        html = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-html-language-server", "--stdio" },
-        jsonls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-json-language-server", "--stdio" },
+        html = { "${pkgs.vscode-langservers-extracted}/bin/vscode-html-language-server", "--stdio" },
+        jsonls = { "${pkgs.vscode-langservers-extracted}/bin/vscode-json-language-server", "--stdio" },
         lua_ls = { "${pkgs.lua-language-server}/bin/lua-language-server" },
         nil_ls = { "${pkgs.nil}/bin/nil" },
         tailwindcss = { "${pkgs.vscode-extensions.bradlc.vscode-tailwindcss}/bin/tailwindcss-language-server", "--stdio", },
