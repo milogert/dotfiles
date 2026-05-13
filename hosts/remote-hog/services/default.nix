@@ -5,6 +5,7 @@
     # ./avahi.nix
     ./homelab
     # ./livebook.nix
+    ./infinity-card-generator.nix
     ./nginx.nix
     ./koreader-sync.nix
     ./obsidian.nix
