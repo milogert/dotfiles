@@ -5,8 +5,6 @@
 
   services.traefik.enable = true;
 
-  # services.traefik.dynamic.dir = "/var/lib/traefik/dynamic";
-
   services.traefik.staticConfigOptions = {
     /* log = { */
     /*   filePath = "/var/lib/traefik/traefik.system.log"; */
@@ -39,10 +37,13 @@
 
     api.dashboard = true;
 
+
     # pilot.token = builtins.readFile ("/etc/secrets/traefik-pilot.token");
   };
 
-  # This gives access to the dashboard.
+  systemd.services.traefik.serviceConfig.EnvironmentFile =
+    "/etc/secrets/route53.env";
+
   services.traefik.dynamicConfigOptions.http = {
     routers.traefik = {
       entryPoints = [ "websecure" ];
@@ -60,35 +61,6 @@
       };
     };
 
-    routers.wishlist = {
-      entryPoints = [ "websecure" ];
-      rule = "Host(`rrw.milogert.com`) || Host(`wishlist.milogert.com`)";
-      service = "noop@internal";
-
-      middlewares = [ "wishlistRedirect" ];
-      tls = {
-        certResolver = "letsEncrypt";
-        domains = [ {
-          main = "rrw.milogert.com";
-          sans = [ "wishlist.milogert.com" ];
-        } ];
-      };
-    };
-
-    middlewares = {
-      wishlistRedirect = {
-        redirectRegex = {
-          regex = "^https://(rrw|wishlist)\\.milogert\\.com";
-          replacement = "https://www.icloud.com/pages/07eSQUDeSG3CPPBAih4dGMDRw#Rolling-Release_Wishlist";
-        };
-      };
-    };
-  };
-
-  systemd.services.traefik.serviceConfig.EnvironmentFile =
-    "/etc/secrets/route53.env";
-
-  services.traefik.dynamicConfigOptions.http = {
     routers.ai = {
       entryPoints = [ "websecure" ];
       rule = "Host(`ai.milogert.com`)";
@@ -101,6 +73,22 @@
     };
 
     services.ai.loadBalancer.servers = [ { url = "http://localhost:18789"; } ];
-  };
 
+    # This router exists only to provision the wildcard certificate for
+    # dynamically-created app subdomains under *.apps.ai.milogert.com.
+    routers.apps-ai-wildcard = {
+      entryPoints = [ "websecure" ];
+      rule = "Host(`apps.ai.milogert.com`)";
+      service = "noop@internal";
+
+      tls = {
+        certResolver = "letsEncrypt";
+        domains = [ {
+          main = "apps.ai.milogert.com";
+          sans = [ "*.apps.ai.milogert.com" ];
+        } ];
+      };
+    };
+
+  };
 }
