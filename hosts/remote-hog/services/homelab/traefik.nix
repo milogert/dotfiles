@@ -1,26 +1,19 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
-{
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+let
+  format = pkgs.formats.toml { };
+  dynamicDir = "/srv/traefik-dynamic";
 
-  services.traefik.enable = true;
+  dynamicConfigFile = format.generate "traefik-dynamic-static.toml"
+    config.services.traefik.dynamicConfigOptions;
 
-  services.traefik.staticConfigOptions = {
-    /* log = { */
-    /*   filePath = "/var/lib/traefik/traefik.system.log"; */
-    /*   level = "DEBUG"; */
-    /* }; */
-
+  staticConfigFile = format.generate "traefik-static.toml" {
     accessLog.filePath = "/var/lib/traefik/traefik.access.log";
 
     certificatesResolvers.letsEncrypt.acme = {
       email = "milo@milogert.com";
       storage = "/var/lib/traefik/acme-prod.json";
-
       dnsChallenge.provider = "route53";
-
-      # Remove for production.
-      # caServer = "https://acme-staging-v02.api.letsencrypt.org/directory";
     };
 
     entryPoints = {
@@ -37,12 +30,29 @@
 
     api.dashboard = true;
 
+    providers.file = {
+      directory = dynamicDir;
+      watch = true;
+    };
+  };
+in {
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
 
-    # pilot.token = builtins.readFile ("/etc/secrets/traefik-pilot.token");
+  services.traefik = {
+    enable = true;
+    staticConfigFile = staticConfigFile;
+    environmentFiles = [ "/etc/secrets/route53.env" ];
+    group = "users";
   };
 
-  systemd.services.traefik.serviceConfig.EnvironmentFile =
-    "/etc/secrets/route53.env";
+  systemd.tmpfiles.rules = [
+    "d ${dynamicDir} 2775 traefik users -"
+  ];
+
+  system.activationScripts.traefikDynamicConfig = lib.stringAfter [ "users" "groups" ] ''
+    install -d -m 2775 -o traefik -g users ${dynamicDir}
+    install -m 0644 ${dynamicConfigFile} ${dynamicDir}/00-nixos-static.toml
+  '';
 
   services.traefik.dynamicConfigOptions.http = {
     routers.traefik = {
@@ -74,8 +84,6 @@
 
     services.ai.loadBalancer.servers = [ { url = "http://localhost:18789"; } ];
 
-    # This router exists only to provision the wildcard certificate for
-    # dynamically-created app subdomains under *.apps.ai.milogert.com.
     routers.apps-ai-wildcard = {
       entryPoints = [ "websecure" ];
       rule = "Host(`apps.ai.milogert.com`)";
@@ -89,6 +97,5 @@
         } ];
       };
     };
-
   };
 }
