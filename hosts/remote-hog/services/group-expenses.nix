@@ -4,7 +4,7 @@ let
   service = "group-expenses";
   port = "4011";
   repo = "/home/milo/.openclaw/workspace/projects/group-expenses";
-  domain = "group-expenses.apps.ai.milogert.com";
+  domain = "square-up.apps.ai.milogert.com";
 in {
   systemd.services.${service} = {
     description = "Group Expenses Phoenix app";
