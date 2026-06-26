@@ -5,35 +5,17 @@ let
   volsink = "0";
   volchange = "5";
 
-  workspaces = [
-    { number = "1"; name = "www"; }
-    { number = "2"; name = "misc"; }
-    { number = "3"; name = "tty"; }
-    { number = "4"; name = "media"; }
-    { number = "5"; name = "chat"; }
-    { number = "6"; name = "config"; }
-    { number = "7"; name = "games"; }
-  ];
-
-  mkWorkspaceName = { number, name }: "${number}:${name}";
-
-  genWorkspaceName = idx: mkWorkspaceName (builtins.elemAt workspaces idx);
-
-  mkWorkspaceBindings = acc: { number, name }: let
-    fullName = mkWorkspaceName { inherit number name; };
-  in {
-    "${modifier}+${number}" = "workspace ${fullName}";
-    "${modifier}+Shift+${number}" =
-      "move container to workspace ${fullName}";
-  } // acc;
-
-  workspaceBindings = builtins.foldl' mkWorkspaceBindings {} workspaces;
-
   waybar_bin = "${pkgs.waybar}/bin/waybar";
   waybar_location = "~/.config/waybar";
   waybar_css = "${waybar_location}/style.css";
 
-  keybindings = lib.mkOptionDefault ({
+  # Modes.
+  mode_launcher = "launcher";
+  mode_passthrough = "passthrough";
+  mode_resize = "resize";
+  mode_system = "(l)ock, (q)uit sway, (r)eboot, (s)uspend, (p)oweroff, or escape";
+
+  keybindings = lib.mkOptionDefault {
     "${modifier}+Shift+r" = "restart";
     "Ctrl+Shift+4" = "exec --no-startup-id grim -g \"$(slurp)\" $(xdg-user-dir PICTURES)/screenshots/$(date +'screenshot_%Y-%m-%dT%H:%M:%S.png')";
     "${modifier}+Shift+w" = "exec --no-startup-id mkdir -p ~/Pictures/saved_wallpapers; cp ~/.config/sway/wallpaper.jpg ~/Pictures/saved_wallpapers/$(date --iso=seconds).jpg";
@@ -55,13 +37,12 @@ let
     XF86AudioRaiseVolume = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +${volchange}%";
     XF86AudioLowerVolume = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -${volchange}%";
     XF86AudioMute = "exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle";
-  } // workspaceBindings);
 
-  # Modes.
-  mode_launcher = "launcher";
-  mode_passthrough = "passthrough";
-  mode_resize = "resize";
-  mode_system = "(l)ock, (q)uit sway, (r)eboot, (s)uspend, (p)oweroff, or escape";
+    # Power buttons
+    # XF86PowerOff 
+  };
+
+  swaylockCommand = "${pkgs.swaylock}/bin/swaylock";
 
   black = "#1C1B19";
   blue = "#2C78BF";
@@ -88,39 +69,37 @@ let
   xgray5 = "#4E4E4E";
   yellow = "#FBB829";
 in {
-  home.file."${config.xdg.configHome}/fuzzel/fuzzel.ini".text = ''
-    dpi-aware=no
-    icon-theme=Papirus-Dark
-    width=50
-    prompt="❯   "
-    font=Hack:weight=bold:size=20
-    line-height=30
-    fields=name,generic,comment,categories,filename,keywords
-    terminal=zsh -c
-    layer=overlay
-    horizontal-pad=0
-    vertical-pad=0
-
-    [colors]
-    background=${black}ee
-    border=${hard_black}ee
-    match=${bright_red}ee
-    selection-text=${bright_white}ee
-    selection=${bright_black}ee
-    text=${white}ee
-
-    [border]
-    radius=10
-
-    [dmenu]
-    exit-immediately-if-empty=yes
-  '';
+  # home.file."${config.xdg.configHome}/fuzzel/fuzzel.ini".text = ''
+  #   dpi-aware=no
+  #   icon-theme=Papirus-Dark
+  #   width=50
+  #   prompt="❯   "
+  #   font=Hack:weight=bold:size=20
+  #   line-height=30
+  #   fields=name,generic,comment,categories,filename,keywords
+  #   terminal=zsh -c
+  #   layer=overlay
+  #   horizontal-pad=0
+  #   vertical-pad=0
+  #
+  #   [colors]
+  #   background=${black}ee
+  #   border=${hard_black}ee
+  #   match=${bright_red}ee
+  #   selection-text=${bright_white}ee
+  #   selection=${bright_black}ee
+  #   text=${white}ee
+  #
+  #   [border]
+  #   radius=10
+  #
+  #   [dmenu]
+  #   exit-immediately-if-empty=yes
+  # '';
 
   home.packages = with pkgs; [
-    # xwayland
     centerpiece
-    fuzzel
-    mako
+    # fuzzel
     pango
     pavucontrol
     playerctl
@@ -130,6 +109,7 @@ in {
     swaylock
     wl-clipboard
     wofi
+    python3
   ];
   wayland.windowManager.sway = {
     enable = true;
@@ -137,22 +117,6 @@ in {
 
     config = {
       inherit modifier;
-
-      assigns = {
-        "${genWorkspaceName 1}" = [
-          { class = "^Firefox"; }
-        ];
-        "${genWorkspaceName 3}" = [
-          { app_id = "Kitty"; }
-        ];
-        "${genWorkspaceName 5}" = [
-          { class = "discord"; }
-        ];
-        "${genWorkspaceName 6}" = [
-          { app_id = ".blueman-manager-wrapped"; }
-          { app_id = "pavucontrol"; }
-        ];
-      };
 
       colors = {
         focused = {
@@ -239,11 +203,11 @@ in {
           Escape = "mode default";
           "${modifier}+Shift+e" = "mode default";
 
-          l = "swaylock && swaymsg mode default";
+          l = "exec ${swaylockCommand} & swaymsg mode default";
           q = "exit";
-          r = "systemctl reboot && swaymsg mode default";
-          p = "systemctl poweroff now && swaymsg mode default";
-          s = "systemctl suspend && swaymsg mode default";
+          r = "exec swaymsg mode default & systemctl reboot";
+          p = "exec swaymsg mode default & systemctl poweroff now";
+          s = "exec ${swaylockCommand} & swaymsg mode default & systemctl suspend";
         };
       };
 
@@ -258,7 +222,6 @@ in {
       };
 
       startup = [
-        { command = "kitty"; }
         { command = "firefox"; }
         { command = "discord"; }
       ];
@@ -267,6 +230,12 @@ in {
 
       window = {
         border = 2;
+      };
+
+      gaps = {
+        # horizontal = 5;
+        # vertical = 5;
+        inner = 10;
       };
 
       workspaceAutoBackAndForth = true;
@@ -279,7 +248,7 @@ in {
           fonts = {
             names = [ "Hack" ];
             style = "Regular";
-            size = 10.0;
+            size = 14.0;
           };
 
           # colors = {
@@ -319,6 +288,112 @@ in {
           # };
         }
       ];
+    };
+  };
+
+  services.swayidle = {
+    enable = true;
+    events = [
+      { event = "before-sleep"; command = swaylockCommand; }
+      { event = "lock"; command = "lock"; }
+    ];
+
+    timeouts = [
+      { timeout = 60 * 5; command = swaylockCommand; }
+      { timeout = 60 * 15; command = "${pkgs.systemd}/bin/systemctl suspend"; }
+    ];
+  };
+
+  services.swaync = {
+    enable = true;
+
+    settings = {
+      "$schema" = "/etc/xdg/swaync/configSchema.json";
+
+      positionX = "right";
+      positionY = "top";
+      control-center-positionX = "none";
+      control-center-positionY = "none";
+      control-center-margin-top = 8;
+      control-center-margin-bottom = 8;
+      control-center-margin-right = 8;
+      control-center-margin-left = 8;
+      control-center-width = 500;
+      control-center-height = 600;
+      fit-to-screen = false;
+
+      layer = "overlay";
+      control-center-layer = "overlay";
+      cssPriority = "user";
+      notification-icon-size = 64;
+      notification-body-image-height = 100;
+      notification-body-image-width = 200;
+      notification-inline-replies = true;
+      timeout = 10;
+      timeout-low = 5;
+      timeout-critical = 0;
+      notification-window-width = 500;
+      keyboard-shortcuts = true;
+      image-visibility = "when-available";
+      transition-time = 200;
+      hide-on-clear = true;
+      hide-on-action = true;
+      script-fail-notify = true;
+
+      widgets = [
+        "inhibitors"
+        "title"
+        "dnd"
+        "mpris"
+        "notifications"
+      ];
+
+      widget-config = {
+        inhibitors = {
+          text = "Inhibitors";
+          button-text = "Clear All";
+          clear-all-button = true;
+        };
+        title = {
+          text = "Notifications";
+          clear-all-button = false;
+          button-text = "Clear All";
+        };
+        dnd = {
+          text = "Do Not Disturb";
+        };
+        label = {
+          max-lines = 5;
+          text = "Label Text";
+        };
+        mpris = {
+          image-size = 96;
+          image-radius = 12;
+        };
+      };
+    };
+  };
+
+  programs.swaylock = {
+    enable = true;
+
+    settings = {
+      show-failed-attempts = true;
+      daemonize = true;
+
+      color = "1C1B19";
+      inside-color = "D0BFA1"; # white
+      inside-clear-color = "2C78BF"; # blue
+      inside-ver-color = "FBB829"; # yellow
+      inside-wrong-color = "EF2F27"; # red
+      key-hl-color = "FF8700";
+      ring-color = "FCE8C3";
+      ring-clear-color = "68A8E4";
+      ring-ver-color = "FED06E";
+      ring-wrong-color = "F75341";
+      text-clear-color = "1C1B19";
+      text-ver-color = "1C1B19";
+      text-wrong-color = "1C1B19";
     };
   };
 }

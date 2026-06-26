@@ -12,15 +12,16 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Set your time zone.
-  time.timeZone = "America/Menominee";
+  time.timeZone = "America/New_York";
 
   systemd.services.mount-pstore.enable = false;
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  # Enable sound.
-  sound.enable = false;
+  environment.systemPackages = with pkgs; [ lact ];
+  systemd.packages = with pkgs; [ lact ];
+  systemd.services.lactd.wantedBy = ["multi-user.target"];
 
   # rtkit is optional but recommended
   security.rtkit.enable = true;

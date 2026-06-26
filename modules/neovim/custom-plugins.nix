@@ -1,4 +1,5 @@
-{ buildNpmPackage
+{ pkgs
+, buildNpmPackage
 , darwin
 , fetchFromGitHub
 , lib
@@ -44,7 +45,9 @@ let
     };
 
     cargoHash = "sha256-+zXYDYVbXaapu1cdVGmRDgi6r2Ns09PzOFPdTgRHxOI=";
-    RUSTFLAGS = "-C link-arg=-undefined -C link-arg=dynamic_lookup";
+    RUSTFLAGS = if pkgs.stdenv.isDarwin
+                then "-C link-arg=-undefined -C link-arg=dynamic_lookup"
+                else "";
   };
 
   lua-json5 = vimUtils.buildVimPlugin rec {
@@ -56,9 +59,13 @@ let
       sha256 = "0dhzqrp0jv7nk3m29qibz581bhin738pkg3gn8ahk5dz7dkwzlkj";
     };
 
-    postInstall = ''
-      cp ${lua-json5-bin}/lib/liblua_json5.dylib $out/lua/json5.dylib
-    '';
+    postInstall = if pkgs.stdenv.isDarwin
+                  then ''
+                    cp ${lua-json5-bin}/lib/liblua_json5.dylib $out/lua/json5.dylib
+                  ''
+                  else ''
+                    strip -o $out/lua/json5.so ${lua-json5-bin}/lib/liblua_json5.so
+                  '';
   };
 
   nvim-dap-vscode-js = vimUtils.buildVimPlugin rec {

@@ -30,7 +30,7 @@ in {
     gc.options = "--delete-older-than 30d";
 
     # Which package set to use.
-    package = pkgs.nixStable;
+    package = pkgs.nixVersions.stable;
 
     extraOptions = "experimental-features = nix-command flakes";
   };
@@ -62,19 +62,6 @@ in {
       cargo
       coreutils # Why do I have this?
       ctop
-      diskonaut
-      eza
-      fd
-      findutils
-      fswatch
-      fzf # Need this for aliases.
-      gcc
-      gnumake
-      gnupg
-      go
-      htop
-      jq
-      neofetch
       nix-prefetch-git
       # nixops
       neovim-custom

@@ -10,23 +10,21 @@
     ./services
   ];
 
-  programs.sway.enable = true;
+  programs = {
+    zsh = {
+      enable = true;
 
-  programs.zsh = {
-    enable = true;
+      shellAliases = {
+        ll = "eza -l -g --git --color always --icons -a -s type";
+        ls = "eza --color auto --icons -a -s type";
+      };
 
-    shellAliases = {
-      ll = "eza -l -g --git --color always --icons -a -s type";
-      ls = "eza --color auto --icons -a -s type";
+      promptInit = "";
     };
 
-    promptInit = "";
+    steam.enable = true;
+    steam.remotePlay.openFirewall = true;
   };
-
-  programs.steam.enable = true;
-  programs.steam.remotePlay.openFirewall = true;
-
-  virtualisation.lxd.enable = true;
 
   #security.pam = {
   #  u2f.enable = true;
@@ -44,16 +42,7 @@
   environment.systemPackages = with pkgs; [
     clinfo
     gjs
-    gnome.dconf-editor
-    gnome.gnome-tweaks
-    gnome.gnome-keyring
-    gnome.gnome-system-monitor
-    gnome.nautilus
-    gnome.seahorse
-    gnomeExtensions.appindicator
-    gnomeExtensions.espresso
-    gnomeExtensions.screenshot-tool
-    gnomeExtensions.vitals
+    kmail
     lshw
     protontricks
     solaar

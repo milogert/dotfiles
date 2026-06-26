@@ -27,6 +27,11 @@
     firewall.allowedTCPPorts = [
       42000 # Warpinator
       42001 # Warpinator
+      27015 27036 # Space Marine 2
+    ];
+
+    firewall.allowedUDPPorts = [
+      27015 # Space Marine 2
     ];
 
     firewall.allowedTCPPortRanges = [
@@ -35,6 +40,7 @@
 
     firewall.allowedUDPPortRanges = [
       { from = 1714; to = 1764; } # KDE Connect
+      { from = 27031; to = 27036; } # Space Marine 2
     ];
   };
 }

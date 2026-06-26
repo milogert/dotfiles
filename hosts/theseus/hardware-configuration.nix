@@ -31,18 +31,17 @@
   hardware = {
     enableAllFirmware = true;
 
-    opengl = {
-      driSupport = true;
-      driSupport32Bit = true;
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+
       extraPackages = with pkgs; [
-        amdvlk
         # radv
-        rocm-opencl-icd
-        rocm-opencl-runtime
+        # rocm-opencl-icd
+        # rocm-opencl-runtime
       ];
       # This is for steam support. Needs pipewire at the moment
       extraPackages32 = with pkgs.driversi686Linux; [
-        amdvlk
         # radv
         # libva
       ] ++ lib.optionals config.services.pipewire.enable [ pkgs.pkgsi686Linux.pipewire ];

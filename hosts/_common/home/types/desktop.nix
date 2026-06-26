@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ../kitty.nix
     ../ranger.nix
   ];
 

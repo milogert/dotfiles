@@ -6,12 +6,11 @@
 {
   home.packages = with pkgs; [
     gh
-    gitAndTools.delta
-    gitAndTools.gh
+    delta
   ];
 
   programs.git = {
-    package = pkgs.gitAndTools.gitFull;
+    package = pkgs.gitFull;
     enable = true;
     userName  = "Milo Gertjejansen";
     userEmail = "milo@milogert.com";
@@ -98,8 +97,8 @@
       gh = "${pkgs.gh}/bin/gh";
     in
       config.lib.dag.entryAfter ["writeBoundary"] ''
-        if (! ${gh} auth status); then
-          run ${gh} auth login -s read:project
-        fi
+        # if (! ${gh} auth status); then
+        #   run ${gh} auth login -s read:project
+        # fi
       '';
 }

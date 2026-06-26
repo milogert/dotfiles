@@ -6,8 +6,9 @@
 {
   imports = [
     ./sway.nix
-    ./waybar.nix
+    ./waybar
     ./desktop.nix
+    # ./hyprland.nix
   ];
 
   home.stateVersion = "21.05";
@@ -26,22 +27,22 @@
   home.packages = with pkgs; [
     calibre
     cargo
-    cider
-    cinnamon.warpinator
+    warpinator
     cockatrice
     cryptsetup
     discord
     elixir
     evince
     firefox
+    gamescope
     insomnia
-    libsForQt5.kdeconnect-kde
     mangohud
     mutt
     nodejs
     phoronix-test-suite
     pinentry-curses
     ranger
+    vassal
     vial
     vulkan-tools
   ];

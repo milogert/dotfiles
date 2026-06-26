@@ -23,18 +23,30 @@
       openFirewall = true;
     };
 
-  # Enable the X11 windowing system.
+    logind.settings.Login = ''
+      HandlePowerKey=ignore
+    '';
+
+    displayManager.sddm = {
+      enable = true;
+      wayland.enable = true;
+    };
+    desktopManager.plasma6.enable = true;
+    displayManager.defaultSession = "plasma";
+
+    # Enable the X11 windowing system.
     xserver = {
+      enable = true;
       videoDrivers = [ "amdgpu" ];
 
       # Enable the GNOME 3 Desktop Environment.
-      displayManager.gdm = {
-        enable = true;
-        wayland = true;
-      };
-      desktopManager.gnome = {
-        enable = true;
-      };
+      # displayManager.gdm = {
+      #   enable = true;
+      #   wayland = true;
+      # };
+      # desktopManager.gnome = {
+      #   enable = true;
+      # };
     };
 
     gnome.core-utilities.enable = false;
