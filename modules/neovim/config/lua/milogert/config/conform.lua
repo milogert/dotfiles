@@ -41,9 +41,6 @@ conform.setup({
     typescriptreact = javascript_like,
   },
 
-   default_format_opts = {
-    lsp_format = "fallback",
-  },
   -- log_level = vim.log.levels.DEBUG,
 })
 

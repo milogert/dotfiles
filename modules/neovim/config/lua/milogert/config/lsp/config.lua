@@ -119,8 +119,6 @@ require("lspkind").init({
     EnumMember = "",
     Constant = "",
     Struct = "",
-    Supermaven = "",
-    supermaven = "",
   },
 })
 

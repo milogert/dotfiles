@@ -33,7 +33,6 @@ require('milogert.main').setup({
   nix = false,
 
   debuggers = {
-    elixir_ls = "path/to/elixir_ls",
     vscode_js = {
       adapter = "path/to/vscode_js_debug_adapter",
       debugger = "path/to/vscode_js_debugger",
@@ -121,7 +120,6 @@ Oh boy. Probably too many.
 | `persistence-nvim`            | `utils` | Saves session state when exiting neovim. `<leader>sr` to **s**ession **r**estore. |
 | `plenary-nvim`                | `utils` | Dependecy of various plugins. |
 | `srcery-vim`                  | `ui` | My theme 🤤. |
-| `supermaven-nvim`             | `tools` | AI completion. |
 | `vim-abolish`                 | `utils` | Remove all instances of words. Untested. |
 | `vim-dadbod`                  | `tools` | Database browser. |
 | `vim-dadbod-completion`       | `tools` | Database browser completion. |

@@ -5,6 +5,8 @@
 
   services.traefik.enable = true;
 
+  # services.traefik.dynamic.dir = "/var/lib/traefik/dynamic";
+
   services.traefik.staticConfigOptions = {
     /* log = { */
     /*   filePath = "/var/lib/traefik/traefik.system.log"; */
@@ -85,4 +87,20 @@
 
   systemd.services.traefik.serviceConfig.EnvironmentFile =
     "/etc/secrets/route53.env";
+
+  services.traefik.dynamicConfigOptions.http = {
+    routers.ai = {
+      entryPoints = [ "websecure" ];
+      rule = "Host(`ai.milogert.com`)";
+      service = "ai";
+
+      tls = {
+        certResolver = "letsEncrypt";
+        domains = [ { main = "ai.milogert.com"; } ];
+      };
+    };
+
+    services.ai.loadBalancer.servers = [ { url = "http://localhost:18789"; } ];
+  };
+
 }

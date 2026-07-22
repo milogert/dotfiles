@@ -2,16 +2,17 @@ local fzf = require("fzf-lua")
 
 local u = require("milogert.utils")
 
+
 -- require('fzf-lua-frecency').setup()
 
--- local fzf_files = function()
---   local gitStatus = vim.g.gitsigns_head
---
---   -- local cmd = u.tern(gitStatus == nil, "files", "global")
---   local cmd = u.tern(gitStatus == nil, "files", "git_files")
---
---   return require("fzf-lua")[cmd]({ git_icons = false, file_icons = true })
--- end
+local fzf_files = function()
+  local gitStatus = vim.g.gitsigns_head
+
+  local cmd = u.tern(gitStatus == nil, "files", "global")
+  -- local cmd = u.tern(gitStatus == nil, "files", "git_files")
+
+  return require("fzf-lua")[cmd]({ git_icons = false, file_icons = true })
+end
 
 -- u.nmap("<C-m>", "", {
 --   callback = function()

@@ -122,7 +122,6 @@ let
     package-info-nvim
     persistence-nvim
     srcery-vim
-    supermaven-nvim
     tssorter-nvim
     typescript-tools-nvim
     vim-abolish
@@ -150,7 +149,6 @@ pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
       nix = true,
 
       debuggers = {
-        elixir_ls = "${pkgs.elixir-ls}/bin/elixir-debug-adapter",
         vscode_js = {
           adapter = "${customPlugins.nvim-dap-vscode-js}",
           debugger = "${pkgs.vscode-js-debug}",

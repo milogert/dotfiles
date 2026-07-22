@@ -7,7 +7,7 @@
     # ./heimdall.nix
 
     # ./home-assistant
-    # ./media
+    ./media
     # ./monitoring
     ./tt-rss
   ];

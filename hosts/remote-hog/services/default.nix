@@ -6,6 +6,8 @@
     ./homelab
     # ./livebook.nix
     ./nginx.nix
+    ./koreader-sync.nix
+    ./obsidian.nix
     ./openssh.nix
     /* ./openvpn.nix */
     # ./printing.nix
