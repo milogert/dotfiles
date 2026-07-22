@@ -169,7 +169,7 @@
       defaults write com.apple.finder NewWindowTargetPath -string "file://$HOME"
 
       # Finder - Show the $HOME/Library folder
-      chflags nohidden $HOME/Library
+      chflags nohidden "$HOME"/Library
 
       # Finder - Show the /Volumes folder
       chflags nohidden /Volumes

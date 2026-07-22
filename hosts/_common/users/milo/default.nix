@@ -30,7 +30,10 @@ in
 
   home.packages = with pkgs; [
     gitoxide
+    notmuch
+    w3m
     nodejs
+    python3
     watchman
   ];
 

@@ -14,8 +14,6 @@ local on_attach = function(_client, bufnr)
   u.nmap("<leader>e", vim.diagnostic.open_float, default_opts)
   u.nmap("<leader>q", vim.diagnostic.setloclist, default_opts)
   u.nmap("<leader>c", vim.diagnostic.setqflist, default_opts)
-  u.nmap("gD", fzf.lsp_declarations, default_opts)
-  u.nmap("gd", fzf.lsp_definitions, default_opts)
   u.nmap("K", function()
     vim.lsp.buf.hover({
       border = {
@@ -32,10 +30,7 @@ local on_attach = function(_client, bufnr)
   end, default_opts)
   u.nmap("gi", fzf.lsp_implementations, default_opts)
   u.nmap("[ls", vim.lsp.buf.signature_help, default_opts)
-  u.nmap("<leader>D", fzf.lsp_typedefs, default_opts)
   u.nmap("<leader>rn", vim.lsp.buf.rename, default_opts)
-  u.nmap("gr", fzf.lsp_references, default_opts)
-  u.nmap("<leader>ca", vim.lsp.buf.code_action, default_opts)
 
   -- Set some keybinds conditional on server capabilities
   -- TODO which capability is correct? I think the "Provider" version is but I

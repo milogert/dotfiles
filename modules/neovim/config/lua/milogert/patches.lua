@@ -109,3 +109,28 @@
 -- hl('@tag.attribute', {link = 'Identifier'})
 -- hl('@tag.delimiter', {link = 'Delimiter'})
 -- -- }}}
+
+-- Patch srcery 3.0.0 missing highlight groups. Wrapped in ColorScheme autocmd
+-- so overrides survive any colorscheme reload.
+local function apply_srcery_patches()
+  local hl = function(group, opts)
+    vim.api.nvim_set_hl(0, group, opts)
+  end
+
+  -- @property was removed in 3.0.0; YAML keys use it via treesitter.
+  hl('@property', { link = 'Member' })
+
+  -- yamlBlockMappingKey is the vim syntax group for YAML keys (used when
+  -- treesitter is not active). In 3.0.0 Identifier = bright_white = invisible.
+  hl('yamlBlockMappingKey', { link = 'Member' })
+
+  -- fugitiveHash links to Identifier which is bright_white (= Normal) in 3.0.0,
+  -- making SHAs invisible. Give it an explicit color.
+  hl('fugitiveHash', { link = 'Member' })
+end
+
+apply_srcery_patches()
+vim.api.nvim_create_autocmd('ColorScheme', {
+  pattern = 'srcery',
+  callback = apply_srcery_patches,
+})

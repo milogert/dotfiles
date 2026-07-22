@@ -50,6 +50,13 @@ fzf.register_ui_select({
   },
 })
 
+vim.lsp.buf.references = fzf.lsp_references
+vim.lsp.buf.definitions = fzf.lsp_definitions
+vim.lsp.buf.declarations = fzf.lsp_declarations
+vim.lsp.buf.implementations = fzf.lsp_implementations
+vim.lsp.buf.document_symbols = fzf.lsp_document_symbols
+vim.lsp.buf.type_definitions = fzf.lsp_typedefs
+
 -- local fzf_overlay = require("fzf-lua-overlay")
 -- fzf_overlay.setup({
 -- })

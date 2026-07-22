@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+HIST=$HOME/.cache/mem_sparkline
+BARS='▁▂▃▄▅▆▇█'
+
+FREE=$(memory_pressure 2>/dev/null | grep -i 'free percentage' | grep -o '[0-9]*')
+if [ -n "$FREE" ]; then
+  USED=$((100 - FREE))
+else
+  USED=$(awk '/MemTotal/{t=$2}/MemAvailable/{a=$2}END{printf "%d",(t-a)/t*100}' /proc/meminfo 2>/dev/null)
+fi
+
+[ -z "$USED" ] && exit
+
+echo "$USED" >> "$HIST"
+tail -10 "$HIST" > "$HIST.tmp" && mv "$HIST.tmp" "$HIST"
+
+color_for() {
+  local v=$1
+  if [ "$v" -ge 80 ]; then
+    printf 'colour1'  # srcery red
+  elif [ "$v" -ge 60 ]; then
+    printf 'colour3'  # srcery yellow
+  else
+    printf 'colour2'  # srcery green
+  fi
+}
+
+while IFS= read -r v; do
+  idx=$((v * 7 / 100))
+  color=$(color_for "$v")
+  printf '#[fg=%s]%s' "$color" "${BARS:$idx:1}"
+done < "$HIST"
+
+printf '#[fg=%s] %d%%#[default]' "$(color_for "$USED")" "$USED"

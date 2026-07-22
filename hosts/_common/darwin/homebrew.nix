@@ -1,6 +1,6 @@
 {
   taps = [
-    "homebrew/cask-versions"
+    # "homebrew/cask-versions"
     # This isn't working
     "PeonPing/tap"
   ];
@@ -8,7 +8,7 @@
   brews = [
     "PeonPing/tap/peon-ping"
     "ios-deploy"
-    "pinentry-mac"
+    { name = "pinentry-mac"; trusted = true; }
   ];
 
   casks = [
@@ -17,9 +17,10 @@
     "moom"
     "obsidian"
     "plex"
-    "postgres-unofficial"
+    "postgres-app"
+    "session-manager-plugin"
     "vial"
-    "yubico-yubikey-manager"
+    "yubico-authenticator"
   ];
 
   masApps = {

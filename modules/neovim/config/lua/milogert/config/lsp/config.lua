@@ -1,8 +1,8 @@
 local on_attach = require("milogert.config.lsp.on_attach")
 local lsp_utils = require("milogert.config.lsp.utils")
 
-vim.lsp.set_log_level(vim.log.levels.INFO)
--- vim.lsp.set_log_level("off")
+vim.lsp.log.set_level(vim.log.levels.INFO)
+-- vim.lsp.log.set_level(vim.log.levels.OFF)
 
 vim.diagnostic.config({
   -- virtual_lines = true,
@@ -52,13 +52,14 @@ vim.lsp.config("*", {
   --     },
   --   },
   -- }),
-  handlers = {
-    ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded", width = 81 }),
-    ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded", width = 81 }),
-  },
+  handlers = {},
   -- flags = { debounce_text_changes = 150 },
   on_attach = on_attach,
 })
+
+vim.lsp.buf.hover({ border = "rounded", width = 81 })
+vim.lsp.buf.signature_help({ border = "rounded", width = 81 })
+
 
 local default_capabilities = vim.lsp.protocol.make_client_capabilities()
 default_capabilities.textDocument.completion.completionItem.snippetSupport = true

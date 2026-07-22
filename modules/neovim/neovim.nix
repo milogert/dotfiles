@@ -5,7 +5,6 @@ let
     blink-cmp
     blink-cmp-git
     blink-compat
-    comment-nvim # :help commenting, consider removing this later.
     dressing-nvim
     elixir-tools-nvim
     fidget-nvim
@@ -20,6 +19,8 @@ let
     lspkind-nvim
     mason-lspconfig-nvim
     mason-nvim
+    neotest
+    neotest-vitest
     none-ls-nvim
     nui-nvim
     nvim-cmp
@@ -29,15 +30,97 @@ let
     nvim-dap-virtual-text
     nvim-nio
     nvim-treesitter-textobjects
-    nvim-treesitter.withAllGrammars
+    # nvim-treesitter-textsubjects
+    (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
+      p.awk
+      p.bash
+      p.c
+      p.c_sharp
+      p.cmake
+      p.comment
+      p.commonlisp
+      p.cpp
+      p.css
+      p.csv
+      p.desktop
+      p.devicetree
+      p.diff
+      p.dockerfile
+      p.dot
+      p.editorconfig
+      p.eex
+      p.elixir
+      p.elm
+      p.erlang
+      p.func
+      p.git_config
+      p.git_rebase
+      p.gitattributes
+      p.gitcommit
+      p.gitignore
+      p.gleam
+      p.go
+      p.gpg
+      p.graphql
+      p.heex
+      p.html
+      p.http
+      p.hurl
+      p.ini
+      p.javascript
+      p.jq
+      p.jsdoc
+      p.json
+      p.json5
+      p.latex
+      p.lua
+      p.luadoc
+      p.make
+      p.markdown
+      p.markdown_inline
+      p.mermaid
+      p.nginx
+      p.nix
+      p.passwd
+      p.php
+      p.phpdoc
+      p.printf
+      p.properties
+      p.query
+      p.readline
+      p.regex
+      p.requirements
+      p.robots_txt
+      p.scss
+      p.sql
+      p.ssh_config
+      p.styled
+      p.svelte
+      p.sway
+      p.terraform
+      p.tmux
+      p.todotxt
+      p.toml
+      p.tsx
+      p.turtle
+      p.twig
+      p.typescript
+      p.typespec
+      p.typoscript
+      p.typst
+      p.udev
+      p.vim
+      p.vimdoc
+      p.xml
+      p.yaml
+      p.zsh
+    ]))
     nvim-web-devicons
     obsidian-nvim
     octo-nvim
-    oil-nvim
     other-nvim
     package-info-nvim
     persistence-nvim
-    # sqlite-lua
     srcery-vim
     supermaven-nvim
     tssorter-nvim
@@ -77,10 +160,10 @@ pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
       ls_cmds = {
         -- biome = { "${pkgs.vscode-extensions.biomejs.biome}/bin/biome", "start" },
         biome = { "node_modules/.bin/biome", "lsp-proxy" },
-        cssls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-css-language-server", "--stdio" },
+        cssls = { "${pkgs.vscode-langservers-extracted}/bin/vscode-css-language-server", "--stdio" },
         elixirls = { "${pkgs.elixir-ls}/bin/elixir-ls" },
-        html = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-html-language-server", "--stdio" },
-        jsonls = { "${pkgs.nodePackages.vscode-langservers-extracted}/bin/vscode-json-language-server", "--stdio" },
+        html = { "${pkgs.vscode-langservers-extracted}/bin/vscode-html-language-server", "--stdio" },
+        jsonls = { "${pkgs.vscode-langservers-extracted}/bin/vscode-json-language-server", "--stdio" },
         lua_ls = { "${pkgs.lua-language-server}/bin/lua-language-server" },
         nil_ls = { "${pkgs.nil}/bin/nil" },
         tailwindcss = { "${pkgs.vscode-extensions.bradlc.vscode-tailwindcss}/bin/tailwindcss-language-server", "--stdio", },

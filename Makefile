@@ -76,5 +76,5 @@ add-user:
 hog: _nixos-build _nixos-switch
 remote-hog: _nixos-build _nixos-switch
 theseus: _nixos-build _nixos-switch
-nutop: _install_requirements _nix-darwin-build _nix-darwin-switch
+work: _install_requirements _nix-darwin-build _nix-darwin-switch
 minotaur: _install_requirements _nix-darwin-build _nix-darwin-switch

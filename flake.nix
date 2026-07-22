@@ -52,6 +52,16 @@
             sha256 = "1c737i390fc1wwdw1jh2bab92pmzlmyh75wnmnxldvaajd01fki9";
           };
         });
+
+        # direnv integration tests fail on Darwin (sleep gets SIGKILL'd by sandbox)
+        # Go unit tests pass fine — skip only the shell integration tests
+        direnv = prev.direnv.overrideAttrs (old: {
+          checkPhase = ''
+            runHook preCheck
+            make test-go
+            runHook postCheck
+          '';
+        });
       };
 
       nixpkgsConfig = {
@@ -174,11 +184,11 @@
           };
         };
 
-        nutop = darwin.lib.darwinSystem {
+        work = darwin.lib.darwinSystem {
           inherit inputs;
           system = "aarch64-darwin";
           modules = mkDarwinConfig {
-            host = "nutop";
+            host = "work";
             users = [ "milo" ];
             type = "desktop";
           };

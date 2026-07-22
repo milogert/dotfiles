@@ -17,6 +17,7 @@ M.setup = function(variable_opts)
 
   -- Set the leader key. This should be first.
   require("milogert.settings")
+  require("milogert.patches")
   require("milogert.autocmds")
 
   -- Source plugin configs.
@@ -25,7 +26,6 @@ M.setup = function(variable_opts)
     "blink-cmp",
     "bruno",
     "colorizer",
-    "comment",
     "conform",
     "dressing",
     "dap",
@@ -38,6 +38,7 @@ M.setup = function(variable_opts)
     "keybindings",
     "lsp.config",
     "mcp-hub",
+    "neotest",
     -- "none-ls",
     "obsidian",
     "octo",
