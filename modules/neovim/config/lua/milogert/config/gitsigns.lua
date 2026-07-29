@@ -1,59 +1,89 @@
-local u = require "milogert.utils"
+local u = require("milogert.utils")
 
-require('gitsigns').setup({
-  preview_config = {
-    -- Options passed to nvim_open_win
-    border = 'rounded',
-    style = 'minimal',
-    relative = 'cursor',
-    row = 1,
-    col = 0
-  },
-})
+local gitsigns = require("gitsigns")
 
 local gitsignsMaps = {
-  [']g'] = {
-    cmd = [[&diff ? ']g' : '<cmd>Gitsigns next_hunk<CR>']],
-    opts = { expr = true },
+  {
+    mode = "n",
+    lhs = "]g",
+    rhs = function()
+      if vim.wo.diff then
+        vim.cmd.normal({ "]g", bang = true })
+      else
+        gitsigns.nav_hunk("next")
+      end
+    end,
   },
-  ['[g'] = {
-    cmd = [[&diff ? '[g' : '<cmd>Gitsigns prev_hunk<CR>']],
-    opts = { expr = true },
+  {
+    mode = "n",
+    lhs = "[g",
+    rhs = function()
+      if vim.wo.diff then
+        vim.cmd.normal({ "[g", bang = true })
+      else
+        gitsigns.nav_hunk("prev")
+      end
+    end,
   },
 
   -- Popup what's changed in a hunk under cursor
-  ['<Leader>gp'] = ':Gitsigns preview_hunk<CR>',
+  { mode = "n", lhs = "<Leader>gp", rhs = gitsigns.preview_hunk },
 
   -- Stage/reset individual hunks under cursor in a file
-  ['<Leader>gs'] = ':Gitsigns stage_hunk<CR>',
-  ['<Leader>gr'] = ':Gitsigns reset_hunk<CR>',
-  ['<Leader>gu'] = ':Gitsigns undo_stage_hunk<CR>',
+  { mode = "n", lhs = "<Leader>gs", rhs = gitsigns.stage_hunk },
+  { mode = "n", lhs = "<Leader>gr", rhs = gitsigns.reset_hunk },
+  {
+    mode = "v",
+    lhs = "<leader>hs",
+    rhs = function()
+      gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end,
+  },
+  {
+    mode = "v",
+    lhs = "<leader>hr",
+    rhs = function()
+      gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end,
+  },
+  { mode = "n", lhs = "<Leader>gu", rhs = gitsigns.undo_stage_hunk },
 
   -- Stage/reset all hunks in a file
-  ['<Leader>gS'] = ':Gitsigns stage_buffer<CR>',
-  ['<Leader>gU'] = ':Gitsigns reset_buffer_index<CR>',
-  ['<Leader>gR'] = ':Gitsigns reset_buffer<CR>',
+  { mode = "n", lhs = "<Leader>gS", rhs = gitsigns.stage_buffer },
+  { mode = "n", lhs = "<Leader>gU", rhs = gitsigns.reset_buffer_index },
+  { mode = "n", lhs = "<Leader>gR", rhs = gitsigns.reset_buffer },
 
   -- Open git status in interative window (similar to lazygit)
-  ['<Leader>gg'] = ':Git<CR>',
+  { mode = "n", lhs = "<Leader>gg", rhs = ":Git<cr>" },
 
   -- Show `git status output`
-  -- ['<Leader>gs'] = ':Git status<CR>',
+  -- { mode = 'n', lhs = '<Leader>gs', rhs = ':Git status<CR>' },
 
   -- Open commit window (creates commit after writing and saving commit msg)
-  ['<Leader>gc'] = ':Git commit | startinsert<CR>',
+  { mode = "n", lhs = "<Leader>gc", rhs = ":Git commit | startinsert<cr>" },
 
   -- Other tools from fugitive
-  ['<Leader>gd'] = ':Git difftool<CR>',
-  ['<Leader>gm'] = ':Git mergetool<CR>',
-  ['<Leader>g|'] = ':Gvdiffsplit<CR>',
-  ['<Leader>g_'] = ':Gdiffsplit<CR>',
+  { mode = "n", lhs = "<Leader>gd", rhs = ":Git difftool<cr>" },
+  { mode = "n", lhs = "<Leader>gm", rhs = ":Git mergetool<cr>" },
+  { mode = "n", lhs = "<Leader>g|", rhs = ":G vdiffsplit<cr>" },
+  { mode = "n", lhs = "<Leader>g_", rhs = ":G diffsplit<cr>" },
 }
 
-for key, map in pairs(gitsignsMaps) do
-  if type(map) == 'string' then
-    u.nmap(key, map)
-  else
-    u.nmap(key, map.cmd, map.opts)
-  end
-end
+gitsigns.setup({
+  preview_config = {
+    -- Options passed to nvim_open_win
+    border = "rounded",
+    style = "minimal",
+    relative = "cursor",
+    row = 1,
+    col = 0,
+  },
+
+  on_attach = function(bufnr)
+    for _, mapping in ipairs(gitsignsMaps) do
+      local opts = mapping.opts or {}
+      opts.buffer = bufnr
+      u._map(mapping.mode, mapping.lhs, mapping.rhs, opts)
+    end
+  end,
+})

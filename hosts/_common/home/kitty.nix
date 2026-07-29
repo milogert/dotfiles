@@ -2,7 +2,7 @@
 
 {
   programs.kitty = {
-    enable = true;
+    enable = false;
 
     font = {
       package = pkgs.hack-font;
@@ -10,7 +10,7 @@
       size = 11;
     };
 
-    keybindings = {};
+    keybindings = { };
 
     settings = {
       tab_bar_style = "hidden";

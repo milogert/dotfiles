@@ -5,8 +5,10 @@ let
     "https://cache.nixos.org"
     "https://nix-community.cachix.org"
     "https://milogert.cachix.org"
+    "https://milogert-neovim.cachix.org"
   ];
-in {
+in
+{
   imports = [
     ./aliases.nix
   ];
@@ -14,7 +16,10 @@ in {
   nix = {
     settings = {
       sandbox = false;
-      trusted-users = [ "root" "@admin" ];
+      trusted-users = [
+        "root"
+        "@admin"
+      ];
 
       inherit substituters;
       trusted-substituters = substituters;
@@ -22,11 +27,12 @@ in {
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "milogert.cachix.org-1:MaZAAWJXDV85HpLm2yyLX9b52wQghRxljAZJg0dEjkY="
+        "milogert-neovim.cachix.org-1:1MQUFLyvP9rjqczFdEuiMhXa3zvsS8BfvwlPZFx26u8="
       ];
     };
 
     # Garbage collection.
-    gc.automatic = false;
+    gc.automatic = true;
     gc.options = "--delete-older-than 30d";
 
     # Which package set to use.
@@ -40,7 +46,9 @@ in {
       BAT_THEME = "srcery";
       EDITOR = "nvim";
       MANPAGER = "nvim +Man!";
-      NPM_TOKEN = "`cat $HOME/.npmrc 2>/dev/null | grep npmjs | grep authToken | tr \"=\" \"\\n\" | tail -n 1`";
+      NPM_TOKEN = ''
+        `${pkgs.coreutils}/bin/cat $HOME/.npmrc 2>/dev/null | ${pkgs.gnugrep}/bin/grep npmjs | ${pkgs.gnugrep}/bin/grep authToken | ${pkgs.coreutils}/bin/tr "=" "\n" | ${pkgs.coreutils}/bin/tail -n 1`
+      '';
       PATH = builtins.concatStringsSep ":" [
         "/usr/local/sbin"
         "$HOME/.local/bin"
@@ -55,6 +63,7 @@ in {
     pathsToLink = [ "/share/zsh" ];
 
     systemPackages = with pkgs; [
+      # nixops
       bash
       bash-completion
       bat # Need this for aliases.
@@ -62,13 +71,24 @@ in {
       cargo
       coreutils # Why do I have this?
       ctop
-      nix-prefetch-git
-      # nixops
+      eza
+      fd
+      findutils
+      fswatch
+      fzf # Need this for aliases.
+      gcc
+      gnumake
+      gnupg
+      go
+      htop
+      jq
+      neofetch
       neovim-custom
+      nix-prefetch-git
       openvpn
       parallel
       postgresql
-      # python39
+      python3
       rename
       ripgrep
       shellcheck

@@ -6,3 +6,5 @@ result
 state.file
 
 .*priv
+
+.claude/settings.local.json

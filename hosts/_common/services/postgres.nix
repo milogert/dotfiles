@@ -1,4 +1,4 @@
-{ pkgs, ... }: 
+{ pkgs, ... }:
 
 {
   services.pgmanage = {
@@ -12,6 +12,8 @@
 
   services.postgresql = {
     enable = true;
+    package = pkgs.postgresql_15;
+
     package = pkgs.postgresql_15;
 
     authentication = ''

@@ -2,7 +2,8 @@
 
 let
   home_dir = "${config.home.homeDirectory}";
-in {
+in
+{
   programs.direnv = {
     enable = true;
 

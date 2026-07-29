@@ -13,17 +13,6 @@
 
   home.stateVersion = "21.05";
 
-  services.spotifyd = {
-    enable = true;
-    package = pkgs.spotifyd;
-
-    settings.global = {
-      username = "milo@milogert.com";
-      password_cmd = "jq -r \".spotifyd.password\" /etc/nixos/secrets.nix"; 
-      device_name = "theseus";
-    };
-  };
-
   home.packages = with pkgs; [
     calibre
     cargo
@@ -31,14 +20,11 @@
     cockatrice
     cryptsetup
     discord
-    elixir
     evince
     firefox
     gamescope
-    insomnia
     mangohud
-    mutt
-    nodejs
+    neomutt
     phoronix-test-suite
     pinentry-curses
     ranger

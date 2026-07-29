@@ -1,5 +1,3 @@
-local u = require "milogert.utils"
-
-vim.cmd.packadd('vimplugin-vim-arpeggio')
-
-u.arpeggio('inoremap', 'jk', '<Esc>')
+-- This is needed since Arpeggio is an older vim plugin.
+vim.cmd("runtime! plugin/arpeggio.vim")
+vim.cmd("runtime! plugin/mail.vim")

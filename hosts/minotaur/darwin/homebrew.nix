@@ -1,43 +1,23 @@
+let
+  commonConfig = import ../../_common/darwin/homebrew.nix;
+in
 {
   homebrew = {
     enable = true;
+    # enableZshIntegration = true;
     onActivation.cleanup = "zap";
 
-    taps = [
-      "homebrew/cask-versions"
-    ];
+    taps = commonConfig.taps;
 
-    brews = [
-      "ios-deploy"
-      "pinentry-mac"
-    ];
+    brews = commonConfig.brews;
 
     casks = [
-      "arc"
-      "calibre"
-      "cyberduck"
       "discord"
-      "flipper"
-      "google-chrome"
-      "insomnia"
-      "moom"
-      "notion"
-      "plex"
-      "pocket-casts"
-      "postgres-unofficial"
-      "vial"
-    ];
+    ]
+    ++ commonConfig.casks;
 
-    masApps = {
-      "1Blocker" = 1365531024;
-      "Amazon Kindle" = 302584613;
-      ColorSlurp = 1287239339;
-      "Next Meeting" = 1017470484;
-      Xcode = 497799835;
-    };
+    masApps = commonConfig.masApps;
 
-    extraConfig = ''
-      cask_args appdir: "~/Applications"
-    '';
+    extraConfig = commonConfig.extraConfig;
   };
 }

@@ -1,47 +1,31 @@
-local on_attach = require("milogert.config.lsp.on_attach")
+local default_markers = { ".git" }
 
 local M = {}
 
-local default_capabilities = vim.lsp.protocol.make_client_capabilities()
-default_capabilities.textDocument.completion.completionItem.snippetSupport = true
-default_capabilities.textDocument.documentColor = true
+--[[
+Get the root directory for the LSP.
 
-M.default_capabilities = require("cmp_nvim_lsp").default_capabilities(default_capabilities)
+Accounts for Octo buffers which we don't really want the LSP to start on.
+]]
+---@param markers (string|string[])[] list of markers that we watch for
+---@return function root_dir_callback a callback for `root_dirs`
+M.root_dir_fn = function(markers)
+  local final_markers = default_markers
 
--- local border = {
---   {"╭", "FloatBorder"},
---   {"─", "FloatBorder"},
---   {"╮", "FloatBorder"},
---   {"│", "FloatBorder"},
---   {"╯", "FloatBorder"},
---   {"─", "FloatBorder"},
---   {"╰", "FloatBorder"},
---   {"│", "FloatBorder"},
--- }
+  if (markers) then
+    final_markers = markers
+  end
 
--- LSP settings (for overriding per client)
-local handlers = {
-  ["textDocument/hover"] = vim.lsp.with(
-    vim.lsp.handlers.hover,
-    { border = "rounded", width = 81 }
-  ),
-  ["textDocument/signatureHelp"] = vim.lsp.with(
-    vim.lsp.handlers.signature_help,
-    { border = "rounded", width = 81 }
-  ),
-}
+  return function(bufnr, on_dir)
+    if vim.api.nvim_buf_get_name(bufnr):match("^octo://") then
+      return
+    end
 
-M.server_defaults = {
-  handlers = handlers,
-  capabilities = M.default_capabilities,
-  flags = { debounce_text_changes = 150 },
-  on_attach = on_attach,
-}
-
-M.default_with_cmd = function(cmd)
-  return vim.tbl_extend("keep", {
-    cmd = cmd,
-  }, M.server_defaults)
+    local root = vim.fs.root(bufnr, final_markers)
+    if root then
+      on_dir(root)
+    end
+  end
 end
 
 return M

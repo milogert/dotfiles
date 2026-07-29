@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: 
+{ config, pkgs, ... }:
 
 {
   programs.bat = {
@@ -6,6 +6,7 @@
     config = {
       theme = "srcery";
       style = "full,changes";
+      pager = "less -RFX";
     };
     themes = {
       srcery = {

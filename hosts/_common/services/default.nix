@@ -5,6 +5,6 @@
     ./borgbackup.nix
     ./gpg.nix
     ./postgres.nix
-    ./udev.nix
+    # ./udev.nix
   ];
 }

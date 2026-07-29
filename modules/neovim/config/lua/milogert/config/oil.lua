@@ -12,6 +12,8 @@ require("oil").setup({
   view_options = {
     show_hidden = true,
   },
+  skip_confirm_for_simple_edits = false,
+
   keymaps = {
     ["-"] = "actions.parent",
     ["<C-c>"] = "actions.close",
@@ -35,3 +37,4 @@ require("oil").setup({
   },
 })
 
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })

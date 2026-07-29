@@ -1,9 +1,7 @@
 local variables = require('milogert.variables')
-local lspconfig = require "lspconfig"
-local lsp_utils = require "milogert.config.lsp.utils"
 
-lspconfig.texlab.setup(vim.tbl_extend("keep", {
+vim.lsp.config('texlab', {
   cmd = variables.get().ls_cmds.texlab,
-}, lsp_utils.server_defaults))
+})
 
-
+vim.lsp.enable({ 'texlab' })

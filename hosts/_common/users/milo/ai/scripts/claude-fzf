@@ -1,0 +1,113 @@
+#!/bin/bash
+# claude-fzf: Select Claude Code sessions with fzf
+#
+# Usage:
+#   claude-fzf           # Select and resume a session in current directory
+#   claude-fzf --all     # Show sessions from all projects
+
+set -euo pipefail
+
+CLAUDE_DIR="$HOME/.claude/projects"
+CURRENT_DIR="$(pwd)"
+PROJECT_DIR_ENCODED=$(echo "$CURRENT_DIR" | sed 's|/|-|g')
+PROJECT_PATH="$CLAUDE_DIR/$PROJECT_DIR_ENCODED"
+
+show_all=false
+if [[ "${1:-}" == "--all" ]]; then
+    show_all=true
+fi
+
+# Function to extract first user message from a session file
+get_first_message() {
+    local session_file="$1"
+    local session_id=$(basename "$session_file" .jsonl)
+
+    # Skip agent sessions
+    if [[ "$session_id" == agent-* ]]; then
+        return
+    fi
+
+    # Get timestamp of last modification
+    local timestamp=$(date -r "$session_file")
+
+    local first_message=""
+
+    # Try to get summary first (cleaner, curated descriptions)
+    first_message=$(grep '"type":"custom-title"' "$session_file" | \
+        tail -n 1 | \
+        jq -r '.customTitle' 2>/dev/null | \
+        tr -d '\n' | \
+        cut -c1-80 || true)
+
+    if [[ -z "$first_message" || "$first_message" == "null" ]]; then
+        first_message=$(grep '"type":"summary"' "$session_file" | \
+            tail -n 1 | \
+            jq -r '.summary' 2>/dev/null | \
+            tr -d '\n' | \
+            cut -c1-80 || true)
+    fi
+
+    # Fall back to first user message if no summary
+    if [[ -z "$first_message" || "$first_message" == "null" ]]; then
+        first_message=$(grep '"type":"user"' "$session_file" 2>/dev/null | \
+            jq -r 'select(.isMeta != true) | .message.content' 2>/dev/null | \
+            grep -v '^<' | \
+            head -n 1 | \
+            tr -d '\n' | \
+            cut -c1-80 || true)
+    fi
+
+    # Check if session has any actual messages (skip if not)
+    local has_messages=$(grep -E '"type":"(user|assistant)"' "$session_file" 2>/dev/null | head -n 1)
+    if [[ -z "$has_messages" ]]; then
+        # Empty session (only summary or snapshots), skip it
+        return
+    fi
+
+    # Final fallback: use session ID if we still don't have a message
+    if [[ -z "$first_message" || "$first_message" == "null" ]]; then
+        first_message="[Session $session_id]"
+    fi
+
+    echo -e "$session_id\\t$first_message\\t$timestamp"
+}
+
+# Build session list
+if [[ "$show_all" == true ]]; then
+    # Show sessions from all projects
+    for project_dir in "$CLAUDE_DIR"/*; do
+        if [[ -d "$project_dir" ]]; then
+            project_name=$(basename "$project_dir" | sed 's|-|/|g')
+            for session_file in "$project_dir"/*.jsonl; do
+                [[ -f "$session_file" ]] || continue
+                result=$(get_first_message "$session_file")
+                [[ -n "$result" ]] && echo -e "$project_name\t$result"
+            done
+        fi
+    done | fzf \
+        --delimiter='\t' \
+        --with-nth=2,3,4 \
+        --preview='echo "Project: {1}"; echo "Session: {2}"; echo "Modified: {3}"; echo ""; echo "Preview: {4}"' \
+        --preview-window=up:5:wrap \
+        --height=80% \
+        --reverse \
+        --header="Select Claude Code session (all projects)" | cut -f2
+else
+    # Show only current project sessions
+    if [[ ! -d "$PROJECT_PATH" ]]; then
+        echo "No Claude Code sessions found for current directory: $CURRENT_DIR" >&2
+        exit 1
+    fi
+
+    for session_file in "$PROJECT_PATH"/*.jsonl; do
+        [[ -f "$session_file" ]] || continue
+        get_first_message "$session_file"
+    done | fzf \
+        --delimiter='\t' \
+        --with-nth=2,3 \
+        --preview='echo "Session: {1}"; echo "Modified: {3}"; echo ""; echo "{2}"' \
+        --preview-window=up:4:wrap \
+        --height=80% \
+        --reverse \
+        --header="Select Claude Code session (current project)"
+fi | cut -f1

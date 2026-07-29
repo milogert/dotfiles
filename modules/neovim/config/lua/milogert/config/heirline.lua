@@ -155,7 +155,15 @@ local mode_indicator = {
 
     names = names or ("? " .. self.mode .. " ?")
 
-    return " %2(" .. names[self.mode] .. "%)"
+    local system_icon = " "
+    -- local os = require("milogert.utils").getOS()
+    -- if os == "OSX" then
+    --   system_icon = "󰀵"
+    -- elseif os == "Linux" then
+    --   system_icon = " "
+    -- end
+
+    return system_icon .. "%2(" .. names[self.mode] .. "%)"
   end,
 
   -- Same goes for the highlight. Now the foreground will change according to the current mode.
@@ -296,7 +304,7 @@ local lsp_indicator = {
   -- Or complicate things a bit and get the servers names
   provider = function()
     local names = {}
-    for _, server in ipairs(vim.lsp.buf_get_clients(0)) do
+    for _, server in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
       table.insert(names, server.name)
     end
 
@@ -402,13 +410,13 @@ local git = {
   condition = conditions.is_git_repo,
 
   init = function(self)
-    self.status_dict = vim.b.gitsigns_status_dict
-    self.has_changes = self.status_dict.added ~= 0 or self.status_dict.removed ~= 0 or self.status_dict.changed ~= 0
+    -- self.status_dict = vim.b.gitsigns_status_dict
+    -- self.has_changes = self.status_dict.added ~= 0 or self.status_dict.removed ~= 0 or self.status_dict.changed ~= 0
   end,
 
   hl = { fg = colors.orange },
 
-  git_branch,
+  -- git_branch,
 
   -- You could handle delimiters, icons and counts similar to Diagnostics
   -- {
@@ -507,6 +515,7 @@ local statusline_inactive = {
   end,
 
   file_name_block,
+  diagnostic_icons,
   align,
   file_type,
 }
@@ -521,7 +530,7 @@ local statusline_special = {
 
   file_type,
   special_help_file,
-  special_fugitive,
+  -- special_fugitive,
   special_dirvish,
   align,
   ruler,

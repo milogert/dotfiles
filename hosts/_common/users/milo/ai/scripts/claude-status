@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Claude Code statusLine command
+
+input=$(cat)
+
+dir=$(echo "$input" | jq -r '.workspace.current_dir // .cwd')
+short_dir=$(basename "$dir")
+
+model=$(echo "$input" | jq -r '.model.display_name')
+used=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
+cost=$(echo "$input" | jq -r '.cost.total_cost_usd // empty')
+rate_5h=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
+vim_mode=$(echo "$input" | jq -r '.vim.mode // empty')
+
+worktree=$(echo "$input" | jq -r '.worktree.name // empty')
+
+branch=""
+if git -C "$dir" rev-parse --git-dir > /dev/null 2>&1; then
+  branch=$(git -C "$dir" symbolic-ref --short HEAD 2>/dev/null \
+    || git -C "$dir" rev-parse --short HEAD 2>/dev/null)
+fi
+
+# ANSI colors
+cyan='\033[36m'
+green='\033[32m'
+yellow='\033[33m'
+orange='\033[38;5;208m'
+magenta='\033[35m'
+blue='\033[34m'
+red='\033[31m'
+white='\033[37m'
+bold='\033[1m'
+dim='\033[2m'
+reset='\033[0m'
+
+parts=()
+parts+=("${cyan}${short_dir}${reset}")
+[[ -n "$branch" ]] && parts+=("${orange}${branch}${reset}")
+[[ -n "$worktree" ]] && parts+=("${magenta}wt:${worktree}${reset}")
+parts+=("${green}${model}${reset}")
+[[ -n "$used" ]] && parts+=("${blue}${used}% ctx${reset}")
+[[ -n "$cost" ]] && parts+=("${yellow}\$${cost}${reset}")
+[[ -n "$rate_5h" ]] && parts+=("${red}${rate_5h}% rate${reset}")
+[[ -n "$vim_mode" ]] && parts+=("${bold}${white}${vim_mode}${reset}")
+
+sep="${dim} | ${reset}"
+printf '%b' "$(IFS=$'\x1f'; joined="${parts[*]}"; echo "${joined//$'\x1f'/$sep}")"

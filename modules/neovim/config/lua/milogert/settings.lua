@@ -62,7 +62,7 @@ vim.opt.softtabstop = -1
 vim.opt.colorcolumn = '80'
 
 -- Use the system clipboard (in addition to other things?), y/p uses it.
-vim.opt.clipboard = vim.opt.clipboard + 'unnamed'
+vim.opt.clipboard = vim.opt.clipboard + 'unnamedplus'
 
 -- Mouse doesn't belong in terminal.
 vim.opt.mouse = ''
@@ -76,6 +76,7 @@ vim.opt.smartcase = true
 -- Other settings.
 vim.opt.hidden = true
 vim.opt.cmdheight = 2
+vim.opt.previewheight = 32
 vim.opt.showmode = false
 vim.opt.updatetime = 10
 vim.opt.shortmess = vim.opt.shortmess + 'c'
@@ -89,9 +90,14 @@ vim.opt.spellsuggest = {'best', 9}
 
 -- Folding.
 vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldnestmax = 10
 vim.opt.foldenable = false
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+
+-- Indentation.
+vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 
 -- Backspace.
 vim.opt.backspace = { 'indent', 'eol', 'start' }
@@ -118,10 +124,42 @@ vim.opt.lazyredraw = false
 vim.g.fzf_buffers_jump = true
 
 -- Vimux.
-vim.g.VimuxHeight = "25"
+-- vim.g.VimuxHeight = "25"
 vim.g.VimuxOrientation = "h"
 vim.g.VimuxUseNearest = 0
 
 -- Filetype.lua
 -- vim.g.do_filetype_lua = 1 -- Enables filetype.lua
 -- vim.g.did_load_filetypes = 0 -- Disables filetype.vim
+
+vim.g.db_ui_use_nerd_fonts = 1
+
+-- vim.o.tabline = "%!TabLine()"
+--
+-- 	function MyTabLine()
+-- 	  let s = ''
+-- 	  for i in range(tabpagenr('$'))
+-- 	    " select the highlighting
+-- 	    if i + 1 == tabpagenr()
+-- 	      let s ..= '%#TabLineSel#'
+-- 	    else
+-- 	      let s ..= '%#TabLine#'
+-- 	    endif
+--
+-- 	    " set the tab page number (for mouse clicks)
+-- 	    let s ..= '%' .. (i + 1) .. 'T'
+--
+-- 	    " the label is made by MyTabLabel()
+-- 	    let s ..= ' %{MyTabLabel(' .. (i + 1) .. ')} '
+-- 	  endfor
+--
+-- 	  " after the last tab fill with TabLineFill and reset tab page nr
+-- 	  let s ..= '%#TabLineFill#%T'
+--
+-- 	  " right-align the label to close the current tab page
+-- 	  if tabpagenr('$') > 1
+-- 	    let s ..= '%=%#TabLine#%999Xclose'
+-- 	  endif
+--
+-- 	  return s
+-- 	endfunction

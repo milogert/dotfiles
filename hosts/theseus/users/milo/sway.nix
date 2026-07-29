@@ -111,6 +111,7 @@ in {
     wofi
     python3
   ];
+
   wayland.windowManager.sway = {
     enable = true;
     wrapperFeatures.gtk = true;

@@ -1,5 +1,5 @@
 local null_ls = require("null-ls")
-local variables = require('milogert.variables')
+local variables = require("milogert.variables")
 
 local h = require("null-ls.helpers")
 
@@ -66,15 +66,16 @@ local h = require("null-ls.helpers")
 --   },
 -- })
 
+local prefer_local_config = {
+  prefer_local = "node_modules/.bin",
+}
+
 null_ls.setup({
   on_attach = require("milogert.config.lsp.on_attach"),
 
   sources = {
-    -- null_ls.builtins.code_actions.eslint.with({
-    --   prefer_local = "node_modules/.bin",
-    -- }),
-    null_ls.builtins.code_actions.gitsigns,
-    null_ls.builtins.code_actions.statix,
+    -- null_ls.builtins.code_actions.gitsigns,
+    -- null_ls.builtins.code_actions.statix,
     -- fzf_lua_lsp.with({
     --   config = {
     --     -- filter_actions = function(title)
@@ -84,22 +85,13 @@ null_ls.setup({
     --   },
     -- }),
 
-    null_ls.builtins.diagnostics.credo,
-    -- null_ls.builtins.diagnostics.eslint.with({
-    --   prefer_local = "node_modules/.bin",
-    -- }),
-    null_ls.builtins.diagnostics.statix,
+    -- null_ls.builtins.diagnostics.credo,
+    -- null_ls.builtins.diagnostics.statix,
 
-    -- null_ls.builtins.formatting.eslint.with({
-    --   prefer_local = "node_modules/.bin",
+    -- null_ls.builtins.formatting.biome,
+    -- null_ls.builtins.formatting.mix,
+    -- null_ls.builtins.formatting.stylua.with({
+    --   command = variables.get().ls_cmds.stylua[1],
     -- }),
-    -- null_ls.builtins.formatting.json_tool,
-    null_ls.builtins.formatting.mix,
-    null_ls.builtins.formatting.prettier.with({
-      prefer_local = "node_modules/.bin",
-    }),
-    null_ls.builtins.formatting.stylua.with({
-      command = variables.get().ls_cmds.stylua[1],
-    })
   },
 })

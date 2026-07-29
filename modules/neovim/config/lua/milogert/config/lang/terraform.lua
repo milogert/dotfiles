@@ -1,7 +1,7 @@
 local variables = require("milogert.variables")
-local lspconfig = require("lspconfig")
-local lsp_utils = require("milogert.config.lsp.utils")
 
-lspconfig.terraformls.setup(vim.tbl_extend("keep", {
+vim.lsp.config("terraformls", {
   cmd = variables.get().ls_cmds.terraformls,
-}, lsp_utils.server_defaults))
+})
+
+vim.lsp.enable({ "terraformls" })

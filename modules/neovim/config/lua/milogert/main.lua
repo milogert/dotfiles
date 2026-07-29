@@ -1,8 +1,12 @@
 local M = {}
 local variables = require("milogert.variables")
-local u = require('milogert.utils')
 
-M.setup = function (variable_opts)
+--[[
+Set up neovim.
+]]
+---@param variable_opts milogert.Variables The variables to make globally
+---available.
+M.setup = function(variable_opts)
   variables.setup(variable_opts)
 
   local log = require("milogert.logger")
@@ -13,77 +17,84 @@ M.setup = function (variable_opts)
 
   -- Set the leader key. This should be first.
   require("milogert.settings")
+  require("milogert.patches")
   require("milogert.autocmds")
 
   -- Source plugin configs.
   local plugins = {
     "arpeggio",
-    "cmp",
+    "blink-cmp",
+    "bruno",
     "colorizer",
-    "comment",
-    "copilot",
+    "conform",
     "dressing",
     "dap",
-    "devcontainer",
+    -- "doodle",
+    "dressing",
     "fidget",
     "fzf-lua",
     "gitsigns",
+    -- "js-i18n",
     "keybindings",
-    "lsp.installer",
-    "luasnip",
-    "mini",
-    "none-ls",
+    "lsp.config",
+    "mcp-hub",
+    "neotest",
+    -- "none-ls",
+    "obsidian",
     "octo",
     "oil",
+    "other",
+    -- "output-panel",
     "package-info",
     "persistence",
-    "runscript",
     "tada",
     "treesitter",
 
     "heirline", -- Needs to be last since it uses info from other imports
   }
 
+  -- This was 3, but made the status bar be only on the bottom and only reflect
+  -- the current window.
+  vim.opt.laststatus = 2
+
   for _, plugin in ipairs(plugins) do
-    local ok, err = pcall(require, 'milogert.config.' .. plugin)
+    local ok, err = pcall(require, "milogert.config." .. plugin)
     if not ok then
-      log.error('Failed to load plugin config: ' .. plugin)
+      log.error("Failed to load plugin config: " .. plugin)
       log.error(err)
     end
   end
 
   -- Load optional files.
   local optionals = {
-    'playground',
-    'priv',
+    "playground",
+    "priv",
   }
 
   for _, mod in ipairs(optionals) do
     local ok, err = pcall(require, mod)
     if not ok then
-      log.info('Failed to load file: ' .. mod .. '.lua')
+      log.info("Failed to load file: " .. mod .. ".lua")
       log.error(err)
     end
   end
 
   -- Perform language setup.
-  require('milogert.config.lang.main')
+  require("milogert.config.lang.main")
 
-  -- Oil.nvim
-  u.nmap('-', ':Oil<CR>')
   -- Dirvish - override netrw when using Explore, Sexplore, and Vexplore.
-  vim.g.loaded_netrwPlugin = 'loaded due to dirvish'
-  for _, value in ipairs({ { 'Explore', '' }, { 'Sexplore', 'split | silent ' }, { 'Vexplore', 'vsplit | silent ' } }) do
-    vim.api.nvim_create_user_command(
-      value[1],
-      function(opts)
-        vim.cmd(value[2] .. 'Dirvish ' .. opts.fargs[1])
-      end,
-      { nargs = '?', complete = 'dir' }
-    )
-  end
+  -- vim.g.loaded_netrwPlugin = 'loaded due to dirvish'
+  -- for _, value in ipairs({ { 'Explore', '' }, { 'Sexplore', 'split | silent ' }, { 'Vexplore', 'vsplit | silent ' } }) do
+  --   vim.api.nvim_create_user_command(
+  --     value[1],
+  --     function(opts)
+  --       vim.cmd(value[2] .. 'Dirvish ' .. opts.fargs[1])
+  --     end,
+  --     { nargs = '?', complete = 'dir' }
+  --   )
+  -- end
 
-  vim.cmd [[
+  vim.cmd([[
   " Function to source only if file exists.
   function! SourceIfExists(file)
     if filereadable(expand(a:file))
@@ -115,7 +126,12 @@ M.setup = function (variable_opts)
     "lcd ~
     file scratch
   endfunction
-  ]]
+  ]])
+
+  -- Just for oil.nvim.
+  -- require("yank-path").setup({
+  --   use_oil = true,
+  -- })
 end
 
 return M

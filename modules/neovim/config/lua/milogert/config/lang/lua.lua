@@ -1,9 +1,12 @@
 local variables = require("milogert.variables")
-local lspconfig = require("lspconfig")
-local lsp_utils = require("milogert.config.lsp.utils")
+local on_attach = require("milogert.config.lsp.on_attach")
 
-lspconfig.lua_ls.setup(vim.tbl_extend("keep", {
+vim.lsp.config("lua_ls", {
   cmd = variables.get().ls_cmds.lua_ls,
+  on_attach = function(client, bufnr)
+    client.server_capabilities.document_formatting = true
+    on_attach(client, bufnr)
+  end,
   settings = {
     Lua = {
       hint = {
@@ -18,4 +21,6 @@ lspconfig.lua_ls.setup(vim.tbl_extend("keep", {
       },
     },
   },
-}, lsp_utils.server_defaults))
+})
+
+vim.lsp.enable({ 'lua_ls' })

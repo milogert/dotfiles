@@ -1,21 +1,20 @@
+{ pkgs, ... }:
+
 {
   environment.shellAliases = {
-    cat = "bat";
-    catt = "bat --style=plain --pager=never";
-    gpgkill = "gpgconf --kill gpg-agent";
-    ll = "eza -l -g --git --color always --icons -a -s type";
-    ls = "eza --color auto --icons -a -s type";
-    mux = "tmuxinator";
-    rel = ". ~/.zshrc";
+    cat = "${pkgs.bat}/bin/bat";
+    catt = "${pkgs.bat}/bin/bat --style=plain --pager=never";
+    gpgkill = "${pkgs.gnupg}/bin/gpgconf --kill gpg-agent";
+    ll = "${pkgs.eza}/bin/eza -l -g --git --color always --icons -a -s type";
+    ls = "${pkgs.eza}/bin/eza --color auto --icons -a -s type";
     reset-yubikey = "gpg-connect-agent \"scd serialno\" \"learn --force\" /bye";
-    srv = "python -m SimpleHTTPServer \${1:-8000}";
 
     # Nix stuff.
-    ns = "nix-shell";
-    nsp = "nix-shell -p";
+    ns = "${pkgs.nix}/bin/nix-shell";
+    nsp = "${pkgs.nix}/bin/nix-shell -p";
 
-    nq = "nix search";
-    nqn = "nix search nixpkgs";
+    nq = "${pkgs.nix}/bin/nix search";
+    nqn = "${pkgs.nix}/bin/nix search nixpkgs";
 
     nm = "man 5 configuration.nix";
     nmh = "man 5 home-configuration.nix";

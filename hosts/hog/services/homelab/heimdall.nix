@@ -6,7 +6,8 @@ let
   hostPort = "81";
   containerPort = "80";
   image = "linuxserver/heimdall:latest";
-in {
+in
+{
   users.users."${userGroupName}" = {
     home = "/var/lib/${userGroupName}";
     createHome = true;
@@ -22,7 +23,7 @@ in {
 
   virtualisation.oci-containers.containers."${userGroupName}" = {
     image = image;
-    ports = ["${hostPort}:${containerPort}"];
+    ports = [ "${hostPort}:${containerPort}" ];
     volumes = [
       "/var/lib/${userGroupName}:/config"
     ];
