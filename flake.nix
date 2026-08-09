@@ -59,6 +59,16 @@
           };
         });
 
+        # direnv integration tests fail on Darwin (sleep gets SIGKILL'd by sandbox)
+        # Go unit tests pass fine — skip only the shell integration tests
+        direnv = prev.direnv.overrideAttrs (old: {
+          checkPhase = ''
+            runHook preCheck
+            make test-go
+            runHook postCheck
+          '';
+        });
+
         pi-coding-agent = prev.callPackage ./packages/pi-coding-agent/package.nix { };
       };
 
@@ -220,11 +230,11 @@
           };
         };
 
-        nutop = darwin.lib.darwinSystem {
+        work = darwin.lib.darwinSystem {
           inherit inputs;
           system = "aarch64-darwin";
           modules = mkDarwinConfig {
-            host = "nutop";
+            host = "work";
             users = [ "milo" ];
             type = "desktop";
           };

@@ -1,6 +1,7 @@
 {
-  pkgs,
   config,
+  lib,
+  pkgs,
   ...
 }:
 
@@ -36,154 +37,176 @@ in
       srcery-tmux
       vim-tmux-navigator
     ];
-    extraConfig = ''
-      # Mostly my own config but...
-      # Tips from https://dev.to/iggredible/useful-tmux-configuration-examples-k3g
+    extraConfig =
+      let
+        tmuxPaletteBin = "${tmuxPlugins.tmux-palette}/share/tmux-plugins/tmux-palette/bin/tmux-palette.sh";
+      in
+      ''
+        # Mostly my own config but...
+        # Tips from https://dev.to/iggredible/useful-tmux-configuration-examples-k3g
 
-      set-option -sa terminal-overrides ',alacritty:RGB'
+        set-option -sa terminal-overrides ',alacritty:RGB'
 
-      # Rebind prefix key from C-b to C-Space
-      set -g prefix C-Space
-      unbind-key C-b
-      bind-key C-Space send-prefix
+        # Rebind prefix key from C-b to C-Space
+        set -g prefix C-Space
+        unbind-key C-b
+        bind-key C-Space send-prefix
 
-      # Set the default shell.
-      set-option -gu default-command
-      set-option -g default-shell "${pkgs.zsh}/bin/zsh"
-      set-option -ga terminal-overrides ",xterm-256color:Tc"
+        # Set the default shell.
+        set-option -gu default-command
+        set-option -g default-shell "${pkgs.zsh}/bin/zsh"
+        set-option -ga terminal-overrides ",xterm-256color:Tc"
 
-      # Swap layout switch and previous buffer keys.
-      unbind Space
-      bind Space last-window
-      unbind b
-      bind b next-layout
+        # Swap layout switch and previous buffer keys.
+        unbind Space
+        bind Space last-window
+        unbind b
+        bind b next-layout
 
-      # Force a reload of the config file
-      unbind r
-      bind r source-file ~/.config/tmux/tmux.conf \; display "tmux config reloaded"
+        # Tmux Palette
+        bind P run-shell "${tmuxPaletteBin}"
+        bind M-f run-shell "${tmuxPaletteBin} find-pane"
+        bind M-m run-shell "${tmuxPaletteBin} move-pane"
 
-      # Set window notifications
-      # setw -g monitor-activity on
-      # set -g visual-activity on
-      # set -g monitor-silence on
 
-      # Start window numbering at 1 for easier switching.
-      setw -g base-index 1
-      setw -g pane-base-index 1
-      bind | split-window -h -c "#{pane_current_path}"
-      bind - split-window -v -c "#{pane_current_path}"
-      set -g renumber-windows on
+        # Force a reload of the config file
+        unbind r
+        bind r source-file ~/.config/tmux/tmux.conf \; display "tmux config reloaded"
 
-      # Rename panes based on the current path automatically.
-      set-option -g automatic-rename on
-      set-option -g automatic-rename-format '#{b:pane_current_path}'
+        # Set window notifications
+        # setw -g monitor-activity on
+        # set -g visual-activity on
+        # set -g monitor-silence on
 
-      # Rejoin panes
-      bind j choose-window 'join-pane -h -s "%%"'
-      bind J choose-window 'join-pane -s "%%"'
+        # Start window numbering at 1 for easier switching.
+        setw -g base-index 1
+        setw -g pane-base-index 1
+        bind | split-window -h -c "#{pane_current_path}"
+        bind - split-window -v -c "#{pane_current_path}"
+        set -g renumber-windows on
 
-      # Allow mousewheel scrolling.
-      set-option -g mouse on
-      #set -g mode-mouse on
-      #set -g mouse-select-window on
-      #set -g mouse-select-pane on
-      unbind -T copy-mode-vi MouseDragEnd1Pane
-      bind-key -T copy-mode-vi v send-keys -X begin-selection
-      bind-key -T copy-mode-vi y send-keys -X copy-selection
+        # Rename panes based on the current path automatically.
+        set-option -g automatic-rename on
+        set-option -g automatic-rename-format '#{b:pane_current_path}'
 
-      # Focus last session when exiting a session totally.
-      set-hook -g session-closed 'switch-client -l'
+        # Rejoin panes
+        bind j choose-window 'join-pane -h -s "%%"'
+        bind J choose-window 'join-pane -s "%%"'
 
-      ## Enable clipboard interactivity
-      #set -g set-clipboard on
+        # Allow mousewheel scrolling.
+        set-option -g mouse on
+        #set -g mode-mouse on
+        #set -g mouse-select-window on
+        #set -g mouse-select-pane on
+        unbind -T copy-mode-vi MouseDragEnd1Pane
+        bind-key -T copy-mode-vi v send-keys -X begin-selection
+        bind-key -T copy-mode-vi y send-keys -X copy-selection
 
-      ## Set window notifications
-      #set -g monitor-activity on
-      #set -g visual-activity on
+        # Focus last session when exiting a session totally.
+        set-hook -g session-closed 'switch-client -l'
 
-      ## Update files on focus (using for neovim)
-      set -g focus-events on
+        ## Enable clipboard interactivity
+        #set -g set-clipboard on
 
-      ## macOS Command+K (Clear scrollback buffer)
-      #bind -n C-k clear-history
+        ## Set window notifications
+        #set -g monitor-activity on
+        #set -g visual-activity on
 
-      ## A quiter setup
-      set -g visual-activity off
-      set -g visual-bell off
-      set -g visual-silence off
-      setw -g monitor-activity off
-      set -g bell-action none
+        ## Update files on focus (using for neovim)
+        set -g focus-events on
 
-      ###########
-      ## Status #
-      ###########
-      ## https://rudra.dev/posts/a-mininal-tmux-configuration-from-scratch/
+        ## macOS Command+K (Clear scrollback buffer)
+        #bind -n C-k clear-history
 
-      ## Set status bar on
-      set -g status on
+        ## A quiter setup
+        set -g visual-activity off
+        set -g visual-bell off
+        set -g visual-silence off
+        setw -g monitor-activity off
+        set -g bell-action none
 
-      ## Update the status line every second
-      set -g status-interval 1
+        ###########
+        ## Status #
+        ###########
+        ## https://rudra.dev/posts/a-mininal-tmux-configuration-from-scratch/
 
-      ## Set the position of window lists.
-      set -g status-justify left # [left | centre | right]
+        ## Set status bar on
+        set -g status on
 
-      ## Set Vi style keybinding in the status line
-      set -g status-keys vi
+        ## Update the status line every second
+        set -g status-interval 1
 
-      ## Set the status bar position
-      set -g status-position top # [top, bottom]
+        ## Set the position of window lists.
+        set -g status-justify left # [left | centre | right]
 
-      ## Set status bar background and foreground color.
-      #set -g status-style fg=colour136,bg="#002b36"
+        ## Set Vi style keybinding in the status line
+        set -g status-keys vi
 
-      ## Set left side status bar length and style
-      set -g status-left-length 60
-      set -g status-left-style default
+        ## Set the status bar position
+        set -g status-position top # [top, bottom]
 
-      ## Display the session name
-      #set -g status-left "#[fg=green] ❐ #S #[default]"
-      set -g status-left "#S@#H "
+        ## Set status bar background and foreground color.
+        #set -g status-style fg=colour136,bg="#002b36"
 
-      ## Display the os version (Mac Os)
-      #set -ag status-left " #[fg=black] #[fg=green,bright]  #(sw_vers -productVersion) #[default]"
+        ## Set left side status bar length and style
+        set -g status-left-length 60
+        set -g status-left-style default
 
-      ## Display the battery percentage (Mac OS)
+        ## Display the session name
+        #set -g status-left "#[fg=green] ❐ #S #[default]"
+        set -g status-left "#S@#H "
 
-      ## Set right side status bar length and style
-      set -g status-right-length 140
-      set -g status-right-style default
+        ## Display the os version (Mac Os)
+        #set -ag status-left " #[fg=black] #[fg=green,bright]  #(sw_vers -productVersion) #[default]"
 
-      ## Display the cpu load (Mac OS)
-      set -g status-right "#[fg=green,bg=default,bright]#(top -l 1 | grep -E "^CPU" | sed 's/.*://')#[default]"
-      # set -g status-right "#(top -l 1 | grep -E "^CPU" | sed 's/.*:/  /') "
+        ## Display the battery percentage (Mac OS)
 
-      # Battery.
-      set -ag status-right "| #[fg=green,bg=default,bright]🔋 #(pmset -g batt | tail -1 | awk '{print $3}' | tr -d ';') #[default]"
+        ## Set right side status bar length and style
+        set -g status-right-length 140
+        set -g status-right-style default
 
-      # Display the date
-      set -ag status-right "| #[fg=white,bg=default]%a %d #[default]"
+        ## Display the cpu load (Mac OS)
+        set -g status-right "#[fg=green,bg=default,bright]#(top -l 1 | grep -E "^CPU" | sed 's/.*://' | sed 's/user/u/' | sed 's/sys/s/' | sed 's/idle/i/')#[default]"
 
-      # Display the time
-      set -ag status-right "#[fg=colour172,bright,bg=default]%l:%M %p #[default]"
+        ## Display memory pressure sparkline (macOS + Linux)
+        set -ag status-right "| #($HOME/.local/bin/mem-sparkline) MEM#[default]"
 
-      ## Display the hostname
-      #set -ag status-right "#[fg=cyan,bg=default] ☠ #H #[default]"
-      #set -ag status-right " ☠ #H "
+        # Battery.
+        set -ag status-right "| #[fg=green,bg=default,bright]🔋 #(pmset -g batt | tail -1 | awk '{print $3}' | tr -d ';') #[default]"
 
-      # Marking Panes #########################################################
+        # Display the date
+        set -ag status-right "| #[fg=white,bg=default]%a %d #[default]"
 
-      bind \` switch-client -t'{marked}'
+        # Display the time
+        set -ag status-right "#[fg=colour172,bright,bg=default]%l:%M %p #[default]"
 
-      # Plugins ###############################################################
+        ## Display the hostname
+        #set -ag status-right "#[fg=cyan,bg=default] ☠ #H #[default]"
+        #set -ag status-right " ☠ #H "
 
-      ## Resurrect
-      # What to restore
-      set -g @resurrect-processes 'vim nvim ssh psql "~claude --continue" claude "~neovim-edge --impure"'
+        # Marking Panes #########################################################
 
-      ## Continuum
-      # Automatic restore
-      set -g @continuum-restore 'on'
-    '';
+        bind \` switch-client -t'{marked}'
+
+        # Plugins ###############################################################
+
+        ## Resurrect
+        # What to restore
+        set -g @resurrect-processes 'vim ssh psql claude "~claude --continue" "~bin/nvim->nvim" "~neovim-edge --impure"'
+
+        ## Continuum
+        # Automatic restore
+        set -g @continuum-restore 'on'
+        set -ag status-right "#(${pkgs.tmuxPlugins.continuum}/share/tmux-plugins/continuum/scripts/continuum_save.sh)"
+      '';
+  };
+
+  home.file."${config.xdg.configHome}/tmux-palette/sizing.json".text = lib.generators.toJSON { } {
+    # maxHeight = 28;
+    # width = 90;
+    # padX = 3;
+    # mobileWidth = 80;
+    border = "single";
+    popupBorder = "heavy";
   };
 }

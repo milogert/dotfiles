@@ -5,7 +5,6 @@ let
     blink-cmp
     blink-cmp-git
     blink-compat
-    comment-nvim # :help commenting, consider removing this later.
     dressing-nvim
     elixir-tools-nvim
     fidget-nvim
@@ -20,6 +19,8 @@ let
     lspkind-nvim
     mason-lspconfig-nvim
     mason-nvim
+    neotest
+    neotest-vitest
     none-ls-nvim
     nui-nvim
     nvim-cmp
@@ -117,11 +118,9 @@ let
     nvim-web-devicons
     obsidian-nvim
     octo-nvim
-    oil-nvim
     other-nvim
     package-info-nvim
     persistence-nvim
-    # sqlite-lua
     srcery-vim
     tssorter-nvim
     typescript-tools-nvim

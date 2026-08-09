@@ -98,6 +98,10 @@
       ".vscode"
       "node_modules"
     ];
+
+    signing = {
+      format = "openpgp";
+    };
   };
 
   home.activation.requestReadProjectForGH =

@@ -65,8 +65,57 @@ let
           }
         )
       );
+
+  tmuxPaletteSrc = pkgs.fetchFromGitHub {
+    owner = "eduwass";
+    repo = "tmux-palette";
+    rev = "6c254f5280570034e24630960777a4782c56be0e";
+    sha256 = "0l2qs9cc784n2c12xc9954qdhd8m1zwlp9dq0kjm98hd6c00icqy";
+  };
+
+  tmuxPaletteNodeModules = stdenv.mkDerivation {
+    pname = "tmux-palette-node-modules";
+    version = "6c254f5";
+    src = tmuxPaletteSrc;
+
+    nativeBuildInputs = [ pkgs.bun ];
+
+    dontConfigure = true;
+    dontFixup = true;
+
+    buildPhase = ''
+      export BUN_INSTALL_CACHE_DIR=$(mktemp -d)
+      bun install --no-progress --frozen-lockfile
+    '';
+
+    installPhase = ''
+      mkdir -p $out
+      cp -R ./node_modules $out
+    '';
+
+    outputHashAlgo = "sha256";
+    outputHashMode = "recursive";
+    outputHash = "sha256-oeyWpohMx/+biiHps/L0JFB2enO4hnR4J54NTgAdN+M=";
+  };
 in
 {
+  tmux-palette = mkTmuxPlugin {
+    pluginName = "tmux-palette";
+    rtpFilePath = "tmux-palette.tmux";
+    version = "6c254f5";
+    src = tmuxPaletteSrc;
+    nativeBuildInputs = [ pkgs.bun ];
+    postInstall = ''
+      cp -R ${tmuxPaletteNodeModules}/node_modules $out/${rtpPath}/tmux-palette/
+      substituteInPlace $out/${rtpPath}/tmux-palette/bin/tmux-palette.sh \
+        --replace-fail 'exec bun ' 'exec ${pkgs.bun}/bin/bun ' \
+        --replace-fail 'MEASURE="$(bun ' 'MEASURE="$(${pkgs.bun}/bin/bun '
+      substituteInPlace $out/${rtpPath}/tmux-palette/tmux-palette.tmux \
+        --replace-fail 'command -v bun' 'command -v ${pkgs.bun}/bin/bun' \
+        --replace-fail 'bun install' '${pkgs.bun}/bin/bun install'
+    '';
+  };
+
   srcery-tmux = mkTmuxPlugin {
     pluginName = "srcery";
     version = "now";

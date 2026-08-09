@@ -37,14 +37,6 @@ let
 
     zprof
 
-    if [[ $(uname -s) == 'Darwin' ]]; then
-      eval "$(/opt/homebrew/bin/brew shellenv)"
-    fi
-
-    if [[ -d ~/Developer/flutter ]]; then
-      export PATH="$PATH:$HOME/Developer/flutter/bin"
-    fi
-
     # cdwt - pushd to a git worktree by branch name
     cdwt() {
       local dir
@@ -69,6 +61,18 @@ let
     }
 
     compdef _cdwt cdwt
+
+    # mkwt - create a git worktree from a branch name like category/feature/short-desc
+    # folder becomes category-feature-short-desc alongside the current worktree root
+    mkwt() {
+      local branch="''${1:?branch name required}"
+      local folder
+      folder=$(echo "$branch" | tr '/' '-')
+      local root
+      root=$(git worktree list | head -1 | cut -f1 -d' ')
+      local dest="''${root}/.worktrees/$folder"
+      git worktree add -b "$branch" "$dest" && cd "$dest"
+    }
 
     # This is generated from `pnpm completion zsh`
     #compdef pnpm

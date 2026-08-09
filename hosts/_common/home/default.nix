@@ -12,6 +12,7 @@
     ./tmux
     ./xdg.nix
     ./zsh
+    ./zellij.nix
   ];
 
   home.packages = with pkgs; [

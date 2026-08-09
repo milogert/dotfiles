@@ -5,13 +5,13 @@ let
 in {
   environment.systemPackages = with pkgs; [
     fuse
-    macfuse-stubs
+    # macfuse-stubs
     rclone
     rsync
   ];
 
   homebrew.casks = [
-    "macfuse"
+    # "macfuse"
   ];
 
   environment.etc."rclone/rclone.conf".source = "/etc/conf.d/rclone.conf";

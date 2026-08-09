@@ -1,8 +1,8 @@
 {
   networking = {
-    computerName = "nutop";
-    hostName = "nutop";
-    localHostName = "nutop";
+    computerName = "work";
+    hostName = "work";
+    localHostName = "work";
     knownNetworkServices = [
       "USB 10/100/1000 LAN"
       "Wi-Fi"

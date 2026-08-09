@@ -79,5 +79,5 @@ add-user:
 hog: _nixos_switch
 remote-hog: _nixos_switch
 theseus: _nixos_switch
-nutop: _nix_darwin_build
+work: _nix_darwin_build
 minotaur: _nix_darwin_build

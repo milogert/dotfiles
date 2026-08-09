@@ -32,7 +32,10 @@ in
   home.packages = with pkgs; [
     codex
     gitoxide
+    notmuch
+    w3m
     nodejs
+    python3
     pi-coding-agent
     watchman
   ];

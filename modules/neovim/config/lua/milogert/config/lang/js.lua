@@ -3,22 +3,22 @@ local on_attach = require("milogert.config.lsp.on_attach")
 
 vim.lsp.config("jsonls", { cmd = variables.get().ls_cmds.jsonls })
 
-vim.lsp.config('biome', {
+vim.lsp.config("biome", {
   cmd = variables.get().ls_cmds.biome,
   filetypes = {
+    "css",
+    "html",
     "javascript",
     "javascriptreact",
-    "javascript.jsx",
+    "json",
+    "json5",
+    "jsonc",
+    "svelte",
     "typescript",
     "typescriptreact",
-    "typescript.tsx",
     "vue",
-    "svelte",
-    "astro",
-    "json",
-    "jsonc",
-    "json5",
   },
+  -- root_markers = { { "biome.json", "biome.jsonc" } },
   on_attach = function(client, bufnr)
     -- Enable formatting capabilities
     client.server_capabilities.documentFormattingProvider = true
@@ -26,6 +26,20 @@ vim.lsp.config('biome', {
 
     -- Ensure code action capabilities are enabled
     client.server_capabilities.codeActionProvider = true
+
+    vim.api.nvim_set_keymap(
+      "n",
+      "<leader>twr",
+      "<cmd>lua require('neotest').run.run({ vitestCommand = 'pnpm test:unit' })<cr>",
+      { desc = "Run Watch" }
+    )
+
+    vim.api.nvim_set_keymap(
+      "n",
+      "<leader>twf",
+      "<cmd>lua require('neotest').run.run({ vim.fn.expand('%'), vitestCommand = 'pnpm test:unit' })<cr>",
+      { desc = "Run Watch File" }
+    )
 
     on_attach(client, bufnr)
   end,
@@ -48,7 +62,7 @@ vim.lsp.config('biome', {
   },
 })
 
-vim.lsp.config('tsgo', {
+vim.lsp.config("tsgo", {
   cmd = variables.get().ls_cmds.tsgo,
   filetypes = {
     "javascript",
@@ -181,13 +195,6 @@ if variables.get().debuggers.vscode_js then
       },
     }
   end
-
-  require("dap.ext.vscode").load_launchjs(nil, {
-    ["pwa-node"] = js_languages,
-    ["node"] = js_languages,
-    ["chrome"] = js_languages,
-    ["pwa-chrome"] = js_languages,
-  })
 else
   print("variables.get().debuggers.vscode_js is not configured")
 end
