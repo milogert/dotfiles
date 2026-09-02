@@ -1,28 +1,19 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
-{
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+let
+  format = pkgs.formats.toml { };
+  dynamicDir = "/srv/traefik-dynamic";
 
-  services.traefik.enable = true;
+  dynamicConfigFile = format.generate "traefik-dynamic-static.toml"
+    config.services.traefik.dynamicConfigOptions;
 
-  # services.traefik.dynamic.dir = "/var/lib/traefik/dynamic";
-
-  services.traefik.staticConfigOptions = {
-    /* log = { */
-    /*   filePath = "/var/lib/traefik/traefik.system.log"; */
-    /*   level = "DEBUG"; */
-    /* }; */
-
+  staticConfigFile = format.generate "traefik-static.toml" {
     accessLog.filePath = "/var/lib/traefik/traefik.access.log";
 
     certificatesResolvers.letsEncrypt.acme = {
       email = "milo@milogert.com";
       storage = "/var/lib/traefik/acme-prod.json";
-
       dnsChallenge.provider = "route53";
-
-      # Remove for production.
-      # caServer = "https://acme-staging-v02.api.letsencrypt.org/directory";
     };
 
     entryPoints = {
@@ -39,10 +30,30 @@
 
     api.dashboard = true;
 
-    # pilot.token = builtins.readFile ("/etc/secrets/traefik-pilot.token");
+    providers.file = {
+      directory = dynamicDir;
+      watch = true;
+    };
+  };
+in {
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+  services.traefik = {
+    enable = true;
+    staticConfigFile = staticConfigFile;
+    environmentFiles = [ "/etc/secrets/route53.env" ];
+    group = "users";
   };
 
-  # This gives access to the dashboard.
+  systemd.tmpfiles.rules = [
+    "d ${dynamicDir} 2775 traefik users -"
+  ];
+
+  system.activationScripts.traefikDynamicConfig = lib.stringAfter [ "users" "groups" ] ''
+    install -d -m 2775 -o traefik -g users ${dynamicDir}
+    install -m 0644 ${dynamicConfigFile} ${dynamicDir}/00-nixos-static.toml
+  '';
+
   services.traefik.dynamicConfigOptions.http = {
     routers.traefik = {
       entryPoints = [ "websecure" ];
@@ -60,35 +71,6 @@
       };
     };
 
-    routers.wishlist = {
-      entryPoints = [ "websecure" ];
-      rule = "Host(`rrw.milogert.com`) || Host(`wishlist.milogert.com`)";
-      service = "noop@internal";
-
-      middlewares = [ "wishlistRedirect" ];
-      tls = {
-        certResolver = "letsEncrypt";
-        domains = [ {
-          main = "rrw.milogert.com";
-          sans = [ "wishlist.milogert.com" ];
-        } ];
-      };
-    };
-
-    middlewares = {
-      wishlistRedirect = {
-        redirectRegex = {
-          regex = "^https://(rrw|wishlist)\\.milogert\\.com";
-          replacement = "https://www.icloud.com/pages/07eSQUDeSG3CPPBAih4dGMDRw#Rolling-Release_Wishlist";
-        };
-      };
-    };
-  };
-
-  systemd.services.traefik.serviceConfig.EnvironmentFile =
-    "/etc/secrets/route53.env";
-
-  services.traefik.dynamicConfigOptions.http = {
     routers.ai = {
       entryPoints = [ "websecure" ];
       rule = "Host(`ai.milogert.com`)";
@@ -101,6 +83,19 @@
     };
 
     services.ai.loadBalancer.servers = [ { url = "http://localhost:18789"; } ];
-  };
 
+    routers.apps-ai-wildcard = {
+      entryPoints = [ "websecure" ];
+      rule = "Host(`apps.ai.milogert.com`)";
+      service = "noop@internal";
+
+      tls = {
+        certResolver = "letsEncrypt";
+        domains = [ {
+          main = "apps.ai.milogert.com";
+          sans = [ "*.apps.ai.milogert.com" ];
+        } ];
+      };
+    };
+  };
 }
