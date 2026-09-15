@@ -23,8 +23,8 @@ in
   imports = [
     (common_dir + /home/default.nix)
     (common_dir + /home/direnv.nix)
-    ./ai/claude.nix
-    ./ai/pi.nix
+    ./ai/claude
+    ./ai/pi
     ./programs
     ./scripts
   ];

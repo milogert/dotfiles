@@ -7,6 +7,7 @@
     ../_common/default.nix
     ../_common/types/headless.nix
     ./networking.nix
+    ./wireguard.nix
     ./services
     ../_common/services
   ];
@@ -22,9 +23,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    backblaze-b2
     ranger
     rclone
-    terraform
   ];
 }

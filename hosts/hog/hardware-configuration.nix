@@ -39,7 +39,7 @@
   };
 
   fileSystems."/mnt/download-stream-cache" = {
-    device = "/dev/disk/by-uuid/85a5a6eb-b23a-451a-a36c-c1e51b1c7299";
+    device = "/dev/disk/by-uuid/f605a42f-76ea-46c8-8d19-a5c6d1eb580b";
     fsType = "ext4";
   };
 

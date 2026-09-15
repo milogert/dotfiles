@@ -4,6 +4,7 @@
   imports = [
     ./avahi.nix
     ./homelab
+    ./koreader-sync.nix
     ./livebook.nix
     ./nginx.nix
     ./openssh.nix
