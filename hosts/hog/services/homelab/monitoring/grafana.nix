@@ -10,10 +10,10 @@ in
   services.grafana = {
     enable = true;
 
-    addr = "0.0.0.0";
     domain = "grafana.milogert.dev";
 
     settings = {
+      server.http_addr = "0.0.0.0";
       security.secret_key = "test key";
     };
 

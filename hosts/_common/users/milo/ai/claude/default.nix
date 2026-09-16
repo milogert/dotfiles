@@ -8,7 +8,7 @@
 let
   directory = "${config.home.homeDirectory}/.claude";
   peonPingScript = "${directory}/hooks/peon-ping/peon.sh";
-  inherit (pkgs.stdenv) isDarwin;
+  inherit (pkgs.stdenv.hostPlatform) isDarwin;
 in
 {
   home.packages = with pkgs; [
@@ -154,7 +154,7 @@ in
 
     "${directory}/skills/" = {
       recursive = true;
-      source = ./skills;
+      source = ../skills;
     };
   };
 }
