@@ -98,7 +98,6 @@ let
       p.svelte
       p.sway
       p.terraform
-      p.tmux
       p.todotxt
       p.toml
       p.tsx
@@ -167,7 +166,7 @@ pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
         tailwindcss = { "${pkgs.vscode-extensions.bradlc.vscode-tailwindcss}/bin/tailwindcss-language-server", "--stdio", },
         terraformls = { "${pkgs.terraform-ls}/bin/terraform-ls", "serve" },
         texlab = { "${pkgs.texlab}/bin/texlab" },
-        tsgo = { "${pkgs.typescript-go}/bin/tsgo", "--lsp", "--stdio", },
+        tsgo = { "${pkgs.typescript}/bin/tsgo", "--lsp", "--stdio", },
       },
 
       formatters = {

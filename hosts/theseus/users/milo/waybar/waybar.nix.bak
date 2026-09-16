@@ -47,7 +47,6 @@
             interval = "once";
             tooltip = false;
             return-type = "string";
-            # on-click = "kitty -e $SHELL -c 'neofetch; read'";
             escape = true;
           };
           "sway/workspaces" = {

@@ -1,6 +1,7 @@
 let
   userHogMilo = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBd16tgf4w3UYvAemneiqbbdzLS+lE2n2kU9Nkv4Wgys milo@hog";
-  users = [ userHogMilo ];
+  userTheseusMilo = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHGDPOjYPoNSWVIAzdoJMF/KS+KrvNBRknchWKUW2vAW milo@theseus";
+  users = [ userHogMilo userTheseusMilo ];
 
   hog = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHSdpbmMIGT1pdNiC3G1Ha4zPDyHQJMtLwf0/NnIItty root@nixos";
   theseus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHlm3elIZpaMhWqVFOFJKmvdu/COrRgUP7S9J4EroaYP root@theseus";
