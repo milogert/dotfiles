@@ -21,21 +21,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    openclaw = {
-      url = "github:openclaw/nix-openclaw";
+    agenix = {
+      url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
     };
   };
 
   outputs =
     inputs@{
       self,
+      agenix,
       darwin,
       home-manager,
       neovim-custom,
       nixpkgs,
-      openclaw,
     }:
     let
       overlays = final: prev: {
@@ -68,8 +67,6 @@
             runHook postCheck
           '';
         });
-
-        pi-coding-agent = prev.callPackage ./packages/pi-coding-agent/package.nix { };
       };
 
       nixpkgsConfig = {
@@ -83,42 +80,6 @@
         overlays = [
           overlays
           neovim-custom.overlays.default
-          openclaw.overlays.default
-          (final: prev: {
-            openclaw-gateway =
-              final.runCommand "openclaw-gateway-fixed"
-                {
-                  inherit (prev.openclaw-gateway) meta;
-                  nativeBuildInputs = [ final.gnused ];
-                }
-                ''
-                  cp -r ${prev.openclaw-gateway} $out
-                  chmod -R u+w $out
-
-                  # Keep plugin manifests next to the built extension bundles so
-                  # the gateway can discover packaged extensions correctly.
-                  for ext_dir in $out/lib/openclaw/extensions/*/; do
-                    ext_name=$(basename "$ext_dir")
-                    manifest="$ext_dir/openclaw.plugin.json"
-                    dist_dir="$out/lib/openclaw/dist/extensions/$ext_name"
-                    if [ -f "$manifest" ] && [ -d "$dist_dir" ]; then
-                      cp "$manifest" "$dist_dir/"
-                    fi
-                  done
-
-                  for wrapper in $out/bin/*; do
-                    if [ -f "$wrapper" ]; then
-                      sed -i "s|${prev.openclaw-gateway}|$out|g" "$wrapper"
-                    fi
-                  done
-                '';
-          })
-          (final: prev: {
-            openclaw = final.symlinkJoin {
-              name = "openclaw";
-              paths = [ final.openclaw-gateway ];
-            };
-          })
         ];
       };
 
@@ -131,17 +92,16 @@
         }:
         let
           user_host_path = ./. + "/hosts/${host}/users";
-          common_config = "${user_host_path}/_common";
+          common_config = user_host_path + "/_common";
           common_user_config = ./. + "/hosts/_common/users/${user}";
-          user_path = "${user_host_path}/${user}";
-          config_path = "${user_path}/config.nix";
+          user_path = user_host_path + "/${user}";
+          config_path = user_path + "/config.nix";
           config = import config_path { inherit pkgs user; };
           home_type_path = ./. + "/hosts/_common/home/types/${type}.nix";
         in
         {
           home-manager.users.${user} = {
             imports = [
-              openclaw.homeManagerModules.openclaw
               user_path
               common_config
               common_user_config
@@ -201,7 +161,6 @@
         (mkCommonConfig { inherit host type users; })
         ++ [
           home-manager.darwinModules.home-manager
-          openclaw.darwinModules.openclaw
         ];
 
       mkNixosConfig =
@@ -213,6 +172,7 @@
         (mkCommonConfig { inherit host type users; })
         ++ [
           home-manager.nixosModules.home-manager
+          agenix.nixosModules.default
           {
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
           }
@@ -295,8 +255,6 @@
             in
             {
               neovim = neovim-custom.packages.aarch64-linux.default;
-              openclaw = pkgs.openclaw;
-              pi-coding-agent = pkgs.pi-coding-agent;
             };
 
           x86_64-linux =
@@ -305,8 +263,6 @@
             in
             {
               neovim = neovim-custom.packages.x86_64-linux.default;
-              openclaw = pkgs.openclaw;
-              pi-coding-agent = pkgs.pi-coding-agent;
             };
 
           aarch64-darwin =
@@ -315,8 +271,6 @@
             in
             {
               neovim = neovim-custom.packages.aarch64-darwin.default;
-              openclaw = pkgs.openclaw;
-              pi-coding-agent = pkgs.pi-coding-agent;
             };
 
           x86_64-darwin =
@@ -325,8 +279,6 @@
             in
             {
               neovim = neovim-custom.packages.x86_64-darwin.default;
-              openclaw = pkgs.openclaw;
-              pi-coding-agent = pkgs.pi-coding-agent;
             };
         };
     };

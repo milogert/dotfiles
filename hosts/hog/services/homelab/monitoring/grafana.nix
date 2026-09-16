@@ -2,42 +2,50 @@
 
 let
   node-exporter-dashboard-json = pkgs.fetchurl {
-    url =
-      "https://raw.githubusercontent.com/rfrail3/grafana-dashboards/master/prometheus/node-exporter-full.json";
+    url = "https://raw.githubusercontent.com/rfrail3/grafana-dashboards/master/prometheus/node-exporter-full.json";
     sha256 = "sha256-S0xTDU5xHRuOSPOgGQb9EMY7MiqJ6L1JrQsN8LrnXV8=";
   };
-in {
+in
+{
   services.grafana = {
     enable = true;
 
     addr = "0.0.0.0";
     domain = "grafana.milogert.dev";
 
-    provision = {
-      enable = true;
-
-      datasources = [
-        {
-          name = "Prometheus";
-          url = "https://prometheus.milogert.dev";
-          type = "prometheus";
-        }
-        {
-          name = "Loki";
-          url = "http://localhost:3100";
-          type = "loki";
-        }
-      ];
-
-      dashboards = [
-        {
-          name = "node-exporter";
-          type = "file";
-          folder = "Server";
-          options.path = "/etc/grafana-dashboards/node-exporter.json";
-        }
-      ];
+    settings = {
+      security.secret_key = "test key";
     };
+
+    # provision = {
+    #   enable = true;
+    #
+    #   datasources = [
+    #     {
+    #       name = "Prometheus";
+    #       url = "https://prometheus.milogert.dev";
+    #       type = "prometheus";
+    #     }
+    #     {
+    #       name = "Loki";
+    #       url = "http://localhost:3100";
+    #       type = "loki";
+    #     }
+    #   ];
+    #
+    #   # dashboards = [
+    #   #   {
+    #   #     name = "Memory Free";
+    #   #     options.path = ./grafana;
+    #   #   }
+    #   # ];
+    #
+    #   # notifiers = [
+    #   #   {
+    #   #     name = "Memory Running Out";
+    #   #   }
+    #   # ];
+    # };
   };
 
   services.traefik.dynamicConfigOptions.http = {

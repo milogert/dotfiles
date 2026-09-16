@@ -2,6 +2,6 @@
 
 {
   services.calibre-web = {
-    enable = true;
+    enable = false;
   };
 }

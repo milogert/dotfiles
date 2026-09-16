@@ -1,6 +1,4 @@
-{
-  ...
-}:
+{ ... }:
 
 {
   programs.ssh = {
@@ -24,7 +22,7 @@
         ControlPersist = "no";
       };
 
-      "hog theseus remote-hog home.milogert.com" = {
+      "hog theseus home.milogert.com" = {
         RemoteForward = {
           bind.address = "/run/user/1000/gnupg/S.gpg-agent";
           host.address = "/Users/milo/.gnupg/S.gpg-agent.extra";
