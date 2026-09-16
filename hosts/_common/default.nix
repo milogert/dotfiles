@@ -87,7 +87,6 @@ in
       go
       htop
       jq
-      neofetch
       neovim-custom
       nix-prefetch-git
       openvpn

@@ -7,7 +7,7 @@
 }:
 
 let
-  inherit (pkgs.stdenv) isDarwin;
+  inherit (pkgs.stdenv.hostPlatform) isDarwin;
 
   bruno-nvim = vimUtils.buildVimPlugin rec {
     pname = "bruno.nvim";
@@ -119,7 +119,7 @@ let
     };
 
     cargoHash = "sha256-+zXYDYVbXaapu1cdVGmRDgi6r2Ns09PzOFPdTgRHxOI=";
-    RUSTFLAGS = if pkgs.stdenv.isDarwin
+    RUSTFLAGS = if isDarwin
                 then "-C link-arg=-undefined -C link-arg=dynamic_lookup"
                 else "";
   };
@@ -134,7 +134,7 @@ let
       sha256 = "sha256-ctLPZzu/lQkVsm+8edE4NsIVUPkr4iTqmPZsCW7GHzY=";
     };
 
-    postInstall = if pkgs.stdenv.isDarwin
+    postInstall = if isDarwin
                   then ''
                     cp ${lua-json5-bin}/lib/liblua_json5.dylib $out/lua/json5.dylib
                   ''
