@@ -16,6 +16,11 @@ in
   nix = {
     settings = {
       sandbox = false;
+
+      # During builds, require 5Gb of space. max-free unset so it cleans all the
+      # garbage.
+      min-free = "5G";
+
       trusted-users = [
         "root"
         "@admin"

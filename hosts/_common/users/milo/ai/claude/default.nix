@@ -154,7 +154,7 @@ in
 
     "${directory}/skills/" = {
       recursive = true;
-      source = ./skills;
+      source = ../skills;
     };
   };
 }

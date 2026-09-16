@@ -98,7 +98,6 @@ let
       p.svelte
       p.sway
       p.terraform
-      p.tmux
       p.todotxt
       p.toml
       p.tsx
