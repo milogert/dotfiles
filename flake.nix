@@ -25,6 +25,11 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hermes-agent = {
+      url = "github:NousResearch/hermes-agent";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -35,6 +40,7 @@
       home-manager,
       neovim-custom,
       nixpkgs,
+      hermes-agent,
     }:
     let
       overlays = final: prev: {
@@ -80,6 +86,7 @@
         overlays = [
           overlays
           neovim-custom.overlays.default
+          hermes-agent.overlays.default
         ];
       };
 
@@ -149,6 +156,8 @@
               home-manager.useUserPackages = true;
             }
           )
+          # TODO why does this not work?
+          # hermes-agent.homeManagerModules.default
         ]
         ++ (builtins.map mkUserConfigWrapped users);
 
@@ -161,6 +170,8 @@
         (mkCommonConfig { inherit host type users; })
         ++ [
           home-manager.darwinModules.home-manager
+          agenix.darwinModules.default
+          hermes-agent.darwinModules.default
         ];
 
       mkNixosConfig =
@@ -173,6 +184,7 @@
         ++ [
           home-manager.nixosModules.home-manager
           agenix.nixosModules.default
+          hermes-agent.nixosModules.default
           {
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
           }

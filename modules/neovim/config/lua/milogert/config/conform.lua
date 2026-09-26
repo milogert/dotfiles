@@ -5,6 +5,7 @@ local conform = require("conform")
 
 local javascript_like = {
   "biome-check",
+  "biome_on_nix",
   -- stop_after_first = true,
 }
 
@@ -27,6 +28,18 @@ conform.setup({
         "--column-width",
         "80",
       },
+    },
+
+    biome_on_nix = {
+      command = "biome",
+      stdin = true,
+      args = { "check", "--write", "--stdin-file-path", "$FILENAME" },
+      cwd = require("conform.util").root_file({
+        "biome.json",
+        "biome.jsonc",
+        ".biome.json",
+        ".biome.jsonc",
+      }),
     },
   },
 

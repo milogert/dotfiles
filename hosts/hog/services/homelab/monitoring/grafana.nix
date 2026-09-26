@@ -3,17 +3,16 @@
 let
   node-exporter-dashboard-json = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/rfrail3/grafana-dashboards/master/prometheus/node-exporter-full.json";
-    sha256 = "sha256-S0xTDU5xHRuOSPOgGQb9EMY7MiqJ6L1JrQsN8LrnXV8=";
+    sha256 = "sha256-3+opah4hCqZoGXYU03CLVnGKmb53lKHCwBLNUdp+y4k=";
   };
 in
 {
   services.grafana = {
     enable = true;
 
-    domain = "grafana.milogert.dev";
-
     settings = {
       server.http_addr = "0.0.0.0";
+      server.domain = "grafana.milogert.dev";
       security.secret_key = "test key";
     };
 

@@ -2,21 +2,13 @@
 
 let
   hostPort = "8787";
-  containerPort = hostPort;
-  image = "hotio/readarr:testing";
 in {
-  virtualisation.oci-containers.containers.readarr = {
-    inherit image;
-    ports = ["${hostPort}:${containerPort}"];
-    volumes = [
-      "${config.users.users.media.home}/config/readarr:/config"
-      "/mnt/download-stream-cache/downloads/dst/Books:/downloads"
-      "/mnt/media/Books:/library"
-    ];
-    environment = {
-      PUID = builtins.toString config.users.users.media.uid;
-      PGID = builtins.toString config.users.groups.media.gid;
-    };
+  services.readarr = {
+    enable = true;
+    user = "media";
+    group = "media";
+    dataDir = "${config.users.users.media.home}/config/readarr";
+    settings.server.port = 8787;
   };
 
   services.traefik.dynamicConfigOptions.http = {
