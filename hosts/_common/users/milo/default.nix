@@ -20,6 +20,8 @@ let
   moduleAliases = builtins.foldl' (l: r: l // r) { } (builtins.map moduleAliasFn modules);
 in
 {
+  age.identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
+
   imports = [
     (common_dir + /home/default.nix)
     (common_dir + /home/direnv.nix)
@@ -30,6 +32,7 @@ in
   ];
 
   home.packages = with pkgs; [
+    agenix
     codex
     gitoxide
     hermes-agent

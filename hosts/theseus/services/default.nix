@@ -4,6 +4,7 @@
   systemd.services.mount-pstore.enable = false;
 
   virtualisation.docker.enable = true;
+
   services = {
     blueman.enable = true;
 
@@ -23,33 +24,27 @@
       openFirewall = true;
     };
 
-    logind.settings.Login = ''
-      HandlePowerKey=ignore
-    '';
-
-    displayManager.sddm = {
-      enable = true;
-      wayland.enable = true;
+    logind.settings.Login = {
+      HandlePowerKey = "ignore";
     };
-    desktopManager.plasma6.enable = true;
-    displayManager.defaultSession = "plasma";
+
+    displayManager.noctalia-greeter = {
+      enable = true;
+      settings = {
+        cursor.size = 24;
+        keyboard.layout = "us";
+      };
+      cursorTheme = {
+        package = pkgs.bibata-cursors;
+        name = "Bibata-Modern-Ice";
+      };
+    };
 
     # Enable the X11 windowing system.
     xserver = {
       enable = true;
       videoDrivers = [ "amdgpu" ];
-
-      # Enable the GNOME 3 Desktop Environment.
-      # displayManager.gdm = {
-      #   enable = true;
-      #   wayland = true;
-      # };
-      # desktopManager.gnome = {
-      #   enable = true;
-      # };
     };
-
-    gnome.core-utilities.enable = false;
 
     # Enable the OpenSSH daemon.
     openssh.enable = true;
