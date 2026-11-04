@@ -34,6 +34,17 @@ in
         "milogert.cachix.org-1:MaZAAWJXDV85HpLm2yyLX9b52wQghRxljAZJg0dEjkY="
         "milogert-neovim.cachix.org-1:1MQUFLyvP9rjqczFdEuiMhXa3zvsS8BfvwlPZFx26u8="
       ];
+
+      # These lines do nothing right now since I'm following nixpkgs in the
+      # noctalia input in my flake.
+      extra-substituters = [
+        "https://noctalia.cachix.org"
+        "https://umbriel.cachix.org"
+      ];
+      extra-trusted-public-keys = [
+        "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+        "umbriel.cachix.org-1:JfNq/2yg2S6D6z4Z2dVSZrZlDPQTKtexB6GAVLD98nw="
+      ];
     };
 
     # Garbage collection.

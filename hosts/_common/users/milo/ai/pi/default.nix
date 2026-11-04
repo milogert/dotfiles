@@ -1,9 +1,16 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   piDir = "${config.home.homeDirectory}/.pi";
 in
 {
+
+  age.secrets.hermes-proxy-api-key.file = ../../../../../../secrets/milo/pi/HERMES_PROXY_API_KEY.age;
+
+  home.packages = [
+    pkgs.pi-coding-agent
+  ];
+
   home.file = {
     "${piDir}/agent/settings.json" = {
       # force = true;
@@ -164,29 +171,22 @@ in
     };
 
     "${piDir}/agent/models.json" = {
-      # force = true;
       text = lib.generators.toJSON { } {
         providers = {
-          openclaw-local = {
-            name = "OpenClaw Local";
+          hermes = {
+            name = "hermes";
             baseUrl = "https://ai.milogert.com/v1";
-            apiKey = "OPENCLAW_GATEWAY_TOKEN";
+            apiKey = config.age.secrets.hermes-proxy-api-key.path;
             api = "openai-completions";
             models = [
               {
-                id = "openclaw/main";
-                name = "OpenClaw Main";
+                id = "hermes";
+                name = "hermes";
                 reasoning = false;
                 input = [
                   "text"
                   "image"
                 ];
-                cost = {
-                  input = 0;
-                  output = 0;
-                  cacheRead = 0;
-                  cacheWrite = 0;
-                };
                 contextWindow = 200000;
                 maxTokens = 8192;
                 compat = {
