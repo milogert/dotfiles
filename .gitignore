@@ -8,3 +8,5 @@ state.file
 .*priv
 
 .claude/settings.local.json
+
+.worktrees/

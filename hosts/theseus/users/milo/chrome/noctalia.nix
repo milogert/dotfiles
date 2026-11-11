@@ -7,9 +7,9 @@ let
       n = builtins.toString ni;
     in
     ''
-      "Mod+${n}" = "workspace-switch ${n}"
-      "Mod+Shift+${n}" = "window-move-to-workspace-silent ${n}"
-      #"Mod+Shift+${n}" = "window-move-to-workspace ${n}"
+      "Mod+${n}" = "workspace-switch:${n}"
+      "Mod+Shift+${n}" = "window-move-to-workspace-silent:${n}"
+      #"Mod+Shift+${n}" = "window-move-to-workspace:${n}"
     '';
 
   workspaceKeybinds = lib.strings.join "\n" (
@@ -196,6 +196,12 @@ in
   };
 
   home.file."${config.xdg.configHome}/umbriel/config.toml".text = ''
+    [output.DP-2]
+    mode = "7680x2160@120"
+    position = [0, 0]
+    scale = 1
+    focus_at_startup = true
+
     [layout]
     mode = "dwindle"
 
