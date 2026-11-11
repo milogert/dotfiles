@@ -75,8 +75,8 @@ final: prev:
       src = prev.pkgs.fetchFromGitHub {
         owner = "ibhagwan";
         repo = "fzf-lua";
-        rev = "a8458b79a957a6e3e217d84106a0fd4b9470ff4c";
-        sha256 = "0wswrbfjjyid1zgqmjcxkl7mljsmlayzkfnkpc3zy82ry8li0nis";
+        rev = "3868dcc78d2c2766c9510ab18b6d3815071b389e";
+        sha256 = "0ps9snlkxl26s1a3ig6qycfr10n4gc4yb8h5na1qnxr7skh9gjv4";
       };
     });
 

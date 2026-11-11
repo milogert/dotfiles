@@ -118,7 +118,7 @@ let
       sha256 = "0dhzqrp0jv7nk3m29qibz581bhin738pkg3gn8ahk5dz7dkwzlkj";
     };
 
-    cargoHash = "sha256-+zXYDYVbXaapu1cdVGmRDgi6r2Ns09PzOFPdTgRHxOI=";
+    cargoHash = "sha256-lMBA8OidN1GGHmIGvJhkLudeEe+RODk1+xdDT2ElEhw=";
     RUSTFLAGS = if isDarwin
                 then "-C link-arg=-undefined -C link-arg=dynamic_lookup"
                 else "";

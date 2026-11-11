@@ -35,7 +35,8 @@ let
     alias ll="${pkgs.eza}/bin/eza -l -g --git --color always --icons -a -s type";
     alias ls="${pkgs.eza}/bin/eza --color auto --icons -a -s type";
 
-    zprof
+    # Turn profiling on
+    #zprof
 
     # cdwt - pushd to a git worktree by branch name
     cdwt() {
@@ -102,6 +103,21 @@ let
       fi
     fi
     ###-end-pnpm-completion-###
+
+    # Directly background and keep running a task.
+    ctrl-b-background() {
+      # Send SIGTSTP (same as Ctrl+Z) to pause the current foreground job
+      kill -TSTP $$
+
+      # Wait briefly for the shell to regain control, then send 'bg' and Enter
+      zle -I && echo "Sent to background. `bg` to resume" && bg
+    }
+
+    # Define the function as a Zle widget
+    zle -N ctrl-b-background
+
+    # Bind Ctrl+B to that widget
+    bindkey '^B' ctrl-b-background
 
     ## initExtra end
   '';

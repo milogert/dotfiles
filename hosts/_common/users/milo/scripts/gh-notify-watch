@@ -1,0 +1,161 @@
+#!/usr/bin/env bash
+# Poll gh-notify on an interval. Args pass through as the reason filter.
+#
+# Deliberately not `watch(1)`: that lives in procps, which on darwin also
+# installs a Linux ps/top/sysctl that shadow the system ones and break
+# anything parsing their output (vim-tmux-navigator, for one).
+set -euo pipefail
+
+SLEEP_TOTAL=${GH_NOTIFY_INTERVAL:-120}
+INTERVAL=1
+
+# Working hours: poll only Mon-Fri between these times. Outside them the loop
+# keeps running (so r/q/esc still work) but never hits the GitHub API.
+WORK_START=${GH_NOTIFY_START:-0830}
+WORK_END=${GH_NOTIFY_END:-1730}
+
+# 0830 -> 8:30, purely for the status line.
+pretty_time() { printf '%d:%s' "$((10#${1:0:2}))" "${1:2:2}"; }
+
+# 10#: force base-10, or times like 0830 parse as invalid octal.
+in_work_hours() {
+  local dow now
+  dow=$(date +%u)                  # 1=Mon .. 7=Sun
+  [ "$dow" -ge 6 ] && return 1
+  now=$(date +%H%M)
+  [ $((10#$now)) -ge $((10#$WORK_START)) ] && [ $((10#$now)) -lt $((10#$WORK_END)) ]
+}
+
+# Restore the cursor and the normal screen buffer however we exit.
+cleanup() {
+  printf '\033[?1000l\033[?1006l\033[?7h\033[?25h\033[?1049l';
+}
+trap cleanup EXIT
+
+# bash defers trap handlers until the running builtin returns, and `read -t`
+# can hold that for a full second, so the loop also checks this flag.
+interrupted=0
+
+# A trap on INT/TERM *replaces* the default kill, so the handler has to exit
+# itself -- otherwise the signal is swallowed and the loop just keeps going.
+# Re-raise with the default handler so the exit status is a true 128+signal.
+on_signal() {
+  interrupted=1
+  trap - INT TERM
+  cleanup
+  kill -"$1" $$
+}
+trap 'on_signal INT' INT
+trap 'on_signal TERM' TERM
+
+# Alternate screen buffer, so quitting leaves the scrollback as it was.
+printf '\033[?1049h\033[?25l\033[?1000h\033[?1006h'
+
+# Seeded so the first pass always polls, whatever time you start it.
+force=1
+out=""
+status=""
+offset=0
+lines=()
+
+render() {
+  local rows _cols last
+  read -r rows _cols < <(stty size) || rows=24
+  height=$((rows > 2 ? rows - 2 : 1))
+  last=$((${#lines[@]} > height ? ${#lines[@]} - height : 0))
+  ((offset < 0)) && offset=0
+  ((offset > last)) && offset=$last
+  # ponytail: clip wide lines; use a pager if horizontal scrolling is needed.
+  printf '\033[H\033[2J\033[?7l'
+  printf '%s\n' "${lines[@]:offset:height}"
+  printf '\033[%s;1H\033[2m-- %s | %s-%s/%s --\nwheel/arrows/PgUp/PgDn scroll | r refresh | q/esc/ctrl-c quit\033[0m\033[?7h' \
+    "$((rows - 1))" "$status" "$((offset + 1))" \
+    "$((offset + height < ${#lines[@]} ? offset + height : ${#lines[@]}))" "${#lines[@]}"
+}
+trap render WINCH
+
+while :; do
+  polled=0
+  if [ "$force" = 1 ] || in_work_hours; then
+    polled=1
+    out=$(gh-notify "$@" 2>&1) || true
+    status=$(printf 'every %ss' "$SLEEP_TOTAL")
+    if ! in_work_hours; then
+      status="$status (pausing, off hours)"
+    fi
+  else
+    # Off hours: redraw the last result, poll nothing.
+    status="paused until $(pretty_time "$WORK_START") (off hours)"
+  fi
+  force=0
+
+  mapfile -t lines <<< "$out"
+
+  # This is reversed because reasons.
+  if [ $# -gt 0 ]; then
+    lines=(" " "${lines[@]}")
+
+    if [ -n $2 ]; then
+      lines=("--          organization: $2" "${lines[@]}")
+    fi
+
+    lines=("-- filters: reasons:      $1" "${lines[@]}")
+  fi
+
+  render
+
+  deadline=$((SECONDS + SLEEP_TOTAL))
+  while ((SECONDS < deadline)); do
+      if [ "$interrupted" = 1 ]; then break 2; fi
+
+      # Off hours the countdown is meaningless -- break as soon as the work
+      # window opens so 8:30am isn't missed by up to a full interval.
+      if [ "$polled" = 0 ] && in_work_hours; then break; fi
+
+      if read -s -r -t "$INTERVAL" -N 1 key; then
+          if [[ "$key" == $'\e' ]]; then
+              # Only a standalone Escape quits; consume terminal sequences whole.
+              if read -s -r -t 0.1 -N 1 key; then
+                  if [[ "$key" == '[' || "$key" == 'O' ]]; then
+                      for ((n=0; n<64; n++)); do
+                          read -s -r -t 0.1 -N 1 byte || break
+                          key+="$byte"
+                          [[ "$byte" == [@-~] ]] && break
+                      done
+                  fi
+                  if [[ "$key" == '[M' ]]; then
+                      # Legacy mouse reports contain three more bytes.
+                      read -s -r -t 0.1 -N 3 mouse || true
+                      case "${mouse:0:1}" in
+                          '`') key=wheel-up ;;
+                          a) key=wheel-down ;;
+                          *) key="" ;;
+                      esac
+                  elif [[ "$key" =~ ^\[\<64\;[0-9]+\;[0-9]+M$ ]]; then
+                      key=wheel-up
+                  elif [[ "$key" =~ ^\[\<65\;[0-9]+\;[0-9]+M$ ]]; then
+                      key=wheel-down
+                  fi
+              else
+                  break 2
+              fi
+          else
+              case "$key" in
+                  q) break 2 ;;
+                  r|R) force=1; break ;; # Explicit refresh beats the schedule.
+              esac
+          fi
+
+          case "$key" in
+              '[A'|'OA'|k) offset=$((offset - 1)) ;;
+              '[B'|'OB'|j) offset=$((offset + 1)) ;;
+              '[5~') offset=$((offset - height)) ;;
+              '[6~') offset=$((offset + height)) ;;
+              wheel-up) offset=$((offset - 3)) ;;
+              wheel-down) offset=$((offset + 3)) ;;
+              *) continue ;;
+          esac
+          render
+      fi
+  done
+done

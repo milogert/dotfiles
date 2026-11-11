@@ -11,12 +11,12 @@ let
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 in
 {
-  home.packages = with pkgs; [
-    claude-code
-  ];
+  programs.claude-code = {
+    enable = true;
 
-  home.file = {
-    "${directory}/settings.json".text = lib.generators.toJSON { } {
+    enableMcpIntegration = true;
+
+    settings = {
       env = {
         EDITOR = "nvim";
         VISUAL = "nvim";
@@ -89,6 +89,22 @@ in
                 command = peonPingScript;
                 timeout = 10;
               }
+              {
+                type = "command";
+                command = "~/.claude/hooks/ccmux-session-start.sh";
+              }
+            ];
+          }
+        ];
+
+        SessionEnd = [
+          {
+            matcher = "";
+            hooks = [
+              {
+                type = "command";
+                command = "~/.claude/hooks/ccmux-session-end.sh";
+              }
             ];
           }
         ];
@@ -115,6 +131,10 @@ in
                 command = peonPingScript;
                 timeout = 10;
               }
+              {
+                type = "command";
+                command = "~/.claude/hooks/ccmux-state-notify.sh";
+              }
             ];
           }
         ];
@@ -122,14 +142,13 @@ in
 
       statusLine = {
         type = "command";
-        command = "${config.home.homeDirectory}/.local/bin/claude-status";
+        command = ../helpers/ai-harness-status;
       };
 
       alwaysThinkingEnabled = false;
       model = "claude-sonnet-4-6";
       # Set this to use the 1m context window.
       largeContextWindow = false;
-      effort = "medium";
 
       permissions = {
         allow = [
@@ -145,8 +164,22 @@ in
         ];
       };
 
+      includeCoAuthoredBy = false;
     };
 
+    plugins = {
+      ponytail = (
+        pkgs.fetchFromGitHub {
+          owner = "DietrichGebert";
+          repo = "ponytail";
+          rev = "16f29800fd2681bdf24f3eb4ccffe38be3baec6b";
+          sha256 = "sha256-Y7d4s7uqjH6IbEXhqAiQ+yaxr6iiGcv2X64LuMtG1T8=";
+        }
+      );
+    };
+  };
+
+  home.file = {
     "${config.home.homeDirectory}/.local/bin/" = {
       recursive = true;
       source = ./scripts;

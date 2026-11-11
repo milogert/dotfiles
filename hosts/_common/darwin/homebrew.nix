@@ -6,6 +6,7 @@
   ];
 
   brews = [
+    "epilande/tap/ccmux"
     "PeonPing/tap/peon-ping"
     "ios-deploy"
     { name = "pinentry-mac"; trusted = true; }

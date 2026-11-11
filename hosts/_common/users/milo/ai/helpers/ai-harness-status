@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Claude Code statusLine command
+# AI harness statusLine command
+# Compatible with Claude Code and pi-statusline plugin.
 
 input=$(cat)
 

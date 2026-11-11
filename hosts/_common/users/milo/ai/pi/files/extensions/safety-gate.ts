@@ -48,12 +48,54 @@ async function confirmOrBlock(ctx: any, title: string, body: string) {
   return undefined;
 }
 
+enum FeaturesEnum {
+  editOutsideDirectory = "edit-outside-directory",
+  editSecretFile = "edit-secret-file",
+  riskyCommand = "risky-command",
+  status = "status",
+}
+
 export default function (pi: ExtensionAPI) {
+  const features = {
+    [FeaturesEnum.editOutsideDirectory]: true,
+    [FeaturesEnum.editSecretFile]: true,
+    [FeaturesEnum.riskyCommand]: true,
+  }
+
+  function status(ctx: any) {
+    if (!ctx.hasUI) return;
+    if (!enabled) ctx.ui.setStatus("safety-gate", undefined);
+    else ctx.ui.setStatus("safety-gate", accepted ? "PLAN accepted" : "PLAN first");
+  }
+
+  // pi.on("session_start", (_event, ctx) => {
+  //   const last: { data?: { enabled?: boolean; accepted?: boolean } } | undefined =
+  //     ctx.sessionManager.getEntries()
+  //       .slice()
+  //       .reverse()
+  //       .find((entry: any) =>
+  //         entry.type === "custom" && entry.customType === "plan-mode-lite"
+  //       )
+  //   enabled = last?.data?.enabled ?? true;
+  //   accepted = last?.data?.accepted ?? false;
+  //   status(ctx);
+  // });
+
+  function persist() {
+    pi.appendEntry("safety-gate", features);
+  }
+
   pi.on("tool_call", async (event, ctx) => {
     if (event.toolName === "bash") {
+      if (!features[FeaturesEnum.riskyCommand]) {
+        return undefined
+      }
+
       const command = String((event.input as { command?: unknown }).command ?? "");
       const match = riskyCommandPatterns.find(({ pattern }) => pattern.test(command));
-      if (!match) return undefined;
+      if (!match) {
+        return undefined;
+      }
 
       return confirmOrBlock(
         ctx,
@@ -64,9 +106,11 @@ export default function (pi: ExtensionAPI) {
 
     if (event.toolName === "write" || event.toolName === "edit") {
       const target = normalizeCandidate(ctx.cwd, (event.input as { path?: unknown }).path);
-      if (!target) return undefined;
+      if (!target) {
+        return undefined;
+      }
 
-      if (!isInside(ctx.cwd, target)) {
+      if (features[FeaturesEnum.editOutsideDirectory] && !isInside(ctx.cwd, target)) {
         return confirmOrBlock(
           ctx,
           "Write outside working directory",
@@ -74,7 +118,7 @@ export default function (pi: ExtensionAPI) {
         );
       }
 
-      if (pathLooksSecret(target)) {
+      if (features[FeaturesEnum.editSecretFile] && pathLooksSecret(target)) {
         return confirmOrBlock(
           ctx,
           "Possible secret file write",
@@ -87,6 +131,10 @@ export default function (pi: ExtensionAPI) {
   });
 
   pi.on("user_bash", async (event, ctx) => {
+    if (!features[FeaturesEnum.riskyCommand]) {
+      return undefined
+    }
+
     const match = riskyCommandPatterns.find(({ pattern }) => pattern.test(event.command));
     if (!match) return undefined;
 
@@ -119,4 +167,53 @@ export default function (pi: ExtensionAPI) {
 
     return undefined;
   });
+
+  pi.registerCommand("safety-gate", {
+    description: `Manage the safety gate features:
+/saftey-gate
+  edit-outside-directory|edit-secret-file|risky-command on|off|toggle
+  status`,
+    handler: async (args, ctx) => {
+      const [command, state] = args.trim().split(' ', 2)
+
+      const isCommand = [FeaturesEnum.editOutsideDirectory, FeaturesEnum.editSecretFile, FeaturesEnum.riskyCommand].includes(command)
+      if (!isCommand) {
+        ctx.ui.notify("/saftey-gate edit-outside-directory|edit-secret-file|risky-command on|off|toggle")
+        return
+      }
+
+      if (command === status) {
+        ctx.ui.notify(JSON.stringify(features), 'info')
+        return
+      }
+
+      switch (state) {
+        case 'on':
+          features[command] = true
+          break
+
+        case 'off':
+          features[command] = false
+          break
+
+        case 'toggle':
+          features[command] = !features[command]
+          break
+
+        default:
+          ctx.ui.notify(`${state} is not one of on|off|toggle`, "info")
+          return
+      }
+
+      ctx.ui.notify(`${command} set to ${features[command]}`, "info")
+    },
+
+    getArgumentCompletions: (prefix) => {
+      const matches = [FeaturesEnum.editOutsideDirectory, FeaturesEnum.editSecretFile, FeaturesEnum.riskyCommand]
+        .filter((value) => value.startsWith(prefix))
+        .map((value) => ({ value, label: value }));
+      return matches.length ? matches : null;
+    },
+
+  })
 }

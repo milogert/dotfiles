@@ -116,6 +116,15 @@ in
     '';
   };
 
+  resurrect = pkgs.tmuxPlugins.resurrect.overrideAttrs (old: {
+    patches = (old.patches or [ ]) ++ [
+      (pkgs.fetchpatch {
+        url = "https://github.com/tmux-plugins/tmux-resurrect/pull/534.patch";
+        hash = "sha256-Sd3J/S9L0sE2Na1ar5oaJ61Y4giwd1HBpssZUQCAufM=";
+      })
+    ];
+  });
+
   srcery-tmux = mkTmuxPlugin {
     pluginName = "srcery";
     version = "now";

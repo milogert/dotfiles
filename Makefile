@@ -45,16 +45,16 @@ __switching_msg:
 _nixos_build: __building_msg
 	nix build ".#nixosConfigurations.${HOST}.config.system.build.toplevel" --extra-experimental-features 'nix-command flakes' --impure
 
-_nixos_switch: _nixos_build __switching_msg
+_nixos_switch: _install_requirements _nixos_build __switching_msg
 	# Old command: sudo nixos-rebuild switch --flake ".#${HOST}"
 	# See https://github.com/NixOS/nixpkgs/issues/169193
 	nixos-rebuild --sudo switch --flake ".#${HOST}" --impure
 
 # nix-darwin commands.
-_nix_darwin_build: _install_requirements _nix_darwin_switch __building_msg
+_nix_darwin_build: __building_msg
 	nix build ".#darwinConfigurations.${HOST}.system" --extra-experimental-features 'nix-command flakes' --impure
 
-_nix_darwin_switch: __switching_msg
+_nix_darwin_switch: _install_requirements _nix_darwin_build __switching_msg
 	sudo ./result/sw/bin/darwin-rebuild switch --flake ".#${HOST}" --impure
 
 # Common commands.
@@ -79,5 +79,5 @@ add-user:
 hog: _nixos_switch
 remote-hog: _nixos_switch
 theseus: _nixos_switch
-work: _nix_darwin_build
-minotaur: _nix_darwin_build
+work: _nix_darwin_switch
+minotaur: _nix_darwin_switch

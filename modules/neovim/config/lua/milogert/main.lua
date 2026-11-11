@@ -34,6 +34,7 @@ M.setup = function(variable_opts)
     "fidget",
     "fzf-lua",
     "gitsigns",
+    "hydra",
     -- "js-i18n",
     "keybindings",
     "lsp.config",

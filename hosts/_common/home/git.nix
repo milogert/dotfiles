@@ -26,6 +26,14 @@
         a = "add";
         amend = "commit --amend";
         branches = "for-each-ref --sort=-committerdate --format='%(color:cyan)%(authordate:relative)\t%(color:red)%(authorname)\t%(color:white)%(color:bold)%(refname:short)' refs/remotes";
+        branchhistory = ''
+          !branchHistory() {
+            git log --first-parent --merges --reverse --format='%s' origin/master..HEAD |
+            awk -F ' into ' 'BEGIN { printf \"master\n\" }
+              NF > 1 && !seen[$NF]++ { printf \" → %s\n\", $NF }
+              END { print \"\" }' ;
+          }; branchHistory
+        '';
         c = "commit";
         ca = "commit --amend";
         ci = "commit -a";

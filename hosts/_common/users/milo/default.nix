@@ -25,6 +25,7 @@ in
     (common_dir + /home/direnv.nix)
     ./ai/claude
     ./ai/pi
+    ./ai/mcp.nix
     ./programs
     ./scripts
   ];
@@ -36,7 +37,6 @@ in
     w3m
     nodejs
     python3
-    pi-coding-agent
     watchman
   ];
 

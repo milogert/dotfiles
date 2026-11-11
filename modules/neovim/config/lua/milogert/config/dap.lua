@@ -3,24 +3,25 @@ local u = require("milogert.utils")
 local dap = require("dap")
 local dapui = require("dapui")
 
-u.nmap("<M-k>", "", { callback = dapui.eval })
-u.vmap("<M-k>", "", { callback = dapui.eval })
-u.nmap("<Leader>db", "", { callback = dap.toggle_breakpoint })
-u.nmap("<Leader>dB", "", {
-  callback = function()
-    dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
-  end,
-})
+u.nmap("<M-k>", dapui.eval)
+u.vmap("<M-k>", dapui.eval)
+u.nmap("<F7>", dap.toggle_breakpoint)
+local breakpoint = function()
+  dap.set_breakpoint(vim.fn.input("Condition: "), vim.fn.input("Hit condition: "), vim.fn.input("Log message: "))
+end
+u.nmap("<F8>", breakpoint)
 -- u.nmap("<Leader>ds", "", { callback = dap.run })
-u.nmap("<Leader>dr", "", { callback = dap.repl.toggle })
-u.nmap("<Leader>dl", "", { callback = dap.run_last })
-u.nmap("<Leader>dl", "", { callback = dapui.toggle })
-u.nmap("<F4>", "", { callback = dap.terminate })
-u.nmap("<F5>", "", { callback = dap.continue })
-u.nmap("<F9>", "", { callback = dapui.toggle })
-u.nmap("<F10>", "", { callback = dap.step_over })
-u.nmap("<F11>", "", { callback = dap.step_into })
-u.nmap("<F12>", "", { callback = dap.step_out })
+u.nmap("<Leader>dr", dap.repl.toggle)
+u.nmap("<Leader>dl", dap.run_last)
+u.nmap("<Leader>dl", dapui.toggle)
+u.nmap("<F4>", dap.terminate)
+u.nmap("<S-F4>", dap.disconnect)
+u.nmap("<F5>", dap.continue)
+u.nmap("<F9>", dapui.toggle)
+u.nmap("<F10>", dap.step_over)
+u.nmap("<S-F10>", dap.step_back)
+u.nmap("<F11>", dap.step_into)
+u.nmap("<F12>", dap.step_out)
 
 vim.fn.sign_define("DapBreakpoint", {
   text = "🛑",
@@ -28,7 +29,7 @@ vim.fn.sign_define("DapBreakpoint", {
   linehl = "",
   numhl = "",
 })
-vim.fn.sign_define("DapLogpoint", {
+vim.fn.sign_define("DapLogPoint", {
   text = "🪵",
   texthl = "",
   linehl = "",
@@ -36,6 +37,18 @@ vim.fn.sign_define("DapLogpoint", {
 })
 vim.fn.sign_define("DapStopped", {
   text = "👉",
+  texthl = "",
+  linehl = "",
+  numhl = "",
+})
+vim.fn.sign_define("DapBreakpointRejected", {
+  text = "🙅‍♂️",
+  texthl = "",
+  linehl = "",
+  numhl = "",
+})
+vim.fn.sign_define("DapBreakpointCondition", {
+  text = "🤔",
   texthl = "",
   linehl = "",
   numhl = "",
@@ -59,15 +72,15 @@ repl.commands = vim.tbl_extend("force", repl.commands, {
 dapui.setup({
   controls = {
     icons = {
-      pause = " (F5)",
-      play = " (F5)",
-      step_into = " (F11)",
-      step_over = " (F10)",
-      step_out = " (F12)",
-      step_back = "",
+      pause = " <F5>",
+      play = " <F5>",
+      step_into = " <F11>",
+      step_over = " <F10>",
+      step_back = " <S-F10>",
+      step_out = " <F12>",
       run_last = "",
-      terminate = " (F4)",
-      disconnect = "",
+      terminate = " <F4>",
+      disconnect = " <S-F4>",
     },
   },
 })

@@ -25,6 +25,8 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-plist-manager.url = "github:sushydev/nix-plist-manager";
   };
 
   outputs =
@@ -35,6 +37,7 @@
       home-manager,
       neovim-custom,
       nixpkgs,
+      nix-plist-manager,
     }:
     let
       overlays = final: prev: {
@@ -149,6 +152,11 @@
               home-manager.useUserPackages = true;
             }
           )
+          {
+            home-manager.sharedModules = [
+              nix-plist-manager.homeManagerModules.default
+            ];
+          }
         ]
         ++ (builtins.map mkUserConfigWrapped users);
 
@@ -161,6 +169,7 @@
         (mkCommonConfig { inherit host type users; })
         ++ [
           home-manager.darwinModules.home-manager
+          nix-plist-manager.darwinModules.default
         ];
 
       mkNixosConfig =

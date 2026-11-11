@@ -6,7 +6,7 @@
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
-    historyWidgetOptions = [
+    historyWidget.options = [
       "--sort"
       "--reverse"
     ];
