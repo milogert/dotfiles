@@ -1,8 +1,8 @@
 local on_attach = require("milogert.config.lsp.on_attach")
 local lsp_utils = require("milogert.config.lsp.utils")
 
-vim.lsp.log.set_level(vim.log.levels.INFO)
--- vim.lsp.log.set_level(vim.log.levels.OFF)
+-- vim.lsp.log.set_level(vim.log.levels.INFO)
+vim.lsp.log.set_level(vim.log.levels.OFF)
 
 vim.diagnostic.config({
   -- virtual_lines = true,

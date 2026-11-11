@@ -44,6 +44,7 @@ vim.lsp.config("biome", {
     on_attach(client, bufnr)
   end,
   settings = {
+    ["typescript.experimental.expandableHover"] = { enabled = true },
     codeAction = {
       ["source.action.useSortedKeys.biome"] = {
         enable = true,
@@ -62,15 +63,13 @@ vim.lsp.config("biome", {
   },
 })
 
-vim.lsp.config("tsgo", {
-  cmd = variables.get().ls_cmds.tsgo,
+vim.lsp.config("tsc", {
+  cmd = variables.get().ls_cmds.tsc,
   filetypes = {
     "javascript",
     "javascriptreact",
-    "javascript.jsx",
     "typescript",
     "typescriptreact",
-    "typescript.tsx",
     "vue",
     "svelte",
     "astro",
@@ -85,6 +84,7 @@ vim.lsp.config("tsgo", {
 
     on_attach(client, bufnr)
   end,
+  root_dir = require("milogert.config.lsp.utils").root_dir_fn({ "package.json" }),
   root_markers = { "package.json" },
   single_file_support = false,
   -- init_options = {
@@ -104,7 +104,7 @@ vim.lsp.config("tsgo", {
 vim.lsp.enable({
   "biome",
   "jsonls",
-  "tsgo",
+  "tsc",
 })
 
 if variables.get().debuggers.vscode_js then
@@ -136,9 +136,9 @@ if variables.get().debuggers.vscode_js then
   })
 
   local js_languages = {
-    "typescript",
     "javascript",
     "javascriptreact",
+    "typescript",
     "typescriptreact",
   }
 

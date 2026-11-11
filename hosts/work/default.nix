@@ -3,7 +3,6 @@
 {
   imports = [
     ../_common/default.nix
-    ./darwin/settings.nix
     ./darwin/homebrew.nix
     ./networking.nix
     ./services
@@ -11,6 +10,7 @@
 
   # This is nix-darwin specific.
   system.stateVersion = 5;
+  system.primaryUser = "milo";
 
   programs.zsh = {
     enable = true;

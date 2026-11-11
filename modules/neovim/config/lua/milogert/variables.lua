@@ -17,7 +17,7 @@ end
 ---@field tailwindcss string[]
 ---@field terraformls string[]
 ---@field texlab string[]
----@field tsgo string[]
+---@field tsc string[]
 
 ---@class milogert.variables.Formatters
 ---@field lua string[]

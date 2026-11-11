@@ -6,5 +6,6 @@
     ../ranger.nix
     ../alacritty.nix
     ../ghostty
+    ../kitty
   ];
 }

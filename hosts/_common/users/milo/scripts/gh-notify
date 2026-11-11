@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# GitHub notifications that actually involve you, via the gh CLI.
+#
+# Usage: gh-notify [reason,reason,...]
+#   gh-notify                       # review_requested, assign, mention, author, comment
+#   gh-notify comment,author        # only activity on your own threads
+#   gh-notify all                   # no reason filter (includes the subscribed firehose)
+#
+# Env:
+#   GH_NOTIFY_BODY=0   skip comment bodies (titles and links only)
+#   GH_NOTIFY_LINES=n  max body lines to show (default 12)
+set -euo pipefail
+
+REASONS=${1:-review_requested,assign,mention,author,comment}
+ORGANIZATIONS=${2:-}
+MAXLINES=${GH_NOTIFY_LINES:-12}
+
+# participating=true is a server-side filter for "not merely subscribed", which
+# on a busy account is the difference between 36 notifications and ~5000.
+ENDPOINT='/notifications?participating=true&per_page=100'
+[ "$REASONS" = "all" ] && ENDPOINT='/notifications?per_page=100'
+
+gh api "$ENDPOINT" --paginate |
+  REASONS="$REASONS" \
+  ORGANIZATIONS="${ORGANIZATIONS}" \
+  MAXLINES="$MAXLINES" \
+  SHOW_BODY="${GH_NOTIFY_BODY:-1}" \
+    python3 ~/.local/bin/gh-notify.py

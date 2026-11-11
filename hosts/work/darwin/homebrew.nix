@@ -10,7 +10,7 @@ in
 
     taps = commonConfig.taps;
 
-    brews = commonConfig.brews;
+    brews = [ "newrelic-cli"] ++ commonConfig.brews;
 
     casks = [
       "1password"

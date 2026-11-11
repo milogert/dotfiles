@@ -1,5 +1,6 @@
 local conditions = require("heirline.conditions")
 local utils = require("heirline.utils")
+local hydra_statusline = require("hydra.statusline")
 
 local colors = {
   red = utils.get_highlight("DiagnosticError").fg,
@@ -156,12 +157,12 @@ local mode_indicator = {
     names = names or ("? " .. self.mode .. " ?")
 
     local system_icon = " "
-    -- local os = require("milogert.utils").getOS()
-    -- if os == "OSX" then
-    --   system_icon = "󰀵"
-    -- elseif os == "Linux" then
-    --   system_icon = " "
-    -- end
+    local os = require("milogert.utils").getOS()
+    if os == "OSX" then
+      system_icon = "󰀵 "
+    elseif os == "Linux" then
+      system_icon = " "
+    end
 
     return system_icon .. "%2(" .. names[self.mode] .. "%)"
   end,
@@ -173,6 +174,20 @@ local mode_indicator = {
   end,
 
   space,
+}
+
+local hydra = {
+  condition = function()
+    return hydra_statusline.is_active()
+  end,
+
+  provider = function()
+    return hydra_statusline.get_name()
+  end,
+
+  hl = function()
+    return { fg = hydra_statusline.get_color() }
+  end,
 }
 
 local spell = {
@@ -193,8 +208,11 @@ local file_icon = {
   init = function(self)
     local filename = self.filename
     local extension = vim.fn.fnamemodify(filename, ":e")
-    self.icon, self.icon_color =
-        require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
+    self.icon, self.icon_color = require("nvim-web-devicons").get_icon_color(
+      filename,
+      extension,
+      { default = true }
+    )
   end,
   provider = function(self)
     return self.icon and (self.icon .. " ")
@@ -334,10 +352,14 @@ local diagnostic_icons = {
   },
 
   init = function(self)
-    self.errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
-    self.warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
-    self.hints = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
-    self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
+    self.errors =
+      #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+    self.warnings =
+      #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
+    self.hints =
+      #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
+    self.info =
+      #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
   end,
 
   {
@@ -494,6 +516,7 @@ local special_dirvish = {
 
 local statusline_default = {
   mode_indicator,
+  hydra,
   spell,
   file_name_block,
   git,

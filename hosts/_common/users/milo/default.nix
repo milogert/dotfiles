@@ -27,6 +27,7 @@ in
     (common_dir + /home/direnv.nix)
     ./ai/claude
     ./ai/pi
+    ./ai/mcp.nix
     ./programs
     ./scripts
   ];
@@ -38,7 +39,6 @@ in
     hermes-agent
     nodejs
     notmuch
-    pi-coding-agent
     python3
     w3m
     watchman

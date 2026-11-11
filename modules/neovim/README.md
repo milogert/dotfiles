@@ -52,7 +52,7 @@ require('milogert.main').setup({
     tailwindcss = { "bin/command", ...args, },
     terraformls = { "bin/command", ...args },
     texlab = { "bin/command", ...args },
-    tsgo = { "bin/command", ...args, },
+    tsc = { "tsc", "--lsp", "--stdio" }, -- Requires native TypeScript 7+.
   },
 })
 ```

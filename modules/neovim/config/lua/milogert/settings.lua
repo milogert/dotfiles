@@ -18,6 +18,18 @@ vim.opt.shada = "'50"
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
+-- Diffing. linematch makes 3-way merges actually readable.
+vim.opt.diffopt = {
+  'internal',
+  'filler',
+  'closeoff',
+  'algorithm:histogram',
+  'indent-heuristic',
+  'linematch:120',
+  'iwhiteall',
+}
+vim.opt.fillchars:append({ diff = '╱' })
+
 -- Enable modelines.
 vim.opt.compatible = false
 vim.cmd.filetype('on')

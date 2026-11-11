@@ -6,6 +6,7 @@
 {
   imports = [
     ./hammerspoon
+    ./plist-settings.nix
   ];
 
   home = {
@@ -19,6 +20,10 @@
     ];
 
     file = {
+      ".local/bin/restore-monitor" = {
+        source = ./restore-monitor.swift;
+        executable = true;
+      };
       ".cargo/config.toml" = {
         recursive = true;
         text = ''

@@ -35,9 +35,20 @@ Verification:
 - Treat formatter/linter fixes as normal file edits and mention them.
 
 Communication:
+- Use only ASCII quotation marks: " (U+0022) and ' (U+0027).
+- Never use curly/smart quotes or Unicode quotation marks, including in contractions and generated files.
 - Explain important “why” briefly, especially when teaching or making architectural decisions.
 - Avoid long explanations unless requested.
 - Avoid formulaic assistant wrap-ups like “in summary,” “to recap,” or “in conclusion.”
 - Do not add a closing summary unless it adds new value.
 - Prefer direct, natural language.
 - End after the useful information is delivered.
+
+Global Coding Standards
+1. YAGNI: Don't build it until you need it
+2. DRY: Extract patterns after second duplication, not before.
+3. Fail Fast: Explicit errors beat silent failure
+4. Simple First: Write the obvious solution, optimize only if needed
+5. Delete Aggressively: Less code = fewer bugs
+6. Semantic naming: Always name variables, parameters, and API endpoints with verbose, self-documenting names that optimize for comprehension by both human and LLMs, not brevity.
+7. Follow Established Patterns: Always prefer using an established codebase pattern before using a novel one.

@@ -10,5 +10,17 @@
       source = ./mem-sparkline;
       executable = true;
     };
+    "${config.home.homeDirectory}/.local/bin/gh-notify" = {
+      source = ./gh-notify;
+      executable = true;
+    };
+    "${config.home.homeDirectory}/.local/bin/gh-notify.py" = {
+      source = ./gh-notify.py;
+      executable = true;
+    };
+    "${config.home.homeDirectory}/.local/bin/gh-notify-watch" = {
+      source = ./gh-notify-watch;
+      executable = true;
+    };
   };
 }

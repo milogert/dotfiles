@@ -26,6 +26,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-plist-manager.url = "github:sushydev/nix-plist-manager";
+
     hermes-agent = {
       url = "github:NousResearch/hermes-agent";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,6 +49,7 @@
       home-manager,
       neovim-custom,
       nixpkgs,
+      nix-plist-manager,
       hermes-agent,
       noctalia,
       umbriel,
@@ -169,6 +172,11 @@
               home-manager.useUserPackages = true;
             }
           )
+          {
+            home-manager.sharedModules = [
+              nix-plist-manager.homeManagerModules.default
+            ];
+          }
         ]
         ++ (builtins.map mkUserConfigWrapped users);
 
@@ -181,6 +189,7 @@
         (mkCommonConfig { inherit host type users; })
         ++ [
           home-manager.darwinModules.home-manager
+          nix-plist-manager.darwinModules.default
           agenix.darwinModules.default
           hermes-agent.darwinModules.default
         ];

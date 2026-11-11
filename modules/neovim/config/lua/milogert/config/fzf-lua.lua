@@ -57,6 +57,8 @@ vim.lsp.buf.declarations = fzf.lsp_declarations
 vim.lsp.buf.implementations = fzf.lsp_implementations
 vim.lsp.buf.document_symbols = fzf.lsp_document_symbols
 vim.lsp.buf.type_definitions = fzf.lsp_typedefs
+vim.lsp.buf.incoming_calls = fzf.lsp_incoming_calls
+vim.lsp.buf.outgoing_calls = fzf.lsp_outgoing_calls
 
 -- local fzf_overlay = require("fzf-lua-overlay")
 -- fzf_overlay.setup({

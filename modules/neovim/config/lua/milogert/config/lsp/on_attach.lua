@@ -3,6 +3,17 @@ vim.diagnostic.config({
   source = true,
 })
 
+local border = {
+  { "╭", "FloatBorder" },
+  { "─", "FloatBorder" },
+  { "╮", "FloatBorder" },
+  { "│", "FloatBorder" },
+  { "╯", "FloatBorder" },
+  { "─", "FloatBorder" },
+  { "╰", "FloatBorder" },
+  { "│", "FloatBorder" },
+}
+
 local fzf = require("fzf-lua")
 -- local conform = require("conform")
 
@@ -16,19 +27,9 @@ local on_attach = function(_client, bufnr)
   u.nmap("<leader>c", vim.diagnostic.setqflist, default_opts)
   u.nmap("K", function()
     vim.lsp.buf.hover({
-      border = {
-        { "╭", "FloatBorder" },
-        { "─", "FloatBorder" },
-        { "╮", "FloatBorder" },
-        { "│", "FloatBorder" },
-        { "╯", "FloatBorder" },
-        { "─", "FloatBorder" },
-        { "╰", "FloatBorder" },
-        { "│", "FloatBorder" },
-      },
+      border = border,
     })
   end, default_opts)
-  u.nmap("gi", fzf.lsp_implementations, default_opts)
   u.nmap("[ls", vim.lsp.buf.signature_help, default_opts)
   u.nmap("<leader>rn", vim.lsp.buf.rename, default_opts)
 
