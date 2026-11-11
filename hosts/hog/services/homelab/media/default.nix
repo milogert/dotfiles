@@ -5,6 +5,7 @@ let
 in {
   imports = [
     ./books.nix
+    ./jellyfin.nix
     ./nzbget.nix
     ./nzbhydra2.nix
     ./plex.nix

@@ -16,11 +16,20 @@ let
   files = [
     "SOUL.md"
     "config.yaml"
-    "cron/"
     "plugins/"
     "profile.yaml"
     "scripts/"
-    "skills/"
+  ];
+
+  # Runtime-writable dirs. `d=` (not `d` or `L+`) force-creates each as a real
+  # writable dir, removing any stale symlink into the read-only Nix store
+  # first. Hermes writes to these at runtime, so they must not be store
+  # symlinks (would fail with Errno 30 "Read-only file system"):
+  #   cron/    cron scheduler lock + job state
+  #   skills/  skills Hermes learns via skill_manage
+  writableDirs = [
+    "cron"
+    "skills"
   ];
 
   mapProfileFiles =
@@ -28,6 +37,9 @@ let
     [
       "d ${hermesHome}/profiles/${profile} 0750 hermes hermes - -"
     ]
+    ++ (builtins.map (
+      dir: "d= ${hermesHome}/profiles/${profile}/${dir} 0750 hermes hermes - -"
+    ) writableDirs)
     ++ (builtins.map (
       file: "L+ ${hermesHome}/profiles/${profile}/${file} - - - - ${./profiles/${profile}/${file}}"
     ) files);
@@ -140,7 +152,6 @@ in
         ignored_channels = [
           # "123456789012345678"
         ];
-        
       };
 
       memory = {

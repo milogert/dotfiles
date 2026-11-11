@@ -10,6 +10,9 @@ let
   extensions = import ./files/extensions/packages { inherit pkgs; };
 in
 {
+
+  age.secrets.hermes-proxy-api-key.file = ../../../../../../secrets/milo/pi/HERMES_PROXY_API_KEY.age;
+
   home.packages = [
     pkgs.pi-coding-agent
   ];
@@ -195,9 +198,31 @@ in
     };
 
     "${piDir}/agent/models.json" = {
-      # force = true;
       text = lib.generators.toJSON { } {
         providers = {
+          hermes = {
+            name = "hermes";
+            baseUrl = "https://ai.milogert.com/v1";
+            apiKey = config.age.secrets.hermes-proxy-api-key.path;
+            api = "openai-completions";
+            models = [
+              {
+                id = "hermes";
+                name = "hermes";
+                reasoning = false;
+                input = [
+                  "text"
+                  "image"
+                ];
+                contextWindow = 200000;
+                maxTokens = 8192;
+                compat = {
+                  supportsDeveloperRole = false;
+                  supportsReasoningEffort = false;
+                };
+              }
+            ];
+          };
         };
       };
     };

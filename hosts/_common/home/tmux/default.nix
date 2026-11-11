@@ -202,8 +202,6 @@ in
       ## Display the os version (Mac Os)
       #set -ag status-left " #[fg=black] #[fg=green,bright]  #(sw_vers -productVersion) #[default]"
 
-      ## Display the battery percentage (Mac OS)
-
       ## Set right side status bar length and style
       set -g status-right-length 140
       set -g status-right-style default

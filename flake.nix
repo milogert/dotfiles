@@ -27,6 +27,18 @@
     };
 
     nix-plist-manager.url = "github:sushydev/nix-plist-manager";
+
+    hermes-agent = {
+      url = "github:NousResearch/hermes-agent";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    noctalia = {
+      url = "github:noctalia-dev/noctalia";
+      inputs.nixpkgs.follows = "nixpkgs"; # this line is optional, prevents downloading two versions of nixpkgs but disables cache
+    };
+
+    umbriel.url = "github:noctalia-dev/umbriel";
   };
 
   outputs =
@@ -38,6 +50,9 @@
       neovim-custom,
       nixpkgs,
       nix-plist-manager,
+      hermes-agent,
+      noctalia,
+      umbriel,
     }:
     let
       overlays = final: prev: {
@@ -82,7 +97,10 @@
         };
         overlays = [
           overlays
+          agenix.overlays.default
           neovim-custom.overlays.default
+          hermes-agent.overlays.default
+          noctalia.overlays.default
         ];
       };
 
@@ -109,6 +127,8 @@
               common_config
               common_user_config
               home_type_path
+              agenix.homeManagerModules.default
+              hermes-agent.homeManagerModules.default
             ];
             nixpkgs = nixpkgsConfig;
           };
@@ -170,6 +190,8 @@
         ++ [
           home-manager.darwinModules.home-manager
           nix-plist-manager.darwinModules.default
+          agenix.darwinModules.default
+          hermes-agent.darwinModules.default
         ];
 
       mkNixosConfig =
@@ -182,6 +204,9 @@
         ++ [
           home-manager.nixosModules.home-manager
           agenix.nixosModules.default
+          hermes-agent.nixosModules.default
+          noctalia.nixosModules.default
+          umbriel.nixosModules.default
           {
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
           }

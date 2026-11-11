@@ -8,6 +8,7 @@
     ./sway.nix
     ./waybar
     ./desktop.nix
+    ./chrome
     # ./hyprland.nix
   ];
 

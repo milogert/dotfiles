@@ -6,6 +6,10 @@ let
   containerPort = "5984";
   configPrefix = "${config.users.users.media.home}/config/${service}";
 in {
+  age.secrets.obsidian-couch-db = {
+    file = ../../../secrets/obsidian/COUCH_DB.age;
+  };
+
   virtualisation.oci-containers.containers.${service} = {
     image = "couchdb:3.3.3";
     ports = ["${hostPort}:${containerPort}"];
@@ -19,7 +23,7 @@ in {
       TZ = "America/New_York";
     };
     environmentFiles = [
-      "/etc/secrets/obsidian.env"
+      config.age.secrets.obsidian-couch-db.path
     ];
   };
 

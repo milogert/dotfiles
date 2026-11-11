@@ -78,34 +78,5 @@ in
         ];
       };
     };
-
-    routers.ai = {
-      entryPoints = [ "websecure" ];
-      rule = "Host(`ai.milogert.com`)";
-      service = "ai";
-
-      tls = {
-        certResolver = "letsEncrypt";
-        domains = [ { main = "ai.milogert.com"; } ];
-      };
-    };
-
-    services.ai.loadBalancer.servers = [ { url = "http://localhost:18789"; } ];
-
-    routers.apps-ai-wildcard = {
-      entryPoints = [ "websecure" ];
-      rule = "Host(`apps.ai.milogert.com`)";
-      service = "noop@internal";
-
-      tls = {
-        certResolver = "letsEncrypt";
-        domains = [
-          {
-            main = "apps.ai.milogert.com";
-            sans = [ "*.apps.ai.milogert.com" ];
-          }
-        ];
-      };
-    };
   };
 }

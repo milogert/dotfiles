@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   modifier = "Mod4";
@@ -17,8 +22,10 @@ let
 
   keybindings = lib.mkOptionDefault {
     "${modifier}+Shift+r" = "restart";
-    "Ctrl+Shift+4" = "exec --no-startup-id grim -g \"$(slurp)\" $(xdg-user-dir PICTURES)/screenshots/$(date +'screenshot_%Y-%m-%dT%H:%M:%S.png')";
-    "${modifier}+Shift+w" = "exec --no-startup-id mkdir -p ~/Pictures/saved_wallpapers; cp ~/.config/sway/wallpaper.jpg ~/Pictures/saved_wallpapers/$(date --iso=seconds).jpg";
+    "Ctrl+Shift+4" =
+      "exec --no-startup-id grim -g \"$(slurp)\" $(xdg-user-dir PICTURES)/screenshots/$(date +'screenshot_%Y-%m-%dT%H:%M:%S.png')";
+    "${modifier}+Shift+w" =
+      "exec --no-startup-id mkdir -p ~/Pictures/saved_wallpapers; cp ~/.config/sway/wallpaper.jpg ~/Pictures/saved_wallpapers/$(date --iso=seconds).jpg";
     "${modifier}+Shift+s" = "sticky toggle";
 
     # Modes
@@ -39,7 +46,7 @@ let
     XF86AudioMute = "exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle";
 
     # Power buttons
-    # XF86PowerOff 
+    # XF86PowerOff
   };
 
   swaylockCommand = "${pkgs.swaylock}/bin/swaylock";
@@ -68,7 +75,8 @@ let
   xgray4 = "#444444";
   xgray5 = "#4E4E4E";
   yellow = "#FBB829";
-in {
+in
+{
   # home.file."${config.xdg.configHome}/fuzzel/fuzzel.ini".text = ''
   #   dpi-aware=no
   #   icon-theme=Papirus-Dark
@@ -141,9 +149,9 @@ in {
           indicator = xgray1;
           childBorder = xgray1;
         };
-        /* urgent           red          xgray1     red          red      red */
-        /* placeholder      xgray3       hard_black bright_black xgray3   xgray3 */
-        /* background       black */
+        # urgent           red          xgray1     red          red      red
+        # placeholder      xgray3       hard_black bright_black xgray3   xgray3
+        # background       black
       };
 
       floating.criteria = [
@@ -151,8 +159,8 @@ in {
         { class = "Pavucontrol"; }
         {
           app_id = "firefox";
-          title="^Picture-in-Picture$";
-        }#border none, floating enable, sticky enable
+          title = "^Picture-in-Picture$";
+        } # border none, floating enable, sticky enable
       ];
 
       fonts = {
@@ -189,13 +197,13 @@ in {
           Return = "mode default";
           Escape = "mode default";
           "${modifier}+r" = "mode default";
-          h     = "resize shrink width 10 px";
-          Left  = "resize shrink width 10 px";
-          j     = "resize grow height 10 px";
-          Down  = "resize grow height 10 px";
-          k     = "resize shrink height 10 px";
-          Up    = "resize shrink height 10 px";
-          l     = "resize grow width 10 px";
+          h = "resize shrink width 10 px";
+          Left = "resize shrink width 10 px";
+          j = "resize grow height 10 px";
+          Down = "resize grow height 10 px";
+          k = "resize shrink height 10 px";
+          Up = "resize shrink height 10 px";
+          l = "resize grow width 10 px";
           Right = "resize grow width 10 px";
         };
 
@@ -294,14 +302,20 @@ in {
 
   services.swayidle = {
     enable = true;
-    events = [
-      { event = "before-sleep"; command = swaylockCommand; }
-      { event = "lock"; command = "lock"; }
-    ];
+    events = {
+      "before-sleep" = swaylockCommand;
+      "lock" = "lock";
+    };
 
     timeouts = [
-      { timeout = 60 * 5; command = swaylockCommand; }
-      { timeout = 60 * 15; command = "${pkgs.systemd}/bin/systemctl suspend"; }
+      {
+        timeout = 60 * 5;
+        command = swaylockCommand;
+      }
+      {
+        timeout = 60 * 15;
+        command = "${pkgs.systemd}/bin/systemctl suspend";
+      }
     ];
   };
 

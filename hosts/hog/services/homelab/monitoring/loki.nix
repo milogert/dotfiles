@@ -36,7 +36,7 @@
   # };
 
   services.loki = {
-    enable = true;
+    enable = false;
 
     configuration = {
       auth_enabled = false;

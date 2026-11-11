@@ -40,14 +40,14 @@
   security.polkit.enable = true;
 
   environment.systemPackages = with pkgs; [
+    noctalia
     clinfo
     gjs
-    kmail
     lshw
     protontricks
     solaar
     vulkan-tools
-    wineWowPackages.stable
+    wineWow64Packages.stable
     winetricks
   ];
 }
