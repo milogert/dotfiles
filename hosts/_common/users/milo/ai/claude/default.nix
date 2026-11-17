@@ -8,7 +8,6 @@
 let
   directory = "${config.home.homeDirectory}/.claude";
   peonPingScript = "${directory}/hooks/peon-ping/peon.sh";
-  inherit (pkgs.stdenv.hostPlatform) isDarwin;
 in
 {
   programs.claude-code = {
@@ -32,19 +31,6 @@ in
           {
             matcher = "";
             hooks = [
-              (
-                if isDarwin then
-                  {
-                    type = "command";
-                    command = "afplay /System/Library/Sounds/Glass.aiff";
-                  }
-                else
-                  { }
-              )
-              {
-                type = "command";
-                command = "tput bel";
-              }
               {
                 type = "command";
                 command = peonPingScript;
@@ -58,19 +44,6 @@ in
           {
             matcher = "";
             hooks = [
-              (
-                if isDarwin then
-                  {
-                    type = "command";
-                    command = "afplay /System/Library/Sounds/Funk.aiff";
-                  }
-                else
-                  { }
-              )
-              {
-                type = "command";
-                command = "tput bel";
-              }
               {
                 type = "command";
                 command = peonPingScript;

@@ -2,16 +2,20 @@
   config,
   lib,
   pkgs,
+  osConfig,
   ...
 }:
 
 let
   piDir = "${config.home.homeDirectory}/.pi";
   extensions = import ./files/extensions/packages { inherit pkgs; };
+  enableHermes = osConfig.networking.hostName != "work";
 in
 {
 
-  age.secrets.hermes-proxy-api-key.file = ../../../../../../secrets/milo/pi/HERMES_PROXY_API_KEY.age;
+  age.secrets.hermes-proxy-api-key = lib.mkIf enableHermes {
+    file = ../../../../../../secrets/milo/pi/HERMES_PROXY_API_KEY.age;
+  };
 
   home.packages = [
     pkgs.pi-coding-agent
@@ -31,6 +35,9 @@ in
       treeFilterMode = "no-tools";
       enableSkillCommands = true;
       showHardwareCursor = true;
+      fullscreenCopyOnSelect = false;
+      tuiMode = "regular";
+      outputPad = 0;
       shellPath = "${pkgs.writeShellScript "pi-zsh" ''
         exec ${pkgs.zsh}/bin/zsh -i +Z "$@"
       ''}";
@@ -58,8 +65,13 @@ in
             position = "right";
           }
           {
-            id = "automode";
-            statusKey = "pi-automode";
+            id = "cache-warming";
+            statusKey = "cache-warming";
+            position = "right";
+          }
+          {
+            id = "pr-watch";
+            statusKey = "pr-watch";
             position = "right";
           }
         ];
@@ -174,6 +186,11 @@ in
       recursive = true;
     };
 
+    "${piDir}/agent/extensions/ccmux.js".source = import ./files/extensions/packages/pi-ccmux.nix {
+      inherit pkgs;
+      homeDirectory = config.home.homeDirectory;
+    };
+
     "${piDir}/agent/extensions/powerline-footer/theme.json".text = lib.generators.toJSON { } {
       colors.cost = "#fbb829"; # Srcery gold
     };
@@ -199,7 +216,7 @@ in
 
     "${piDir}/agent/models.json" = {
       text = lib.generators.toJSON { } {
-        providers = {
+        providers = lib.optionalAttrs enableHermes {
           hermes = {
             name = "hermes";
             baseUrl = "https://ai.milogert.com/v1";

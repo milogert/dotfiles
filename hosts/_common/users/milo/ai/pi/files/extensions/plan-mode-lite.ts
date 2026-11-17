@@ -1,4 +1,4 @@
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 
 enum SUBCOMMANDS {
   execute = 'execute',
@@ -13,24 +13,26 @@ export default function (pi: ExtensionAPI) {
   let enabled = true;
   let accepted = false;
 
-  function status(ctx: any) {
+  function status(ctx: ExtensionContext) {
     if (!ctx.hasUI) return;
     if (!enabled) ctx.ui.setStatus("plan-mode", undefined);
     else ctx.ui.setStatus("plan-mode", accepted ? "PLAN accepted" : "PLAN first");
   }
 
-  pi.on("session_start", (_event, ctx) => {
-    const last: { data?: { enabled?: boolean; accepted?: boolean } } | undefined =
-      ctx.sessionManager.getEntries()
-        .slice()
-        .reverse()
-        .find((entry: any) =>
-          entry.type === "custom" && entry.customType === "plan-mode-lite"
-        )
-    enabled = last?.data?.enabled ?? true;
-    accepted = last?.data?.accepted ?? false;
+  function restore(ctx: ExtensionContext) {
+    const last = ctx.sessionManager.getBranch().findLast((entry) =>
+      entry.type === "custom" && entry.customType === "plan-mode-lite"
+    );
+    const stored = last?.type === "custom"
+      ? last.data as { enabled?: boolean; accepted?: boolean } | undefined
+      : undefined;
+    enabled = typeof stored?.enabled === "boolean" ? stored.enabled : true;
+    accepted = enabled && stored?.accepted === true;
     status(ctx);
-  });
+  }
+
+  pi.on("session_start", (_event, ctx) => restore(ctx));
+  pi.on("session_tree", (_event, ctx) => restore(ctx));
 
   function persist() {
     pi.appendEntry("plan-mode-lite", { enabled, accepted });
@@ -69,14 +71,12 @@ export default function (pi: ExtensionAPI) {
         accepted = true;
         persist();
         status(ctx);
-        // Dispatch the installed auto-mode extension's public command, not its internal state.
-        // pi.sendUserMessage("/automode on", { expandPromptTemplates: true });
         if (action === SUBCOMMANDS.execute) {
           pi.sendUserMessage("Execute the accepted plan now. Keep changes focused and verify them.", {
             deliverAs: "followUp",
           });
         } else {
-          ctx.ui.notify("Plan accepted. Auto mode enabled; send a prompt when ready to implement.", "success");
+          ctx.ui.notify("Plan accepted. Send a prompt when ready to implement; use /planmode reset for a new task.", "info");
         }
         return;
       }
@@ -94,14 +94,14 @@ export default function (pi: ExtensionAPI) {
         enabled
           ? accepted
             ? "Plan mode is on; current plan accepted. Use /planmode reset to require a new plan."
-            : "Plan mode is on; writes blocked. Use /planmode execute to approve and start implementation."
+            : "Plan mode is on; edit/write tools blocked (not a shell sandbox). Use /planmode execute to approve and start implementation."
           : "Plan mode is off. Use /planmode on to enable.",
         "info",
       );
     },
 
     getArgumentCompletions: (prefix) => {
-      const matches = [SUBCOMMANDS.execute, SUBCOMMANDS.accept]
+      const matches = Object.values(SUBCOMMANDS)
         .filter((value) => value.startsWith(prefix))
         .map((value) => ({ value, label: value }));
       return matches.length ? matches : null;
@@ -118,9 +118,7 @@ export default function (pi: ExtensionAPI) {
       ? "Planning-first mode is enabled and the current plan has been accepted. Implement according to the accepted plan, keeping changes focused. If new risk or scope appears, stop and ask before continuing."
       : "Planning-first mode is enabled and no plan has been accepted yet. Inspect and produce a concise plan. Do not write/edit files or intentionally mutate project state. Ask the user to approve with `/planmode execute` to start implementation (or `/planmode accept` to approve without starting).";
 
-    return {
-      systemPrompt: `${event.systemPrompt}\n\n${guardrail}`,
-    };
+    event.systemPromptOptions.sections["plan-mode"] = guardrail;
   });
 
   pi.on("tool_call", (event) => {

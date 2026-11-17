@@ -29,7 +29,8 @@
     nix-plist-manager.url = "github:sushydev/nix-plist-manager";
 
     hermes-agent = {
-      url = "github:NousResearch/hermes-agent";
+      # url = "github:NousResearch/hermes-agent";
+      url = "github:ak2k/hermes-agent?ref=fix/nix-pnpm-deps-darwin-hash";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -191,7 +192,6 @@
           home-manager.darwinModules.home-manager
           nix-plist-manager.darwinModules.default
           agenix.darwinModules.default
-          hermes-agent.darwinModules.default
         ];
 
       mkNixosConfig =
@@ -273,47 +273,22 @@
         };
       };
 
-      packages =
-        let
-          mkPkgs =
-            system:
-            import nixpkgs {
-              inherit system;
-              inherit (nixpkgsConfig) config overlays;
-            };
-        in
-        {
-          aarch64-linux =
-            let
-              pkgs = mkPkgs "aarch64-linux";
-            in
-            {
-              neovim = neovim-custom.packages.aarch64-linux.default;
-            };
-
-          x86_64-linux =
-            let
-              pkgs = mkPkgs "x86_64-linux";
-            in
-            {
-              neovim = neovim-custom.packages.x86_64-linux.default;
-            };
-
-          aarch64-darwin =
-            let
-              pkgs = mkPkgs "aarch64-darwin";
-            in
-            {
-              neovim = neovim-custom.packages.aarch64-darwin.default;
-            };
-
-          x86_64-darwin =
-            let
-              pkgs = mkPkgs "x86_64-darwin";
-            in
-            {
-              neovim = neovim-custom.packages.x86_64-darwin.default;
-            };
+      packages = {
+        aarch64-linux = {
+          neovim = neovim-custom.packages.aarch64-linux.default;
         };
+
+        x86_64-linux = {
+          neovim = neovim-custom.packages.x86_64-linux.default;
+        };
+
+        aarch64-darwin = {
+          neovim = neovim-custom.packages.aarch64-darwin.default;
+        };
+
+        x86_64-darwin = {
+          neovim = neovim-custom.packages.x86_64-darwin.default;
+        };
+      };
     };
 }

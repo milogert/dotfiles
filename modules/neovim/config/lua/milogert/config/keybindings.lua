@@ -33,6 +33,9 @@ u.imap("<Down>", "<nop>")
 u.imap("<Left>", "<nop>")
 u.imap("<Right>", "<nop>")
 
+-- Simulated "put in word" motion.
+u.nmap("<leader>p", "viwP")
+
 -- Remap j/k to gj/gk but only when we are not counting.
 local jkMapOpts = { noremap = true, silent = true, expr = true }
 u.map("j", '(v:count == 0 ? "gj" : "j")', jkMapOpts)

@@ -25,9 +25,7 @@ in
   imports = [
     (common_dir + /home/default.nix)
     (common_dir + /home/direnv.nix)
-    ./ai/claude
-    ./ai/pi
-    ./ai/mcp.nix
+    ./ai
     ./programs
     ./scripts
   ];
@@ -36,7 +34,6 @@ in
     agenix
     codex
     gitoxide
-    hermes-agent
     nodejs
     notmuch
     python3

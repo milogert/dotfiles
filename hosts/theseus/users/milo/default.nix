@@ -17,13 +17,13 @@
   home.packages = with pkgs; [
     calibre
     cargo
-    warpinator
     cockatrice
     cryptsetup
     discord
     evince
     firefox
     gamescope
+    hermes-agent
     mangohud
     neomutt
     phoronix-test-suite
@@ -32,6 +32,7 @@
     vassal
     vial
     vulkan-tools
+    warpinator
   ];
 
   programs.qutebrowser = {
