@@ -31,8 +31,16 @@ Git:
 - Prefer showing a summary and letting the user commit.
 
 Verification:
-- Running tests, linting, typechecking, and formatting is encouraged when relevant.
-- Treat formatter/linter fixes as normal file edits and mention them.
+- Use risk-based verification, not the full suite by default. Run the smallest meaningful checks covering the changed behavior and affected callers.
+- Use the project's documented commands and development environment. For code or build changes, inspect relevant CI configuration so local checks use compatible flags, versions, and setup.
+- For bug fixes, add or update a focused regression test when practical. Confirm it fails with the bug present and passes with the fix.
+- Run relevant formatting, linting, and typechecking checks. Scope them to changed files or packages where supported; avoid unrelated expensive checks.
+- Broaden verification for shared code, public interfaces, dependencies, build/CI configuration, or changes spanning multiple components. Run the full suite when these changes have broad or unclear impact, when explicitly requested, or when the project requires it.
+- After the final edit, rerun checks affected by that edit. Unrelated passing checks remain valid; do not restart everything automatically.
+- Fix failures caused by your changes. Never skip, disable, or weaken tests just to obtain a passing result.
+- Report commands run, results, and important checks not run. Distinguish "focused checks passed" from "full CI passed"; do not imply broader coverage than was verified.
+- If verification is blocked or disproportionately expensive, report the limitation and remaining risk rather than repeatedly retrying or silently claiming success. Ask before proceeding when the unverified risk is material.
+- Documentation-only changes need review and applicable formatting/link checks, not unrelated application tests.
 
 Communication:
 - Use only ASCII quotation marks: " (U+0022) and ' (U+0027).

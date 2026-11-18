@@ -21,8 +21,6 @@ in
   programs.kitty = {
     enable = true;
 
-    shellIntegration.enableZshIntegration = true;
-
     font = {
       package = pkgs.hack-font;
       name = "Hack Nerd Font Mono";

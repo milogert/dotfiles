@@ -1,4 +1,4 @@
-.PHONY: check help usage all update update-neovim
+.PHONY: check check-patches help usage all update update-neovim
 .DEFAULT: all
 
 HOST=${HOSTNAME}
@@ -12,6 +12,8 @@ define usage
 @echo "    Updates the flake.lock file so new versions can be installed. This includes modules."
 @echo "  update-neovim"
 @echo "    Updates the neovim module."
+@echo "  check-patches"
+@echo "    Checks tracked upstream fixes and releases without changing patches."
 @echo
 @echo "Anything prefixed with '_' is internal, but can be run separately if you need granular output."
 endef
@@ -34,8 +36,11 @@ config: check ${HOST}
 	@echo -e "\033[0;32mDone configuring ${HOST}\033[0m"
 	@echo -e "\033[0;32m  Run \033[1;34mmake update && make\033[0;32m if your programs are out of date\033[0m"
 
+check-patches:
+	@node scripts/check-upstream-patches.mjs || echo "Warning: upstream patch audit unavailable; continuing build."
+
 # DRY
-__building_msg:
+__building_msg: check-patches
 	@echo -e "\033[0;33m-- Building ----------------------------\033[0m"
 
 __switching_msg:

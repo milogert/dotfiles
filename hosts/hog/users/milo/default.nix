@@ -13,5 +13,9 @@ in
     (common_dir + /home/types/headless.nix)
   ];
 
+  home.packages = with pkgs; [
+    hermes-agent
+  ];
+
   home.stateVersion = "21.05";
 }

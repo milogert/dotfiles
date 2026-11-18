@@ -32,7 +32,11 @@ function normalizeCandidate(cwd: string, candidate: unknown): string | undefined
   return path.resolve(cwd, stripped);
 }
 
-function isInside(parent: string, child: string): boolean {
+function isInside(allowedDirectories: string[], parent: string, child: string): boolean {
+  if (allowedDirectories.some(dir => child.startsWith(dir))) {
+    return true
+  }
+
   const rel = path.relative(parent, child);
   return rel === "" || (!!rel && !rel.startsWith("..") && !path.isAbsolute(rel));
 }
@@ -57,15 +61,15 @@ enum FeaturesEnum {
 
 export default function (pi: ExtensionAPI) {
   const features = {
-    [FeaturesEnum.editOutsideDirectory]: true,
+    [FeaturesEnum.editOutsideDirectory]: [],
     [FeaturesEnum.editSecretFile]: true,
     [FeaturesEnum.riskyCommand]: true,
   }
 
   function status(ctx: any) {
     if (!ctx.hasUI) return;
-    if (!enabled) ctx.ui.setStatus("safety-gate", undefined);
-    else ctx.ui.setStatus("safety-gate", accepted ? "PLAN accepted" : "PLAN first");
+    if (!enabled) ctx.ui.setStatus("gate-check", undefined);
+    else ctx.ui.setStatus("gate-check", accepted ? "PLAN accepted" : "PLAN first");
   }
 
   // pi.on("session_start", (_event, ctx) => {
@@ -82,7 +86,7 @@ export default function (pi: ExtensionAPI) {
   // });
 
   function persist() {
-    pi.appendEntry("safety-gate", features);
+    pi.appendEntry("gate-check", features);
   }
 
   pi.on("tool_call", async (event, ctx) => {
@@ -110,7 +114,7 @@ export default function (pi: ExtensionAPI) {
         return undefined;
       }
 
-      if (features[FeaturesEnum.editOutsideDirectory] && !isInside(ctx.cwd, target)) {
+      if (!isInside(features[FeaturesEnum.editOutsideDirectory], ctx.cwd, target)) {
         return confirmOrBlock(
           ctx,
           "Write outside working directory",
@@ -157,7 +161,7 @@ export default function (pi: ExtensionAPI) {
     if (!ok) {
       return {
         result: {
-          output: "Blocked by safety-gate",
+          output: "Blocked by gate-check",
           exitCode: 1,
           cancelled: false,
           truncated: false,
@@ -168,17 +172,24 @@ export default function (pi: ExtensionAPI) {
     return undefined;
   });
 
-  pi.registerCommand("safety-gate", {
+  pi.registerCommand("gate-check", {
     description: `Manage the safety gate features:
-/saftey-gate
-  edit-outside-directory|edit-secret-file|risky-command on|off|toggle
-  status`,
-    handler: async (args, ctx) => {
-      const [command, state] = args.trim().split(' ', 2)
+/gate-check
+  (edit-outside-directory|edit-secret-file|risky-command) [on|off|TOGGLE]
+    Changes one of the settings. If you omit the second argument it toggles the setting.
 
-      const isCommand = [FeaturesEnum.editOutsideDirectory, FeaturesEnum.editSecretFile, FeaturesEnum.riskyCommand].includes(command)
-      if (!isCommand) {
-        ctx.ui.notify("/saftey-gate edit-outside-directory|edit-secret-file|risky-command on|off|toggle")
+  edit-outside-directory (add|remove|reset) directory1 directory2 ...
+    Adds or removes the list of directories. If you call \`reset\` it removes all directories from the array.
+
+  status
+    Displays the status`,
+    handler: async (args, ctx) => {
+      const [command, subcommand, ...subcommandArgs] = args.trim().split(' ', 3)
+
+      if (command === FeaturesEnum.status) {
+        ctx.ui.notify(Object.keys(features).map((feature) => {
+          return `${feature} -> ${features[feature] ? 'enabled' : 'disabled'}`
+        }).join('\n'))
         return
       }
 
@@ -187,32 +198,75 @@ export default function (pi: ExtensionAPI) {
         return
       }
 
-      switch (state) {
-        case 'on':
-          features[command] = true
-          break
+      if (command === FeaturesEnum.editOutsideDirectory) {
+        if (subcommand === 'add') {
+          features[FeaturesEnum.editOutsideDirectory] = [...new Set([...subcommandArgs, features[FeaturesEnum.editOutsideDirectory]])]
+        } else if (subcommand === 'remove') {
+          features[FeaturesEnum.editOutsideDirectory] = features[FeaturesEnum.editOutsideDirectory].filter(dir => !subcommandArgs.includes(dir))
+        } else if (subcommand === 'reset') {
+          features[FeaturesEnum.editOutsideDirectory] = []
+        } else {
+          ctx.ui.notify("/gate-check edit-outside-directory (add|remove) directory1 directory2 ...")
+        }
+        return
+      }
 
-        case 'off':
-          features[command] = false
-          break
+      const isCommand = [FeaturesEnum.editSecretFile, FeaturesEnum.riskyCommand].includes(command)
 
-        case 'toggle':
-          features[command] = !features[command]
-          break
+      if (!isCommand) {
+        ctx.ui.notify("/gate-check edit-outside-directory|edit-secret-file|risky-command on|off|toggle")
+        return
+      }
 
-        default:
-          ctx.ui.notify(`${state} is not one of on|off|toggle`, "info")
-          return
+      if (subcommand) {
+        switch (subcommand) {
+          case 'on':
+            features[command] = true
+            break
+
+          case 'off':
+            features[command] = false
+            break
+
+          case 'toggle':
+            features[command] = !features[command]
+            break
+
+          default:
+            ctx.ui.notify(`${subcommand} is not one of on|off|toggle`, "info")
+            return
+        }
+      } else {
+        features[command] = !features[command]
       }
 
       ctx.ui.notify(`${command} set to ${features[command]}`, "info")
     },
 
     getArgumentCompletions: (prefix) => {
-      const matches = [FeaturesEnum.editOutsideDirectory, FeaturesEnum.editSecretFile, FeaturesEnum.riskyCommand]
-        .filter((value) => value.startsWith(prefix))
-        .map((value) => ({ value, label: value }));
-      return matches.length ? matches : null;
+      const [command, subcommand] = prefix.trimStart().split(' ', 2)
+
+      let matches
+
+      if (subcommand === undefined) {
+        matches = [FeaturesEnum.editOutsideDirectory, FeaturesEnum.editSecretFile, FeaturesEnum.riskyCommand]
+          .filter((value) => value.startsWith(command.toLowerCase().trim()))
+          .map((value) => ({ value: `${value} `, label: value }));
+
+        if (matches.length) {
+          return matches
+        }
+      }
+
+      matches = ['on', 'off', 'toggle']
+        .filter((value) => value.startsWith((subcommand || '').toLowerCase().trim()))
+        .map((value) => ({ value: `${command} ${value} `, label: value }));
+
+      if (matches.length) {
+        return matches
+      }
+
+      return null
     },
 
   })

@@ -12,8 +12,8 @@
     stateVersion = "21.05";
 
     packages = with pkgs; [
-      # docker
       git-lfs
+      hermes-agent
       mas
     ];
 

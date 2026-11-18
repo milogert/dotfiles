@@ -1,0 +1,49 @@
+[
+  {
+    "name": "ccmux Pi idle lifecycle",
+    "file": "hosts/_common/users/milo/ai/pi/files/extensions/packages/ccmux-path-agent-settled.nix",
+    "repo": "epilande/ccmux",
+    "kind": "source",
+    "source": "src/plugins/pi/ccmux.js",
+    "pattern": "pi\\.on\\(\\s*[\"']agent_settled[\"']"
+  },
+  {
+    "name": "tmux-resurrect persistence.nvim support",
+    "file": "hosts/_common/home/tmux/custom-plugins.nix",
+    "repo": "tmux-plugins/tmux-resurrect",
+    "kind": "pull",
+    "number": 534
+  },
+  {
+    "name": "fidget.nvim rewrite pin",
+    "file": "modules/neovim/overlays.nix",
+    "repo": "j-hui/fidget.nvim",
+    "kind": "issue",
+    "number": 131
+  },
+  {
+    "name": "Powerline custom-message fix pin",
+    "file": "hosts/_common/users/milo/ai/pi/files/extensions/packages/pi-powerline-footer.nix",
+    "repo": "nicobailon/pi-powerline-footer",
+    "kind": "commit",
+    "commit": "2260ae6fee41ae2cb3d0d3d6609d5231fe57d004"
+  },
+  {
+    "name": "Powerline secondary-row placement",
+    "file": "hosts/_common/users/milo/ai/pi/files/extensions/packages/pi-powerline-footer-path-overflow-above.nix",
+    "kind": "manual",
+    "reason": "Local layout preference, not a known upstream bug fix."
+  },
+  {
+    "name": "direnv Darwin integration tests",
+    "file": "flake.nix",
+    "kind": "manual",
+    "reason": "Needs a Darwin sandbox regression check; no tracked upstream fix reference."
+  },
+  {
+    "name": "tmux-palette Bun paths",
+    "file": "hosts/_common/home/tmux/custom-plugins.nix",
+    "kind": "manual",
+    "reason": "Nix store-path packaging substitutions, not a known upstream bug fix."
+  }
+]
