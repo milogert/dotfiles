@@ -157,7 +157,7 @@ pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
 
       ls_cmds = {
         -- biome = { "${pkgs.vscode-extensions.biomejs.biome}/bin/biome", "start" },
-        biome = { "node_modules/.bin/biome", "lsp-proxy" },
+        biome = { "${pkgs.biome}/bin/biome", "lsp-proxy" },
         cssls = { "${pkgs.vscode-langservers-extracted}/bin/vscode-css-language-server", "--stdio" },
         elixirls = { "${pkgs.elixir-ls}/bin/elixir-ls" },
         html = { "${pkgs.vscode-langservers-extracted}/bin/vscode-html-language-server", "--stdio" },

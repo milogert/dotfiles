@@ -45,7 +45,10 @@ is excluded explicitly by the router and omitted from the work configuration.
 ## Planning and parallel work
 
 Use `/planmode execute` to accept a plan and start work, or `/planmode accept`
-to approve without starting. Approval and enabled/disabled state follow the
+to approve without starting. The agent is instructed to present the plan and wait
+for that command, not show an approval picker; picker answers do not unlock plan
+mode. Requirements questions can still use forms.
+Approval and enabled/disabled state follow the
 active session branch on reload, resume, forks, and `/tree` navigation.
 
 Use `/planmode reset` before a new task. The extension does not guess whether a

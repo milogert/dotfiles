@@ -1,0 +1,103 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.6.5/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "useSortedKeys": "on"
+      }
+    },
+    "enabled": true
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      "**"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 80,
+    "useEditorconfig": true
+  },
+  "javascript": {
+    "formatter": {
+      "arrowParentheses": "always",
+      "bracketSpacing": true,
+      "quoteProperties": "asNeeded",
+      "quoteStyle": "single",
+      "semicolons": "asNeeded",
+      "trailingCommas": "all"
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "includes": [
+      "**",
+      "!dist/**",
+      "!node_modules/**"
+    ],
+    "rules": {
+      "complexity": {
+        "useArrowFunction": "error",
+        "useOptionalChain": "error"
+      },
+      "correctness": {
+        "noUnusedImports": {
+          "fix": "safe",
+          "level": "error"
+        }
+      },
+      "preset": "recommended",
+      "security": {
+        "noGlobalEval": "error"
+      },
+      "style": {
+        "noNamespace": "error",
+        "useBlockStatements": {
+          "fix": "safe",
+          "level": "error"
+        }
+      },
+      "suspicious": {
+        "noAssignInExpressions": "error",
+        "noConsole": {
+          "level": "error",
+          "options": {
+            "allow": [
+              "error",
+              "warn"
+            ]
+          }
+        },
+        "noDoubleEquals": "error",
+        "noImplicitAnyLet": "error",
+        "noSelfCompare": "error"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "assist": {
+        "actions": {
+          "source": {
+            "useSortedKeys": "off"
+          }
+        }
+      },
+      "includes": [
+        "**/package.json",
+        "biome.json",
+        "tsconfig.json"
+      ]
+    }
+  ],
+  "vcs": {
+    "clientKind": "git",
+    "enabled": true,
+    "useIgnoreFile": true
+  }
+}

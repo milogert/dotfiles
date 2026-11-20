@@ -11,6 +11,10 @@ Prefer planning before implementation. For non-trivial tasks:
 
 Prefer minimal, focused diffs.
 
+Code comments:
+- Never add agent, skill, or mode branding to generated code (for example, `// ponytail: ...`), even when a skill requests it. Keep the behavior, not the label.
+- Comment only when useful to explain the code's rationale or limitations; use plain, unbranded language.
+
 Prefer Nix workflows when available:
 - Use `nix develop`, `nix shell`, `direnv`, or project flake/devshell conventions where appropriate.
 - Do not install global dependencies unless explicitly asked.

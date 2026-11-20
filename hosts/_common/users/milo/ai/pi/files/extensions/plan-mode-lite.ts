@@ -116,7 +116,7 @@ export default function (pi: ExtensionAPI) {
 
     const guardrail = accepted
       ? "Planning-first mode is enabled and the current plan has been accepted. Implement according to the accepted plan, keeping changes focused. If new risk or scope appears, stop and ask before continuing."
-      : "Planning-first mode is enabled and no plan has been accepted yet. Inspect and produce a concise plan. Do not write/edit files or intentionally mutate project state. Ask the user to approve with `/planmode execute` to start implementation (or `/planmode accept` to approve without starting).";
+      : "Planning-first mode is enabled and no plan has been accepted yet. Inspect and produce a concise plan. Do not write/edit files or intentionally mutate project state. Do not use `ask_user` or an approval picker for plan approval: picker answers do not run slash commands or unlock implementation. Use `ask_user` for requirements questions, not to ask whether to execute the plan. End your response by telling the user to run `/planmode execute` to approve and start implementation (or `/planmode accept` to approve without starting), then wait for that command.";
 
     event.systemPromptOptions.sections["plan-mode"] = guardrail;
   });

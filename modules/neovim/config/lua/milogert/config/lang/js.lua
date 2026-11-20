@@ -4,7 +4,19 @@ local on_attach = require("milogert.config.lsp.on_attach")
 vim.lsp.config("jsonls", { cmd = variables.get().ls_cmds.jsonls })
 
 vim.lsp.config("biome", {
-  cmd = variables.get().ls_cmds.biome,
+  cmd = function(dispatchers, config)
+    local local_biome = vim.fs.find("node_modules/.bin/biome", {
+      path = config.root_dir or vim.fn.getcwd(),
+      upward = true,
+    })[1]
+
+    local command = variables.get().ls_cmds.biome
+    if local_biome and vim.fn.executable(local_biome) == 1 then
+      command = { local_biome, "lsp-proxy" }
+    end
+
+    return vim.lsp.rpc.start(command, dispatchers)
+  end,
   filetypes = {
     "css",
     "html",

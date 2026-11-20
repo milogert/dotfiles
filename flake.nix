@@ -213,6 +213,29 @@
         ];
     in
     {
+      devShells =
+        nixpkgs.lib.genAttrs
+          [
+            "aarch64-linux"
+            "x86_64-linux"
+            "aarch64-darwin"
+          ]
+          (
+            system:
+            let
+              pkgs = import nixpkgs { inherit system; };
+            in
+            {
+              default = pkgs.mkShell {
+                packages = [
+                  pkgs.nodejs_24
+                  pkgs.typescript
+                  pkgs.biome
+                ];
+              };
+            }
+          );
+
       darwinConfigurations = {
         minotaur = darwin.lib.darwinSystem {
           inherit inputs;

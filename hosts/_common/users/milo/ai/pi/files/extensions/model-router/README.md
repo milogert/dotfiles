@@ -60,6 +60,48 @@ A model change made manually while Jev is pending takes precedence. Pi's
 Routing costs are billed by OpenRouter but are not included in pi's agent-token
 footer totals.
 
+## Switch cost guard
+
+Before switching, the router estimates uncached input cost from Pi's current
+context token count plus the new prompt's text (approximately four characters per
+token), using the destination model's advertised input price. No named-model
+allowlist is needed: any switch estimated below $0.25 proceeds without asking.
+Output, Jev fees, new images, and later extension-added context are not included;
+this is an estimate, not a spending cap. Unknown context size or invalid pricing
+requires confirmation too.
+
+A model with a successful assistant reply in this session less than three minutes
+ago also proceeds without asking, regardless of cost. Last use comes from the
+reply's persisted entry timestamp, not merely selecting the model. Error/aborted
+replies do not count. Session history supports this check across reloads/resumes,
+including replies on other branches. Recent use is only a cache hint: changed
+prompts, compaction, provider routing, or eviction can still cause a cache miss.
+
+Otherwise, an interactive dialog offers:
+
+- "Stay on current model" (the default selection).
+- "Switch once" (future expensive switches can ask again).
+- "Stay and disable routing for this session" (manually select a model afterward
+  without Jev switching it back; `/router on` re-enables routing).
+
+Cancelling keeps the current model. Non-interactive runs keep the current model
+when confirmation would be required. Manual model changes, `/router off`, and
+run cancellation while confirmation is pending take precedence. Disabling
+routing lasts until `/router on`, a reload, or a new session.
+
+`PI_ROUTER_COST_LIMIT_USD` overrides the default $0.25 threshold. Use a
+non-negative dollar amount, or `off` to disable cost confirmations. Invalid values
+warn and keep the current model. For a more permissive work launch:
+
+```sh
+PI_ROUTER_COST_LIMIT_USD=2 pi
+# Or disable cost warnings entirely:
+PI_ROUTER_COST_LIMIT_USD=off pi
+```
+
+No machine is detected automatically; the default applies on both personal and
+work hosts unless overridden.
+
 ## Verification
 
 No network or credentials are used by the checks:

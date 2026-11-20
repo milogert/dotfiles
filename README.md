@@ -31,6 +31,28 @@ run. Otherwise the `HOSTNAME` environtment variable will still not be set
 make update
 ```
 
+## TypeScript and JavaScript development
+
+```bash
+nix develop
+npm run test:pr-watch
+npm run typecheck
+npm run check
+```
+
+The shell provides Node 24, TypeScript, and Biome from the existing flake lock.
+It does not install or link npm dependencies. `package.json`, `tsconfig.json`, and
+`biome.json` provide project roots and editor configuration. Launch Neovim from
+the shell, or run `direnv allow` once to use the included `.envrc`.
+
+Typechecking needs project dependencies such as the Pi SDK and Node types, and
+can report existing/in-progress issues including `gate-check.ts`. JavaScript is
+included for editor support but is not typechecked. The current Neovim Biome
+command uses `node_modules/.bin/biome`; use `biome lsp-proxy` instead to run the
+shell's binary. Use `biome check <paths>` for focused checks; it only writes files
+with `--write`. Packaged-extension tests requiring built sources still use their
+documented commands.
+
 # Why Nix?
 
 @rpearce turned me onto this. I used to be an Arch Linux guy, but configuring

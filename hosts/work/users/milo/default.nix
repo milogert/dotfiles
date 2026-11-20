@@ -17,6 +17,7 @@
       docker
       git-lfs
       mas
+      _1password-cli
     ];
 
     file = {
